@@ -2,3 +2,4 @@
 /.env.production
 /access
 /logs
+/node_modules
