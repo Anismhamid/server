@@ -51,7 +51,10 @@ mongoose
 app.use(
 	cors({
 		origin: (origin, callback) => {
-			const allowedOrigins = ["http://localhost:4173", "http://localhost:8209"];
+			const allowedOrigins = [
+				"http://localhost:4173",
+				"https://server-32bo.onrender.com",
+			];
 			if (!origin || allowedOrigins.includes(origin)) {
 				callback(null, true);
 			} else {
