@@ -59,7 +59,7 @@ app.use(
 				"http://localhost:4173",
 				"http://localhost:8209",
 				"https://server-32bo.onrender.com",
-				"https://client-qqq1.vercel.app",
+				"https://client-qqq1-dip2scy3s-anismhamids-projects.vercel.app/",
 			];
 			if (!origin || allowedOrigins.includes(origin)) {
 				callback(null, true);
