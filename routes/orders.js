@@ -14,7 +14,7 @@ router.get("/:userId", auth, async (req, res) => {
 	const userId = req.params.userId;
 
 	if (req.payload._id !== userId || !req.payload.role === "Admin") {
-		return res.status(403).send("You do not have permission to access these orders.");
+		return res.status(401).send("You do not have permission to access these orders.");
 	}
 
 	try {
@@ -27,10 +27,10 @@ router.get("/:userId", auth, async (req, res) => {
 	}
 });
 
-// Get all orders for admin
+// Get all orders for admin and moderator
 router.get("/", auth, async (req, res) => {
 	try {
-		if (!req.payload.role === "Admin" && !req.payload.role === "Moderator") {
+		if (req.payload.role !== "Admin" && req.payload.role !== "Moderator") {
 			return res
 				.status(403)
 				.send("You do not have permission to access these orders.");
@@ -60,7 +60,7 @@ router.patch("/:orderNumber", auth, async (req, res) => {
 		// Return success status
 		res.status(200).send(order);
 	} catch (error) {
-		return res.status(500).send("Server error while fetching orders.");
+		return res.status(500).send("Server error while Retrieve orders.");
 	}
 });
 
@@ -75,7 +75,7 @@ router.get("/details/:orderNumber", auth, async (req, res) => {
 		// Return success status
 		res.status(200).send(order);
 	} catch (error) {
-		return res.status(500).send("Server error while fetching order items.");
+		return res.status(500).send("Server error while Retrieve order items.");
 	}
 });
 

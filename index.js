@@ -22,6 +22,7 @@ const io = new Server(httpServer, {
 
 const helmet = require("helmet");
 const products = require("./routes/products");
+const businessInfo = require("./routes/businessInfo");
 const users = require("./routes/users");
 const carts = require("./routes/carts");
 const orders = require("./routes/orders");
@@ -58,6 +59,7 @@ app.use(
 			const allowedOrigins = [
 				"http://localhost:4173",
 				"http://localhost:8209",
+				"http://localhost:5173",
 				"https://server-32bo.onrender.com",
 				"https://client-qqq1-dip2scy3s-anismhamids-projects.vercel.app",
 				"https://client-qqq1.vercel.app",
@@ -83,6 +85,7 @@ app.use("/api/users", users);
 app.use("/api/carts", carts);
 app.use("/api/orders", orders);
 app.use("/api/products", products);
+app.use("/api/business-info", businessInfo);
 app.use("/api/discounts", discounts);
 app.use("/api/receipt", receipt);
 
