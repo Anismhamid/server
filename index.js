@@ -10,11 +10,7 @@ const orderSocketHandler = require("./sockets/orderSocket");
 const io = new Server(httpServer, {
 	transports: ["websocket"],
 	cors: {
-		origin: [
-			"http://localhost:5173",
-			"http://localhost:4173",
-			"https://client-qqq1.vercel.app",
-		],
+		origin: [process.env.DEV_MODE, process.env.PROD_MODE, process.env.VERCEL_URL],
 		methods: ["GET", "POST"],
 		credentials: true,
 	},
@@ -57,12 +53,11 @@ app.use(
 	cors({
 		origin: (origin, callback) => {
 			const allowedOrigins = [
-				"http://localhost:4173",
-				"http://localhost:8209",
-				"http://localhost:5173",
-				"https://server-32bo.onrender.com",
-				"https://client-qqq1-dip2scy3s-anismhamids-projects.vercel.app",
-				"https://client-qqq1.vercel.app",
+				process.env.PROD_MODE,
+				process.env.DEV_MODE,
+				process.env.NODE_API,
+				process.env.RENDER_API,
+				process.env.VERCEL_URL,
 			];
 			if (!origin || allowedOrigins.includes(origin)) {
 				callback(null, true);
@@ -74,12 +69,12 @@ app.use(
 	}),
 );
 
-app.use(express.json({limit: "5mb"}));
+app.set("io", io);
+app.use(express.json({limit: "2mb"}));
 app.use(helmet({crossOriginOpenerPolicy: false}));
 app.use(logger);
 logToFile();
 app.use(limiter);
-app.set("io", io);
 
 app.use("/api/users", users);
 app.use("/api/carts", carts);
