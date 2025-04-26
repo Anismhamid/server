@@ -1,5 +1,4 @@
-require("dotenv").config()
-const express = require("express");
+בonst express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const {limiter} = require("./middlewares/rateLimiter");
