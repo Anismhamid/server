@@ -10,7 +10,7 @@ const orderSocketHandler = require("./sockets/orderSocket");
 const io = new Server(httpServer, {
 	transports: ["websocket"],
 	cors: {
-		origin: [process.env.DEV_MODE, process.env.PROD_MODE, process.env.VERCEL_URL],
+		origin: [process.env.PROD_MODE, process.env.DEV_MODE, process.env.VERCEL_URL],
 		methods: ["GET", "POST"],
 		credentials: true,
 	},
@@ -58,6 +58,8 @@ app.use(
 				process.env.NODE_API,
 				process.env.RENDER_API,
 				process.env.VERCEL_URL,
+				process.env.VERCEL_URL_DEVELOPMENT,
+				,
 			];
 			if (!origin || allowedOrigins.includes(origin)) {
 				callback(null, true);
@@ -69,12 +71,12 @@ app.use(
 	}),
 );
 
-app.set("io", io);
-app.use(express.json({limit: "2mb"}));
+app.use(express.json({limit: "5mb"}));
 app.use(helmet({crossOriginOpenerPolicy: false}));
 app.use(logger);
 logToFile();
 app.use(limiter);
+app.set("io", io);
 
 app.use("/api/users", users);
 app.use("/api/carts", carts);
