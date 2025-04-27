@@ -14,7 +14,7 @@ router.get("/:userId", auth, async (req, res) => {
 	try {
 		const userId = req.params.userId;
 
-		if (req.payload._id !== userId || req.payload.role !== "Admin")
+		if (req.payload._id !== userId && req.payload.role !== "Admin")
 			return res
 				.status(401)
 				.send("You do not have permission to access these orders.");
