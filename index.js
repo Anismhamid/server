@@ -40,8 +40,11 @@ connectDB();
 app.set("io", io);
 
 io.on("connection", (socket) => {
-	console.log("New WebSocket connection");
+	console.log("New user connected");
 	orderSocketHandler(io, socket);
+	socket.on("disconnect", () => {
+		console.log("user disconnected");
+	});
 });
 
 // Starting server connecion
