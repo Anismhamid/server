@@ -12,9 +12,8 @@ const businessSchema = Joi.object({
 	businessPhone: Joi.string().required(),
 });
 
-router.get("/", auth, async (req, res) => {
+router.get("/", async (req, res) => {
 	try {
-		if (req.payload.role !== "Admin") return res.status(401).send("Access denied.");
 		const businessInfo = await BusinessInfo.findOne();
 		res.status(200).send(businessInfo);
 	} catch (error) {
