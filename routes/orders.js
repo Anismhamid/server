@@ -11,13 +11,14 @@ router.post("/", auth, (req, res, next) => {
 
 // Get orders for a specific user
 router.get("/:userId", auth, async (req, res) => {
-	const userId = req.params.userId;
-
-	if (req.payload._id !== userId || !req.payload.role === "Admin") {
-		return res.status(401).send("You do not have permission to access these orders.");
-	}
-
 	try {
+		const userId = req.params.userId;
+
+		if (req.payload._id !== userId || req.payload.role !== "Admin")
+			return res
+				.status(401)
+				.send("You do not have permission to access these orders.");
+
 		// Retrieve all orders for the user
 		const orders = await Order.find({userId: userId});
 		return res.status(200).send(orders);

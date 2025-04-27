@@ -9,7 +9,7 @@ const logToFile = (method, url, statusCode, errorMessage) => {
 
 	// Create the logs directory if it doesn't exist
 	if (!fs.existsSync(logDir)) {
-		fs.mkdirSync(logDir, {recursive: true}); // Ensure that subdirectories are created
+		fs.mkdirSync(logDir, {recursive: true});
 	}
 
 	// Prepare log message
@@ -30,22 +30,23 @@ const logger = (req, res, next) => {
 	const originalSend = res.send;
 	const startTime = Date.now();
 
+	const logDir = path.join(__dirname, "../logs");
+	const accessDir = path.join(__dirname, "../access");
+
+	if (!fs.existsSync(logDir)) fs.mkdirSync(logDir, {recursive: true});
+	if (!fs.existsSync(accessDir)) fs.mkdirSync(accessDir, {recursive: true});
+
 	res.send = function (body) {
 		const timeTaken = Date.now() - startTime;
 
 		if (res.statusCode >= 400) {
-			logToFile(req.method, req.url, res.statusCode, body); // Log error details
+			const errorMessage = typeof body === "string" ? body : JSON.stringify(body);
+			logToFile(req.method, req.url, res.statusCode, errorMessage); // Log error details
 		} else {
+			// Access log for successful requests
 			const accessLogMessage = `✨${new Date().toLocaleString("he-IL")}✨ | ${
 				req.method
 			} ${req.url} | Status: ${res.statusCode} | ${timeTaken}ms\n`;
-
-			// Ensure the "access" directory exists before appending logs
-			const accessDir = path.join(__dirname, "../access");
-
-			if (!fs.existsSync(accessDir)) {
-				fs.mkdirSync(accessDir, {recursive: true});
-			}
 
 			fs.appendFile(
 				path.join(accessDir, `${new Date().toISOString().split("T")[0]}.log`),
