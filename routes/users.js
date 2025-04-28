@@ -33,6 +33,7 @@ const userSchema = Joi.object({
 	}),
 	email: Joi.string().email().required(),
 	password: Joi.string().min(6).required(),
+	gender: Joi.string().required(),
 	image: Joi.object({
 		url: Joi.string()
 			.uri()

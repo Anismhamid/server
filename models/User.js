@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			minlength: 6,
 		},
-		gender: {type: String},
+		gender: {type: String, enum: ["זכר", "נקבה"], requred: true},
 		image: {
 			type: {
 				url: {
