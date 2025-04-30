@@ -17,6 +17,7 @@ const app = express();
 
 const allowedOrigins = [
 	"http://localhost:5173",
+	"http://localhost:5174",
 	"http://localhost:4173",
 	"http://localhost:8201",
 	"https://server-32bo.onrender.com",
@@ -39,6 +40,7 @@ app.use(
 			}
 		},
 		methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+		allowedHeaders: ["Content-Type", "Authorization"],
 	}),
 );
 

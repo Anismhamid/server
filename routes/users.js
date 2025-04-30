@@ -298,4 +298,18 @@ router.patch("/compleate/:userId", auth, async (req, res) => {
 	}
 });
 
+router.delete("/:userId", auth, async (req, res) => {
+	try {
+		const isAdmin = req.payload.role === roleType.Admin;
+		const isSelf = req.payload._id === req.params.userId;
+		if (!isAdmin && !isSelf)
+			return res.status(401).send("Cannot make this change");
+
+		const user = await User.findByIdAndDelete(req.params.userId);
+		res.status(200).send(user);
+	} catch (error) {
+		res.status(500).send(err.message);
+	}
+});
+
 module.exports = router;
