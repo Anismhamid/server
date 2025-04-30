@@ -44,8 +44,9 @@ app.use(
 	}),
 );
 
+
 app.use(express.json({limit: "5mb"}));
-app.use(helmet({crossOriginOpenerPolicy: false}));
+app.use(helmet());
 app.use(logger);
 logToFile();
 app.use(limiter);

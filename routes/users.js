@@ -8,6 +8,7 @@ const _ = require("lodash");
 const Joi = require("joi");
 const auth = require("../middlewares/auth");
 const chalk = require("chalk");
+const {verifyGoogleToken} = require("../utils/googleAuth");
 
 // for generating token
 const generateToken = (user) => {
@@ -115,16 +116,36 @@ router.get("/google/verify/:id", async (req, res) => {
 // register the new google user into database
 router.post("/google", async (req, res) => {
 	try {
+		const {credentialToken} = req.body;
+		if (!credentialToken) return res.status(400).send("Missing token");
+
+		const payload = await verifyGoogleToken(credentialToken);
+		if (!payload.email_verified) return res.status(401).send("Email not verified");
+
 		// check if user exists
-		let user = await User.findOne({email: req.body.email});
+		let user = await User.findOne({email: payload.email});
 		if (user) {
 			const token = generateToken(user);
-
 			return res.status(200).send(token);
 		}
 
-		// if user not exist create a new
-		user = new User(req.body);
+		// if user not exist create a new one from payload
+		user = new User({
+			name: {
+				first: payload.given_name || "Google",
+				last: payload.family_name || "User",
+			},
+			email: payload.email,
+			password: hashSync(payload.sub, 10),
+			image: {
+				url: payload.picture,
+				alt: `${payload.given_name} ${payload.family_name}`,
+			},
+			role: "Client",
+			activity: [new Date().toLocaleString()],
+			registrAt: new Date().toLocaleString("he-IL"),
+			googleId: payload.sub,
+		});
 
 		// save the user
 		await user.save();
@@ -302,13 +323,39 @@ router.delete("/:userId", auth, async (req, res) => {
 	try {
 		const isAdmin = req.payload.role === roleType.Admin;
 		const isSelf = req.payload._id === req.params.userId;
-		if (!isAdmin && !isSelf)
-			return res.status(401).send("Cannot make this change");
+		if (!isAdmin && !isSelf) return res.status(401).send("Cannot make this change");
 
 		const user = await User.findByIdAndDelete(req.params.userId);
 		res.status(200).send(user);
 	} catch (error) {
-		res.status(500).send(err.message);
+		res.status(500).send(error.message);
+	}
+});
+
+// change password
+router.patch("/password/:userId", auth, async (req, res) => {
+	try {
+		const {userId} = req.params;
+		const {newPassword} = req.body;
+		const isAdmin = req.payload.role === roleType.Admin;
+
+		if (!newPassword || newPassword.length < 6) {
+			return res.status(400).send("Password must contain at least 6 characters");
+		}
+
+		const user = await User.findById(userId);
+		if (!user) return res.status(404).send("User not found");
+
+		if (req.user._id !== userId && !isAdmin) {
+			return res.status(403).send("No permission to change password");
+		}
+
+		user.password = newPassword;
+		await user.save();
+
+		res.status(200).send("Password updated successfully");
+	} catch (err) {
+		res.status(500).send("Internal server error hhh");
 	}
 });
 
