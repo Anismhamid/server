@@ -1,6 +1,5 @@
 // Allowed Origins
 const allowedOrigins = [
-	"http://localhost:4173",
 	process.env.PROD_MODE,
 	process.env.DEV_MODE,
 	process.env.NODE_API,

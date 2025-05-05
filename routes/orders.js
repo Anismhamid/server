@@ -24,7 +24,6 @@ router.get("/:userId", auth, async (req, res) => {
 
 		res.status(200).send(orders);
 	} catch (error) {
-		console.error(error);
 		res.status(500).send("Server error while fetching orders.");
 	}
 });
@@ -60,15 +59,8 @@ router.patch("/:orderNumber", auth, async (req, res) => {
 			{new: true},
 		);
 		if (!order) return res.status(404).send("Order not found");
+
 		const io = req.app.get("io");
-
-		io.on("connection", (socket) => {
-			const userId = socket.handshake.auth?.userId;
-			if (userId) {
-				socket.join(userId);
-			}
-		});
-
 		io.to(order.userId.toString()).emit("order:status:client", {
 			orderNumber: order.orderNumber,
 			status: order.status,

@@ -42,6 +42,12 @@ app.set("io", io);
 io.on("connection", (socket) => {
 	console.log("New user connected");
 
+	// create connection for connected user
+	const userId = socket.handshake.auth?.userId;
+	if (userId) {
+		socket.join(userId);
+	}
+
 	// Handling socket event for orders
 	orderSocketHandler(io, socket);
 
