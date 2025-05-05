@@ -27,7 +27,7 @@ const io = new Server(httpServer, {
 		methods: ["GET", "POST"],
 		credentials: true,
 	},
-	transports: ["websocket"],
+	transports: ["websocket", "polling"],
 });
 
 // Prot
@@ -41,7 +41,10 @@ app.set("io", io);
 
 io.on("connection", (socket) => {
 	console.log("New user connected");
+
+	// Handling socket event for orders
 	orderSocketHandler(io, socket);
+
 	socket.on("disconnect", () => {
 		console.log("user disconnected");
 	});

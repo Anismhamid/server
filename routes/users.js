@@ -126,6 +126,13 @@ router.post("/google", async (req, res) => {
 		let user = await User.findOne({email: payload.email});
 		if (user) {
 			const token = generateToken(user);
+			const io = req.app.get("io");
+			io.emit("user:registered", {
+				id: user._id,
+				name: user.name,
+				email: user.email,
+				role: user.role,
+			});
 			return res.status(200).send(token);
 		}
 

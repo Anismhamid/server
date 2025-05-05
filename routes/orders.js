@@ -12,19 +12,20 @@ router.post("/", auth, (req, res, next) => {
 // Get orders for a specific user
 router.get("/:userId", auth, async (req, res) => {
 	try {
-		const userId = req.params.userId;
+		const {userId} = req.params;
 
-		if (req.payload._id !== userId && req.payload.role !== "Admin")
+		if (req.payload.role !== "Admin" && req.payload._id !== userId)
 			return res
 				.status(401)
 				.send("You do not have permission to access these orders.");
 
 		// Retrieve all orders for the user
-		const orders = await Order.find({userId: userId});
-		return res.status(200).send(orders);
+		const orders = await Order.find({userId: userId}).sort({createdAt: 1});
+
+		res.status(200).send(orders);
 	} catch (error) {
 		console.error(error);
-		return res.status(500).send("Server error while fetching orders.");
+		res.status(500).send("Server error while fetching orders.");
 	}
 });
 
@@ -48,7 +49,9 @@ router.get("/", auth, async (req, res) => {
 router.patch("/:orderNumber", auth, async (req, res) => {
 	try {
 		if (req.payload.role !== "Admin" && req.payload.role !== "Moderator")
-			return res.status(401).send("This user cannot update the product");
+			return res
+				.status(403)
+				.send("You are not authorized to update the order status");
 
 		// Find the order and update
 		const order = await Order.findOneAndUpdate(
@@ -57,11 +60,24 @@ router.patch("/:orderNumber", auth, async (req, res) => {
 			{new: true},
 		);
 		if (!order) return res.status(404).send("Order not found");
+		const io = req.app.get("io");
+
+		io.on("connection", (socket) => {
+			const userId = socket.handshake.auth?.userId;
+			if (userId) {
+				socket.join(userId);
+			}
+		});
+
+		io.to(order.userId.toString()).emit("order:status:client", {
+			orderNumber: order.orderNumber,
+			status: order.status,
+		});
 
 		// Return success status
 		res.status(200).send(order);
 	} catch (error) {
-		return res.status(500).send("Server error while Retrieve orders.");
+		return res.status(500).send("Server error while updating the order.");
 	}
 });
 
