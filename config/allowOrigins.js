@@ -6,6 +6,7 @@ const allowedOrigins = [
 	process.env.RENDER_API,
 	process.env.VERCEL_URL,
 	process.env.VERCEL_URL_DEVELOPMENT,
-];
+].filter(Boolean);
+
 
 module.exports = {allowedOrigins};
