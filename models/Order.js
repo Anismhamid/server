@@ -41,6 +41,19 @@ const orderSchema = new mongoose.Schema(
 		selfCollection: {type: Boolean, required: true},
 		delivery: {type: Boolean, required: true},
 		deliveryFee: {type: Number},
+		phone: {
+			type: {
+				phone_1: {type: String, required: true},
+				phone_2: {type: String},
+			},
+		},
+		address: {
+			type: {
+				city: {type: String},
+				street: {type: String},
+				houseNumber: {type: String},
+			},
+		},
 		status: {
 			type: String,
 			enum: ["Pending", "Preparing", "Delivered", "Shipped", "Cancelled"],

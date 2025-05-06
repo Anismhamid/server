@@ -13,7 +13,19 @@ const {verifyGoogleToken} = require("../utils/googleAuth");
 // for generating token
 const generateToken = (user) => {
 	return Jwt.sign(
-		_.pick(user, ["_id", "name.first", "name.last", "email", "role", "image.url"]),
+		_.pick(user, [
+			"_id",
+			"name.first",
+			"name.last",
+			"email",
+			"role",
+			"image.url",
+			"phone.phone_1",
+			"phone.phone_2",
+			"address.city",
+			"address.street",
+			"address.houseNumber",
+		]),
 		process.env.JWT_SECRET,
 	);
 };
