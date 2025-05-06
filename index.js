@@ -23,18 +23,10 @@ const httpServer = createServer(app);
 // Io Server
 const io = new Server(httpServer, {
 	cors: {
-		origin: [
-			"http://localhost:5173",
-			"http://localhost:4173",
-			"http://localhost:8209",
-			"http://localhost:8201",
-			"https://server-32bo.onrender.com",
-			"https://client-qqq1.vercel.app",
-		],
-		methods: ["GET", "POST","PATCH"],
+		origin: allowedOrigins,
+		methods: ["GET", "POST", "PATCH"],
 		credentials: true,
 	},
-	transports: ["websocket"],
 });
 
 // Prot

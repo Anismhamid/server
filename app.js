@@ -15,8 +15,6 @@ const receipt = require("./routes/receipt");
 
 const app = express();
 
-
-
 app.use(
 	cors({
 		origin: (origin, callback) => {
@@ -27,13 +25,13 @@ app.use(
 			}
 		},
 		methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-		allowedHeaders: ["Content-Type", "Authorization"],
+		credentials: true,
 	}),
 );
 
 app.use((err, req, res, next) => {
 	if (err instanceof Error && err.message === "Not allowed by CORS") {
-		return res.status(403).json({message: "CORS error: Access denied"});
+		return res.status(403).send("CORS error: Access denied");
 	}
 	next(err);
 });
