@@ -5,10 +5,18 @@ const Cart = require("../models/Cart");
 const Jwt = require("jsonwebtoken");
 const {compareSync, genSaltSync, hashSync} = require("bcryptjs");
 const _ = require("lodash");
-const Joi = require("joi");
 const auth = require("../middlewares/auth");
 const chalk = require("chalk");
 const {verifyGoogleToken} = require("../utils/googleAuth");
+const {userSchema, loginSchema} = require("../schema/userSchema");
+const completeUserSchema = require("../schema/completeUserSchema");
+
+// users role
+const roleType = {
+	Admin: "Admin",
+	Moderator: "Moderator",
+	Client: "Client",
+};
 
 // for generating token
 const generateToken = (user) => {
@@ -30,46 +38,7 @@ const generateToken = (user) => {
 	);
 };
 
-const userSchema = Joi.object({
-	name: Joi.object({
-		first: Joi.string().min(3).max(50).required(),
-		last: Joi.string().min(2).max(50).required(),
-	}),
-	phone: Joi.object({
-		phone_1: Joi.string().min(9).max(10).required(),
-		phone_2: Joi.string().allow(""),
-	}),
-	address: Joi.object({
-		city: Joi.string().min(2).max(20).allow(""),
-		street: Joi.string().min(2).max(20).allow(""),
-		houseNumber: Joi.string().allow(""),
-	}),
-	email: Joi.string().email().required(),
-	password: Joi.string().min(6).required(),
-	gender: Joi.string().required(),
-	image: Joi.object({
-		url: Joi.string()
-			.uri()
-			.allow("")
-			.default("https://cdn-icons-png.flaticon.com/512/64/64572.png"),
-		alt: Joi.string().allow(""),
-	}),
-	role: Joi.string().valid("Admin", "Moderator", "Client").default("Client"),
-	activity: Joi.array(),
-	registrAt: Joi.string(),
-	terms: Joi.boolean().required(),
-});
-
-const loginSchema = Joi.object({
-	email: Joi.string().email().required(),
-	password: Joi.string().min(8).max(60).required(),
-});
-
-const roleType = {
-	Admin: "Admin",
-	Moderator: "Moderator",
-	Client: "Client",
-};
+// ----- רישום משתמש -----
 
 // Register new user
 router.post("/", async (req, res) => {
@@ -115,17 +84,52 @@ router.post("/", async (req, res) => {
 		// return the token
 		res.status(200).send(token);
 	} catch (error) {
-		res.status(400).send(error.message);
+		res.status(400).send("Internal server error");
 	}
 });
-// check if user exists
+
+// ----- התחברות -----
+
+// Login users
+router.post("/login", async (req, res) => {
+	try {
+		// Validate body
+		const {error} = loginSchema.validate(req.body);
+		if (error) return res.status(400).send(error.details[0].message);
+
+		// Check if user exists and try to compare the users password
+		let user = await User.findOne({email: req.body.email});
+		if (!user || !compareSync(req.body.password, user.password))
+			return res.status(400).send("invalid email or password");
+
+		// push the activity time
+		user.activity.push(new Date().toLocaleString());
+		await user.save();
+
+		const io = req.app.get("io");
+		io.emit("user:newUserLoggedIn", {
+			email: user.email,
+			role: user.role,
+		});
+
+		const token = generateToken(user);
+
+		res.status(200).send(token);
+	} catch (error) {
+		res.status(500).send("Internal server error");
+	}
+});
+
+// ----- Google OAuth -----
+
+// check if google user exists returns true - false
 router.get("/google/verify/:id", async (req, res) => {
 	const user = await User.findOne({googleId: req.params.id});
 	if (user) return res.send({exists: true});
 	res.send({exists: false});
 });
 
-// register the new google user into database
+// register the new google user into database or login
 router.post("/google", async (req, res) => {
 	try {
 		const {credentialToken} = req.body;
@@ -134,6 +138,9 @@ router.post("/google", async (req, res) => {
 		const payload = await verifyGoogleToken(credentialToken);
 		if (!payload.email_verified) return res.status(401).send("Email not verified");
 
+		if (!payload || !payload.sub || !payload.email) {
+			return res.status(400).send("Invalid Google payload");
+		}
 		// check if user exists
 		let user = await User.findOne({email: payload.email});
 		if (user) {
@@ -190,48 +197,11 @@ router.post("/google", async (req, res) => {
 
 		res.status(201).send(token);
 	} catch (error) {
-		res.status(500).send(error);
+		res.status(500).send("Internal server error");
 	}
 });
 
-// Login users
-router.post("/login", async (req, res) => {
-	try {
-		// Validate body
-		const {error} = loginSchema.validate(req.body);
-		if (error) return res.status(400).send(error.details[0].message);
-
-		// Check if user have permission to get the users
-		let user = await User.findOne({email: req.body.email});
-		if (!user)
-			return res.status(400).send("invalid email or password please try again");
-
-		// Check password
-		const compare = compareSync(req.body.password, user.password);
-		if (!compare) {
-			console.log(chalk.red("invalid email or password please try again"));
-
-			return res.status(400).send("invalid email or password please try again");
-		}
-
-		// push the activity time
-		user.activity.push(new Date().toLocaleString());
-
-		await user.save();
-
-		const io = req.app.get("io");
-		io.emit("user:newUserLoggedIn", {
-			email: user.email,
-			role: user.role,
-		});
-
-		const token = generateToken(user);
-
-		res.status(200).send(token);
-	} catch (error) {
-		res.status(500).send(error.message);
-	}
-});
+// ----- משתמשים -----
 
 // get all users (Admin only)
 router.get("/", auth, async (req, res) => {
@@ -240,36 +210,35 @@ router.get("/", auth, async (req, res) => {
 		if (req.payload.role !== roleType.Admin)
 			return res
 				.status(401)
-				.send("You do not have permission to access this resource");
+				.send({error: "You do not have permission to access this resource"});
 
 		const users = await User.find().select("-password");
-		if (!users) return res.status(404).send("No users found yet");
+		if (!users) return res.status(404).send({message: "No users found yet"});
 
 		res.status(200).send(users);
 	} catch (error) {
-		res.status(500).send(error.message);
+		res.status(500).send("Internal server error");
 	}
 });
 
 // Get single user (Admin or Moderator or oner user only)
 router.get("/:userId", auth, async (req, res) => {
 	try {
+		const {role, _id} = req.payload;
+		const {userId} = req.params;
+
 		// check if user have permission to get the user by id
-		if (
-			req.payload._id !== req.params.userId &&
-			req.payload.role !== roleType.Admin &&
-			req.payload.role !== roleType.Moderator
-		)
+		if (_id !== userId && role !== roleType.Admin && role !== roleType.Moderator)
 			return res
 				.status(401)
-				.send("You do not have permission to access this resource");
+				.send({error: "You do not have permission to access this resource"});
 
 		const user = await User.findOne({_id: req.params.userId}).select("-password");
-		if (!user) return res.status(404).send("user Not Found");
+		if (!user) return res.status(404).send({message: "user Not Found"});
 
 		res.status(200).send(user);
 	} catch (error) {
-		res.status(500).send(error.message);
+		res.status(500).send("Internal server error");
 	}
 });
 
@@ -278,12 +247,7 @@ router.patch("/role/:userEmail", auth, async (req, res) => {
 	try {
 		// Check permission
 		if (req.payload.role !== roleType.Admin)
-			return res.status(401).send("Access denied. Admins only");
-
-		// Prevent non-admins from assigning admin role
-		if (req.body.role === roleType.Admin && req.payload.role !== roleType.Admin) {
-			return res.status(403).send("You are not allowed to assign Admin role.");
-		}
+			return res.status(401).send({error: "Access denied. Admins only"});
 
 		const user = await User.findOneAndUpdate(
 			{email: req.params.userEmail},
@@ -293,7 +257,7 @@ router.patch("/role/:userEmail", auth, async (req, res) => {
 
 		// Check if user exists
 		if (!user) {
-			return res.status(404).send("User not found");
+			return res.status(404).send({message: "User not found"});
 		}
 
 		res.status(200).send(user);
@@ -305,9 +269,15 @@ router.patch("/role/:userEmail", auth, async (req, res) => {
 // compleate user data
 router.patch("/compleate/:userId", auth, async (req, res) => {
 	try {
+		// validate body
+		const {error} = completeUserSchema.validate(req.body);
+		if (error) return res.status(400).send(error.details[0].message);
+
+		const isAdmin = req.payload.role === roleType.Admin;
+		const isSelf = req.params.userId === req.payload._id;
+
 		// Check permission
-		if (req.payload.role !== roleType.Admin && req.params.userId !== req.payload._id)
-			return res.status(401).send("Access denied. Admins or oner user only");
+		if (!isAdmin && !isSelf) return res.status(401).send({message: "Unauthorized"});
 
 		const updateData = {
 			phone: {
@@ -321,30 +291,15 @@ router.patch("/compleate/:userId", auth, async (req, res) => {
 			},
 		};
 
-		const user = await User.findOneAndUpdate(
-			{_id: req.params.userId},
-			{$set: updateData},
-			{new: true},
-		);
+		const user = await User.findByIdAndUpdate(req.params.userId, updateData, {
+			new: true,
+		});
 
 		// Check if user exists
 		if (!user) {
-			return res.status(404).send("User not found");
+			return res.status(404).send({message: "User not found"});
 		}
 
-		res.status(200).send(user);
-	} catch (error) {
-		res.status(500).send(error.message);
-	}
-});
-
-router.delete("/:userId", auth, async (req, res) => {
-	try {
-		const isAdmin = req.payload.role === roleType.Admin;
-		const isSelf = req.payload._id === req.params.userId;
-		if (!isAdmin && !isSelf) return res.status(401).send("Cannot make this change");
-
-		const user = await User.findByIdAndDelete(req.params.userId);
 		res.status(200).send(user);
 	} catch (error) {
 		res.status(500).send(error.message);
@@ -357,24 +312,42 @@ router.patch("/password/:userId", auth, async (req, res) => {
 		const {userId} = req.params;
 		const {newPassword} = req.body;
 		const isAdmin = req.payload.role === roleType.Admin;
+		const isSelf = req.payload._id === userId;
 
 		if (!newPassword || newPassword.length < 6) {
-			return res.status(400).send("Password must contain at least 6 characters");
+			return res
+				.status(400)
+				.send({message: "Password must contain at least 6 characters"});
 		}
 
 		const user = await User.findById(userId);
-		if (!user) return res.status(404).send("User not found");
+		if (!user) return res.status(404).send({message: "User not found"});
 
-		if (req.user._id !== userId && !isAdmin) {
-			return res.status(403).send("No permission to change password");
+		if (!isAdmin && !isSelf) {
+			return res.status(403).send({error: "No permission to change password"});
 		}
 
-		user.password = newPassword;
+		user.password = hashSync(newPassword, 10);
 		await user.save();
 
-		res.status(200).send("Password updated successfully");
+		res.status(200).send({success: "Password updated successfully"});
 	} catch (err) {
-		res.status(500).send("Internal server error hhh");
+		res.status(500).send({error: "Internal server error"});
+	}
+});
+
+router.delete("/:userId", auth, async (req, res) => {
+	try {
+		const isAdmin = req.payload.role === roleType.Admin;
+		const isSelf = req.payload._id === req.params.userId;
+
+		if (!isAdmin && !isSelf)
+			return res.status(401).send({error: "Unauthorized, Cannot make this change"});
+
+		const user = await User.findByIdAndDelete(req.params.userId);
+		res.status(200).send(user);
+	} catch (error) {
+		res.status(500).send("Internal server error");
 	}
 });
 

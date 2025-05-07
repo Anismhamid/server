@@ -12,8 +12,11 @@ const logToFile = (method, url, statusCode, errorMessage) => {
 		fs.mkdirSync(logDir, {recursive: true});
 	}
 
+	statusCode = statusCode || "No status code provided";
+	errorMessage = errorMessage || "No error message provided";
+
 	// Prepare log message
-	const logMessage = `✨${new Date().toLocaleString(
+    const logMessage = `✨${new Date().toLocaleString(
 		"he-IL",
 	)}✨ ${method} ${url} - Status Code: ${statusCode} - Error: ${errorMessage}\n`;
 

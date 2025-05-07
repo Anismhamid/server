@@ -1,4 +1,4 @@
-const productSchema = require("./product");
+const productSchema = require("../schema/orderProduct");
 const Joi = require("joi");
 
 const orderSchema = Joi.object({

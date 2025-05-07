@@ -3,17 +3,7 @@ const auth = require("../middlewares/auth");
 const router = express.Router();
 const Product = require("../models/Product");
 const Carts = require("../models/Cart");
-const Joi = require("joi");
-
-const cartSchema = Joi.object({
-	userId: Joi.string(),
-	product_name: Joi.string().required(),
-	quantity: Joi.number().min(1).required(),
-	product_price: Joi.number().required(),
-	product_image: Joi.string().required(),
-	sale: Joi.boolean().required(),
-	discount: Joi.number().required(),
-});
+const cartSchema =require("../schema/cartSchema")
 
 // Add product to cart by name
 router.post("/", auth, async (req, res) => {

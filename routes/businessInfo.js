@@ -2,15 +2,7 @@ const express = require("express");
 const auth = require("../middlewares/auth");
 const router = express.Router();
 const BusinessInfo = require("../models/BusinessInfo");
-const Carts = require("../models/Cart");
-const Joi = require("joi");
-
-const businessSchema = Joi.object({
-	deliveryFee: Joi.number(),
-	businessName: Joi.string().required(),
-	businessSAddress: Joi.string().required(),
-	businessPhone: Joi.string().required(),
-});
+const businessSchema = require("../schema/businessSchema");
 
 router.get("/", async (req, res) => {
 	try {
