@@ -161,6 +161,15 @@ router.post("/google", async (req, res) => {
 				first: payload.given_name || "Google",
 				last: payload.family_name || "User",
 			},
+			phone: {
+				phone_1: req.body.phone.phone_1 || "",
+				phone_2: req.body.phone.phone_2 || "",
+			},
+			address: {
+				city: req.body.address.city || "",
+				street: req.body.address.street || "",
+				houseNumber: req.body.address.houseNumber || "",
+			},
 			email: payload.email,
 			password: hashSync(payload.sub, 10),
 			image: {
@@ -168,7 +177,7 @@ router.post("/google", async (req, res) => {
 				alt: `${payload.given_name} ${payload.family_name}`,
 			},
 			role: "Client",
-			activity: [new Date().toLocaleString()],
+			activity: [new Date().toLocaleString("he-IL")],
 			registrAt: new Date().toLocaleString("he-IL"),
 			googleId: payload.sub,
 		});
@@ -282,7 +291,7 @@ router.patch("/compleate/:userId", auth, async (req, res) => {
 		const updateData = {
 			phone: {
 				phone_1: req.body.phone.phone_1,
-				phone_2: req.body.phone.phone_2 || "",
+				phone_2: req.body.phone.phone_2,
 			},
 			address: {
 				city: req.body.address.city,
@@ -293,14 +302,15 @@ router.patch("/compleate/:userId", auth, async (req, res) => {
 
 		const user = await User.findByIdAndUpdate(req.params.userId, updateData, {
 			new: true,
-		});
+		}).lean();
 
 		// Check if user exists
 		if (!user) {
 			return res.status(404).send({message: "User not found"});
 		}
 
-		res.status(200).send(user);
+		const {password, ...safeUser} = user;
+		res.status(200).send(safeUser);
 	} catch (error) {
 		res.status(500).send(error.message);
 	}

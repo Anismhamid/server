@@ -22,8 +22,8 @@ const userSchema = Joi.object({
 			.allow(""),
 	}),
 	address: Joi.object({
-		city: Joi.string().min(2).max(20).allow(""),
-		street: Joi.string().min(2).max(20).allow(""),
+		city: Joi.string().min(2).required(),
+		street: Joi.string().min(2).required(),
 		houseNumber: Joi.string().allow(""),
 	}),
 	email: Joi.string().email().required(),
