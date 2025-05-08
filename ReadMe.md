@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is the server-side implementation of the Shok Habena Market e-commerce platform. It serves as the backend API for managing users, products, orders, carts, receipts, business information, and discounts. It also includes real-time features powered by Socket.IO for instant updates to users and admins.
+This is the server-side implementation of the Shok Habena Market e-commerce platform. It serves as the backend API for managing users, products, orders, carts, receipts, business information, and discounts. It also includes real-time features powered by Socket.IO for instant updates to users and admins and uses Google OAuth for googe registeration/login.
 
 # Taple of content
 
@@ -87,8 +87,6 @@ The API is organized using modular Express routers:
 
 -   Error: Validation or registration errors.
 
----
-
 ### User Login (POST /api/users/login)
 
 -   To log in a user, you send a POST request to /api/users/login with exists email and password.
@@ -115,16 +113,14 @@ axios
 
 -   Error: Invalid credentials error.
 
----
-
 ### Google OAuth Verification
 
 -   Response:
-    Success: \*\*\*.
+    Success: true/false.
 
 -   Error: If the user doesn’t exist or any other issue occurs.
 
-### Google OAuth Login/Register
+### Google Login/Register
 
 #### Response:
 
@@ -152,11 +148,11 @@ axios
 
 ### Get Single User by ID (GET /api/users/:userId)
 
--   **_*To retrieve details of a specific user, you can access this route if you have the proper permissions (Admin, Moderator, or the same user)*_**
+-   To retrieve details of a specific user, you can access this route if you have the proper permissions (Admin, Moderator, or the same user)
 
 #### Request:
 
--   Authorization : AdminToken
+-   Authorization : Admin or Moderator or same user Token
 
 ### Response:
 
@@ -862,17 +858,17 @@ axios
 
 #### Response:
 
--   200 OK: Returns a list of all receipts.
+-   200 OK: Returns a list of all receipts
 
--   403 Forbidden: If the user is not an Admin.
+-   403 Forbidden: If the user is not an Admin
 
--   404 Not Found: If no receipts are found.
+-   404 Not Found: If no receipts are found
 
 ---
 
 ### receipts (GET/api/receipts/:userId)
 
--   Fetch receipts for a specific user.
+-   Fetch receipts for a specific user
 
 -   Permissions: User can only access their own receipts or an Admin can access any user's receipts.
 
@@ -889,16 +885,16 @@ axios
 
 #### Response:
 
--   200 Accepted: Returns a list of the user's receipts.
+-   200 Accepted: Returns a list of the user's receipts
 
--   401 Unauthorized: If the user attempts to access receipts of another user without proper authorization.
+-   401 Unauthorized: If the user attempts to access receipts of another user without proper authorization
 
--   404 Not Found: If no receipts are found for the given user.
+-   404 Not Found: If no receipts are found for the given user
 
 #### Security:
 
--   Authorization Middleware: Both routes utilize the auth middleware to ensure the user is authenticated. The admin check is done on the first route (GET /api/receipts), and the second route checks that the logged-in user is trying to access their own receipts.
+-   Authorization Middleware: Both routes utilize the auth middleware to ensure the user is authenticated. The admin check is done on the first route (GET /api/receipts), and the second route checks that the logged-in user is trying to access their own receipts
 
--   Admin Route: Only users with the role Admin can access all receipts.
+-   Admin Route: Only users with the role Admin can access all receipts
 
--   User Route: Users can only access their own receipts, and Admins can access any user's receipts.
+-   User Route: Users can only access their own receipts, and Admins can access any user's receipts

@@ -10,7 +10,6 @@ const completeUserSchema = Joi.object({
 			}),
 		phone_2: Joi.string()
 			.allow("")
-			.pattern(/^0\d{1,2}-?\d{7}$/)
 			.messages({
 				"string.pattern.base": "Phone number must be in a valid Israeli format",
 			}),
