@@ -24,7 +24,7 @@ router.get("/:userId", auth, async (req, res) => {
 		const newReceipt = await Receipt.find({userId: req.params.userId});
 		if (!newReceipt) return res.status(404).send("No receipts yet");
 
-		res.status(202).send(newReceipt);
+		res.status(200).send(newReceipt);
 	} catch (error) {
 		res.status(500).send(error.message);
 	}
