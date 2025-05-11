@@ -497,12 +497,18 @@ axios
 
 ```json
 {
-	"product_name": "Product Name",
-	"quantity": 2,
-	"product_price": 50,
-	"product_image": "url_to_image",
-	"sale": true,
-	"discount": 10
+	"userId": "$dfsd1584sda....",
+	"products": [
+		{
+			"product_name": "Product Name",
+			"quantity": 2,
+			"product_price": 50,
+			"product_image": "url_to_image",
+			"sale": true,
+			"discount": 10
+		}
+	],
+	"total_price": 100;
 }
 ```
 
@@ -838,6 +844,59 @@ axios
 ---
 
 # receipts
+
+### receipts (post /api/receipts)
+
+```json
+{
+	"userId": "$jdsf564....",
+	"orderNumber": "ORD-58362",
+	"orderDate": "2025-04-14T09:13:01.357+00:00",
+	"customer": {
+		"name": {
+			"first": "jon",
+			"last": "bill"
+		},
+		"email": "jon@gmail.com",
+		"phone": {
+			"phone_1": "053835458",
+			"phone_2": ""
+		},
+		"address": {
+			"city": "Tel aviv",
+			"street": "bengorion",
+			"houseNumber": "29"
+		}
+	},
+	"products": [
+		{
+			"product_name": "חטיפי חמאה",
+			"quantity": 2,
+			"product_price": 10.8
+		},
+		{
+			"product_name": "סנדוויצ'ים מוכנים",
+			"quantity": 4,
+			"product_price": 48
+		},
+		{
+			"product_name": "סוכריות גומי",
+			"quantity": 2,
+			"product_price": 8.8
+		}
+	],
+	"payment": "false",
+	"deliveryFee": 25,
+	"discount": 0,
+	 "totalAmount": 92.6,
+	  "businessInfo": {
+    "name": "שוק הפינה פירות ירקות ועוד",
+    "phone": "0538346915",
+    "email": "support@fruitsandveg.com",
+    "address": "שדרות ירושלים 45, תל אביב"
+  },
+}
+```
 
 ### receipts (GET /api/receipts)
 

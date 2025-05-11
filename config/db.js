@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const chalk = require("chalk");
+const User = require("../models/User");
 
 const connectDB = async () => {
 	try {
@@ -10,5 +11,7 @@ const connectDB = async () => {
 		process.exit(1);
 	}
 };
-
 module.exports = connectDB;
+
+// await User.updateMany({status: {$exists: false}}, {$set: {status: false}});
+// console.log("Migration completed");

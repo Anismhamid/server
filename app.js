@@ -12,6 +12,7 @@ const products = require("./routes/products");
 const businessInfo = require("./routes/businessInfo");
 const discounts = require("./routes/discountAndOffers");
 const receipt = require("./routes/receipt");
+const cities = require("./routes/cities");
 
 const app = express();
 
@@ -52,5 +53,6 @@ app.use("/api/users", users);
 app.use("/api/business-info", businessInfo);
 app.use("/api/discounts", discounts);
 app.use("/api/receipt", receipt);
+app.use("/api/cities", cities);
 
 module.exports = app;

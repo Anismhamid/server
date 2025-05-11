@@ -38,6 +38,8 @@ connectDB();
 // attach Io into the app
 app.set("io", io);
 
+const connectedUsers = new Map();
+
 io.on("connection", (socket) => {
 	console.log("New user connected");
 
@@ -47,11 +49,29 @@ io.on("connection", (socket) => {
 		socket.join(userId);
 	}
 
+	// Emit login event with full user data
+	socket.broadcast.emit("user:connected", {
+		userId,
+		socketId: socket.id,
+		timestamp: new Date(),
+	});
+
 	// Handling socket event for orders
 	orderSocketHandler(io, socket);
 
 	socket.on("disconnect", () => {
-		console.log("user disconnected");
+		console.log("User disconnected");
+
+		if (userId) {
+			// Remove user from connected users map
+			connectedUsers.delete(userId);
+
+			// Emit disconnect event
+			socket.broadcast.emit("user:disconnected", {
+				userId,
+				timestamp: new Date(),
+			});
+		}
 	});
 });
 

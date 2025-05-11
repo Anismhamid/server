@@ -10,6 +10,7 @@ const chalk = require("chalk");
 const {verifyGoogleToken} = require("../utils/googleAuth");
 const {userSchema, loginSchema} = require("../schema/userSchema");
 const completeUserSchema = require("../schema/completeUserSchema");
+const Joi = require("joi");
 
 // users role
 const roleType = {
@@ -55,6 +56,7 @@ router.post("/", async (req, res) => {
 		user = new User({
 			...req.body,
 			registrAt: new Date().toLocaleString("he-IL"),
+			status: false,
 		});
 
 		const salt = genSaltSync(10);
@@ -104,6 +106,7 @@ router.post("/login", async (req, res) => {
 
 		// push the activity time
 		user.activity.push(new Date().toLocaleString());
+		user.status = true;
 		await user.save();
 
 		const io = req.app.get("io");
@@ -145,6 +148,7 @@ router.post("/google", async (req, res) => {
 		let user = await User.findOne({email: payload.email});
 		if (user) {
 			const token = generateToken(user);
+			user.status = false;
 			const io = req.app.get("io");
 			io.emit("user:registered", {
 				id: user._id,
@@ -180,8 +184,8 @@ router.post("/google", async (req, res) => {
 			activity: [new Date().toLocaleString("he-IL")],
 			registrAt: new Date().toLocaleString("he-IL"),
 			googleId: payload.sub,
+			status: false,
 		});
-
 		// save the user
 		await user.save();
 
@@ -361,4 +365,23 @@ router.delete("/:userId", auth, async (req, res) => {
 	}
 });
 
+router.patch("/status/:userId", async (req, res) => {
+	try {
+		// 2. Update and return the user
+		const updatedUser = await User.findByIdAndUpdate(
+			req.params.userId,
+			{status: req.body.status},
+			{new: true},
+		);
+
+		if (!updatedUser) {
+			return res.status(404).send("User not found");
+		}
+
+		res.status(200).send(updatedUser);
+	} catch (error) {
+		console.error("Status update error:", error);
+		res.status(500).send("Internal server error");
+	}
+});
 module.exports = router;
