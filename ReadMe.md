@@ -345,7 +345,8 @@ axios
 
 -   Fruit
 -   Vegetable
--   Meat and Fish
+-   Meat
+-   Fish
 -   Dairy
 -   Spices
 -   Bakery
