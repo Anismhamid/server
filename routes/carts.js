@@ -3,7 +3,7 @@ const auth = require("../middlewares/auth");
 const router = express.Router();
 const Product = require("../models/Product");
 const Carts = require("../models/Cart");
-const cartSchema =require("../schema/cartSchema")
+const cartSchema = require("../schema/cartSchema");
 
 // Add product to cart by name
 router.post("/", auth, async (req, res) => {
@@ -58,12 +58,15 @@ router.post("/", auth, async (req, res) => {
 			await cart.save();
 		}
 
-		// Update the product stock
-		product = await Product.findOneAndUpdate(
-			{product_name: req.body.product_name},
-			{$inc: {quantity_in_stock: -req.body.quantity}},
-			{new: true},
-		);
+		// // Update the product stock
+		// product = await Product.findOneAndUpdate(
+		// 	{product_name: req.body.product_name},
+		// 	{$inc: {quantity_in_stock: -req.body.quantity}},
+		// 	{new: true},
+		// );
+		// // send stock update on-time
+		// const io = req.app.get("io");
+		// io.emit("product:quantity_in_stock", product.quantity_in_stock);
 
 		res.status(200).send("Product added to cart successfully");
 	} catch (error) {

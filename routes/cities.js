@@ -16,9 +16,9 @@ router.get("/:city", async (req, res) => {
 	const {city} = req.params;
 	try {
 		const streets = await Cities.find({city_name: city}).distinct("street_name");
-		res.json(streets);
+		res.status(200).send(streets);
 	} catch (err) {
-		res.status(500).json({error: "Failed to fetch streets"});
+		res.status(500).send("Failed to fetch streets");
 	}
 });
 

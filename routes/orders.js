@@ -1,18 +1,40 @@
 const express = require("express");
 const router = express.Router();
 const Order = require("../models/Order");
+const Product = require("../models/Product");
 const auth = require("../middlewares/auth");
 const {createOrder} = require("../controllers/orderController");
 
-router.post("/", auth, (req, res, next) => {
-	req.io = req.app.get("io");
-	createOrder(req, res, next);
+router.post("/", auth, async (req, res, next) => {
+	try {
+		req.io = req.app.get("io");
+		await createOrder(req, res, next);
+
+		// Update the products in stock
+		for (const item of req.body.cartItems) {
+			const product = await Product.findOneAndUpdate(
+				{product_name: item.product_name},
+				{$inc: {quantity_in_stock: -item.quantity}},
+				{new: true},
+			);
+
+			req.io.emit("product:quantity_in_stock", {
+				product_name: product.product_name,
+				quantity_in_stock: product.quantity_in_stock,
+			});
+		}
+	} catch (error) {
+		res.status(500).send(error.message);
+	}
 });
 
 // Get all orders for admin and moderator
 router.get("/", auth, async (req, res) => {
 	try {
-		if (req.payload.role !== "Admin" && req.payload.role !== "Moderator") {
+		const isAdminOrModerator =
+			req.payload.role === "Admin" || req.payload.role === "Moderator";
+
+		if (!isAdminOrModerator) {
 			return res
 				.status(403)
 				.send("You do not have permission to access these orders.");
@@ -25,26 +47,7 @@ router.get("/", auth, async (req, res) => {
 	}
 });
 
-// Get orders for a specific user
-router.get("/:userId", auth, async (req, res) => {
-	try {
-		const {userId} = req.params;
-
-		if (req.payload.role !== "Admin" && req.payload._id !== userId)
-			return res
-				.status(401)
-				.send("You do not have permission to access these orders.");
-
-		// Retrieve all orders for the user
-		const orders = await Order.find({userId: userId}).sort({createdAt: 1});
-
-		res.status(200).send(orders);
-	} catch (error) {
-		res.status(500).send("Server error while fetching orders.");
-	}
-});
-
-// patch status
+// patch order status and send emit
 router.patch("/:orderNumber", auth, async (req, res) => {
 	try {
 		if (req.payload.role !== "Admin" && req.payload.role !== "Moderator")
@@ -88,5 +91,25 @@ router.get("/details/:orderNumber", auth, async (req, res) => {
 	}
 });
 
+// Get orders for a specific user
+router.get("/:userId", auth, async (req, res) => {
+	try {
+		const {userId} = req.params;
+
+		const isAdminOrSelf = req.payload.role === "Admin" || req.payload._id === userId;
+
+		if (!isAdminOrSelf)
+			return res
+				.status(401)
+				.send("You do not have permission to access these orders.");
+
+		// Retrieve all orders for the user
+		const orders = await Order.find({userId: userId}).sort({createdAt: 1});
+
+		res.status(200).send(orders);
+	} catch (error) {
+		res.status(500).send("Server error while fetching orders.");
+	}
+});
 
 module.exports = router;

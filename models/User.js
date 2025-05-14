@@ -49,7 +49,7 @@ const userSchema = new mongoose.Schema(
 		},
 		role: {
 			type: String,
-			enum: ["Admin", "Moderator", "Client"],
+			enum: ["Admin", "Moderator", "Client", "deleviry"],
 			default: "Client",
 		},
 		activity: {type: Array},
@@ -62,10 +62,10 @@ const userSchema = new mongoose.Schema(
 			type: Date,
 			default: Date.now,
 		},
-		 status: {
-    type: Boolean,
-    default: false,
-  },
+		status: {
+			type: Boolean,
+			default: false,
+		},
 		terms: {type: String},
 	},
 	{timestamps: true},
