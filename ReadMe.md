@@ -38,28 +38,31 @@ This is the server-side implementation of the Shok Habena Market e-commerce plat
 -   **Socket.IO**: Real-time bidirectional communication
 -   **dotenv**: For managing environment variables
 -   **express-validator / Joi / Yup**: Input validation (depending on usage)
-<!-- -   **html-pdf / pdf-lib**: For generating PDF receipts (based on implementation) -->
 
-# API Routes
+### API Routes
 
-The API is organized using modular Express routers:
+# User
 
-# Users
+-   The API is organized using modular Express routers:
 
-### User Registration (POST /api/users)
+## Users Registration
 
--   To register a new user, you send a POST request to /api/users with the user's details in the request body.
+-   method: POST
 
-#### Request:
+-   url: `/api/users`
+
+-   then send this json with the user details in the request body.
+
+### body
 
 ```json
 {
 	"name": {
-		"first": "anes",
-		"last": "mhamid"
+		"first": "user",
+		"last": "Doe"
 	},
 	"phone": {
-		"phone_1": "0538346915",
+		"phone_1": "0500000000",
 		"phone_2": ""
 	},
 	"address": {
@@ -67,72 +70,68 @@ The API is organized using modular Express routers:
 		"street": "עין אל דרווה",
 		"houseNumber": "24 א"
 	},
-	"email": "anes@gg.com",
+	"email": "user@example.com",
 	"password": "Abc123!",
-	// gender = "זכר"/"נקבה"
 	"gender": "זכר",
 	"image": {
 		"url": "",
 		"alt": ""
 	},
-	"role": "Client",
-	"registrAt": "29.4.2025, 18:05:15",
 	"terms": true // Required, must have  be accepted
 }
 ```
 
 #### Response:
 
--   Success: A JWT token is returned.
+-   Success: returned register success.
 
 -   Error: Validation or registration errors.
 
-### User Login (POST /api/users/login)
+## User Login
 
--   To log in a user, you send a POST request to /api/users/login with exists email and password.
+-   method: POST
 
-#### Request:
+-   url: `/api/users/login`
+    .
 
-```js
-axios
-	.post("/api/users/login", {
-		email: "user@example.com",
-		password: "userpassword",
-	})
-	.then((response) => {
-		console.log("Login successful, Token:", response.data);
-	})
-	.catch((error) => {
-		console.error("Error logging in:", error.response.data);
-	});
+-   then send this json with the user details in the request body with registered email and password.
+
+### body
+
+```json
+{
+	"email": "user@example.com",
+	"password": "Abc123!"
+}
 ```
 
 #### Response:
 
--   Success: A JWT token is returned.
+-   Success: returned token.
 
 -   Error: Invalid credentials error.
 
-### Google OAuth Verification
+## Google OAuth Verification
 
--   Response:
-    Success: true/false.
+-   Success: true/false.
 
 -   Error: If the user doesn’t exist or any other issue occurs.
 
-### Google Login/Register
+## Google Login/Register
 
 #### Response:
 
--   Success: A JWT token is returned.
+-   Success: returned token.
 
 -   Error: Validation or Google token issues.
 
----
-
-### Get All Users (GET /api/users)
+## Get All Users
 
 -   Admin-only route to retrieve a list of all users.
+
+-   method: GET
+
+-   url: `/api/users`
 
 #### Request:
 
@@ -144,9 +143,11 @@ axios
 
 -   Error: Unauthorized or server error.
 
----
+## Get Single User by ID
 
-### Get Single User by ID (GET /api/users/:userId)
+-   method: GET
+
+-   url: `/api/users/:userId`
 
 -   To retrieve details of a specific user, you can access this route if you have the proper permissions (Admin, Moderator, or the same user)
 
@@ -160,20 +161,22 @@ axios
 
 -   Error: Unauthorized, user not found, etc.
 
----
+## Update User Role
 
-### Update User Role (PATCH /api/users/role/:userEmail)
+-   method: PATCH
+
+-   url: `/api/users/role/:userEmail`
 
 -   Admin-only route to update the role of a user by their email.
 
 -   Authorization : AdminToken
 
-#### Request:
+### body
 
-```js
+```json
 {
-    role: "Client", // Change role as needed
-},
+	"role": "Client"
+}
 ```
 
 #### Response:
@@ -184,32 +187,30 @@ axios
 
 ---
 
-### Complete User Data (PATCH /api/users/compleate/:userId)
+## Complete User Data
+
+-   method: PATCH
+
+-   url: `/api/users/compleate/:userId`
 
 -   To complete a user’s information (e.g., phone number, address), send a PATCH request with the new details.
 
 -   Authorization : Token
 
-#### Request:
+### body
 
-```js
-axios
-	.patch(
-		`/api/users/compleate/${userId}`,
-		{
-			phone: {phone_1: "123456789", phone_2: "987654321"},
-			address: {city: "City", street: "Street", houseNumber: "123"},
-		},
-		{
-			headers: {Authorization: token}, // Include token
-		},
-	)
-	.then((response) => {
-		console.log("User data completed:", response.data);
-	})
-	.catch((error) => {
-		console.error("Error updating user data:", error.response.data);
-	});
+```json
+{
+	"phone": {
+		"phone_1": "0526565458",
+		"phone_2": "Optional"
+	},
+	"address": {
+		"city": "City",
+		"street": "Street",
+		"houseNumber": "Optional"
+	}
+}
 ```
 
 ### Response:
@@ -218,33 +219,22 @@ axios
 
 -   Error: Unauthorized or validation errors.
 
----
+## Change User Password
 
-### Change User Password (PATCH /api/users/password/:userId)
+-   method: PATCH
+
+-   url: `/api/users/password/:userId`
 
 -   To change the password of a user (self or Admin), send a PATCH request with the new password
 
 -   Authorization : self or Admin Token
 
-#### Request:
+### body
 
-```js
-axios
-	.patch(
-		`/api/users/password/${userId}`,
-		{
-			newPassword: "newStrongPassword123",
-		},
-		{
-			headers: {Authorization: token},
-		},
-	)
-	.then((response) => {
-		console.log("Password updated:", response.data);
-	})
-	.catch((error) => {
-		console.error("Error updating password:", error.response.data);
-	});
+```json
+{
+	"newPassword": "newStrongPassword123",
+},
 ```
 
 ### Response:
@@ -253,53 +243,35 @@ axios
 
 -   Error: Invalid password or unauthorized.
 
----
+## Delete User
 
-### Delete User (DELETE /api/users/:userId)
+-   method: DELETE
+
+-   url: `/api/users/:userId`
 
 -   To delete a user (self or Admin), send a DELETE request.
 
-#### Request:
-
-```js
-axios
-	.delete(`/api/users/${userId}`, {
-		headers: {Authorization: token},
-	})
-	.then((response) => {
-		console.log("User deleted:", response.data);
-	})
-	.catch((error) => {
-		console.error("Error deleting user:", error.response.data);
-	});
-```
+-   headers: Authorization: token,
 
 ### Response:
 
--   Success: Deleted user details.
+-   Success: User has been deleted.
 
 -   Error: Unauthorized or user not found.
-
----
 
 # Products
 
 -   This section contains the API routes responsible for handling product-related actions. These routes allow for searching, creating, updating, deleting, and fetching products based on various criteria such as category or specific product name.
 
-### Products (GET /api/products)
+### Products
+
+-   method: GET
+
+-   url: `/api/products`
 
 -   Get all products (used for searching in the home page).
 
 -   Permissions: Public
-
-#### Request:
-
-```js
-axios
-	.get("/api/products")
-	.then((response) => console.log(response.data))
-	.catch((error) => console.error(error.response.data));
-```
 
 #### Response:
 
@@ -307,9 +279,11 @@ axios
 
 -   404 Not Found: If no products are found.
 
----
+## Products
 
-### Products (POST /api/products)
+-   method: POST
+
+-   url: `/api/products`
 
 -   Create a new product
 
@@ -319,14 +293,7 @@ axios
 
 -   Authorization : Admin or Moderator Token
 
-#### Request:
-
-```js
-axios
-	.post("/api/products", productData, {headers: {Authorization: userToken}})
-	.then((response) => console.log(response.data))
-	.catch((error) => console.error(error.response.data));
-```
+### body
 
 ```json
 {
@@ -356,9 +323,13 @@ axios
 -   Baby
 -   Cleaning
 -   Pasta and Rice
--   House
+-   Home
 -   Alcohol
 -   Health
+-   Watches
+-   Women-clothes
+-   Women-bags
+-   Cigarettes
 
 #### Response:
 
@@ -370,9 +341,11 @@ axios
 
 -   Authorization : Admin or Moderator Token
 
----
+## get spicific roducts by name
 
-### Products (GET /api/products/spicific/:name)
+-   method: GET
+
+-   url: `/api/products/spicific/:name`
 
 -   Get a specific product by name (Admin and Moderator only)
 
@@ -381,15 +354,6 @@ axios
 -   Request: Product name in the URL parameter
 
 -   Authorization : Admin or Moderator Token
-
-#### Request:
-
-```js
-axios
-	.get("/api/products/spicific/productName", {headers: {Authorization: userToken}})
-	.then((response) => console.log(response.data))
-	.catch((error) => console.error(error.response.data));
-```
 
 #### Response:
 
@@ -401,9 +365,11 @@ axios
 
 -   Authorization : Admin or Moderator Token
 
----
+## update Product by name
 
-### Products (PUT /api/products/:productName)
+-   method: PUT
+
+-   url: `/api/products/:productName`
 
 -   Update a specific product by name (Admin and Moderator only)
 
@@ -415,13 +381,18 @@ axios
 
 #### Request:
 
-```js
-axios
-	.put("/api/products/productName", updatedProductData, {
-		headers: {Authorization: userToken},
-	})
-	.then((response) => console.log(response.data))
-	.catch((error) => console.error(error.response.data));
+```json
+{
+
+	"product_name": "p.name",
+	"category": "Fruit",
+	"price": 10,
+	"quantity_in_stock": 200,
+	"description": "p.description",
+	"image_url": "https://www....",
+	"sale": true,
+	"discount": 10, // that's mean 10%
+});
 ```
 
 #### Response:
@@ -432,9 +403,11 @@ axios
 
 -   404 Not Found: If the product does not exist.
 
----
+## Delete product
 
-### Products (DELETE /api/products/:name)
+-   method: DELETE
+
+-   url `/api/products/:name`
 
 -   Delete a specific product by name (Admin and Moderator only).
 
@@ -442,15 +415,6 @@ axios
 
 -   Authorization : Admin or Moderator Token
 
-#### Request:
-
-```js
-axios
-	.delete("/api/products/productName", {headers: {Authorization: userToken}})
-	.then((response) => console.log(response.data))
-	.catch((error) => console.error(error.response.data));
-```
-
 #### Response:
 
 -   200 OK: If the product is successfully deleted.
@@ -461,22 +425,15 @@ axios
 
 ---
 
-### Products (GET /api/products/:category)
+### Get products by category
 
--   Get products by category
+-   method: GET
+
+-   url: `/api/products/:category`
 
 -   Permissions: Public
 
 -   Request: Category name in the URL parameter.
-
-#### Request:
-
-```js
-axios
-	.get("/api/products/categoryName")
-	.then((response) => console.log(response.data))
-	.catch((error) => console.error(error.response.data));
-```
 
 #### Response:
 
@@ -484,9 +441,9 @@ axios
 
 -   404 Not Found: If no products are found in the specified category.
 
----
-
 # Cart
+
+### Add Product to Cart
 
 -   Add Product to Cart (POST /api/cart)
 
@@ -530,15 +487,19 @@ axios
 
 -   404 Not Found: Product does not exist
 
----
+## Get Current User Cart
 
-### Get Current User Cart (GET /api/cart/my-cart)
+-   method: GET
+
+-   url: `/api/cart/my-cart`
 
 -   Authorization : Token
 
 -   Fetches the cart of the current user
 
-#### Request:
+-   headers: user token
+
+#### Example with Axios
 
 ```js
 axios
@@ -547,7 +508,7 @@ axios
 	.catch((err) => console.error(err.response.data));
 ```
 
-#### Response:
+### Response:
 
 -   Success
 
@@ -560,7 +521,7 @@ axios
 				"product_name": "Product Name",
 				"quantity": 2,
 				"product_price": 100,
-				"product_image": "url",
+				"product_image": "img.url...",
 				"sale": true,
 				"discount": 10
 			}
@@ -568,8 +529,6 @@ axios
 	}
 ]
 ```
-
--   Error 404 Not Found: Cart not found
 
 ---
 
@@ -585,22 +544,28 @@ axios
 
 ---
 
-### Delete Product from Cart (DELETE /api/cart/:product_name)
+### Delete Product from Cart
+
+-   method: DELETE
+
+-   url: `/api/cart/:product_name`
 
 -   Authorization : Token
 
-#### Request:
+#### Example with Axios
 
 ```js
 axios
 	.delete("/api/cart/Coca-Cola", {headers: {Authorization: token}})
+
 	.then((res) => console.log(res.data))
+
 	.catch((err) => console.error(err.response.data));
 ```
 
 #### Response:
 
--   200 OK: "Product removed from cart successfully"
+-   success: "Product removed from cart successfully"
 
 -   Error: 404 Not Found: Cart or product not found.
 
@@ -623,9 +588,7 @@ axios
 	.catch((err) => console.error(err.response.data));
 ```
 
-#### Response:
-
--   Success
+#### Success:
 
 ```json
 {
@@ -889,13 +852,13 @@ axios
 	"payment": "false",
 	"deliveryFee": 25,
 	"discount": 0,
-	 "totalAmount": 92.6,
-	  "businessInfo": {
-    "name": "שוק הפינה פירות ירקות ועוד",
-    "phone": "0538346915",
-    "email": "support@fruitsandveg.com",
-    "address": "שדרות ירושלים 45, תל אביב"
-  },
+	"totalAmount": 92.6,
+	"businessInfo": {
+		"name": "שוק הפינה פירות ירקות ועוד",
+		"phone": "0538346915",
+		"email": "support@fruitsandveg.com",
+		"address": "שדרות ירושלים 45, תל אביב"
+	}
 }
 ```
 
