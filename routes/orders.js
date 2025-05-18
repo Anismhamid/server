@@ -71,7 +71,7 @@ router.patch("/:orderNumber", auth, async (req, res) => {
 			orderNumber: order.orderNumber,
 			status: order.status,
 			userId: order.userId.toString(),
-			updatedBy: req.payload.name?.first || "משתמש",
+			updatedBy: `${req.payload.name?.first} ${req.payload.name?.last}` || "משתמש",
 		});
 
 		// io.emit("order:status:client", {
