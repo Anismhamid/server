@@ -45,8 +45,17 @@ io.on("connection", (socket) => {
 
 	// create connection for connected user
 	const userId = socket.handshake.auth?.userId;
+	const role = socket.handshake.auth?.role;
+
 	if (userId) {
+		connectedUsers.set(userId, socket.id);
 		socket.join(userId);
+		console.log(`User ${userId} joined personal room`);
+	}
+
+	if (role === "Admin" || role === "Moderator") {
+		socket.join("admins");
+		console.log(`User with role ${role} joined 'admins' room`);
 	}
 
 	// Emit login event with full user data

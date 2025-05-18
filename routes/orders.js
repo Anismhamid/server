@@ -64,10 +64,19 @@ router.patch("/:orderNumber", auth, async (req, res) => {
 		if (!order) return res.status(404).send("Order not found");
 
 		const io = req.app.get("io");
-		io.to(order.userId.toString()).emit("order:status:client", {
+
+		io.emit("order:status:updated", {
 			orderNumber: order.orderNumber,
 			status: order.status,
+			userId: order.userId.toString(),
+			updatedBy: req.payload.name?.first || "משתמש",
 		});
+
+
+		// io.emit("order:status:client", {
+		// 	orderNumber: order.orderNumber,
+		// 	status: order.status,
+		// });
 
 		// Return success status
 		res.status(200).send(order);
