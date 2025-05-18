@@ -11,8 +11,7 @@ const generateOrderNumber = async () => {
 	return orderExists ? generateOrderNumber() : randomOrderNumber;
 };
 
-exports.createOrder = async (req, res) => {
-	try {
+exports.createOrder = async (req) => {
 		const {error} = orderSchema.validate(req.body);
 		if (error) return res.status(400).send(error.details[0].message);
 
@@ -32,8 +31,10 @@ exports.createOrder = async (req, res) => {
 		await newOrder.save();
 
 		const cart = await Carts.findOne({userId: req.payload._id});
-		cart.products = [];
-		await cart.save()
+		if (cart) {
+			cart.products = [];
+			await cart.save();
+		}
 
 		req.io.emit("new order", newOrder);
 
@@ -72,8 +73,5 @@ exports.createOrder = async (req, res) => {
 
 		await newReceipt.save();
 
-		return res.status(201).send(newOrder);
-	} catch (error) {
-		return res.status(400).send(error.message);
-	}
+		return newOrder;
 };

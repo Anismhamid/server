@@ -5,26 +5,28 @@ const Product = require("../models/Product");
 const auth = require("../middlewares/auth");
 const {createOrder} = require("../controllers/orderController");
 
-router.post("/", auth, async (req, res, next) => {
+router.post("/", auth, async (req, res) => {
 	try {
 		req.io = req.app.get("io");
-		await createOrder(req, res, next);
+		const newOrder = await createOrder(req);
 
-		// Update the products in stock
-		for (const item of req.body.cartItems) {
-			const product = await Product.findOneAndUpdate(
-				{product_name: item.product_name},
-				{$inc: {quantity_in_stock: -item.quantity}},
-				{new: true},
-			);
+		await Promise.all(
+			req.body.products.map(async (item) => {
+				const product = await Product.findOneAndUpdate(
+					{product_name: item.product_name},
+					{$inc: {quantity_in_stock: -item.quantity}},
+					{new: true},
+				);
 
-			req.io.emit("product:quantity_in_stock", {
-				product_name: product.product_name,
-				quantity_in_stock: product.quantity_in_stock,
-			});
-		}
+				if (product) {
+					req.io.emit("product:quantity_in_stock", product);
+				}
+			}),
+		);
+		res.status(201).send(newOrder);
 	} catch (error) {
-		res.status(500).send(error.message);
+		console.log(error.message);
+		if (!res.headersSent) res.status(500).send(error.message);
 	}
 });
 
@@ -71,7 +73,6 @@ router.patch("/:orderNumber", auth, async (req, res) => {
 			userId: order.userId.toString(),
 			updatedBy: req.payload.name?.first || "משתמש",
 		});
-
 
 		// io.emit("order:status:client", {
 		// 	orderNumber: order.orderNumber,
