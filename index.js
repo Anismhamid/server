@@ -1,6 +1,7 @@
 require("dotenv").config({
 	path: process.env.NODE_ENV === "production" ? ".env.production" : ".env",
 });
+const auth = require("./middlewares/auth");
 
 // Creating http server
 const {createServer} = require("http");
@@ -27,6 +28,10 @@ const io = new Server(httpServer, {
 		methods: ["GET", "POST", "PATCH"],
 		credentials: true,
 	},
+	connectionStateRecovery: {
+		maxDisconnectionDuration: 2 * 60 * 1000, // 2 minutes
+		skipMiddlewares: true,
+	},
 });
 
 // Prot
@@ -37,30 +42,31 @@ connectDB();
 
 // attach Io into the app
 app.set("io", io);
-
 const connectedUsers = new Map();
 
 io.on("connection", (socket) => {
-	console.log("New user connected");
+	console.log("socket connected");
 
 	// create connection for connected user
-	const userId = socket.handshake.auth?.userId;
-	const role = socket.handshake.auth?.role;
-
-	if (userId) {
-		connectedUsers.set(userId, socket.id);
-		socket.join(userId);
-		console.log(`User ${userId} joined personal room`);
+	const userId = socket.handshake.auth.userId;
+	const userName = socket.handshake.auth.name;
+	const role = socket.handshake.auth.role;
+	if (!userId) {
+		return;
 	}
+
+	connectedUsers.set(userId, socket.id);
+	socket.join(userId);
+	console.log(`User ${userId} joined personal room`);
 
 	if (role === "Admin" || role === "Moderator") {
 		socket.join("admins");
-		console.log(`User with role ${role} joined 'admins' room`);
+		console.log(`${userName} jioned with ${role} role to 'admins' room`);
 	}
 
 	// Emit login event with full user data
 	socket.broadcast.emit("user:connected", {
-		userId,
+		userId: userId,
 		socketId: socket.id,
 		timestamp: new Date(),
 	});
@@ -71,16 +77,14 @@ io.on("connection", (socket) => {
 	socket.on("disconnect", () => {
 		console.log("User disconnected");
 
-		if (userId) {
-			// Remove user from connected users map
-			connectedUsers.delete(userId);
+		// Remove user from connected users map
+		connectedUsers.delete(userId);
 
-			// Emit disconnect event
-			socket.broadcast.emit("user:disconnected", {
-				userId,
-				timestamp: new Date(),
-			});
-		}
+		// Emit disconnect event
+		socket.broadcast.emit("user:disconnected", {
+			userId: userId,
+			timestamp: new Date(),
+		});
 	});
 });
 

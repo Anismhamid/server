@@ -5,7 +5,8 @@ const auth = require("../middlewares/auth");
 
 router.get("/", auth, async (req, res) => {
 	try {
-		if (req.payload.role !== "Admin") return res.status(403).send("Cannot Acceess");
+		if (req.payload.role !== "Admin" && req.payload.role !== "Moderator")
+			return res.status(403).send("Cannot Acceess");
 
 		const newReceipt = await Receipt.find();
 		if (!newReceipt) return res.status(404).send("No receipts yet");

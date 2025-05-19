@@ -6,11 +6,10 @@ const Jwt = require("jsonwebtoken");
 const {compareSync, genSaltSync, hashSync} = require("bcryptjs");
 const _ = require("lodash");
 const auth = require("../middlewares/auth");
-const chalk = require("chalk");
 const {verifyGoogleToken} = require("../utils/googleAuth");
 const {userSchema, loginSchema} = require("../schema/userSchema");
 const completeUserSchema = require("../schema/completeUserSchema");
-const Joi = require("joi");
+const chalk = require("chalk");
 
 // users role
 const roleType = {
@@ -111,9 +110,11 @@ router.post("/login", async (req, res) => {
 
 		const io = req.app.get("io");
 		io.emit("user:newUserLoggedIn", {
+			userId: user._id,
 			email: user.email,
 			role: user.role,
 		});
+		if (io) console.log(chalk.blue(`user-${user.name.first} to-${user.status}`));
 
 		const token = generateToken(user);
 
@@ -365,6 +366,7 @@ router.delete("/:userId", auth, async (req, res) => {
 	}
 });
 
+// update user status online | ofline
 router.patch("/status/:userId", async (req, res) => {
 	try {
 		// 2. Update and return the user
@@ -373,11 +375,11 @@ router.patch("/status/:userId", async (req, res) => {
 			{status: req.body.status},
 			{new: true},
 		);
+		console.log(chalk.red(`user-${updatedUser.name.first} to-${updatedUser.status}`));
 
 		if (!updatedUser) {
 			return res.status(404).send("User not found");
 		}
-
 		res.status(200).send(updatedUser);
 	} catch (error) {
 		console.error("Status update error:", error);
