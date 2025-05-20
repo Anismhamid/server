@@ -75,8 +75,6 @@ io.on("connection", (socket) => {
 	orderSocketHandler(io, socket);
 
 	socket.on("disconnect", () => {
-		console.log("User disconnected");
-
 		// Remove user from connected users map
 		connectedUsers.delete(userId);
 

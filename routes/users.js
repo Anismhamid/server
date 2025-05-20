@@ -135,6 +135,8 @@ router.get("/google/verify/:id", async (req, res) => {
 // register or login the new google user into database or login
 router.post("/google", async (req, res) => {
 	try {
+		const io = req.app.get("io");
+		
 		const {credentialToken} = req.body;
 		if (!credentialToken) return res.status(400).send("Missing token");
 
@@ -149,7 +151,7 @@ router.post("/google", async (req, res) => {
 		if (user) {
 			const token = generateToken(user);
 			user.status = false;
-			const io = req.app.get("io");
+			
 			io.emit("user:newUserLoggedIn", {
 				userId: user._id,
 				email: user.email,
