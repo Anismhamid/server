@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Products = require("../models/Product");
 const auth = require("../middlewares/auth");
-const productsSchema = require("../schema/productsSchema")
+const productsSchema = require("../schema/productsSchema");
 
 //==============All-products==========
 // Get all products for search in home page
@@ -49,12 +49,8 @@ router.post("/", auth, async (req, res) => {
 });
 
 // Get spicific product by name
-router.get("/spicific/:name", auth, async (req, res) => {
+router.get("/spicific/:name", async (req, res) => {
 	try {
-		// Check if the user has permission to access the product
-		if (req.payload.role !== "Admin" && req.payload.role !== "Moderator")
-			return res.status(401).send("Access denied.");
-
 		// Find the product by product_name
 		const product = await Products.findOne({
 			product_name: req.params.name,

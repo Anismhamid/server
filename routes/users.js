@@ -73,7 +73,7 @@ router.post("/", async (req, res) => {
 
 		const io = req.app.get("io");
 		io.emit("user:registered", {
-			id: user._id,
+			userId: user._id,
 			name: user.name,
 			email: user.email,
 			role: user.role,
@@ -114,7 +114,6 @@ router.post("/login", async (req, res) => {
 			email: user.email,
 			role: user.role,
 		});
-		if (io) console.log(chalk.blue(`user-${user.name.first} to-${user.status}`));
 
 		const token = generateToken(user);
 
@@ -133,7 +132,7 @@ router.get("/google/verify/:id", async (req, res) => {
 	res.send({exists: false});
 });
 
-// register the new google user into database or login
+// register or login the new google user into database or login
 router.post("/google", async (req, res) => {
 	try {
 		const {credentialToken} = req.body;
@@ -151,9 +150,8 @@ router.post("/google", async (req, res) => {
 			const token = generateToken(user);
 			user.status = false;
 			const io = req.app.get("io");
-			io.emit("user:registered", {
-				id: user._id,
-				name: user.name,
+			io.emit("user:newUserLoggedIn", {
+				userId: user._id,
 				email: user.email,
 				role: user.role,
 			});
@@ -190,6 +188,13 @@ router.post("/google", async (req, res) => {
 		// save the user
 		await user.save();
 
+		io.emit("user:registered", {
+			id: user._id,
+			name: user.name,
+			email: user.email,
+			role: user.role,
+		});
+
 		// create new cart
 		const cart = new Cart({
 			userId: user._id,
@@ -198,14 +203,6 @@ router.post("/google", async (req, res) => {
 
 		// save the new cart
 		await cart.save();
-
-		const io = req.app.get("io");
-		io.emit("user:registered", {
-			id: user._id,
-			name: user.name,
-			email: user.email,
-			role: user.role,
-		});
 
 		const token = generateToken(user);
 
