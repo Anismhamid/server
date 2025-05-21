@@ -13,10 +13,10 @@ const generateOrderNumber = async () => {
 
 exports.createOrder = async (req) => {
 		const {error} = orderSchema.validate(req.body);
-		if (error) return res.status(400).send(error.details[0].message);
+		if (error)  throw new Error(error.details[0].message);
 
 		const {products, deliveryFee, totalAmount} = req.body;
-		if (!products) return res.status(400).send("No products provided for the order.");
+		if (!products) throw new Error("No products provided for the order.");
 
 		const orderNumber = await generateOrderNumber();
 
