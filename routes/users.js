@@ -149,8 +149,10 @@ router.post("/google", async (req, res) => {
 		// check if user exists
 		let user = await User.findOne({email: payload.email});
 		if (user) {
+			user.activity.push(new Date().toLocaleString("he-IL"));
+			user.status = true;
+
 			const token = generateToken(user);
-			user.status = false;
 
 			io.emit("user:newUserLoggedIn", {
 				userId: user._id,
