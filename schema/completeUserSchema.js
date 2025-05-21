@@ -1,6 +1,10 @@
 const Joi = require("joi");
 
 const completeUserSchema = Joi.object({
+	name: Joi.object({
+		first: Joi.string().required(),
+		last: Joi.string().allow(""),
+	}),
 	phone: Joi.object({
 		phone_1: Joi.string()
 			.pattern(/^0\d{1,2}-?\d{7}$/, "מספר טלפון לא תקין בפורמט ישראלי")
@@ -11,6 +15,13 @@ const completeUserSchema = Joi.object({
 		phone_2: Joi.string()
 			.messages({
 				"string.pattern.base": "Phone number must be in a valid Israeli format",
+			})
+			.allow(""),
+	}),
+	image: Joi.object({
+		url: Joi.string()
+			.messages({
+				"string.pattern.base": "Phone number must be in a valid url format",
 			})
 			.allow(""),
 	}),

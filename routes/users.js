@@ -136,7 +136,7 @@ router.get("/google/verify/:id", async (req, res) => {
 router.post("/google", async (req, res) => {
 	try {
 		const io = req.app.get("io");
-		
+
 		const {credentialToken} = req.body;
 		if (!credentialToken) return res.status(400).send("Missing token");
 
@@ -151,7 +151,7 @@ router.post("/google", async (req, res) => {
 		if (user) {
 			const token = generateToken(user);
 			user.status = false;
-			
+
 			io.emit("user:newUserLoggedIn", {
 				userId: user._id,
 				email: user.email,
@@ -297,6 +297,10 @@ router.patch("/compleate/:userId", auth, async (req, res) => {
 				phone_1: req.body.phone.phone_1,
 				phone_2: req.body.phone.phone_2,
 			},
+			image: {
+				url: req.body.image.url,
+			},
+
 			address: {
 				city: req.body.address.city,
 				street: req.body.address.street,
@@ -385,4 +389,17 @@ router.patch("/status/:userId", async (req, res) => {
 		res.status(500).send("Internal server error");
 	}
 });
+
+router.get("/user/ip", async (req, res) => {
+	try {
+		const ip =
+			req.headers["x-forwarded-for"]?.toString().split(",")[0] ||
+			req.socket.remoteAddress;
+		res.json({ip});
+	} catch (error) {
+		console.error("Failed to get IP:", error);
+		res.status(500).send("Internal server error");
+	}
+});
+
 module.exports = router;
