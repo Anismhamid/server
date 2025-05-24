@@ -218,11 +218,14 @@ router.post("/google", async (req, res) => {
 
 // ----- משתמשים -----
 
-// get all users (Admin only)
+// get all users (Admin / moderators)
 router.get("/", auth, async (req, res) => {
 	try {
 		// check if user have permission to get the users
-		if (req.payload.role !== roleType.Admin)
+		if (
+			req.payload.role !== roleType.Admin &&
+			req.payload.role !== roleType.Moderator
+		)
 			return res
 				.status(401)
 				.send({error: "You do not have permission to access this resource"});
@@ -388,18 +391,6 @@ router.patch("/status/:userId", async (req, res) => {
 		res.status(200).send(updatedUser);
 	} catch (error) {
 		console.error("Status update error:", error);
-		res.status(500).send("Internal server error");
-	}
-});
-
-router.get("/user/ip", async (req, res) => {
-	try {
-		const ip =
-			req.headers["x-forwarded-for"]?.toString().split(",")[0] ||
-			req.socket.remoteAddress;
-		res.json({ip});
-	} catch (error) {
-		console.error("Failed to get IP:", error);
 		res.status(500).send("Internal server error");
 	}
 });
