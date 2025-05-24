@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const messageSchema = new mongoose.Schema(
 	{
-		from: {type: mongoose.Schema.Types.ObjectId, ref: "User", required: true},
+		from: {type: String, ref: "User", required: true},
 		to: {
-			type: mongoose.Schema.Types.ObjectId,
+			type: String,
 			ref: "User",
 			required: true,
 		},
@@ -15,7 +15,7 @@ const messageSchema = new mongoose.Schema(
 		},
 		warning: {type: Boolean, default: false},
 		replyTo: {
-			type: mongoose.Schema.Types.ObjectId,
+			type: String,
 			ref: "message",
 		},
 		isImportant: {type: Boolean, default: false},

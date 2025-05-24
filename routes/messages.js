@@ -8,7 +8,7 @@ const {body, validationResult} = require("express-validator");
 // role messaging permissions
 const messagePermissions = {
 	Client: ["Moderator"],
-	Moderator: ["Client", "Admin"],
+	Moderator: ["Client", "Admin", "Moderator"],
 	Admin: ["Client", "Moderator", "Admin"], // Admins can message anyone including other Admins
 };
 
@@ -17,7 +17,7 @@ function canSendMessage(fromRole, toRole) {
 	return messagePermissions[fromRole]?.includes(toRole) || false;
 }
 
-// Message creation endpoint with validation
+// Message creation endpoint with very hard validation
 router.post(
 	"/",
 	auth,
@@ -37,7 +37,7 @@ router.post(
 			// Validate body
 			const errors = validationResult(req);
 			if (!errors.isEmpty()) {
-				return res.status(400).json({errors: errors.array()});
+				return res.status(400).send(errors.array());
 			}
 
 			const {
@@ -53,19 +53,19 @@ router.post(
 			// Check if recipient exists
 			const toUser = await User.findById(toUserId).select("-password");
 			if (!toUser) {
-				return res.status(404).json({error: "Recipient user not found"});
+				return res.status(404).send("Recipient user not found");
 			}
 
 			// Verify messaging permissions
 			if (!canSendMessage(fromRole, toUser.role)) {
-				return res.status(403).json({
-					error: `Not authorized to send messages to ${toUser.role}s`,
-				});
+				return res
+					.status(403)
+					.send(`Not authorized to send messages to ${toUser.role}s`);
 			}
 
 			// Prevent self-messaging
 			if (fromUserId === toUserId) {
-				return res.status(400).json({error: "Cannot send message to yourself"});
+				return res.status(400).send("Cannot send message to yourself");
 			}
 
 			// Create and save message
@@ -83,25 +83,32 @@ router.post(
 
 			// Emit socket event with minimal data
 			const io = req.app.get("io");
-			io.to(toUserId).emit("message:received", {
-				id: newMessage._id,
-				from: fromUserId,
-				preview: message.substring(0, 50),
-				isImportant,
-				createdAt: newMessage.createdAt,
-			});
+			const senderUser = await User.findById(fromUserId).select("name email role");
 
-			res.status(201).json({
-				message: "Message sent successfully",
-				messageId: newMessage._id,
-			});
+			if (senderUser) {
+				io.to(toUserId).emit("message:received", {
+					id: newMessage._id,
+					from: {
+						_id: senderUser._id,
+						email: senderUser.email,
+						name: senderUser.name,
+						role: senderUser.role,
+					},
+					to: newMessage.to._id ? newMessage.to._id : newMessage.to, // تأكد من الحصول على المعرف بشكل صحيح
+					message: newMessage.message,
+					warning: newMessage.warning,
+					isImportant: newMessage.isImportant,
+					createdAt: newMessage.createdAt,
+					replyTo: newMessage.replyTo,
+					status: newMessage.status,
+				});
+			}
+
+			res.status(201).send(newMessage._id);
 		} catch (error) {
-			console.error("Message send error:", error);
-			res.status(500).json({
-				error: "Failed to send message",
-				details:
-					process.env.NODE_ENV === "development" ? error.message : undefined,
-			});
+			res.status(500).send(
+				process.env.NODE_ENV === "development" ? error.message : undefined,
+			);
 		}
 	},
 );
@@ -111,7 +118,7 @@ router.get("/:userId", auth, async (req, res) => {
 	try {
 		// Verify user can access these messages
 		if (req.params.userId !== req.payload._id) {
-			return res.status(403).json({error: "Unauthorized access"});
+			return res.status(403).send("Unauthorized access");
 		}
 
 		// Pagination parameters
@@ -126,8 +133,8 @@ router.get("/:userId", auth, async (req, res) => {
 			.sort({createdAt: -1})
 			.skip(skip)
 			.limit(limit)
-			.populate("from", "name email")
-			.populate("to", "name email");
+			.populate("from", "name email role")
+			.populate("to", "name email role");
 
 		// Get total count for pagination metadata
 		const total = await Message.countDocuments({
@@ -142,7 +149,7 @@ router.get("/:userId", auth, async (req, res) => {
 			});
 		}
 
-		res.json({
+		res.status(200).json({
 			messages,
 			pagination: {
 				total,

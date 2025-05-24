@@ -224,14 +224,15 @@ router.get("/", auth, async (req, res) => {
 		// check if user have permission to get the users
 		if (
 			req.payload.role !== roleType.Admin &&
-			req.payload.role !== roleType.Moderator
+			req.payload.role !== roleType.Moderator&&
+			req.payload.role !== roleType.Client
 		)
 			return res
 				.status(401)
 				.send({error: "You do not have permission to access this resource"});
 
 		const users = await User.find().select("-password");
-		if (!users) return res.status(404).send({message: "No users found yet"});
+		if (!users) return res.status(404).send( "No users found yet");
 
 		res.status(200).send(users);
 	} catch (error) {
