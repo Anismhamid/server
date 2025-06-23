@@ -4,6 +4,8 @@ const helmet = require("helmet");
 const {limiter} = require("./middlewares/rateLimiter");
 const {logger, logToFile} = require("./utils/logger");
 const {allowedOrigins} = require("./config/allowOrigins");
+const morgan = require("morgan");
+
 
 const users = require("./routes/users");
 const carts = require("./routes/carts");
@@ -43,6 +45,7 @@ app.use(helmet());
 app.use(logger);
 logToFile();
 app.use(limiter);
+app.use(morgan("dev"));
 
 // orders and products
 app.use("/api/carts", carts);
