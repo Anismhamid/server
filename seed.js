@@ -21,7 +21,7 @@ async function seed() {
 		// Seed Users
 		await seedUsers();
 
-		// Seed Users
+		// Seed Cities
 		await seedCities();
 
 		await mongoose.disconnect();
