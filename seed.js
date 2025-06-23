@@ -7,6 +7,7 @@ const fs = require("fs");
 const path = require("path");
 const chalk = require("chalk");
 
+// Main Seed Function
 async function seed() {
 	try {
 		await mongoose.connect("mongodb://localhost:27017/fruit-store");
@@ -30,7 +31,7 @@ async function seed() {
 		console.error(chalk.red(err));
 	}
 }
-
+// Seed Products
 async function seedProducts() {
 	try {
 		const existingProducts = await Product.find();
@@ -78,6 +79,7 @@ async function seedProducts() {
 	}
 }
 
+// Seed Businees Information
 async function seedBusinessInfo() {
 	try {
 		const existingBusinessInfo = await BusinessInfo.find();
@@ -119,7 +121,7 @@ async function seedBusinessInfo() {
 	}
 }
 
-// users seed
+// Seed users
 async function seedUsers() {
 	try {
 		const existingUsers = await User.find();
@@ -153,7 +155,7 @@ async function seedUsers() {
 	}
 }
 
-// Cities seed
+// seed Cities
 async function seedCities() {
 	try {
 		const existingcities = await Cities.find();
@@ -162,7 +164,7 @@ async function seedCities() {
 			return;
 		}
 
-		// Load the cities data
+		// Load The Cities Data
 		const citiesPath = path.join(__dirname, "fruit-store.cities.json");
 		if (!fs.existsSync(citiesPath)) {
 			console.log(chalk.yellow("cities file not found. Skipping cities seeding."));
@@ -172,7 +174,7 @@ async function seedCities() {
 		const rawCitiesData = fs.readFileSync(citiesPath);
 		const citiesJson = JSON.parse(rawCitiesData);
 
-		// Clean the cities data
+		// Clean The cCities Data
 		const cleanCities = citiesJson.map(({_id, __v, ...rest}) => rest);
 
 		if (cleanCities.length === 0) {
