@@ -76,6 +76,7 @@ async function seedProducts() {
 		);
 	} catch (error) {
 		console.log(error);
+		return;
 	}
 }
 
