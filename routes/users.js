@@ -16,6 +16,7 @@ const roleType = {
 	Admin: "Admin",
 	Moderator: "Moderator",
 	Client: "Client",
+	Delivery: "delivery",
 };
 
 // for generating token
@@ -224,7 +225,7 @@ router.get("/", auth, async (req, res) => {
 		// check if user have permission to get the users
 		if (
 			req.payload.role !== roleType.Admin &&
-			req.payload.role !== roleType.Moderator&&
+			req.payload.role !== roleType.Moderator &&
 			req.payload.role !== roleType.Client
 		)
 			return res
@@ -232,7 +233,7 @@ router.get("/", auth, async (req, res) => {
 				.send({error: "You do not have permission to access this resource"});
 
 		const users = await User.find().select("-password");
-		if (!users) return res.status(404).send( "No users found yet");
+		if (!users) return res.status(404).send("No users found yet");
 
 		res.status(200).send(users);
 	} catch (error) {
@@ -247,7 +248,12 @@ router.get("/:userId", auth, async (req, res) => {
 		const {userId} = req.params;
 
 		// check if user have permission to get the user by id
-		if (_id !== userId && role !== roleType.Admin && role !== roleType.Moderator)
+		if (
+			_id !== userId &&
+			role !== roleType.Admin &&
+			role !== roleType.Moderator &&
+			role !== roleType.Delivery
+		)
 			return res
 				.status(401)
 				.send({error: "You do not have permission to access this resource"});
