@@ -12,7 +12,7 @@ const productsSchema = new mongoose.Schema(
 		quantity_in_stock: {
 			type: Number,
 			required: true,
-			min: 1,
+			min: 0,
 		},
 		description: {
 			type: String,
