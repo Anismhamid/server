@@ -30,13 +30,15 @@ router.post("/", auth, async (req, res) => {
 	}
 });
 
-// Get all orders for admin and moderator
+// Get all orders for admin and moderator and delivery
 router.get("/", auth, async (req, res) => {
 	try {
-		const isAdminOrModerator =
-			req.payload.role === "Admin" || req.payload.role === "Moderator";
+		const isAdminOrModeratorOrDelivery =
+			req.payload.role === "Admin" ||
+			req.payload.role === "Moderator" ||
+			req.payload.role === "delivery";
 
-		if (!isAdminOrModerator) {
+		if (!isAdminOrModeratorOrDelivery) {
 			return res
 				.status(403)
 				.send("You do not have permission to access these orders.");
@@ -52,7 +54,11 @@ router.get("/", auth, async (req, res) => {
 // patch order status and send emit
 router.patch("/:orderNumber", auth, async (req, res) => {
 	try {
-		if (req.payload.role !== "Admin" && req.payload.role !== "Moderator")
+		if (
+			req.payload.role !== "Admin" &&
+			req.payload.role !== "Moderator" &&
+			req.payload.role !== "delivery"
+		)
 			return res
 				.status(403)
 				.send("You are not authorized to update the order status");
