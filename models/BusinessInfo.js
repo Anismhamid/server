@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const businessInfoSchema = new mongoose.Schema({
-	deliveryFees: [
+	deliveryFee: [
 		{
 			area: {type: String, required: true},
 			fee: {type: Number, required: true},
