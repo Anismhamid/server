@@ -9,9 +9,7 @@ const orderSchema = Joi.object({
 	selfCollection: Joi.boolean().required(),
 	delivery: Joi.boolean().required(),
 	totalAmount: Joi.number(),
-	deliveryFee: Joi.array().items(
-		Joi.object({area: Joi.string().required(), fee: Joi.number().required()}),
-	),
+	deliveryFee: Joi.number(),
 	phone: Joi.object({
 		phone_1: Joi.string().required(),
 		phone_2: Joi.string().allow(""),

@@ -1,8 +1,30 @@
-[
-	{
-		"deliveryFee": 20,
-		"businessName": "שוק הפינה",
-		"businessSAddress": "רחוב הכרמל 10, תל אביב",
-		"businessPhone": "0538346915"
-	}
-]
+[{
+  "_id": {
+    "$oid": "680ae06a492070a072611b23"
+  },
+  "deliveryFee": [
+    {
+      "area": "אום אל-פחם ",
+      "fee": 20
+    },
+    {
+      "area": "כפר קרע",
+      "fee": 50
+    },
+    {
+      "area": "אום אל-פחם ,מועאויה",
+      "fee": 28
+    },
+    {
+      "area": "ערערה",
+      "fee": 40
+    },
+    {
+      "area": "מעלה עירון ",
+      "fee": 30
+    }
+  ],
+  "businessName": "سوق السخنيني ",
+  "businessSAddress": "ام الفحم, شارع السوق",
+  "businessPhone": "053-274-4698"
+}]
