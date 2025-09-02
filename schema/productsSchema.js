@@ -5,7 +5,7 @@ const productsSchema = Joi.object({
 	category: Joi.string().required().min(2).max(50),
 	price: Joi.number().positive().required().min(0),
 	quantity_in_stock: Joi.number().required().min(0),
-	description: Joi.string().max(500).required(),
+	description: Joi.string().max(500),
 	image_url: Joi.string().uri().allow(""),
 	sale: Joi.boolean().default(false),
 	discount: Joi.number(),
