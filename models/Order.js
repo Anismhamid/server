@@ -67,9 +67,19 @@ const orderSchema = new mongoose.Schema(
 			type: Number,
 			required: true,
 		},
+		commission: {
+			type: Number,
+			required: true,
+		},
 	},
 	{timestamps: true},
 );
+
+orderSchema.pre("save", function (next) {
+	this.commission = this.totalAmount * 0.1;
+	next();
+});
+
 
 const Order = mongoose.model("Order", orderSchema);
 
