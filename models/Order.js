@@ -69,7 +69,7 @@ const orderSchema = new mongoose.Schema(
 		},
 		commission: {
 			type: Number,
-			required: true,
+			default: 0,
 		},
 	},
 	{timestamps: true},
