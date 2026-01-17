@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 const receiptSchema = new mongoose.Schema({
 	userId: {type: String, required: true},
-	orderNumber: {type: String, required: true},
 	orderDate: {type: Date, default: Date.now},
 	customer: {
 		name: {

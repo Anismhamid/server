@@ -14,7 +14,7 @@ const app = require("./app");
 const connectDB = require("./config/db");
 
 // Sockets
-const orderSocketHandler = require("./sockets/orderSocket");
+// const orderSocketHandler = require("./sockets/orderSocket");
 
 // Cors origins from .env
 const {allowedOrigins} = require("./config/allowOrigins");
@@ -72,7 +72,7 @@ io.on("connection", (socket) => {
 	});
 
 	// Handling socket event for orders
-	orderSocketHandler(io, socket);
+	// orderSocketHandler(io, socket);
 
 	socket.on("disconnect", () => {
 		// Remove user from connected users map

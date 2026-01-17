@@ -17,6 +17,7 @@
 		"bcryptjs": "^3.0.2",
 		"chalk": "^4.1.1",
 		"cors": "^2.8.5",
+		"crypto": "^1.0.1",
 		"dotenv": "^16.5.0",
 		"express": "^5.1.0",
 		"express-list-routes": "^1.2.4",

@@ -14,9 +14,10 @@ const userSchema = new mongoose.Schema(
 				last: {type: String, required: true, minlength: 2},
 			},
 		},
+		slug: {type: String},
 		phone: {
 			type: {
-				phone_1: {type: String},
+				phone_1: {type: String, required: true},
 				phone_2: {type: String},
 			},
 		},
@@ -71,6 +72,6 @@ const userSchema = new mongoose.Schema(
 	{timestamps: true},
 );
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("Users", userSchema);
 
 module.exports = User;

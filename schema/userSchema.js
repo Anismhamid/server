@@ -5,6 +5,7 @@ const userSchema = Joi.object({
 		first: Joi.string().min(3).max(50).required(),
 		last: Joi.string().min(2).max(50).required(),
 	}),
+	slug: Joi.string().required(),
 	phone: Joi.object({
 		phone_1: Joi.string()
 			.min(9)

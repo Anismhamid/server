@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
-const Cart = require("../models/Cart");
 const Jwt = require("jsonwebtoken");
 const {compareSync, genSaltSync, hashSync} = require("bcryptjs");
 const _ = require("lodash");
@@ -26,6 +25,7 @@ const generateToken = (user) => {
 			"_id",
 			"name.first",
 			"name.last",
+			"slug",
 			"email",
 			"role",
 			"image.url",
@@ -242,12 +242,12 @@ router.get("/", auth, async (req, res) => {
 });
 
 // Get single user (Admin or Moderator or oner user only)
-router.get("/:userId", auth, async (req, res) => {
+router.get("/:userId",auth, async (req, res) => {
 	try {
 		const {role, _id} = req.payload;
 		const {userId} = req.params;
 
-		// check if user have permission to get the user by id
+		//	check if user have permission to get the user by id
 		if (
 			_id !== userId &&
 			role !== roleType.Admin &&
@@ -258,7 +258,21 @@ router.get("/:userId", auth, async (req, res) => {
 				.status(401)
 				.send({error: "You do not have permission to access this resource"});
 
-		const user = await User.findOne({_id: req.params.userId}).select("-password");
+		const user = await User.findById(userId).select("-password");
+		if (!user) return res.status(404).send({message: "user Not Found"});
+
+		res.status(200).send(user);
+	} catch (error) {
+		res.status(500).send("Internal server error");
+	}
+});
+
+router.get("/customer/:slug", async (req, res) => {
+	try {
+		const {slug} = req.params;
+		console.log("SLUG PARAM:", slug);
+
+		const user = await User.findOne({slug: slug}).select("-password");
 		if (!user) return res.status(404).send({message: "user Not Found"});
 
 		res.status(200).send(user);

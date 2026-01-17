@@ -8,8 +8,6 @@ const morgan = require("morgan");
 
 
 const users = require("./routes/users");
-const carts = require("./routes/carts");
-const orders = require("./routes/orders");
 const products = require("./routes/products");
 const businessInfo = require("./routes/businessInfo");
 const discounts = require("./routes/discountAndOffers");
@@ -47,9 +45,7 @@ logToFile();
 app.use(limiter);
 app.use(morgan("dev"));
 
-// orders and products
-app.use("/api/carts", carts);
-app.use("/api/orders", orders);
+//  products
 app.use("/api/products", products);
 
 // users and business
