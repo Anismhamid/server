@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Products = require("../models/Product");
 const auth = require("../middlewares/auth");
-const productsSchema = require("../schema/productsSchema");
+// const productsSchema = require("../schema/productsSchema");
+const {getProductSchema} = require("../schema/productsSchema");
 
 //==============All-products==========
 // Get all products for search in home page
@@ -16,80 +17,37 @@ router.get("/", async (req, res) => {
 		res.status(500).json({"Internal server error": error.message});
 	}
 });
-// Create new product
+
+// Post new product
 router.post("/", auth, async (req, res) => {
 	try {
-		// Authorization (إن أردت)
-		if (!["Admin", "Moderator", "Vendor"].includes(req.payload.role)) {
-			return res.status(403).send("Access denied");
-		}
+		const {category, type, ...productData} = req.body;
 
-		// Validate body
-		const { error } = productsSchema.validate(req.body);
+		// get category and subcategory schema
+		const schema = getProductSchema(category, type);
+
+		// Add type and category to the data if they are not already exiests		const dataToValidate = {
+		const dataToValidate = {
+			...productData,
+			category,
+			type,
+		};
+
+		// validate schema
+		const {error} = await schema.validate(dataToValidate);
+
+		// if error return the error
 		if (error) return res.status(400).send(error.details[0].message);
 
-		// Prevent duplicate product for same seller
-		const existingProduct = await Products.findOne({
-			product_name: req.body.product_name,
-			"seller.slug": req.payload.slug,
-		});
-
-		if (existingProduct) {
-			return res.status(400).send("Product already exists for this seller");
-		}
-
-		// Build seller from token ONLY
+		// Create a new product using the data from the request body
 		const seller = {
 			name: req.payload.name.first,
 			slug: req.payload.slug,
 			user: req.payload._id,
 		};
 
-		// Create product safely
 		const product = new Products({
-			...req.body,
-			seller,
-		});
-
-		await product.save();
-
-		// Emit socket event
-		const io = req.app.get("io");
-		io.emit("product:new", product);
-
-		res.status(201).send(product);
-	} catch (error) {
-		res.status(500).send(error.message);
-	}
-});
-
-// Post to create a new product
-router.post("/", auth, async (req, res) => {
-	try {
-		// if (
-		// 	!req.payload ||
-		// 	(req.payload.role !== "Admin" && req.payload.role !== "Moderator")
-		// ) {
-		// 	return res.status(401).send("Unauthorized");
-		// }
-
-		const {error} = productsSchema.validate(req.body);
-		if (error) return res.status(400).send(error.details[0].message);
-
-		// Check if product already exists
-		let product = await Products.findById({_id: req.body._id});
-
-		if (product) return res.status(400).send("The product already exists");
-
-		// Create a new product using the data from the request body
-		const seller = {
-			name: req.payload.name.first,
-			slug: req.payload.slug,
-			user: req.payload,
-		};
-
-		product = new Products({
-			...req.body,
+			...dataToValidate,
 			seller,
 		});
 
@@ -106,7 +64,7 @@ router.post("/", auth, async (req, res) => {
 	}
 });
 
-// Get spicific product by name
+// Get spicific product by id
 router.get("/spicific/:productId", async (req, res) => {
 	try {
 		// Find the product by product_name
@@ -124,24 +82,36 @@ router.get("/spicific/:productId", async (req, res) => {
 // Update product
 router.put("/:productId", auth, async (req, res) => {
 	try {
-		// 1️⃣ تحقق من وجود المنتج
 		const product = await Products.findById(req.params.productId);
 		if (!product) return res.status(404).send("Product not found");
 
-		if (req.payload.slug !== product.seller.slug)
+		// Authorization
+		if (req.payload.slug !== product.seller.slug) {
 			return res.status(403).send("Access denied. You can't update this product");
+		}
 
-		const {error} = productsSchema.validate(req.body, {
-			allowUnknown: false,
-			abortEarly: true,
-		});
-		if (error) return res.status(400).send(error.details[0].message);
-
-		// 4️⃣ منع تحديث بيانات حساسة
+		// Prevent updating protected fields
+		delete req.body._id;
+		delete req.body.category;
+		delete req.body.type;
 		delete req.body.seller;
 		delete req.body.likes;
 
-		// 5️⃣ تحديث المنتج
+		// Get dynamic schema based on existing product
+		const schema = getProductSchema(product.category, product.type);
+
+		// Make schema optional (for update)
+		const updateSchema = schema.fork(Object.keys(schema.describe().keys), (field) =>
+			field.optional(),
+		);
+
+		const {error} = updateSchema.validate(req.body, {
+			abortEarly: true,
+			allowUnknown: false,
+		});
+
+		if (error) return res.status(400).send(error.details[0].message);
+
 		const updatedProduct = await Products.findByIdAndUpdate(
 			req.params.productId,
 			{$set: req.body},
@@ -153,6 +123,7 @@ router.put("/:productId", auth, async (req, res) => {
 		res.status(500).send(error.message);
 	}
 });
+
 
 // Delete product
 router.delete("/:name", auth, async (req, res) => {

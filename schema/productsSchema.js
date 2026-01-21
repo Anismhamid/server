@@ -1,31 +1,87 @@
-const Joi = require("joi");
-const {userSchema} = require("./userSchema");
+const {
+	houseSchema,
+	gardenSchema,
+	carsSchema,
+	bikesSchema,
+	trucksSchema,
+	electricVehiclesSchema,
+	menClothesSchema,
+	womenClothesSchema,
+	babySchema,
+	kidsSchema,
+	healthSchema,
+	beautySchema,
+	watchesSchema,
+	cleaningSchema,
+} = require("./categoriesLogic");
 
-const productsSchema = Joi.object({
-	seller: Joi.object({
-		name: Joi.string().required(),
-		slug: Joi.string(),
-		user: userSchema,
-	}),
+/**
+ * ترجع Joi schema لأي فئة حسب category
+ * @param {string} category اسم الفئة
+ * @param {string} type (اختياري) الفئة الفرعية
+ * @returns Joi.ObjectSchema
+ */
+function getProductSchema(category, type) {
+	const schemas = {
+		House: houseSchema,
+		Garden: gardenSchema,
+		Cars: carsSchema,
+		Bikes: bikesSchema,
+		Trucks: trucksSchema,
+		ElectricVehicles: electricVehiclesSchema,
+		MenClothes: menClothesSchema,
+		WomenClothes: womenClothesSchema,
+		Baby: babySchema,
+		Kids: kidsSchema,
+		Health: healthSchema,
+		Beauty: beautySchema,
+		Watches: watchesSchema,
+		Cleaning: cleaningSchema,
+	};
 
-	// if the product is car
-	brand: Joi.string().allow(""),
-	year: Joi.string().allow(""),
-	fuel: Joi.string().allow(""),
-	mileage: Joi.number().min(0).allow(null),
-	color: Joi.string().allow(""),
+	if (!schemas[category]) {
+		throw new Error(`Unknown category: ${category}`);
+	}
 
-	product_name: Joi.string().min(2).max(50).required().trim(),
-	category: Joi.string().required().min(2).max(50),
-	price: Joi.number().positive().required(),
-	in_stock: Joi.boolean().default(true),
+	const schema = schemas[category];
 
-	description: Joi.string().max(500).allow(""),
-	image_url: Joi.string().uri().allow(""),
-	likes: Joi.array().items(Joi.string()).default([]),
+	// إذا كانت الفئة تتطلب type كحقل إلزامي
+	if (
+		[
+			"House",
+			"Garden",
+			"Cars",
+			"Bikes",
+			"Trucks",
+			"ElectricVehicles",
+			"MenClothes",
+			"WomenClothes",
+			"Baby",
+			"Kids",
+		].includes(category)
+	) {
+		// إذا لم يتم تمرير type، نرمي خطأ
+		if (!type) {
+			throw new Error(`type is required for ${category}`);
+		}
 
-	sale: Joi.boolean().default(false),
-	discount: Joi.number().min(0).max(100),
-});
+		// نتحقق من صحة type بناءً على schema
+		const typeField = schema.describe().keys.type;
+		if (typeField && typeField.flags && typeField.flags.allow) {
+			const validTypes = typeField.flags.allow.map((val) => val.value || val);
+			if (!validTypes.includes(type)) {
+				throw new Error(
+					`Invalid type for ${category}. Valid types are: ${validTypes.join(
+						", ",
+					)}`,
+				);
+			}
+		}
 
-module.exports = productsSchema;
+		return schema;
+	}
+
+	return schema;
+}
+
+module.exports = {getProductSchema};
