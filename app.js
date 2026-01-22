@@ -55,5 +55,6 @@ app.use("/api/discounts", discounts);
 app.use("/api/receipt", receipt);
 app.use("/api/cities", cities);
 app.use("/api/messages", messages);
+app.use("/api/images", messages);
 
 module.exports = app;
