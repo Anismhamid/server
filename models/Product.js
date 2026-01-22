@@ -13,7 +13,10 @@ const baseProductSchema = new mongoose.Schema(
 		subcategory: {type: String, required: true},
 		price: {type: Number, required: true, min: [1, "Price must be positive"]},
 		description: {type: String, maxlength: 500},
-		image: {type: String, required: true},
+		image: {
+			url: {type: String, required: true},
+			publicId: {type: String, required: true},
+		},
 		likes: {type: [String], default: []},
 		sale: {type: Boolean, default: false},
 		discount: {type: Number, min: 0, max: 100},

@@ -32,7 +32,7 @@ router.post("/", auth, async (req, res) => {
 			category,
 			type,
 		};
-
+		console.log(dataToValidate);
 		// validate schema
 		const {error} = await schema.validate(dataToValidate);
 
@@ -123,7 +123,6 @@ router.put("/:productId", auth, async (req, res) => {
 		res.status(500).send(error.message);
 	}
 });
-
 
 // Delete product
 router.delete("/:name", auth, async (req, res) => {

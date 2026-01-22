@@ -13,7 +13,7 @@ const baseProductSchema = {
 	subcategory: Joi.string().required(),
 	price: Joi.number().positive().required(),
 	description: Joi.string().max(500).allow(""),
-	image: Joi.string().uri().allow(""),
+	image: Joi.object({url: Joi.string().uri().allow(""), publicId: Joi.string()}),
 	likes: Joi.array().items(Joi.string()).default([]),
 	sale: Joi.boolean().default(false),
 	discount: Joi.number().min(0).max(100),
