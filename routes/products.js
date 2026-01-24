@@ -147,7 +147,7 @@ router.get("/customer/:slug", async (req, res) => {
 	try {
 		const {slug} = req.params;
 
-		const products = await Products.find({"seller.slug": slug});
+		const products = await Products.find({}, {"seller.slug": slug});
 		if (!products || products.length === 0)
 			return res.status(404).send("No products for this user");
 

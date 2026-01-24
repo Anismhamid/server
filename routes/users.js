@@ -242,7 +242,7 @@ router.get("/", auth, async (req, res) => {
 });
 
 // Get single user (Admin or Moderator or oner user only)
-router.get("/:userId",auth, async (req, res) => {
+router.get("/:userId", auth, async (req, res) => {
 	try {
 		const {role, _id} = req.payload;
 		const {userId} = req.params;
@@ -413,6 +413,42 @@ router.patch("/status/:userId", async (req, res) => {
 	} catch (error) {
 		console.error("Status update error:", error);
 		res.status(500).send("Internal server error");
+	}
+});
+
+// في ملف الخادم (مثال باستخدام Express)
+router.get("/check-slug/:slug", async (req, res) => {
+	try {
+		const {slug} = req.params;
+
+		// التحقق من الصيغة
+		if (!/^[a-z0-9-]+$/.test(slug)) {
+			return res.status(400).json({
+				available: false,
+				message: "تنسيق اسم المستخدم غير صالح",
+			});
+		}
+
+		if (slug.length < 3 || slug.length > 30) {
+			return res.status(400).json({
+				available: false,
+				message: "يجب أن يكون طول اسم المستخدم بين 3 و 30 حرفاً",
+			});
+		}
+
+		// التحقق من وجود slug في قاعدة البيانات
+		const existingUser = await User.findOne({slug});
+
+		return res.status(200).json({
+			available: !existingUser,
+			message: existingUser ? "اسم المستخدم محجوز" : "اسم المستخدم متاح",
+		});
+	} catch (error) {
+		console.error("Error checking slug:", error);
+		res.status(500).json({
+			available: false,
+			message: "حدث خطأ أثناء التحقق من اسم المستخدم",
+		});
 	}
 });
 
