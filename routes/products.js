@@ -2,8 +2,14 @@ const express = require("express");
 const router = express.Router();
 const Products = require("../models/Product");
 const auth = require("../middlewares/auth");
-// const productsSchema = require("../schema/productsSchema");
+const cloudinary = require("cloudinary").v2;
 const {getProductSchema} = require("../schema/productsSchema");
+
+cloudinary.config({
+	cloud_name: process.env.CLOUDINARY_NAME,
+	api_key: process.env.CLOUDINARY_API_KEY,
+	api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 //==============All-products==========
 // Get all products for search in home page
@@ -125,18 +131,26 @@ router.put("/:productId", auth, async (req, res) => {
 });
 
 // Delete product
-router.delete("/:name", auth, async (req, res) => {
+router.delete("/:productId", auth, async (req, res) => {
+	const {productId} = req.params;
 	try {
-		if (req.payload.role !== "Admin" && req.payload.role !== "Moderator")
-			return res.status(401).send("Access denied. no token provided");
+		let findProduct = await Products.findById(productId);
+		if (!findProduct) return res.status(404).send("This product is not found");
 
+		const canDelete =
+			req.payload.role === "Admin" ||
+			req.payload.role === "Moderator" ||
+			req.payload.slug === findProduct.seller.slug;
+		if (!canDelete) {
+			return res
+				.status(403)
+				.send("Access denied. You don't have permission to delete this product");
+		}
+		await cloudinary.uploader.destroy(findProduct.image.publicId);
 		// Find the produc and delete
-		const productToDelete = await Products.findOneAndDelete({
-			product_name: req.params.name,
-		});
-		if (!productToDelete) res.status(404).send("This product is not found");
+		await Products.findByIdAndDelete(productId);
 
-		res.status(200).send("The product has been deleted");
+		res.status(200).send("The product has been deleted successfully");
 	} catch (error) {
 		res.status(500).send(error.message);
 	}
@@ -147,7 +161,7 @@ router.get("/customer/:slug", async (req, res) => {
 	try {
 		const {slug} = req.params;
 
-		const products = await Products.find( {"seller.slug": slug});
+		const products = await Products.find({"seller.slug": slug});
 		if (!products || products.length === 0)
 			return res.status(404).send("No products for this user");
 

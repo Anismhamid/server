@@ -133,6 +133,10 @@ router.get("/google/verify/:id", async (req, res) => {
 	res.send({exists: false});
 });
 
+function generateSlug(first, last) {
+	return `${first.toLowerCase()}-${last.toLowerCase()}-${Date.now()}`;
+}
+
 // register or login the new google user into database or login
 router.post("/google", async (req, res) => {
 	try {
@@ -159,6 +163,7 @@ router.post("/google", async (req, res) => {
 				userId: user._id,
 				email: user.email,
 				role: user.role,
+				slug: user.slug,
 			});
 			return res.status(200).send(token);
 		}
@@ -189,6 +194,7 @@ router.post("/google", async (req, res) => {
 			registrAt: new Date().toLocaleString("he-IL"),
 			googleId: payload.sub,
 			status: false,
+			slug: generateSlug(payload.given_name, payload.family_name),
 		});
 		// save the user
 		await user.save();
@@ -198,22 +204,17 @@ router.post("/google", async (req, res) => {
 			name: user.name,
 			email: user.email,
 			role: user.role,
+			slug: user.slug,
 		});
-
-		// create new cart
-		const cart = new Cart({
-			userId: user._id,
-			products: [],
-		});
-
-		// save the new cart
-		await cart.save();
 
 		const token = generateToken(user);
 
 		res.status(201).send(token);
 	} catch (error) {
-		res.status(500).send("Internal server error");
+		res.status(500).json({
+			error: error.message,
+			// error:"Internal server error"
+		});
 	}
 });
 
