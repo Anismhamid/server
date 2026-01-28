@@ -30,6 +30,7 @@ const completeUserSchema = Joi.object({
 		street: Joi.string().min(2).max(50).required(),
 		houseNumber: Joi.string().allow(""),
 	}),
+	gender: Joi.string().required(),
 });
 
 module.exports = completeUserSchema;
