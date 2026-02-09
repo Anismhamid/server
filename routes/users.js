@@ -46,18 +46,30 @@ const generateToken = (user) => {
 router.post("/", async (req, res) => {
 	try {
 		// validate the body
-		const {error} = userSchema.validate(req.body, {stripUnknown: false});
-		if (error) return res.status(400).send(error.details[0].message);
+		const {error} = userSchema.validate(req.body, {
+			abortEarly: false,
+			stripUnknown: false,
+		});
+		if (error) {
+			return res.status(400).json({
+				code: "VALIDATION_ERROR",
+				message: error.details.map((d) => d.message).join(", "),
+			});
+		}
+
 
 		// check if user exists
-		let user = await User.findOne({email: req.body.email}, {password: 0});
+		let user = await User.findOne({email: req.body.email}).select("-password");
 		if (user)
-			return res.status(400).send("This user already exists. Please try another.");
+			return res.status(409).json({
+				code: "EMAIL_EXISTS",
+				message: "Email already exists",
+			});
 
 		user = new User({
 			...req.body,
-			registrAt: new Date().toLocaleString("he-IL"),
-			status: false,
+			registeredAt: new Date(),
+			status: true,
 		});
 
 		const salt = genSaltSync(10);
@@ -66,12 +78,12 @@ router.post("/", async (req, res) => {
 		await user.save();
 
 		// create cart
-		const cart = new Cart({
-			userId: user._id,
-			products: [],
-		});
+		// const cart = new Cart({
+		// 	userId: user._id,
+		// 	products: [],
+		// });
 
-		await cart.save();
+		// await cart.save();
 
 		const io = req.app.get("io");
 		io.emit("user:registered", {
@@ -87,7 +99,7 @@ router.post("/", async (req, res) => {
 		// return the token
 		res.status(200).send(token);
 	} catch (error) {
-		res.status(400).send("Internal server error");
+		res.status(500).send("Internal server error");
 	}
 });
 
@@ -101,7 +113,7 @@ router.post("/login", async (req, res) => {
 		if (error) return res.status(400).send(error.details[0].message);
 
 		// Check if user exists and try to compare the users password
-		let user = await User.findOne({email:req.body.email});
+		let user = await User.findOne({email: req.body.email});
 		if (!user || !compareSync(req.body.password, user.password))
 			return res.status(400).send("invalid email or password");
 
