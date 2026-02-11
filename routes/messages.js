@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../middlewares/auth");
-const User = require("../models/User");
+const Users = require("../models/User");
 const Message = require("../models/Message");
 const {body, validationResult} = require("express-validator");
 
 // role messaging permissions
 const messagePermissions = {
-	Client: ["Moderator"],
+	Client: ["Client", "Admin", "Moderator"],
 	Moderator: ["Client", "Admin", "Moderator"],
-	Admin: ["Client", "Moderator", "Admin"], // Admins can message anyone including other Admins
+	Admin: ["Client", "Moderator", "Admin"],
 };
 
 // Validate message sending permissions
@@ -51,7 +51,7 @@ router.post(
 			const fromRole = req.payload.role;
 
 			// Check if recipient exists
-			const toUser = await User.findById(toUserId).select("-password");
+			const toUser = await Users.findById(toUserId).select("-password");
 			if (!toUser) {
 				return res.status(404).send("Recipient user not found");
 			}
@@ -72,6 +72,7 @@ router.post(
 			const newMessage = new Message({
 				from: fromUserId,
 				to: toUserId,
+
 				message,
 				warning,
 				isImportant,
@@ -83,18 +84,23 @@ router.post(
 
 			// Emit socket event with minimal data
 			const io = req.app.get("io");
-			const senderUser = await User.findById(fromUserId).select("name email role");
+			const senderUser = await Users.findById(fromUserId).select("name email role");
 
 			if (senderUser) {
 				io.to(toUserId).emit("message:received", {
-					id: newMessage._id,
+					_id: newMessage._id,
 					from: {
 						_id: senderUser._id,
 						email: senderUser.email,
 						name: senderUser.name,
 						role: senderUser.role,
 					},
-					to: newMessage.to._id ? newMessage.to._id : newMessage.to, // تأكد من الحصول على المعرف بشكل صحيح
+					to: {
+						_id: toUser._id,
+						email: toUser.email,
+						name: toUser.name,
+						role: toUser.role,
+					},
 					message: newMessage.message,
 					warning: newMessage.warning,
 					isImportant: newMessage.isImportant,
@@ -104,7 +110,11 @@ router.post(
 				});
 			}
 
-			res.status(201).send(newMessage._id);
+			const populatedMessage = await Message.findById(newMessage._id)
+				.populate("from", "name email role")
+				.populate("to", "name email role");
+
+			res.status(201).send(populatedMessage);
 		} catch (error) {
 			res.status(500).send(
 				process.env.NODE_ENV === "development" ? error.message : undefined,
