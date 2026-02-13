@@ -4,7 +4,7 @@ const messageSchema = new mongoose.Schema(
 	{
 		from: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: "Users", // مهم جداً مطابق لاسم الموديل
+			ref: "Users",
 			required: true,
 		},
 		to: {
@@ -25,10 +25,19 @@ const messageSchema = new mongoose.Schema(
 		},
 		status: {
 			type: String,
-			default: "delivered",
+			enum: ["sent", "delivered", "seen"],
+			default: "sent",
+		},
+		roomId: {
+			type: String,
+			required: true,
 		},
 	},
 	{timestamps: true},
 );
+
+messageSchema.index({to: 1, status: 1});
+messageSchema.index({from: 1, to: 1});
+messageSchema.index({roomId: 1,createdAt:1});
 
 module.exports = mongoose.model("Message", messageSchema);

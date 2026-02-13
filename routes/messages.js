@@ -5,19 +5,18 @@ const Users = require("../models/User");
 const Message = require("../models/Message");
 const {body, validationResult} = require("express-validator");
 
-// role messaging permissions
+// Permissions
 const messagePermissions = {
 	Client: ["Client", "Admin", "Moderator"],
 	Moderator: ["Client", "Admin", "Moderator"],
 	Admin: ["Client", "Moderator", "Admin"],
 };
 
-// Validate message sending permissions
 function canSendMessage(fromRole, toRole) {
 	return messagePermissions[fromRole]?.includes(toRole) || false;
 }
 
-// Message creation endpoint with very hard validation
+// ====== Send Message ======
 router.post(
 	"/",
 	auth,
@@ -34,11 +33,8 @@ router.post(
 	],
 	async (req, res) => {
 		try {
-			// Validate body
 			const errors = validationResult(req);
-			if (!errors.isEmpty()) {
-				return res.status(400).send(errors.array());
-			}
+			if (!errors.isEmpty()) return res.status(400).json(errors.array());
 
 			const {
 				toUserId,
@@ -50,130 +46,126 @@ router.post(
 			const fromUserId = req.payload._id;
 			const fromRole = req.payload.role;
 
-			// Check if recipient exists
-			const toUser = await Users.findById(toUserId).select("-password");
-			if (!toUser) {
-				return res.status(404).send("Recipient user not found");
-			}
+			if (fromUserId === toUserId)
+				return res.status(400).send("Cannot message yourself");
 
-			// Verify messaging permissions
-			if (!canSendMessage(fromRole, toUser.role)) {
+			const toUser = await Users.findById(toUserId).select("-password");
+			if (!toUser) return res.status(404).send("Recipient not found");
+
+			if (!canSendMessage(fromRole, toUser.role))
 				return res
 					.status(403)
-					.send(`Not authorized to send messages to ${toUser.role}s`);
-			}
+					.send(`Not allowed to send messages to ${toUser.role}`);
 
-			// Prevent self-messaging
-			if (fromUserId === toUserId) {
-				return res.status(400).send("Cannot send message to yourself");
-			}
+			// Room ID
+			const roomId = [fromUserId, toUserId].sort().join("_");
 
-			// Create and save message
 			const newMessage = new Message({
 				from: fromUserId,
 				to: toUserId,
-
 				message,
 				warning,
 				isImportant,
-				replyTo,
+				replyTo: replyTo || null,
+				roomId,
 				status: "delivered",
 			});
 
 			await newMessage.save();
 
-			// Emit socket event with minimal data
-			const io = req.app.get("io");
-			const senderUser = await Users.findById(fromUserId).select("name email role");
-
-			if (senderUser) {
-				io.to(toUserId).emit("message:received", {
-					_id: newMessage._id,
-					from: {
-						_id: senderUser._id,
-						email: senderUser.email,
-						name: senderUser.name,
-						role: senderUser.role,
-					},
-					to: {
-						_id: toUser._id,
-						email: toUser.email,
-						name: toUser.name,
-						role: toUser.role,
-					},
-					message: newMessage.message,
-					warning: newMessage.warning,
-					isImportant: newMessage.isImportant,
-					createdAt: newMessage.createdAt,
-					replyTo: newMessage.replyTo,
-					status: newMessage.status,
-				});
-			}
-
+			// Populated message
 			const populatedMessage = await Message.findById(newMessage._id)
 				.populate("from", "name email role")
-				.populate("to", "name email role");
+				.populate("to", "name email role")
+				.populate("replyTo", "message from to");
 
-			res.status(201).send(populatedMessage);
-		} catch (error) {
+			const io = req.app.get("io");
+			const connectedUsers = req.app.get("connectedUsers");
+
+			// Send to all sockets of recipient
+			(connectedUsers.get(toUserId) || []).forEach((id) =>
+				io.to(id).emit("message:received", populatedMessage),
+			);
+
+			// Send to all sockets of sender
+			(connectedUsers.get(fromUserId) || []).forEach((id) =>
+				io.to(id).emit("message:received", populatedMessage),
+			);
+
+			// Update unread count
+			const unreadCount = await Message.countDocuments({
+				to: toUserId,
+				status: {$ne: "seen"},
+			});
+			(connectedUsers.get(toUserId) || []).forEach((id) =>
+				io.to(id).emit("message:unreadCount", unreadCount),
+			);
+
+			res.status(201).json(populatedMessage);
+		} catch (err) {
+			console.error(err);
 			res.status(500).send(
-				process.env.NODE_ENV === "development" ? error.message : undefined,
+				process.env.NODE_ENV === "development" ? err.message : "Server error",
 			);
 		}
 	},
 );
 
-// Get messages endpoint with pagination
-router.get("/:userId", auth, async (req, res) => {
+// ====== Get Conversation ======
+router.get("/conversation/:otherUserId", auth, async (req, res) => {
 	try {
-		// Verify user can access these messages
-		if (req.params.userId !== req.payload._id) {
-			return res.status(403).send("Unauthorized access");
-		}
+		const userId = req.payload._id;
+		const otherUserId = req.params.otherUserId;
 
-		// Pagination parameters
-		const page = parseInt(req.query.page) || 1;
-		const limit = parseInt(req.query.limit) || 20;
-		const skip = (page - 1) * limit;
-
-		// Get messages with pagination
-		const messages = await Message.find({
-			$or: [{from: req.params.userId}, {to: req.params.userId}],
-		})
-			.sort({createdAt: -1})
-			.skip(skip)
-			.limit(limit)
+		const roomId = [userId, otherUserId].sort().join("_");
+		const messages = await Message.find({roomId})
+			.sort({createdAt: 1})
 			.populate("from", "name email role")
-			.populate("to", "name email role");
+			.populate("to", "name email role")
+			.populate("replyTo", "message from to");
 
-		// Get total count for pagination metadata
-		const total = await Message.countDocuments({
-			$or: [{from: req.params.userId}, {to: req.params.userId}],
+		const unreadCount = await Message.countDocuments({
+			to: userId,
+			status: {$ne: "seen"},
 		});
 
-		if (!messages.length) {
-			return res.status(200).json({
-				messages: [],
-				total: 0,
-				pages: 0,
-			});
-		}
+		res.json({messages, unreadCount});
+	} catch (err) {
+		console.error(err);
+		res.status(500).send("Failed to get conversation");
+	}
+});
 
-		res.status(200).json({
-			messages,
-			pagination: {
-				total,
-				pages: Math.ceil(total / limit),
-				currentPage: page,
-				perPage: limit,
-			},
+// ====== Mark as Seen ======
+router.patch("/mark-as-seen/:fromUserId", auth, async (req, res) => {
+	try {
+		const toUserId = req.payload._id;
+		const fromUserId = req.params.fromUserId;
+		const io = req.app.get("io");
+		const connectedUsers = req.app.get("connectedUsers");
+
+		await Message.updateMany(
+			{from: fromUserId, to: toUserId, status: {$ne: "seen"}},
+			{status: "seen"},
+		);
+
+		const unreadCount = await Message.countDocuments({
+			to: toUserId,
+			status: {$ne: "seen"},
 		});
-	} catch (error) {
-		console.error("Get messages error:", error);
-		res.status(500).json({
-			error: "Failed to retrieve messages",
-			details: process.env.NODE_ENV === "development" ? error.message : undefined,
-		});
+		(connectedUsers.get(toUserId) || []).forEach((id) =>
+			io.to(id).emit("message:unreadCount", unreadCount),
+		);
+
+		// Notify sender
+		(connectedUsers.get(fromUserId) || []).forEach((id) =>
+			io.to(id).emit("message:seen", {by: toUserId}),
+		);
+
+		res.sendStatus(200);
+	} catch (err) {
+		console.error(err);
+		res.status(500).send("Failed to mark messages as seen");
 	}
 });
 
