@@ -169,4 +169,53 @@ router.patch("/mark-as-seen/:fromUserId", auth, async (req, res) => {
 	}
 });
 
+// ====== Get All Conversations ======
+router.get("/conversations", auth, async (req, res) => {
+	try {
+		const userId = req.payload._id;
+
+		// نجيب كل الرسائل اللي المستخدم مشارك فيها
+		const messages = await Message.find({
+			$or: [{from: userId}, {to: userId}],
+		})
+			.sort({createdAt: -1})
+			.populate("from", "name email role")
+			.populate("to", "name email role");
+
+		// Map للمحادثات بحسب الطرف الآخر
+		const conversationsMap= {};
+
+		messages.forEach((msg) => {
+			const otherUser =
+				msg.from._id.toString() === userId ? msg.to : msg.from;
+			const otherId = otherUser._id.toString();
+
+			if (!conversationsMap[otherId]) {
+				conversationsMap[otherId] = {
+					user: otherUser,
+					lastMessage: msg,
+					unreadCount:
+						msg.to._id.toString() === userId && msg.status !== "seen" ? 1 : 0,
+				};
+			} else {
+				// تحديث آخر رسالة
+				if (msg.createdAt > conversationsMap[otherId].lastMessage.createdAt) {
+					conversationsMap[otherId].lastMessage = msg;
+				}
+				// تحديث عداد الرسائل الغير مقروءة
+				if (msg.to._id.toString() === userId && msg.status !== "seen") {
+					conversationsMap[otherId].unreadCount += 1;
+				}
+			}
+		});
+
+		const conversations = Object.values(conversationsMap);
+
+		res.json({conversations});
+	} catch (err) {
+		console.error(err);
+		res.status(500).send("Failed to get conversations");
+	}
+});
+
 module.exports = router;
