@@ -1,0 +1,432 @@
+[{
+  "_id": {
+    "$oid": "698f5896cbe5d554e71c1525"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "مرحبا",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "delivered",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-02-13T17:00:06.418Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-13T17:00:06.418Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "698f589ccbe5d554e71c1539"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "هلا",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "delivered",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-02-13T17:00:12.880Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-13T17:00:12.880Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "698f58bacbe5d554e71c1548"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "هههههه",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "delivered",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-02-13T17:00:42.837Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-13T17:00:42.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "698f58c6cbe5d554e71c154f"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "هلا فيك يا غالي",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "delivered",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-02-13T17:00:54.298Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-13T17:00:54.298Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "698f58cbcbe5d554e71c1556"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "ههههههههه",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "delivered",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-02-13T17:00:59.609Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-13T17:00:59.609Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "698f58d1cbe5d554e71c155d"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "حبيبي انت نواره",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "delivered",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-02-13T17:01:05.351Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-13T17:01:05.351Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "698f58e0cbe5d554e71c1564"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "كيف سويتها يا زلمه",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "delivered",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-02-13T17:01:20.601Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-13T17:01:20.601Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "698f58e8cbe5d554e71c156b"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "ستام هاي احي",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "delivered",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-02-13T17:01:28.181Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-13T17:01:28.181Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "698f58ebcbe5d554e71c1572"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "هههههههه",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "delivered",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-02-13T17:01:31.310Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-13T17:01:31.310Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "698f58fccbe5d554e71c1579"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "بس بدك تزبطها زي الفيسبوك",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "delivered",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-02-13T17:01:48.150Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-13T17:01:48.150Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "698f58fecbe5d554e71c1580"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "هههههههههههه",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "delivered",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-02-13T17:01:50.691Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-13T17:01:50.691Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "698f5904cbe5d554e71c1587"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "نااار",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "delivered",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-02-13T17:01:56.992Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-13T17:01:56.992Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "698f590ecbe5d554e71c158e"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "انت الناااار احي",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "delivered",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-02-13T17:02:06.339Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-13T17:02:06.339Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "698f5a87cbe5d554e71c159d"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "هههههههههههههه",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "delivered",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-02-13T17:08:23.718Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-13T17:08:23.718Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "698f5a9dcbe5d554e71c15b4"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "اهلين فيك",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "delivered",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-02-13T17:08:45.876Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-13T17:08:45.876Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "698f694acbe5d554e71c163a"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "انيس شو الوضع",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "delivered",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-02-13T18:11:22.799Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-13T18:11:22.799Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "698f6a7ecbe5d554e71c165a"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "هههههه",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "delivered",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-02-13T18:16:30.434Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-13T18:16:30.434Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "698f78a42d17c1ddb5f00d05"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "ااا",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "delivered",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-02-13T19:16:52.767Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-13T19:16:52.767Z"
+  },
+  "__v": 0
+}]

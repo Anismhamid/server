@@ -10,7 +10,7 @@ const chalk = require("chalk");
 // Main Seed Function
 async function seed() {
 	try {
-		await mongoose.connect("mongodb://localhost:27017/fruit-store");
+		await mongoose.connect("mongodb://localhost:27017/marketplace");
 		console.log(chalk.green("Connected to MongoDB"));
 
 		// Seed Products

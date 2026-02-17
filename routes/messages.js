@@ -89,7 +89,7 @@ router.post(
 
 			// Send to all sockets of sender
 			(connectedUsers.get(fromUserId) || []).forEach((id) =>
-				io.to(id).emit("message:received", populatedMessage),
+				io.to(id).emit("message:sent", populatedMessage),
 			);
 
 			// Update unread count
@@ -98,7 +98,10 @@ router.post(
 				status: {$ne: "seen"},
 			});
 			(connectedUsers.get(toUserId) || []).forEach((id) =>
-				io.to(id).emit("message:unreadCount", unreadCount),
+				io.to(id).emit("message:unreadCount", {
+					userId: fromUserId,
+					count: unreadCount,
+				}),
 			);
 
 			res.status(201).json(populatedMessage);
@@ -141,26 +144,37 @@ router.patch("/mark-as-seen/:fromUserId", auth, async (req, res) => {
 	try {
 		const toUserId = req.payload._id;
 		const fromUserId = req.params.fromUserId;
+
 		const io = req.app.get("io");
 		const connectedUsers = req.app.get("connectedUsers");
 
 		await Message.updateMany(
-			{from: fromUserId, to: toUserId, status: {$ne: "seen"}},
+			{
+				roomId: [fromUserId, toUserId].sort().join("_"),
+				from: fromUserId,
+				to: toUserId,
+				status: {$ne: "seen"},
+			},
 			{status: "seen"},
 		);
 
 		const unreadCount = await Message.countDocuments({
 			to: toUserId,
+			from: fromUserId,
 			status: {$ne: "seen"},
 		});
-		(connectedUsers.get(toUserId) || []).forEach((id) =>
-			io.to(id).emit("message:unreadCount", unreadCount),
-		);
 
-		// Notify sender
-		(connectedUsers.get(fromUserId) || []).forEach((id) =>
-			io.to(id).emit("message:seen", {by: toUserId}),
-		);
+		(connectedUsers.get(toUserId) || [])
+			.forEach((id) =>
+				io.to(id).emit("message:unreadCount", {
+					userId: fromUserId,
+					count: unreadCount,
+				}),
+			)(
+				// Notify sender
+				connectedUsers.get(fromUserId) || [],
+			)
+			.forEach((id) => io.to(id).emit("message:seen", {by: toUserId}));
 
 		res.sendStatus(200);
 	} catch (err) {
@@ -174,7 +188,7 @@ router.get("/conversations", auth, async (req, res) => {
 	try {
 		const userId = req.payload._id;
 
-		// نجيب كل الرسائل اللي المستخدم مشارك فيها
+		// كل الرسائل اللي المستخدم مشارك فيها
 		const messages = await Message.find({
 			$or: [{from: userId}, {to: userId}],
 		})
@@ -183,11 +197,10 @@ router.get("/conversations", auth, async (req, res) => {
 			.populate("to", "name email role");
 
 		// Map للمحادثات بحسب الطرف الآخر
-		const conversationsMap= {};
+		const conversationsMap = {};
 
 		messages.forEach((msg) => {
-			const otherUser =
-				msg.from._id.toString() === userId ? msg.to : msg.from;
+			const otherUser = msg.from._id.toString() === userId ? msg.to : msg.from;
 			const otherId = otherUser._id.toString();
 
 			if (!conversationsMap[otherId]) {
