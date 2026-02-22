@@ -186,11 +186,11 @@ router.patch("/mark-as-seen/:fromUserId", auth, async (req, res) => {
 // ====== Get All Conversations ======
 router.get("/conversations", auth, async (req, res) => {
 	try {
-		if (!req.user || !req.user._id) {
+		if (!req.payload || !req.payload._id) {
 			return res.status(401).json({message: "Unauthorized"});
 		}
 
-		const userId = req.user._id.toString();
+		const userId = req.payload._id.toString();
 
 		const messages = await Message.find({
 			$or: [{from: userId}, {to: userId}],
