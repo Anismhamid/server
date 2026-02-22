@@ -186,9 +186,12 @@ router.patch("/mark-as-seen/:fromUserId", auth, async (req, res) => {
 // ====== Get All Conversations ======
 router.get("/conversations", auth, async (req, res) => {
 	try {
-		const userId = req.payload._id;
+		if (!req.user || !req.user._id) {
+			return res.status(401).json({message: "Unauthorized"});
+		}
 
-		// كل الرسائل اللي المستخدم مشارك فيها
+		const userId = req.user._id.toString();
+
 		const messages = await Message.find({
 			$or: [{from: userId}, {to: userId}],
 		})
@@ -196,11 +199,13 @@ router.get("/conversations", auth, async (req, res) => {
 			.populate("from", "name email role")
 			.populate("to", "name email role");
 
-		// Map للمحادثات بحسب الطرف الآخر
 		const conversationsMap = {};
 
 		messages.forEach((msg) => {
+			if (!msg.from || !msg.to) return; // حماية إضافية
+
 			const otherUser = msg.from._id.toString() === userId ? msg.to : msg.from;
+
 			const otherId = otherUser._id.toString();
 
 			if (!conversationsMap[otherId]) {
@@ -211,24 +216,22 @@ router.get("/conversations", auth, async (req, res) => {
 						msg.to._id.toString() === userId && msg.status !== "seen" ? 1 : 0,
 				};
 			} else {
-				// تحديث آخر رسالة
 				if (msg.createdAt > conversationsMap[otherId].lastMessage.createdAt) {
 					conversationsMap[otherId].lastMessage = msg;
 				}
-				// تحديث عداد الرسائل الغير مقروءة
+
 				if (msg.to._id.toString() === userId && msg.status !== "seen") {
 					conversationsMap[otherId].unreadCount += 1;
 				}
 			}
 		});
 
-		const conversations = Object.values(conversationsMap);
-
-		res.json({conversations});
+		res.json({conversations: Object.values(conversationsMap)});
 	} catch (err) {
-		console.error(err);
-		res.status(500).send("Failed to get conversations");
+		console.error("Conversations error:", err);
+		res.status(500).json({message: err.message});
 	}
 });
+
 
 module.exports = router;
