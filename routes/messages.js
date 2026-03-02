@@ -142,39 +142,43 @@ router.get("/conversation/:otherUserId", auth, async (req, res) => {
 // ====== Mark as Seen ======
 router.patch("/mark-as-seen/:fromUserId", auth, async (req, res) => {
 	try {
-		const toUserId = req.payload._id;
+		const toUserId = req.payload._id.toString();
 		const fromUserId = req.params.fromUserId;
 
 		const io = req.app.get("io");
 		const connectedUsers = req.app.get("connectedUsers");
 
-		await Message.updateMany(
-			{
-				roomId: [fromUserId, toUserId].sort().join("_"),
-				from: fromUserId,
-				to: toUserId,
-				status: {$ne: "seen"},
-			},
-			{status: "seen"},
+		const roomId = [fromUserId, toUserId].sort().join("_");
+
+		// تحديث الرسائل
+	await Message.updateMany(
+		{
+			roomId: roomId,
+			from: fromUserId,
+			to: toUserId,
+			status: {$ne: "seen"},
+		},
+		{status: "seen"},
+	);
+
+	const unreadCount = await Message.countDocuments({
+		to: toUserId,
+		from: fromUserId,
+		status: {$ne: "seen"},
+	});
+
+		// بعد ما صاروا seen → العداد صفر
+		(connectedUsers.get(toUserId) || []).forEach((id) =>
+			io.to(id).emit("message:unreadCount", {
+				userId: fromUserId,
+				count: unreadCount,
+			}),
 		);
 
-		const unreadCount = await Message.countDocuments({
-			to: toUserId,
-			from: fromUserId,
-			status: {$ne: "seen"},
-		});
-
-		(connectedUsers.get(toUserId) || [])
-			.forEach((id) =>
-				io.to(id).emit("message:unreadCount", {
-					userId: fromUserId,
-					count: unreadCount,
-				}),
-			)(
-				// Notify sender
-				connectedUsers.get(fromUserId) || [],
-			)
-			.forEach((id) => io.to(id).emit("message:seen", {by: toUserId}));
+		// Notify sender أن الرسائل انقرأت
+		(connectedUsers.get(fromUserId) || []).forEach((id) =>
+			io.to(id).emit("message:seen", {by: toUserId}),
+		);
 
 		res.sendStatus(200);
 	} catch (err) {
@@ -182,6 +186,7 @@ router.patch("/mark-as-seen/:fromUserId", auth, async (req, res) => {
 		res.status(500).send("Failed to mark messages as seen");
 	}
 });
+
 
 // ====== Get All Conversations ======
 router.get("/conversations", auth, async (req, res) => {
@@ -232,6 +237,5 @@ router.get("/conversations", auth, async (req, res) => {
 		res.status(500).json({message: err.message});
 	}
 });
-
 
 module.exports = router;

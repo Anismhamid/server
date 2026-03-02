@@ -56,12 +56,12 @@ io.on("connection", (socket) => {
 	}
 
 	// Typing events
-	socket.on("typing", ({to, from}) => {
+	socket.on("user:typing", ({to, from}) => {
 		const toSockets = connectedUsers.get(to) || [];
 		toSockets.forEach((id) => io.to(id).emit("user:typing", {from}));
 	});
 
-	socket.on("stopTyping", ({to, from}) => {
+	socket.on("user:stopTyping", ({to, from}) => {
 		const toSockets = connectedUsers.get(to) || [];
 		toSockets.forEach((id) => io.to(id).emit("user:stopTyping", {from}));
 	});

@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const baseProductSchema = new mongoose.Schema(
 	{
 		seller: {
-			name: {type: String, required: true},
+			name: {type: String},
 			slug: {type: String},
 			user: {type: mongoose.Schema.Types.ObjectId, ref: "User", required: true},
 		},

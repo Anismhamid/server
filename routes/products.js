@@ -1,4 +1,5 @@
 const express = require("express");
+
 const router = express.Router();
 const Products = require("../models/Product");
 const auth = require("../middlewares/auth");
@@ -50,6 +51,7 @@ router.post("/", auth, async (req, res) => {
 			name: req.payload.name.first,
 			slug: req.payload.slug,
 			user: req.payload._id,
+			imageUrl: req.payload.image.url,
 		};
 
 		const product = new Products({
