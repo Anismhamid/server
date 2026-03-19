@@ -119,74 +119,62 @@ router.get("/conversation/:otherUserId", auth, async (req, res) => {
 	try {
 		const userId = req.payload._id;
 		const otherUserId = req.params.otherUserId;
+		const limit = parseInt(req.query.limit) || 20;
+		const skip = parseInt(req.query.skip) || 0;
 
 		const roomId = [userId, otherUserId].sort().join("_");
+
 		const messages = await Message.find({roomId})
-			.sort({createdAt: 1})
+			.sort({createdAt: -1})
 			.populate("from", "name email role")
 			.populate("to", "name email role")
-			.populate("replyTo", "message from to");
+			.skip(skip)
+			.limit(limit);
+		// .populate("replyTo", "message from to");
 
 		const unreadCount = await Message.countDocuments({
 			to: userId,
 			status: {$ne: "seen"},
 		});
 
-		res.json({messages, unreadCount});
+		const chronologicalMessages = messages.reverse();
+
+		res.json({
+			messages: chronologicalMessages,
+			hasMore: messages.length === limit,
+			unreadCount,
+		});
 	} catch (err) {
 		console.error(err);
 		res.status(500).send("Failed to get conversation");
 	}
 });
-
 // ====== Mark as Seen ======
+
 router.patch("/mark-as-seen/:fromUserId", auth, async (req, res) => {
 	try {
-		const toUserId = req.payload._id.toString();
-		const fromUserId = req.params.fromUserId;
+		const toUserId = req.payload._id; // The person currently reading
+		const fromUserId = req.params.fromUserId; // The person who sent the messages
 
+		// Update only messages sent TO me from THIS user that aren't seen yet
+		await Message.updateMany(
+			{to: toUserId, from: fromUserId, status: {$ne: "seen"}},
+			{$set: {status: "seen"}},
+		);
+
+		// Notify the sender via Socket
 		const io = req.app.get("io");
 		const connectedUsers = req.app.get("connectedUsers");
 
-		const roomId = [fromUserId, toUserId].sort().join("_");
-
-		// تحديث الرسائل
-	await Message.updateMany(
-		{
-			roomId: roomId,
-			from: fromUserId,
-			to: toUserId,
-			status: {$ne: "seen"},
-		},
-		{status: "seen"},
-	);
-
-	const unreadCount = await Message.countDocuments({
-		to: toUserId,
-		from: fromUserId,
-		status: {$ne: "seen"},
-	});
-
-		// بعد ما صاروا seen → العداد صفر
-		(connectedUsers.get(toUserId) || []).forEach((id) =>
-			io.to(id).emit("message:unreadCount", {
-				userId: fromUserId,
-				count: unreadCount,
-			}),
-		);
-
-		// Notify sender أن الرسائل انقرأت
 		(connectedUsers.get(fromUserId) || []).forEach((id) =>
 			io.to(id).emit("message:seen", {by: toUserId}),
 		);
 
 		res.sendStatus(200);
 	} catch (err) {
-		console.error(err);
-		res.status(500).send("Failed to mark messages as seen");
+		res.status(500).send("Error updating status");
 	}
 });
-
 
 // ====== Get All Conversations ======
 router.get("/conversations", auth, async (req, res) => {
