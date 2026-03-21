@@ -54,12 +54,22 @@ const gardenSchema = Joi.object({
 /* ================== Cars ================== */
 const carsSchema = Joi.object({
 	...baseProductSchema,
-	type: Joi.string().valid("private", "electric").required(),
+	type: Joi.string().valid("private", "electric", "parts").required(),
 	brand: Joi.string().required(),
-	year: Joi.number().required(),
-	fuel: Joi.string().valid("gasoline", "diesel", "hybrid").required(),
+	year: Joi.number().when("type", {
+		is: !"parts",
+		then: Joi.required(),
+		otherwise: Joi.optional(),
+	}),
+	fuel: Joi.string().valid("gasoline", "diesel", "hybrid", "electric").when("type", {
+		is: "private",
+		then: Joi.required(),
+		otherwise: Joi.optional(),
+	}),
 	mileage: Joi.number().min(0),
 	color: Joi.string(),
+	batteryCapacity: Joi.number().optional(),
+	rangeKm: Joi.number().optional(),
 });
 
 /* ================== Bikes ================== */

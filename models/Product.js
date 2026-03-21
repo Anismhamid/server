@@ -65,10 +65,23 @@ Products.discriminator("Garden", gardenSchema);
 
 /* ================== Cars ================== */
 const carSchema = new mongoose.Schema({
-	type: {type: String, enum: ["private", "electric"], required: true},
+	type: {type: String, enum: ["private", "electric", "parts"], required: true},
 	brand: {type: String, required: true},
-	year: {type: Number, required: true},
-	fuel: {type: String, enum: ["gasoline", "diesel", "hybrid"], required: true},
+	year: {
+		type: Number,
+		required: function () {
+			return this.type !== "parts";
+		},
+	},
+	fuel: {
+		type: String,
+		enum: ["gasoline", "diesel", "hybrid", "electric"],
+		required: function () {
+			return this.type === "private";
+		},
+	},
+	batteryCapacity: {type: Number},
+	rangeKm: {type: Number},
 	mileage: {type: Number, min: 0},
 	color: {type: String},
 });
@@ -160,7 +173,7 @@ const watchesSchema = new mongoose.Schema({
 	brand: {type: String},
 	waterResistant: {type: Boolean},
 });
-Products.discriminator("Watches", watchesSchema);
+Products.discriminator("0Watches", watchesSchema);
 
 /* ================== Cleaning ================== */
 const cleaningSchema = new mongoose.Schema({
