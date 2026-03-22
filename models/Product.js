@@ -138,7 +138,18 @@ Products.discriminator("WomenClothes", womenClothesSchema);
 /* ================== Baby ================== */
 const babySchema = new mongoose.Schema({
 	type: {type: String, enum: ["clothes", "care", "feeding"], required: true},
-	ageGroup: {type: String, required: true}, // للفئة clothes & feeding
+	ageGroup: {
+		type: String,
+		required: function () {
+			return this.type === "clothes" || this.type === "feeding";
+		},
+	}, // للفئة clothes & feeding
+	brand: {
+		type: String,
+		required: function () {
+			return this.type === "feeding";
+		},
+	},
 	material: {type: String},
 });
 Products.discriminator("Baby", babySchema);

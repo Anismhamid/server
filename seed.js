@@ -40,43 +40,113 @@ async function seedProducts() {
 			return;
 		}
 
-		// Load the product data
-		const productsPath = path.join(__dirname, "fruit-store.products.json");
-		if (!fs.existsSync(productsPath)) {
-			console.log(
-				chalk.yellow("Products file not found. Skipping products seeding."),
-			);
-			return;
-		}
+		const products = [
+			// ================= Baby - care =================
+			{
+				product_name: "Baby Lotion",
+				description: "Gentle baby skin care",
+				price: 10,
+				category: "Baby",
+				type: "care",
+				subcategory: "care",
+				image: {
+					publicId: "seed/baby-lotion",
+					url: "https://via.placeholder.com/300",
+				},
+				ageGroup: "0-6 months",
+			},
 
-		const rawProductsData = fs.readFileSync(productsPath);
-		const productsJson = JSON.parse(rawProductsData);
+			// ================= Baby - feeding =================
+			{
+				product_name: "Baby Bottle",
+				description: "Feeding bottle",
+				price: 15,
+				category: "Baby",
+				type: "feeding",
+				subcategory: "feeding",
+				image: {
+					publicId: "seed/baby-bottle",
+					url: "https://via.placeholder.com/300",
+				},
+				brand: "Philips Avent",
+				ageGroup: "0-6 months",
+			},
 
-		// Filter only valid products
-		const cleanProducts = productsJson
-			.map(({_id, updatedAt, createdAt, __v, ...rest}) => rest)
-			.filter(
-				(p) =>
-					p.product_name &&
-					p.category &&
-					p.price !== undefined &&
-					p.quantity_in_stock !== undefined &&
-					p.description &&
-					p.image_url,
-			);
+			// ================= House - kitchen =================
+			{
+				product_name: "Kitchen Mixer",
+				description: "Electric mixer",
+				price: 120,
+				category: "House",
+				type: "kitchen",
+				subcategory: "kitchen",
+				image: {
+					publicId: "seed/mixer",
+					url: "https://via.placeholder.com/300",
+				},
+				brand: "Bosch",
+				material: "Stainless Steel",
+				powerWatts: 500,
+			},
 
-		if (cleanProducts.length === 0) {
-			console.log(chalk.red("No valid products to insert."));
-			return;
-		}
+			// ================= Cars - private =================
+			{
+				product_name: "Toyota Corolla",
+				description: "Family car",
+				price: 15000,
+				category: "Cars",
+				type: "private",
+				subcategory: "private",
+				image: {
+					publicId: "seed/car",
+					url: "https://via.placeholder.com/300",
+				},
+				brand: "Toyota",
+				year: 2020,
+				fuel: "gasoline",
+				mileage: 40000,
+			},
 
-		await Product.insertMany(cleanProducts);
+			// ================= Bikes - mountain =================
+			{
+				product_name: "Mountain Bike",
+				description: "Off-road bike",
+				price: 600,
+				category: "Bikes",
+				type: "mountain",
+				subcategory: "mountain",
+				image: {
+					publicId: "seed/bike",
+					url: "https://via.placeholder.com/300",
+				},
+				frameSize: "M",
+				suspension: true,
+			},
+
+			// ================= Cleaning =================
+			{
+				product_name: "Ariel Detergent",
+				description: "Laundry detergent",
+				price: 12,
+				category: "Cleaning",
+				type: "detergents",
+				subcategory: "detergents",
+				image: {
+					publicId: "seed/detergent",
+					url: "https://via.placeholder.com/300",
+				},
+				brand: "Ariel",
+				volume: 2,
+			},
+		];
+
+		await Product.insertMany(products);
+
 		console.log(
-			chalk.greenBright(`Inserted ${cleanProducts.length} valid products.`),
+			chalk.greenBright(`Inserted ${products.length} products successfully.`),
 		);
 	} catch (error) {
 		console.log(error);
-		return;
 	}
 }
 

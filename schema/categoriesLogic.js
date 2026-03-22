@@ -124,7 +124,8 @@ const womenClothesSchema = Joi.object({
 const babySchema = Joi.object({
 	...baseProductSchema,
 	type: Joi.string().valid("clothes", "care", "feeding").required(),
-	ageGroup: Joi.string().required(), // للفئة clothes & feeding
+	ageGroup: Joi.string().required(),
+	brand: Joi.string(),
 	material: Joi.string(),
 });
 
@@ -134,6 +135,7 @@ const kidsSchema = Joi.object({
 	type: Joi.string().valid("educational", "toys", "outdoor").required(),
 	ageGroup: Joi.string().required(),
 	safeMaterial: Joi.boolean(),
+	material: Joi.string(),
 });
 
 /* ================== Health ================== */
