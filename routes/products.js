@@ -1,10 +1,10 @@
+const cloudinary = require("cloudinary").v2;
 const express = require("express");
 
 const router = express.Router();
 const Products = require("../models/Product");
 const auth = require("../middlewares/auth");
 const {getProductSchema} = require("../schema/productsSchema");
-const cloudinary = require("../config/cloudinary");
 
 //==============All-products==========
 // Get all products for search in home page
@@ -216,13 +216,19 @@ router.delete("/:productId", auth, async (req, res) => {
 	const {productId} = req.params;
 
 	try {
-		const findProduct = await Products.findById(productId);
-		if (!findProduct) return res.status(404).send("This product is not found");
+		cloudinary.config({
+			cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+			api_key: process.env.CLOUDINARY_API_KEY,
+			api_secret: process.env.CLOUDINARY_API_SECRET,
+		});
+
+		const product = await Products.findById(productId);
+		if (!product) return res.status(404).send("This product is not found");
 
 		const canDelete =
 			req.payload.role === "Admin" ||
 			req.payload.role === "Moderator" ||
-			req.payload.slug === findProduct.seller.slug;
+			req.payload.slug === product.seller.slug;
 
 		if (!canDelete) {
 			return res
@@ -231,21 +237,14 @@ router.delete("/:productId", auth, async (req, res) => {
 		}
 
 		// 1. حذف الصورة أولاً (شرط أساسي)
-		if (findProduct.image?.publicId) {
-			const result = await cloudinary.uploader.destroy(findProduct.image.publicId);
+		if (product.image?.publicId) {
+			await cloudinary.uploader.destroy(product.image.publicId);
 
-			console.log("Cloudinary result:", result);
+			// 2. حذف المنتج فقط إذا نجح حذف الصورة
+			await product.deleteOne();
 
-			// إذا فشل الحذف → نوقف العملية
-			if (result.result !== "ok" && result.result !== "not found") {
-				return res.status(500).send("Failed to delete image from Cloudinary");
-			}
+			return res.status(200).send("The product has been deleted successfully");
 		}
-
-		// 2. حذف المنتج فقط إذا نجح حذف الصورة
-		await Products.findByIdAndDelete(productId);
-
-		return res.status(200).send("The product has been deleted successfully");
 	} catch (error) {
 		console.error("Delete Route Error:", error);
 		return res.status(500).send(error.message);
