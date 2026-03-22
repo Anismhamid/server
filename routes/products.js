@@ -3,14 +3,8 @@ const express = require("express");
 const router = express.Router();
 const Products = require("../models/Product");
 const auth = require("../middlewares/auth");
-const cloudinary = require("cloudinary").v2;
 const {getProductSchema} = require("../schema/productsSchema");
-
-cloudinary.config({
-	cloud_name: process.env.CLOUDINARY_NAME,
-	api_key: process.env.CLOUDINARY_API_KEY,
-	api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+const cloudinary = require("../config/cloudinary");
 
 //==============All-products==========
 // Get all products for search in home page
@@ -133,28 +127,128 @@ router.put("/:productId", auth, async (req, res) => {
 });
 
 // Delete product
+// router.delete("/:productId", auth, async (req, res) => {
+// 	const {productId} = req.params;
+// 	try {
+// 		let findProduct = await Products.findById(productId);
+// 		if (!findProduct) return res.status(404).send("This product is not found");
+
+// 		const canDelete =
+// 			req.payload.role === "Admin" ||
+// 			req.payload.role === "Moderator" ||
+// 			req.payload.slug === findProduct.seller.slug;
+
+// 		if (!canDelete) {
+// 			return res
+// 				.status(403)
+// 				.send("Access denied. You don't have permission to delete this product");
+// 		}
+
+// 		if (findProduct.image && findProduct.image.publicId) {
+// 			try {
+// 				const result = await cloudinary.uploader.destroy(
+// 					findProduct.image.publicId,
+// 				);
+
+// 				if (result.result !== "ok" && result.result !== "not found") {
+// 					throw new Error(
+// 						`Cloudinary Error: ${result.message || result.result}`,
+// 					);
+// 				}
+// 				await Products.findByIdAndDelete(productId);
+// 				res.status(200).send("The product has been deleted successfully");
+// 			} catch (error) {
+// 				console.error("Cloudinary Destruction Error:", error);
+// 				res.status(500).send(error);
+// 			}
+// 		}
+// 	} catch (error) {
+// 		console.error("Delete Route Error:", error);
+// 		res.status(500).send(error);
+// 	}
+// });
+
+// router.delete("/:productId", auth, async (req, res) => {
+// 	const {productId} = req.params;
+
+// 	try {
+// 		let findProduct = await Products.findById(productId);
+// 		if (!findProduct) return res.status(404).send("This product is not found");
+
+// 		const canDelete =
+// 			req.payload.role === "Admin" ||
+// 			req.payload.role === "Moderator" ||
+// 			req.payload.slug === findProduct.seller.slug;
+
+// 		if (!canDelete) {
+// 			return res
+// 				.status(403)
+// 				.send("Access denied. You don't have permission to delete this product");
+// 		}
+
+// 		// حذف الصورة إذا موجودة
+// 		if (findProduct.image?.publicId) {
+// 			try {
+// 				const result = await cloudinary.uploader.destroy(
+// 					findProduct.image.publicId,
+// 				);
+
+// 				console.log("Cloudinary result:", result);
+
+// 				if (result.result !== "ok" && result.result !== "not found") {
+// 					console.warn("Cloudinary warning:", result);
+// 				}
+// 			} catch (cloudErr) {
+// 				console.error("Cloudinary error:", cloudErr);
+// 			}
+// 		}
+
+// 		// حذف المنتج دائمًا
+// 		await Products.findByIdAndDelete(productId);
+
+// 		res.status(200).send("The product has been deleted successfully");
+// 	} catch (error) {
+// 		console.error("Delete Route Error:", error);
+// 		res.status(500).send(error.message);
+// 	}
+// });
 router.delete("/:productId", auth, async (req, res) => {
 	const {productId} = req.params;
+
 	try {
-		let findProduct = await Products.findById(productId);
+		const findProduct = await Products.findById(productId);
 		if (!findProduct) return res.status(404).send("This product is not found");
 
 		const canDelete =
 			req.payload.role === "Admin" ||
 			req.payload.role === "Moderator" ||
 			req.payload.slug === findProduct.seller.slug;
+
 		if (!canDelete) {
 			return res
 				.status(403)
 				.send("Access denied. You don't have permission to delete this product");
 		}
-		await cloudinary.uploader.destroy(findProduct.image.publicId);
-		// Find the produc and delete
+
+		// 1. حذف الصورة أولاً (شرط أساسي)
+		if (findProduct.image?.publicId) {
+			const result = await cloudinary.uploader.destroy(findProduct.image.publicId);
+
+			console.log("Cloudinary result:", result);
+
+			// إذا فشل الحذف → نوقف العملية
+			if (result.result !== "ok" && result.result !== "not found") {
+				return res.status(500).send("Failed to delete image from Cloudinary");
+			}
+		}
+
+		// 2. حذف المنتج فقط إذا نجح حذف الصورة
 		await Products.findByIdAndDelete(productId);
 
-		res.status(200).send("The product has been deleted successfully");
+		return res.status(200).send("The product has been deleted successfully");
 	} catch (error) {
-		res.status(500).send(error.message);
+		console.error("Delete Route Error:", error);
+		return res.status(500).send(error.message);
 	}
 });
 //______________End-All-products__________
