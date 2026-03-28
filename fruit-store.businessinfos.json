@@ -2,29 +2,8 @@
   "_id": {
     "$oid": "680ae06a492070a072611b23"
   },
-  "deliveryFee": [
-    {
-      "area": "אום אל-פחם ",
-      "fee": 20
-    },
-    {
-      "area": "כפר קרע",
-      "fee": 50
-    },
-    {
-      "area": "אום אל-פחם ,מועאויה",
-      "fee": 28
-    },
-    {
-      "area": "ערערה",
-      "fee": 40
-    },
-    {
-      "area": "מעלה עירון ",
-      "fee": 30
-    }
-  ],
-  "businessName": "سوق السخنيني ",
-  "businessSAddress": "ام الفحم, شارع السوق",
-  "businessPhone": "053-274-4698"
+  "deliveryFee": [],
+  "businessName": "EHB9 5ABG",
+  "businessSAddress": "'E 'DA-E, 4'19 9JF 'D01HG",
+  "businessPhone": "0538346915"
 }]
