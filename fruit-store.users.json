@@ -19,8 +19,8 @@
     }
   },
   "address": {
-    "city": "ĞÕİ ĞÜ-ä×İ ",
-    "street": "ÓèÚ âÙß ĞÜÓ'èÕÕÔ",
+    "city": "××•× ××œ-×¤×—× ",
+    "street": "×“×¨×š ×¢×™×Ÿ ××œ×“'×¨×•×•×”",
     "houseNumber": "24",
     "_id": {
       "$oid": "6979d4774f1db7cd4a712607"
@@ -45,7 +45,7 @@
     "$date": "2026-01-28T09:18:47.989Z"
   },
   "updatedAt": {
-    "$date": "2026-02-23T05:22:22.596Z"
+    "$date": "2026-03-19T07:10:00.350Z"
   },
   "__v": 0
 },
@@ -69,8 +69,8 @@
     }
   },
   "address": {
-    "city": "ĞÕİ ĞÜ-ä×İ",
-    "street": "ÓèÚ âÙß ĞÜ Ó'èÕÕÔ",
+    "city": "××•× ××œ-×¤×—×",
+    "street": "×“×¨×š ×¢×™×Ÿ ××œ ×“'×¨×•×•×”",
     "houseNumber": "24",
     "_id": {
       "$oid": "6984903c9e0bc4d9ed0741c5"
@@ -78,7 +78,7 @@
   },
   "email": "arqam.0532273594@gmail.com",
   "password": "$2b$10$ykV6nw8l1BOEjFyX6XFdLu7HgN1yN33bSEaqfNF0b7M4J8hqzTEs2",
-  "gender": "ÖÛè",
+  "gender": "×–×›×¨",
   "image": {
     "url": "",
     "alt": "mhmd mhamed",
@@ -97,7 +97,7 @@
     "$date": "2026-02-05T12:42:36.632Z"
   },
   "updatedAt": {
-    "$date": "2026-02-05T12:42:36.877Z"
+    "$date": "2026-03-26T04:03:24.120Z"
   },
   "__v": 1
 },
@@ -121,8 +121,8 @@
     }
   },
   "address": {
-    "city": "ĞÕİ ĞÜ-ä×İ",
-    "street": "ÓèÚ âÙß ĞÜ Ó'èÕÕÔ",
+    "city": "××•× ××œ-×¤×—×",
+    "street": "×“×¨×š ×¢×™×Ÿ ××œ ×“'×¨×•×•×”",
     "houseNumber": "24",
     "_id": {
       "$oid": "6980c609317475fe5c733af0"
@@ -130,7 +130,7 @@
   },
   "email": "anes@g.com",
   "password": "$2b$10$SGU8Nj//CIldPQF0giy61uvtSaBzhHnIN8nVx1fQDmgGIRSUCowg2",
-  "gender": "ÖÛè",
+  "gender": "×–×›×¨",
   "image": {
     "url": "",
     "alt": "anes mhamid",
@@ -165,26 +165,35 @@
     "2/19/2026, 5:00:10 PM",
     "2/19/2026, 5:07:45 PM",
     "2/20/2026, 7:23:18 AM",
-    "2/23/2026, 5:22:28 AM"
+    "2/23/2026, 5:22:28 AM",
+    "3/17/2026, 2:01:40 PM",
+    "3/19/2026, 7:09:54 AM",
+    "3/22/2026, 7:28:02 AM",
+    "3/22/2026, 11:39:21 AM",
+    "3/26/2026, 2:04:28 PM",
+    "3/26/2026, 2:16:41 PM",
+    "3/26/2026, 3:46:53 PM",
+    "3/28/2026, 7:39:08 AM",
+    "3/28/2026, 7:45:09 AM"
   ],
   "registrAt": "2.2.2026, 17:43:05",
-  "status": true,
+  "status": false,
   "terms": "true",
   "createdAt": {
     "$date": "2026-02-02T15:43:05.060Z"
   },
   "updatedAt": {
-    "$date": "2026-02-23T05:22:28.356Z"
+    "$date": "2026-03-28T07:45:32.245Z"
   },
-  "__v": 26
+  "__v": 35
 },
 {
   "_id": {
     "$oid": "698623a8e6bc0b47c72a0109"
   },
   "name": {
-    "first": "-3JF",
-    "last": "-3JF",
+    "first": "Ø­Ø³ÙŠÙ†",
+    "last": "Ø­Ø³ÙŠÙ†",
     "_id": {
       "$oid": "698623a8e6bc0b47c72a010a"
     }
@@ -198,8 +207,8 @@
     }
   },
   "address": {
-    "city": "Ò'ÓÙÙÓÔ-ŞÛè",
-    "street": "è× 1060",
+    "city": "×’'×“×™×™×“×”-××›×¨",
+    "street": "×¨×— 1060",
     "houseNumber": "",
     "_id": {
       "$oid": "698623a8e6bc0b47c72a010c"
@@ -207,10 +216,10 @@
   },
   "email": "hussain@g.com",
   "password": "$2b$10$2hjCaypu9SMM1/YydxGAbeK6jWPMp2ypcCXN/lR4RHOXZC2gAUQza",
-  "gender": "ÖÛè",
+  "gender": "×–×›×¨",
   "image": {
     "url": "",
-    "alt": "-3JF -3JF",
+    "alt": "Ø­Ø³ÙŠÙ† Ø­Ø³ÙŠÙ†",
     "_id": {
       "$oid": "698623a8e6bc0b47c72a010d"
     }
@@ -237,8 +246,8 @@
     "$oid": "698c815ff696efcb31ef1ae7"
   },
   "name": {
-    "first": "-D'",
-    "last": "9J4'F",
+    "first": "Ø­Ù„Ø§",
+    "last": "Ø¹ÙŠØ´Ø§Ù†",
     "_id": {
       "$oid": "698c815ff696efcb31ef1ae8"
     }
@@ -252,8 +261,8 @@
     }
   },
   "address": {
-    "city": "Ò'ÓÙÙÓÔ-ŞÛè",
-    "street": "Ò'ÓÙÙÓÔ-ŞÛè",
+    "city": "×’'×“×™×™×“×”-××›×¨",
+    "street": "×’'×“×™×™×“×”-××›×¨",
     "houseNumber": "",
     "_id": {
       "$oid": "698c815ff696efcb31ef1aea"
@@ -261,10 +270,10 @@
   },
   "email": "halaishan2003@gmail.com",
   "password": "$2b$10$3ENtxLLbGjIK7rvZ4fdznOR3stbdLhtq72D2y1K0KCn6FrTMb1InW",
-  "gender": "àçÑÔ",
+  "gender": "× ×§×‘×”",
   "image": {
     "url": "",
-    "alt": "-D' 9J4'F",
+    "alt": "Ø­Ù„Ø§ Ø¹ÙŠØ´Ø§Ù†",
     "_id": {
       "$oid": "698c815ff696efcb31ef1aeb"
     }
@@ -304,8 +313,8 @@
     }
   },
   "address": {
-    "city": "èŞê ÔéèÕß",
-    "street": "ĞÙÜê",
+    "city": "×¨××ª ×”×©×¨×•×Ÿ",
+    "street": "××™×œ×ª",
     "houseNumber": "",
     "_id": {
       "$oid": "699742c99a6b9bd1a2fa9eaa"
@@ -313,7 +322,7 @@
   },
   "email": "webap43747@bitonc.com",
   "password": "$2b$10$1IZC21V.kfp1GtTW27MQT.wgKd5V/4gyKJgueOLP36H18L8u41X8i",
-  "gender": "ÖÛè",
+  "gender": "×–×›×¨",
   "image": {
     "url": "",
     "alt": "Adam Ae",
@@ -354,8 +363,8 @@
     }
   },
   "address": {
-    "city": "ĞÕİ ĞÜ-ä×İ ",
-    "street": "ĞÜŞ×ĞÒ'àÔ",
+    "city": "××•× ××œ-×¤×—× ",
+    "street": "××œ××—××’'× ×”",
     "houseNumber": "",
     "_id": {
       "$oid": "699b384cccc6122ea7aaeabb"
@@ -381,6 +390,57 @@
   },
   "updatedAt": {
     "$date": "2026-02-22T17:09:32.558Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69bdaf88ba9a143a17452a17"
+  },
+  "googleId": "114847897912210678744",
+  "name": {
+    "first": "×§×¨×™×Ÿ",
+    "last": "×œ×˜×•×§×•×¨×¡×§×™",
+    "_id": {
+      "$oid": "69bdaf88ba9a143a17452a18"
+    }
+  },
+  "slug": "×§×¨×™×Ÿ-×œ×˜×•×§×•×¨×¡×§×™-1774038920670",
+  "phone": {
+    "phone_1": "0539186698",
+    "phone_2": "",
+    "_id": {
+      "$oid": "69bdaf88ba9a143a17452a19"
+    }
+  },
+  "address": {
+    "city": "××•× ××œ-×¤×—× ",
+    "street": "×“×¨×š ×¢×™×Ÿ ××œ×“'×¨×•×•×”",
+    "houseNumber": "",
+    "_id": {
+      "$oid": "69bdaf88ba9a143a17452a1a"
+    }
+  },
+  "email": "k0539186698@gmail.com",
+  "password": "$2b$10$0yA/030F2oV2kziEb.pBUObl0vkyHmbLKrmwDXWnoQluNWPfIAWAe",
+  "image": {
+    "url": "https://lh3.googleusercontent.com/a/ACg8ocJcIJcXTD2ndx9rJedtJoyu9VEOegVEYzZVyWOyXgxGq-k1ow=s96-c",
+    "alt": "×§×¨×™×Ÿ ×œ×˜×•×§×•×¨×¡×§×™",
+    "_id": {
+      "$oid": "69bdaf88ba9a143a17452a1b"
+    }
+  },
+  "role": "Client",
+  "activity": [
+    "20.3.2026, 20:35:20"
+  ],
+  "registrAt": "20.3.2026, 20:35:20",
+  "status": false,
+  "createdAt": {
+    "$date": "2026-03-20T20:35:20.676Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-20T20:35:20.676Z"
   },
   "__v": 0
 }]

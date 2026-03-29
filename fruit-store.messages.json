@@ -8,17 +8,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "E1-('",
+  "message": "مرحبا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-13T17:00:06.418Z"
   },
   "updatedAt": {
-    "$date": "2026-02-13T17:00:06.418Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -32,17 +32,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "GD'",
+  "message": "هلا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-13T17:00:12.880Z"
   },
   "updatedAt": {
-    "$date": "2026-02-13T17:00:12.880Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -56,17 +56,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "GGGGGG",
+  "message": "هههههه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-13T17:00:42.837Z"
   },
   "updatedAt": {
-    "$date": "2026-02-13T17:00:42.837Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -80,17 +80,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "GD' AJC J' :'DJ",
+  "message": "هلا فيك يا غالي",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-13T17:00:54.298Z"
   },
   "updatedAt": {
-    "$date": "2026-02-13T17:00:54.298Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -104,17 +104,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "GGGGGGGGG",
+  "message": "ههههههههه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-13T17:00:59.609Z"
   },
   "updatedAt": {
-    "$date": "2026-02-13T17:00:59.609Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -128,17 +128,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "-(J(J 'F* FH'1G",
+  "message": "حبيبي انت نواره",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-13T17:01:05.351Z"
   },
   "updatedAt": {
-    "$date": "2026-02-13T17:01:05.351Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -152,17 +152,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "CJA 3HJ*G' J' 2DEG",
+  "message": "كيف سويتها يا زلمه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-13T17:01:20.601Z"
   },
   "updatedAt": {
-    "$date": "2026-02-13T17:01:20.601Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -176,17 +176,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "3*'E G'J '-J",
+  "message": "ستام هاي احي",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-13T17:01:28.181Z"
   },
   "updatedAt": {
-    "$date": "2026-02-13T17:01:28.181Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -200,17 +200,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "GGGGGGGG",
+  "message": "هههههههه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-13T17:01:31.310Z"
   },
   "updatedAt": {
-    "$date": "2026-02-13T17:01:31.310Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -224,17 +224,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "(3 (/C *2(7G' 2J 'DAJ3(HC",
+  "message": "بس بدك تزبطها زي الفيسبوك",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-13T17:01:48.150Z"
   },
   "updatedAt": {
-    "$date": "2026-02-13T17:01:48.150Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -248,17 +248,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "GGGGGGGGGGGG",
+  "message": "هههههههههههه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-13T17:01:50.691Z"
   },
   "updatedAt": {
-    "$date": "2026-02-13T17:01:50.691Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -272,17 +272,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "F'''1",
+  "message": "نااار",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-13T17:01:56.992Z"
   },
   "updatedAt": {
-    "$date": "2026-02-13T17:01:56.992Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -296,17 +296,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "'F* 'DF''''1 '-J",
+  "message": "انت الناااار احي",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-13T17:02:06.339Z"
   },
   "updatedAt": {
-    "$date": "2026-02-13T17:02:06.339Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -320,17 +320,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "GGGGGGGGGGGGGG",
+  "message": "هههههههههههههه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-13T17:08:23.718Z"
   },
   "updatedAt": {
-    "$date": "2026-02-13T17:08:23.718Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -344,17 +344,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "'GDJF AJC",
+  "message": "اهلين فيك",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-13T17:08:45.876Z"
   },
   "updatedAt": {
-    "$date": "2026-02-13T17:08:45.876Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -368,17 +368,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "'FJ3 4H 'DH69",
+  "message": "انيس شو الوضع",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-13T18:11:22.799Z"
   },
   "updatedAt": {
-    "$date": "2026-02-13T18:11:22.799Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -392,17 +392,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "GGGGGG",
+  "message": "هههههه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-13T18:16:30.434Z"
   },
   "updatedAt": {
-    "$date": "2026-02-13T18:16:30.434Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -416,17 +416,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "'''",
+  "message": "ااا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-13T19:16:52.767Z"
   },
   "updatedAt": {
-    "$date": "2026-02-13T19:16:52.767Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -440,17 +440,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "4H 'DH69",
+  "message": "شو الوضع",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T03:51:32.894Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T03:51:32.894Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -464,17 +464,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "CJAC",
+  "message": "كيفك",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T03:51:54.142Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T03:51:54.142Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -488,17 +488,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": ":''",
+  "message": "غاا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T03:52:22.995Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T03:52:22.995Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -512,17 +512,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "***'",
+  "message": "تتتا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T04:03:20.467Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T04:03:20.467Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -536,17 +536,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "'JD+D",
+  "message": "ايلثل",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T04:03:38.377Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T04:03:38.377Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -560,17 +560,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "F(F(*",
+  "message": "نبنبت",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T04:06:21.570Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T04:06:21.570Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -584,17 +584,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "ADA:",
+  "message": "فلفغ",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T04:07:00.937Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T04:07:00.937Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -608,17 +608,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "AAAA",
+  "message": "فففف",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T04:07:13.736Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T04:07:13.736Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -632,17 +632,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "DDDD",
+  "message": "لللل",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T04:07:40.961Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T04:07:40.961Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -656,17 +656,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "GD' AJC",
+  "message": "هلا فيك",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T04:08:38.801Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T04:08:38.801Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -680,17 +680,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "GD'",
+  "message": "هلا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T04:08:48.661Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T04:08:48.661Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -704,17 +704,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "'''G",
+  "message": "اااه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T04:33:31.609Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T04:33:31.609Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -728,17 +728,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "''''",
+  "message": "اااا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T04:34:10.201Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T04:34:10.201Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -752,17 +752,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "'GDJF",
+  "message": "اهلين",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T04:34:22.585Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T04:34:22.585Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -776,17 +776,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "CJAC",
+  "message": "كيفك",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T04:34:28.243Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T04:34:28.243Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -800,17 +800,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "'D-E/ DDG (.J1 H'F*",
+  "message": "الحمد لله بخير، وانت",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T04:34:40.857Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T04:34:40.857Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -824,17 +824,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "(.J1 'D-E/ DDG",
+  "message": "بخير الحمد لله",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T04:34:51.256Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T04:34:51.256Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -848,17 +848,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "*A8D",
+  "message": "تفظل",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T04:35:08.057Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T04:35:08.057Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -872,17 +872,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "'F* -'7* 3J'1G DD(J9",
+  "message": "انت حاطت سياره للبيع",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T04:35:26.640Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T04:35:26.640Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -896,17 +896,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "CJAC",
+  "message": "كيفك",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T05:05:01.900Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T05:05:01.900Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -920,17 +920,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "''",
+  "message": "اا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T05:05:19.675Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T05:05:19.675Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -944,17 +944,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "''G",
+  "message": "ااه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T05:05:40.458Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T05:05:40.458Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -972,13 +972,13 @@
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T05:05:46.737Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T05:05:46.737Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -992,17 +992,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "E1-('",
+  "message": "مرحبا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T11:27:45.943Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T11:27:45.943Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -1016,17 +1016,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "'GDJF",
+  "message": "اهلين",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T11:28:15.036Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T11:28:15.036Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -1040,17 +1040,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "CJAC\\",
+  "message": "كيفك\\",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T11:28:28.749Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T11:28:28.749Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -1064,17 +1064,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "E1-('",
+  "message": "مرحبا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T11:28:52.929Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T11:28:52.929Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -1088,17 +1088,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "GD'",
+  "message": "هلا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T11:28:58.977Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T11:28:58.977Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -1112,17 +1112,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "GGGGGGG",
+  "message": "ههههههه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T11:29:01.011Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T11:29:01.011Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -1136,17 +1136,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "4H 'D'.('1",
+  "message": "شو الاخبار",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T11:29:10.918Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T11:29:10.918Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -1160,17 +1160,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "9'/J",
+  "message": "عادي",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T11:29:16.454Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T11:29:16.454Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -1184,17 +1184,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "4H 'DH69",
+  "message": "شو الوضع",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T11:29:33.921Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T11:29:33.921Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -1208,17 +1208,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "*E'E",
+  "message": "تمام",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T11:29:59.924Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T11:29:59.924Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -1232,17 +1232,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "GD'",
+  "message": "هلا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T11:31:38.131Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T11:31:38.131Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -1256,17 +1256,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "GD'",
+  "message": "هلا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T11:32:16.442Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T11:32:16.442Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -1280,17 +1280,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "*'*",
+  "message": "تات",
   "warning": true,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T11:32:55.104Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T11:32:55.104Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -1304,17 +1304,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "''",
+  "message": "اا",
   "warning": true,
   "isImportant": true,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T11:33:13.024Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T11:33:13.024Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -1328,17 +1328,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "''",
+  "message": "اا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T11:33:25.282Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T11:33:25.282Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -1352,17 +1352,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "GD'",
+  "message": "هلا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T12:22:32.113Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T12:22:32.113Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -1376,17 +1376,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "4H 'DH69",
+  "message": "شو الوضع",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-14T15:52:28.160Z"
   },
   "updatedAt": {
-    "$date": "2026-02-14T15:52:28.160Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -1424,7 +1424,7 @@
   "to": {
     "$oid": "698623a8e6bc0b47c72a0109"
   },
-  "message": "GD' J' :'DJ",
+  "message": "هلا يا غالي",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -1448,7 +1448,7 @@
   "to": {
     "$oid": "698623a8e6bc0b47c72a0109"
   },
-  "message": "GGGG",
+  "message": "هههه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -1520,7 +1520,7 @@
   "to": {
     "$oid": "698623a8e6bc0b47c72a0109"
   },
-  "message": "*('J'J'J'*(*(*(*",
+  "message": "تباياياياتبتبتبت",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -1544,7 +1544,7 @@
   "to": {
     "$oid": "698623a8e6bc0b47c72a0109"
   },
-  "message": "GGGGGG",
+  "message": "هههههه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -1568,7 +1568,7 @@
   "to": {
     "$oid": "698623a8e6bc0b47c72a0109"
   },
-  "message": "GGGGGGG",
+  "message": "ههههههه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -1760,7 +1760,7 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "3DEDJ 9'DDJ -/C",
+  "message": "سلملي عاللي حدك",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -1784,7 +1784,7 @@
   "to": {
     "$oid": "698623a8e6bc0b47c72a0109"
   },
-  "message": "H5D",
+  "message": "وصل",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -1808,7 +1808,7 @@
   "to": {
     "$oid": "698623a8e6bc0b47c72a0109"
   },
-  "message": "-3JJF CJAC",
+  "message": "حسيين كيفك",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -1832,7 +1832,7 @@
   "to": {
     "$oid": "698623a8e6bc0b47c72a0109"
   },
-  "message": "GGGGGG",
+  "message": "هههههه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -1856,17 +1856,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "GG",
+  "message": "هه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-15T18:25:53.364Z"
   },
   "updatedAt": {
-    "$date": "2026-02-15T18:25:53.364Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -1880,17 +1880,17 @@
   "to": {
     "$oid": "6984903c9e0bc4d9ed0741c2"
   },
-  "message": "'J1J AJC",
+  "message": "ايري فيك",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6980c609317475fe5c733aed_6984903c9e0bc4d9ed0741c2",
   "createdAt": {
     "$date": "2026-02-15T18:30:16.660Z"
   },
   "updatedAt": {
-    "$date": "2026-02-15T18:30:16.660Z"
+    "$date": "2026-03-26T04:04:44.416Z"
   },
   "__v": 0
 },
@@ -1904,17 +1904,17 @@
   "to": {
     "$oid": "6984903c9e0bc4d9ed0741c2"
   },
-  "message": "GGGGGG",
+  "message": "هههههه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6980c609317475fe5c733aed_6984903c9e0bc4d9ed0741c2",
   "createdAt": {
     "$date": "2026-02-15T18:30:32.034Z"
   },
   "updatedAt": {
-    "$date": "2026-02-15T18:30:32.034Z"
+    "$date": "2026-03-26T04:04:44.416Z"
   },
   "__v": 0
 },
@@ -1928,17 +1928,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "''",
+  "message": "اا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-16T03:42:15.861Z"
   },
   "updatedAt": {
-    "$date": "2026-02-16T03:42:15.861Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -1952,17 +1952,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "GG",
+  "message": "هه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-16T03:42:20.608Z"
   },
   "updatedAt": {
-    "$date": "2026-02-16T03:42:20.608Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -1976,17 +1976,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "GD'",
+  "message": "هلا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-16T03:46:35.419Z"
   },
   "updatedAt": {
-    "$date": "2026-02-16T03:46:35.419Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -2000,17 +2000,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "'GDJF",
+  "message": "اهلين",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-16T03:46:55.995Z"
   },
   "updatedAt": {
-    "$date": "2026-02-16T03:46:55.995Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -2024,17 +2024,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "GD'",
+  "message": "هلا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-16T03:47:15.025Z"
   },
   "updatedAt": {
-    "$date": "2026-02-16T03:47:15.025Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -2048,17 +2048,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "GGGGG",
+  "message": "ههههه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-16T03:47:40.352Z"
   },
   "updatedAt": {
-    "$date": "2026-02-16T03:47:40.352Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -2072,17 +2072,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "GD' GD'",
+  "message": "هلا هلا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-16T03:47:50.659Z"
   },
   "updatedAt": {
-    "$date": "2026-02-16T03:47:50.659Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -2096,17 +2096,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "''''",
+  "message": "اااا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-16T03:48:01.297Z"
   },
   "updatedAt": {
-    "$date": "2026-02-16T03:48:01.297Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -2120,17 +2120,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "'D9GG",
+  "message": "العهه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-16T03:48:12.251Z"
   },
   "updatedAt": {
-    "$date": "2026-02-16T03:48:12.251Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -2144,17 +2144,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "GGGGGG",
+  "message": "هههههه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-16T03:48:28.619Z"
   },
   "updatedAt": {
-    "$date": "2026-02-16T03:48:28.619Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -2168,17 +2168,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "GGGG",
+  "message": "هههه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-16T03:48:36.793Z"
   },
   "updatedAt": {
-    "$date": "2026-02-16T03:48:36.793Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -2192,17 +2192,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "GGG",
+  "message": "ههه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-16T03:48:54.371Z"
   },
   "updatedAt": {
-    "$date": "2026-02-16T03:48:54.371Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -2216,17 +2216,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "9999",
+  "message": "عععع",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-16T03:49:02.339Z"
   },
   "updatedAt": {
-    "$date": "2026-02-16T03:49:02.339Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -2240,7 +2240,7 @@
   "to": {
     "$oid": "698623a8e6bc0b47c72a0109"
   },
-  "message": "4H 'DH69",
+  "message": "شو الوضع",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -2264,7 +2264,7 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "'D3D'E 9DJCE",
+  "message": "السلام عليكم",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -2288,7 +2288,7 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "'.HJ",
+  "message": "اخوي",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -2336,7 +2336,7 @@
   "to": {
     "$oid": "699742c99a6b9bd1a2fa9ea7"
   },
-  "message": "4H 'DH69",
+  "message": "شو الوضع",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -2360,7 +2360,7 @@
   "to": {
     "$oid": "699742c99a6b9bd1a2fa9ea7"
   },
-  "message": "GGGGGG",
+  "message": "هههههه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -2384,7 +2384,7 @@
   "to": {
     "$oid": "699742c99a6b9bd1a2fa9ea7"
   },
-  "message": "F'''1 'G",
+  "message": "نااار اه؟",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -2408,7 +2408,7 @@
   "to": {
     "$oid": "699742c99a6b9bd1a2fa9ea7"
   },
-  "message": "'''",
+  "message": "ااا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -2432,17 +2432,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "E1-('",
+  "message": "مرحبا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-20T07:22:33.237Z"
   },
   "updatedAt": {
-    "$date": "2026-02-20T07:22:33.237Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -2456,17 +2456,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "4H 'DH69",
+  "message": "شو الوضع",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-20T07:22:41.644Z"
   },
   "updatedAt": {
-    "$date": "2026-02-20T07:22:41.644Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -2480,17 +2480,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "CJAC",
+  "message": "كيفك",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-20T07:22:46.379Z"
   },
   "updatedAt": {
-    "$date": "2026-02-20T07:22:46.379Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -2504,17 +2504,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "''G '.HJ",
+  "message": "ااه اخوي",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-20T07:23:02.694Z"
   },
   "updatedAt": {
-    "$date": "2026-02-20T07:23:02.694Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -2528,17 +2528,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "GD'",
+  "message": "هلا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-20T07:23:41.823Z"
   },
   "updatedAt": {
-    "$date": "2026-02-20T07:23:41.823Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -2552,17 +2552,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "''G '.HJ",
+  "message": "ااه اخوي",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-20T07:24:02.354Z"
   },
   "updatedAt": {
-    "$date": "2026-02-20T07:24:02.354Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -2576,17 +2576,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "CJA",
+  "message": "كيف",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-20T07:24:08.589Z"
   },
   "updatedAt": {
-    "$date": "2026-02-20T07:24:08.589Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -2600,17 +2600,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "9D'",
+  "message": "علا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-20T07:24:52.254Z"
   },
   "updatedAt": {
-    "$date": "2026-02-20T07:24:52.254Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -2624,17 +2624,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "-(J( BD(J",
+  "message": "حبيب قلبي",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-20T07:24:59.428Z"
   },
   "updatedAt": {
-    "$date": "2026-02-20T07:24:59.428Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -2648,17 +2648,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "GD' AJC",
+  "message": "هلا فيك",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-20T07:25:13.039Z"
   },
   "updatedAt": {
-    "$date": "2026-02-20T07:25:13.039Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -2672,17 +2672,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "GGGGGG",
+  "message": "هههههه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-20T07:25:18.796Z"
   },
   "updatedAt": {
-    "$date": "2026-02-20T07:25:18.796Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -2696,17 +2696,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "GD'",
+  "message": "هلا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-20T07:26:34.225Z"
   },
   "updatedAt": {
-    "$date": "2026-02-20T07:26:34.225Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -2720,17 +2720,17 @@
   "to": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "message": "CJAC '.HJ",
+  "message": "كيفك اخوي",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-20T07:26:44.055Z"
   },
   "updatedAt": {
-    "$date": "2026-02-20T07:26:44.055Z"
+    "$date": "2026-03-19T07:10:29.767Z"
   },
   "__v": 0
 },
@@ -2744,17 +2744,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "9D' AJC",
+  "message": "علا فيك",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-20T07:26:59.762Z"
   },
   "updatedAt": {
-    "$date": "2026-02-20T07:26:59.762Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -2768,17 +2768,17 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "'GDJF",
+  "message": "اهلين",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-20T07:27:16.002Z"
   },
   "updatedAt": {
-    "$date": "2026-02-20T07:27:16.002Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -2792,7 +2792,7 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "'''G /H/",
+  "message": "اااه دود",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -2816,7 +2816,7 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "������",
+  "message": "הלוווו",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -2840,7 +2840,7 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "�����",
+  "message": "אלווו",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -2864,7 +2864,7 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "'FJJJJ3",
+  "message": "انييييس",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -2888,7 +2888,7 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "HJFC",
+  "message": "وينك",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -2912,7 +2912,7 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "HHHH",
+  "message": "وووو",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -2936,7 +2936,7 @@
   "to": {
     "$oid": "699b384cccc6122ea7aaeab8"
   },
-  "message": "'J1J AJC",
+  "message": "ايري فيك",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -2960,7 +2960,7 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "7(J((((",
+  "message": "طبيبببب",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -2984,7 +2984,7 @@
   "to": {
     "$oid": "699b384cccc6122ea7aaeab8"
   },
-  "message": "G.9.9.",
+  "message": "هخعخعخ",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -3012,13 +3012,13 @@
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-22T17:16:41.958Z"
   },
   "updatedAt": {
-    "$date": "2026-02-22T17:16:41.958Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -3036,13 +3036,13 @@
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-22T17:16:56.348Z"
   },
   "updatedAt": {
-    "$date": "2026-02-22T17:16:56.348Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -3060,13 +3060,13 @@
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-22T17:17:07.543Z"
   },
   "updatedAt": {
-    "$date": "2026-02-22T17:17:07.543Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -3084,13 +3084,13 @@
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-22T17:17:15.608Z"
   },
   "updatedAt": {
-    "$date": "2026-02-22T17:17:15.608Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -3108,13 +3108,13 @@
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-22T17:17:18.312Z"
   },
   "updatedAt": {
-    "$date": "2026-02-22T17:17:18.312Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -3132,13 +3132,13 @@
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-22T17:17:48.424Z"
   },
   "updatedAt": {
-    "$date": "2026-02-22T17:17:48.424Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -3156,13 +3156,13 @@
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-22T17:19:47.398Z"
   },
   "updatedAt": {
-    "$date": "2026-02-22T17:19:47.398Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -3180,13 +3180,13 @@
   "warning": false,
   "isImportant": false,
   "replyTo": null,
-  "status": "delivered",
+  "status": "seen",
   "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
   "createdAt": {
     "$date": "2026-02-22T17:19:53.911Z"
   },
   "updatedAt": {
-    "$date": "2026-02-22T17:19:53.911Z"
+    "$date": "2026-03-19T07:10:48.461Z"
   },
   "__v": 0
 },
@@ -3200,7 +3200,7 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "DJ4 (2(74 '-7 '9D'F",
+  "message": "ليش بزبطش احط اعلان",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -3272,7 +3272,7 @@
   "to": {
     "$oid": "699b384cccc6122ea7aaeab8"
   },
-  "message": "**G(D4",
+  "message": "تتهبلش",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -3296,7 +3296,7 @@
   "to": {
     "$oid": "699b384cccc6122ea7aaeab8"
   },
-  "message": "GGGGGGGG",
+  "message": "هههههههه",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -3320,7 +3320,7 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "(JF 9F/C",
+  "message": "بين عندك؟",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -3344,7 +3344,7 @@
   "to": {
     "$oid": "699b384cccc6122ea7aaeab8"
   },
-  "message": "'G HJD'",
+  "message": "اه ويلا",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -3368,7 +3368,7 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": "DJ4 9F/J D9",
+  "message": "ليش عندي لع",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -3392,7 +3392,7 @@
   "to": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "message": ".D5 (/J4 'D9(",
+  "message": "خلص بديش العب",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -3416,7 +3416,7 @@
   "to": {
     "$oid": "699b384cccc6122ea7aaeab8"
   },
-  "message": "(2(7 (3 (4*:D 9DJG AJ E4'CD",
+  "message": "بزبط بس بشتغل عليه في مشاكل",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -3440,7 +3440,7 @@
   "to": {
     "$oid": "699b384cccc6122ea7aaeab8"
   },
-  "message": "E(JF D9",
+  "message": "مبين لع",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -3464,7 +3464,7 @@
   "to": {
     "$oid": "699b384cccc6122ea7aaeab8"
   },
-  "message": "E(JF4",
+  "message": "مبينش",
   "warning": false,
   "isImportant": false,
   "replyTo": null,
@@ -3499,6 +3499,1446 @@
   },
   "updatedAt": {
     "$date": "2026-02-22T17:40:03.847Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69a9b2a2e98e2e6689552e84"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6984903c9e0bc4d9ed0741c2"
+  },
+  "message": "هبلي",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6980c609317475fe5c733aed_6984903c9e0bc4d9ed0741c2",
+  "createdAt": {
+    "$date": "2026-03-05T16:43:14.905Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T04:04:44.416Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69b95fa28c034d6b2b506761"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "وينك",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-17T14:05:22.459Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T07:10:29.767Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69b95fb88c034d6b2b50676f"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "هذيني",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-17T14:05:44.424Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T07:10:48.461Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69b95fbe8c034d6b2b506776"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "وين",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-17T14:05:50.716Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T07:10:29.767Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69b95fc68c034d6b2b50677d"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "بالدار",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-17T14:05:58.572Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T07:10:48.461Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69b95fd18c034d6b2b506784"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "شو بتعمل",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-17T14:06:09.729Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T07:10:29.767Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69b95fd88c034d6b2b50678b"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "ولا اشي",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-17T14:06:16.577Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T07:10:48.461Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69b95fdf8c034d6b2b506792"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "ههههه",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-17T14:06:23.785Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T07:10:48.461Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69b95fe68c034d6b2b506799"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "ط",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-17T14:06:30.483Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T07:10:29.767Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69bba16ddfeef79e7e7e51be"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "شو الوضع",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-19T07:10:37.746Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T07:10:48.461Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69bba17fdfeef79e7e7e51ce"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "الحمد لله",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-19T07:10:55.381Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T07:11:15.745Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69bba185dfeef79e7e7e51d5"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "8",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-19T07:11:01.851Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T07:11:11.097Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69bba192dfeef79e7e7e51ec"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "1",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-19T07:11:14.293Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T07:11:15.745Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69bba19fdfeef79e7e7e51f5"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "شو الاخبار اخوي",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-19T07:11:27.429Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T07:11:29.085Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69bba1a9dfeef79e7e7e51fe"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "الحمد لله بخير",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-19T07:11:37.926Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T07:11:39.559Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69bdafaaba9a143a17452a26"
+  },
+  "from": {
+    "$oid": "69bdaf88ba9a143a17452a17"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "??",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6980c609317475fe5c733aed_69bdaf88ba9a143a17452a17",
+  "createdAt": {
+    "$date": "2026-03-20T20:35:54.616Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-20T20:35:58.510Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69bdafb6ba9a143a17452a35"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "69bdaf88ba9a143a17452a17"
+  },
+  "message": "מה קטרה",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6980c609317475fe5c733aed_69bdaf88ba9a143a17452a17",
+  "createdAt": {
+    "$date": "2026-03-20T20:36:06.744Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-20T20:36:17.069Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69bdafd7ba9a143a17452a4e"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "69bdaf88ba9a143a17452a17"
+  },
+  "message": "חח",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6980c609317475fe5c733aed_69bdaf88ba9a143a17452a17",
+  "createdAt": {
+    "$date": "2026-03-20T20:36:39.062Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-20T20:36:53.601Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69bdaff0ba9a143a17452a5d"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "69bdaf88ba9a143a17452a17"
+  },
+  "message": "شو الوضع",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6980c609317475fe5c733aed_69bdaf88ba9a143a17452a17",
+  "createdAt": {
+    "$date": "2026-03-20T20:37:04.118Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-20T20:37:05.415Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c4b05e45b2214d29419d32"
+  },
+  "from": {
+    "$oid": "6984903c9e0bc4d9ed0741c2"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "אא",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6980c609317475fe5c733aed_6984903c9e0bc4d9ed0741c2",
+  "createdAt": {
+    "$date": "2026-03-26T04:04:46.689Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T04:04:57.562Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c4b07445b2214d29419d44"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6984903c9e0bc4d9ed0741c2"
+  },
+  "message": "هلا اخوووي",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6980c609317475fe5c733aed_6984903c9e0bc4d9ed0741c2",
+  "createdAt": {
+    "$date": "2026-03-26T04:05:08.903Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T04:05:24.444Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c4b09345b2214d29419d5b"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6984903c9e0bc4d9ed0741c2"
+  },
+  "message": "هلا اخوويي",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6980c609317475fe5c733aed_6984903c9e0bc4d9ed0741c2",
+  "createdAt": {
+    "$date": "2026-03-26T04:05:39.618Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T04:05:40.940Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c4b09a45b2214d29419d63"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6984903c9e0bc4d9ed0741c2"
+  },
+  "message": "شو وينك",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6980c609317475fe5c733aed_6984903c9e0bc4d9ed0741c2",
+  "createdAt": {
+    "$date": "2026-03-26T04:05:46.449Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T04:05:48.007Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c4b0ab45b2214d29419d6b"
+  },
+  "from": {
+    "$oid": "6984903c9e0bc4d9ed0741c2"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "بدار",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6980c609317475fe5c733aed_6984903c9e0bc4d9ed0741c2",
+  "createdAt": {
+    "$date": "2026-03-26T04:06:03.110Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T04:06:04.485Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c4b0b645b2214d29419d73"
+  },
+  "from": {
+    "$oid": "6984903c9e0bc4d9ed0741c2"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "وانت",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6980c609317475fe5c733aed_6984903c9e0bc4d9ed0741c2",
+  "createdAt": {
+    "$date": "2026-03-26T04:06:14.471Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T04:06:15.898Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c4b0b745b2214d29419d7a"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6984903c9e0bc4d9ed0741c2"
+  },
+  "message": "ليش بتكذب يا منيك",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6980c609317475fe5c733aed_6984903c9e0bc4d9ed0741c2",
+  "createdAt": {
+    "$date": "2026-03-26T04:06:15.774Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T04:06:17.074Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c4b0c745b2214d29419d83"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6984903c9e0bc4d9ed0741c2"
+  },
+  "message": "اااا",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6980c609317475fe5c733aed_6984903c9e0bc4d9ed0741c2",
+  "createdAt": {
+    "$date": "2026-03-26T04:06:31.641Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T04:06:32.933Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c4b0cd45b2214d29419d8b"
+  },
+  "from": {
+    "$oid": "6984903c9e0bc4d9ed0741c2"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "تتت",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6980c609317475fe5c733aed_6984903c9e0bc4d9ed0741c2",
+  "createdAt": {
+    "$date": "2026-03-26T04:06:37.704Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T04:06:39.072Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c53ff9fa6c19f9c1f65620"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "شو الوضع",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:17:29.973Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:18:37.793Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c54024fa6c19f9c1f65633"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "وين هيك",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:18:12.612Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:18:37.793Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c54036fa6c19f9c1f6563d"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "بتبينش",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:18:30.093Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:18:37.793Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c5404bfa6c19f9c1f6564d"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "وينك",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:18:51.594Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:18:53.224Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c54055fa6c19f9c1f65655"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "بدار",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:19:01.417Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:20:10.558Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c5406cfa6c19f9c1f65663"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "بدار",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:19:24.842Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:20:10.558Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c5407dfa6c19f9c1f6566a"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "ن",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:19:41.326Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:19:42.864Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c54081fa6c19f9c1f65672"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "د",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:19:45.079Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:19:46.123Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c54085fa6c19f9c1f6567a"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "ه",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:19:49.942Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:19:51.466Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c5408afa6c19f9c1f65682"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "ه",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:19:54.567Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:20:10.558Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c54092fa6c19f9c1f65689"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "ه",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:20:02.759Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:20:10.558Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c5409ffa6c19f9c1f65698"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "ز",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:20:15.040Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:20:16.566Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c540a4fa6c19f9c1f656a0"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "ز",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:20:20.062Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:20:21.539Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c540b1fa6c19f9c1f656a8"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "شو بتعمل انتي؟",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:20:33.036Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:20:34.688Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c540bcfa6c19f9c1f656b0"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "ولا اشي",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:20:44.124Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:20:45.685Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c540c4fa6c19f9c1f656b8"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "ممم",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:20:52.623Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:20:54.166Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c540ccfa6c19f9c1f656c0"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "تاىل",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:21:00.151Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:21:01.799Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c540e2fa6c19f9c1f656d5"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "ههههههه",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:21:22.035Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:21:23.413Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c540e7fa6c19f9c1f656dd"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "هههههه",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:21:27.771Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:21:29.260Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c5411dfa6c19f9c1f656e5"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "يخيي",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:22:21.701Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:22:23.284Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c54123fa6c19f9c1f656ed"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "هههههه",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:22:27.841Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:22:29.490Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c5412efa6c19f9c1f656f5"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "هههههههه",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:22:38.696Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:22:40.582Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c5413cfa6c19f9c1f656fd"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "هههههههه",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:22:52.167Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:22:53.682Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c54142fa6c19f9c1f65705"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "هلااا",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T14:22:58.058Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T14:23:00.102Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c555081be5581ffa8288fd"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "كيفك",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T15:47:20.628Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T15:47:34.378Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c5551c1be5581ffa82890d"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "jjj",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T15:47:40.622Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T15:48:14.559Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c5554f1be5581ffa828926"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "jjjj",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T15:48:31.389Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T15:48:32.668Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c5555b1be5581ffa82892e"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "نن",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T15:48:43.528Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T15:48:44.958Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c5556f1be5581ffa828936"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "10",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T15:49:03.682Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T15:49:05.058Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c555871be5581ffa828954"
+  },
+  "from": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "to": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "message": "jhgf",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T15:49:27.798Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T15:49:38.902Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c555b01be5581ffa82896b"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "12",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T15:50:08.534Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T15:50:14.371Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c555bc1be5581ffa82897d"
+  },
+  "from": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "to": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "message": "44",
+  "warning": false,
+  "isImportant": false,
+  "replyTo": null,
+  "status": "seen",
+  "roomId": "6979d4774f1db7cd4a712604_6980c609317475fe5c733aed",
+  "createdAt": {
+    "$date": "2026-03-26T15:50:20.256Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T15:50:36.535Z"
   },
   "__v": 0
 }]
