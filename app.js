@@ -18,20 +18,28 @@ const images = require("./routes/deleteImage");
 
 const app = express();
 
-app.use(
-	cors({
-		origin: (origin, callback) => {
-			if (!origin || allowedOrigins.includes(origin)) {
-				callback(null, true);
-			} else {
-				callback(new Error("Not allowed by CORS"));
-			}
-		},
-		methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-		credentials: true,
-		allowedHeaders: ["Content-Type", "Authorization"],
-	}),
-);
+const corsOptions = {
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps, curl, etc.)
+        if (!origin) return callback(null, true);
+        
+       
+        
+        // Check against allowed origins
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            console.log('Blocked by CORS:', origin);
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+};
+
+// Apply CORS middleware
+app.use(cors(corsOptions));
 
 app.use((err, req, res, next) => {
 	if (err instanceof Error && err.message === "Not allowed by CORS") {
