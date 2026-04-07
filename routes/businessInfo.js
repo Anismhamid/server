@@ -26,6 +26,7 @@ router.put("/", auth, async (req, res) => {
 		});
 
 		res.status(200).send(businessInfo);
+		
 	} catch (error) {
 		res.status(400).send(error.message);
 	}
