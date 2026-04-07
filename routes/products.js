@@ -237,8 +237,10 @@ router.delete("/:productId", auth, async (req, res) => {
 		}
 
 		// 1. حذف الصورة أولاً (شرط أساسي)
-		if (product.image?.publicId) {
+		if (product.image.publicId) {
 			await cloudinary.uploader.destroy(product.image.publicId);
+			console.log(product.image.publicId);
+			
 
 			// 2. حذف المنتج فقط إذا نجح حذف الصورة
 			await product.deleteOne();
