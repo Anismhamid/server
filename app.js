@@ -1,20 +1,20 @@
-const express = require("express");
-const cors = require("cors");
-const helmet = require("helmet");
-const {limiter} = require("./middlewares/rateLimiter");
-const {logger, logToFile} = require("./utils/logger");
-const {allowedOrigins} = require("./config/allowOrigins");
-const morgan = require("morgan");
+const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
+const { limiter } = require('./middlewares/rateLimiter');
+const { logger, logToFile } = require('./utils/logger');
+const { allowedOrigins } = require('./config/allowOrigins');
+const morgan = require('morgan');
 
-const users = require("./routes/users");
-const products = require("./routes/products");
-const businessInfo = require("./routes/businessInfo");
-const featuredAd = require("./routes/featuredRegister");
-const discounts = require("./routes/discountAndOffers");
-const receipt = require("./routes/receipt");
-const cities = require("./routes/cities");
-const messages = require("./routes/messages");
-const images = require("./routes/deleteImage");
+const users = require('./routes/users');
+const products = require('./routes/products');
+const businessInfo = require('./routes/businessInfo');
+const featuredAd = require('./routes/featuredRegister');
+const discounts = require('./routes/discountAndOffers');
+const receipt = require('./routes/receipt');
+const cities = require('./routes/cities');
+const messages = require('./routes/messages');
+const images = require('./routes/deleteImage');
 
 const app = express();
 
@@ -22,9 +22,7 @@ const corsOptions = {
     origin: function (origin, callback) {
         // Allow requests with no origin (like mobile apps, curl, etc.)
         if (!origin) return callback(null, true);
-        
-       
-        
+
         // Check against allowed origins
         if (allowedOrigins.indexOf(origin) !== -1) {
             callback(null, true);
@@ -42,30 +40,30 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use((err, req, res, next) => {
-	if (err instanceof Error && err.message === "Not allowed by CORS") {
-		return res.status(403).send("CORS error: Access denied");
-	}
-	next(err);
+    if (err instanceof Error && err.message === 'Not allowed by CORS') {
+        return res.status(403).send('CORS error: Access denied');
+    }
+    next(err);
 });
 
-app.use(express.json({limit: "5mb"}));
+app.use(express.json({ limit: '5mb' }));
 app.use(helmet());
 app.use(logger);
 logToFile();
 app.use(limiter);
-app.use(morgan("dev"));
+app.use(morgan('dev'));
 
 //  products
-app.use("/api/products", products);
+app.use('/api/products', products);
 
 // users and business
-app.use("/api/users", users);
-app.use("/api/business-info", businessInfo);
-app.use("/api/featured-ads", featuredAd);
-app.use("/api/discounts", discounts);
-app.use("/api/receipt", receipt);
-app.use("/api/cities", cities);
-app.use("/api/messages", messages);
-app.use("/api/images", images);
+app.use('/api/users', users);
+app.use('/api/business-info', businessInfo);
+app.use('/api/featured-ads', featuredAd);
+app.use('/api/discounts', discounts);
+app.use('/api/receipt', receipt);
+app.use('/api/cities', cities);
+app.use('/api/messages', messages);
+app.use('/api/images', images);
 
 module.exports = app;
