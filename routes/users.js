@@ -77,14 +77,6 @@ router.post("/", async (req, res) => {
 
 		await user.save();
 
-		// create cart
-		// const cart = new Cart({
-		// 	userId: user._id,
-		// 	products: [],
-		// });
-
-		// await cart.save();
-
 		const io = req.app.get("io");
 		io.emit("user:registered", {
 			userId: user._id,

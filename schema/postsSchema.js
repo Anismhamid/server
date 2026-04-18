@@ -21,7 +21,7 @@ const {
  * @param {string} type (اختياري) الفئة الفرعية
  * @returns Joi.ObjectSchema
  */
-function getProductSchema(category, type) {
+function getPostSchema(category, type) {
 	const schemas = {
 		House: houseSchema,
 		Garden: gardenSchema,
@@ -84,4 +84,4 @@ function getProductSchema(category, type) {
 	return schema;
 }
 
-module.exports = {getProductSchema};
+module.exports = {getPostSchema};

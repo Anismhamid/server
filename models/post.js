@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 // ===== Base Schema لجميع المنتجات =====
-const baseProductSchema = new mongoose.Schema(
+const basePostsSchema = new mongoose.Schema(
 	{
 		seller: {
 			name: {type: String},
@@ -26,7 +26,7 @@ const baseProductSchema = new mongoose.Schema(
 	{timestamps: true, discriminatorKey: "category"},
 );
 
-const Products = mongoose.model("Products", baseProductSchema);
+const Posts = mongoose.model("Posts", basePostsSchema);
 
 /* ================== House ================== */
 const houseSchema = new mongoose.Schema({
@@ -43,7 +43,7 @@ const houseSchema = new mongoose.Schema({
 	powerWatts: {type: Number},
 	usageType: {type: String},
 });
-Products.discriminator("House", houseSchema);
+Posts.discriminator("House", houseSchema);
 
 /* ================== Garden ================== */
 const gardenSchema = new mongoose.Schema({
@@ -61,7 +61,7 @@ const gardenSchema = new mongoose.Schema({
 	toolType: {type: String},
 	weatherResistant: {type: Boolean},
 });
-Products.discriminator("Garden", gardenSchema);
+Posts.discriminator("Garden", gardenSchema);
 
 /* ================== Cars ================== */
 const carSchema = new mongoose.Schema({
@@ -85,7 +85,7 @@ const carSchema = new mongoose.Schema({
 	mileage: {type: Number, min: 0},
 	color: {type: String},
 });
-Products.discriminator("Cars", carSchema);
+Posts.discriminator("Cars", carSchema);
 
 /* ================== Bikes ================== */
 const bikeSchema = new mongoose.Schema({
@@ -95,7 +95,7 @@ const bikeSchema = new mongoose.Schema({
 	weight: {type: Number}, // للفئة road
 	suspension: {type: Boolean}, // للفئة mountain
 });
-Products.discriminator("Bikes", bikeSchema);
+Posts.discriminator("Bikes", bikeSchema);
 
 /* ================== Trucks ================== */
 const truckSchema = new mongoose.Schema({
@@ -104,7 +104,7 @@ const truckSchema = new mongoose.Schema({
 	loadCapacityTons: {type: Number, required: true},
 	axles: {type: Number}, // للفئة heavy
 });
-Products.discriminator("Trucks", truckSchema);
+Posts.discriminator("Trucks", truckSchema);
 
 /* ================== Electric Vehicles ================== */
 const electricSchema = new mongoose.Schema({
@@ -113,7 +113,7 @@ const electricSchema = new mongoose.Schema({
 	batteryCapacity: {type: Number},
 	rangeKm: {type: Number},
 });
-Products.discriminator("ElectricVehicles", electricSchema);
+Posts.discriminator("ElectricVehicles", electricSchema);
 
 /* ================== Men Clothes ================== */
 const menClothesSchema = new mongoose.Schema({
@@ -122,7 +122,7 @@ const menClothesSchema = new mongoose.Schema({
 	material: {type: String},
 	color: {type: String},
 });
-Products.discriminator("MenClothes", menClothesSchema);
+Posts.discriminator("MenClothes", menClothesSchema);
 
 /* ================== Women Clothes ================== */
 const womenClothesSchema = new mongoose.Schema({
@@ -133,7 +133,7 @@ const womenClothesSchema = new mongoose.Schema({
 	length: {type: String}, // للفئة dresses
 	heelHeight: {type: Number}, // للفئة shoes
 });
-Products.discriminator("WomenClothes", womenClothesSchema);
+Posts.discriminator("WomenClothes", womenClothesSchema);
 
 /* ================== Baby ================== */
 const babySchema = new mongoose.Schema({
@@ -152,7 +152,7 @@ const babySchema = new mongoose.Schema({
 	},
 	material: {type: String},
 });
-Products.discriminator("Baby", babySchema);
+Posts.discriminator("Baby", babySchema);
 
 /* ================== Kids ================== */
 const kidsSchema = new mongoose.Schema({
@@ -160,7 +160,7 @@ const kidsSchema = new mongoose.Schema({
 	ageGroup: {type: String, required: true},
 	safeMaterial: {type: Boolean},
 });
-Products.discriminator("Kids", kidsSchema);
+Posts.discriminator("Kids", kidsSchema);
 
 /* ================== Health ================== */
 const healthSchema = new mongoose.Schema({
@@ -168,7 +168,7 @@ const healthSchema = new mongoose.Schema({
 	brand: {type: String},
 	expiryDate: {type: String}, // للحفاظ على توافق مع categoriesLogic
 });
-Products.discriminator("Health", healthSchema);
+Posts.discriminator("Health", healthSchema);
 
 /* ================== Beauty ================== */
 const beautySchema = new mongoose.Schema({
@@ -176,7 +176,7 @@ const beautySchema = new mongoose.Schema({
 	brand: {type: String},
 	expiryDate: {type: String},
 });
-Products.discriminator("Beauty", beautySchema);
+Posts.discriminator("Beauty", beautySchema);
 
 /* ================== Watches ================== */
 const watchesSchema = new mongoose.Schema({
@@ -184,7 +184,7 @@ const watchesSchema = new mongoose.Schema({
 	brand: {type: String},
 	waterResistant: {type: Boolean},
 });
-Products.discriminator("0Watches", watchesSchema);
+Posts.discriminator("0Watches", watchesSchema);
 
 /* ================== Cleaning ================== */
 const cleaningSchema = new mongoose.Schema({
@@ -192,6 +192,11 @@ const cleaningSchema = new mongoose.Schema({
 	brand: {type: String},
 	volume: {type: Number},
 });
-Products.discriminator("Cleaning", cleaningSchema);
+Posts.discriminator("Cleaning", cleaningSchema);
 
-module.exports = Products;
+basePostsSchema.index({ category: 1 });
+basePostsSchema.index({ brand: 1 });
+basePostsSchema.index({ type: 1 });
+basePostsSchema.index({ price: 1 });
+
+module.exports = Posts;

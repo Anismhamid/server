@@ -4,7 +4,7 @@ const featuredAdSchema = new mongoose.Schema(
 	{
 		listingId: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: "Products",
+			ref: "Posts",
 			required: true,
 			index: true,
 		},

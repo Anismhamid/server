@@ -7,11 +7,10 @@ const { allowedOrigins } = require('./config/allowOrigins');
 const morgan = require('morgan');
 
 const users = require('./routes/users');
-const products = require('./routes/products');
+const posts = require('./routes/posts');
 const businessInfo = require('./routes/businessInfo');
 const featuredAd = require('./routes/featuredRegister');
 const discounts = require('./routes/discountAndOffers');
-const receipt = require('./routes/receipt');
 const cities = require('./routes/cities');
 const messages = require('./routes/messages');
 const images = require('./routes/deleteImage');
@@ -53,15 +52,14 @@ logToFile();
 app.use(limiter);
 app.use(morgan('dev'));
 
-//  products
-app.use('/api/products', products);
+//  posts
+app.use('/api/posts', posts);
 
 // users and business
 app.use('/api/users', users);
 app.use('/api/business-info', businessInfo);
 app.use('/api/featured-ads', featuredAd);
 app.use('/api/discounts', discounts);
-app.use('/api/receipt', receipt);
 app.use('/api/cities', cities);
 app.use('/api/messages', messages);
 app.use('/api/images', images);
