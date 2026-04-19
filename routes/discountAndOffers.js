@@ -3,6 +3,7 @@ const router = express.Router();
 const Posts = require('../models/post');
 const { disconnect } = require('mongoose');
 
+
 router.get('/', async (req, res) => {
     try {
         const discounts = await Posts.aggregate([
