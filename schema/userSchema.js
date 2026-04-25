@@ -39,7 +39,7 @@ const userSchema = Joi.object({
 	}),
 	role: Joi.string().valid("Admin", "Moderator", "Client").default("Client"),
 	activity: Joi.array(),
-	registrAt: Joi.string(),
+	registeredAt: Joi.date(),
 	status: Joi.boolean(),
 	terms: Joi.boolean().required(),
 });

@@ -217,40 +217,26 @@ router.put('/:postId', auth, async (req, res) => {
         const post = await Posts.findById(req.params.postId);
         if (!post) return res.status(404).send('Post not found');
 
-        // Authorization
         if (req.payload.slug !== post.seller.slug) {
-            return res
-                .status(403)
-                .send("Access denied. You can't update this post");
+            return res.status(403).send('Access denied');
         }
 
-        // Prevent updating protected fields
-        delete req.body._id;
-        delete req.body.category;
-        delete req.body.type;
-        delete req.body.seller;
-        delete req.body.likes;
-
-        // Get dynamic schema based on existing post
         const schema = getPostSchema(post.category, post.type);
 
-        // Make schema optional (for update)
-        const updateSchema = schema.fork(
-            Object.keys(schema.describe().keys),
-            (field) => field.optional(),
-        );
-
-        const { error } = updateSchema.validate(req.body, {
-            abortEarly: true,
+        const { error, value } = schema.validate(req.body, {
+            abortEarly: false,
             allowUnknown: false,
+            presence: 'optional',
         });
 
-        if (error) return res.status(400).send(error.details[0].message);
+        if (error) {
+            return res.status(400).send(error.details[0].message);
+        }
 
         const updatedPost = await Posts.findByIdAndUpdate(
             req.params.postId,
-            { $set: req.body },
-            { new: true, runValidators: true },
+            { $set: value },
+            { returnDocument: 'after', runValidators: true },
         );
 
         res.status(200).send(updatedPost);
@@ -258,7 +244,6 @@ router.put('/:postId', auth, async (req, res) => {
         res.status(500).send(error.message);
     }
 });
-
 // Delete post
 router.delete('/:postId', auth, async (req, res) => {
     const { postId } = req.params;
