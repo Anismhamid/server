@@ -320,8 +320,7 @@ router.get('/:category', async (req, res) => {
             category: category.charAt(0).toUpperCase() + category.slice(1),
         });
 
-        if (post.length === 0)
-            return res.status(404).send(`${category} not found`);
+        if (!post.length) return res.status(404).send(`${category} not found`);
 
         res.status(200).send(post);
     } catch (error) {
@@ -360,6 +359,61 @@ router.patch('/:postId/like', auth, async (req, res) => {
     } catch (error) {
         console.error('Like error:', error);
         res.status(500).send({ message: 'Internal server error' });
+    }
+});
+
+router.patch('/:postId/reviews', auth, async (req, res) => {
+    try {
+        const { postId } = req.params;
+        const { comment, rating } = req.body;
+        const { _id } = req.payload;
+
+        // validation
+        if (!comment || comment.trim().length === 0) {
+            return res.status(400).send({ message: 'Comment is required' });
+        }
+
+        const numericRating = Number(rating);
+
+        if (rating !== undefined && (numericRating < 1 || numericRating > 5)) {
+            return res
+                .status(400)
+                .send({ message: 'Rating must be between 1 and 5' });
+        }
+
+        // find post
+        const post = await Posts.findById(postId);
+        if (!post) {
+            return res.status(404).send({ message: 'Post not found' });
+        }
+
+        // optional: prevent duplicate review by same user
+        // const alreadyReviewed = post.reviews.some(
+        // 	r => r.user.toString() === _id.toString()
+        // );
+
+        // if (alreadyReviewed) {
+        // 	return res.status(400).send({ message: 'You already reviewed this post' });
+        // }
+
+        const newReview = {
+            user: {_id: req.payload._id, name:{ first: req.payload.name.first, last: req.payload.name.last } },
+            comment: comment.trim(),
+            rating: rating !== undefined ? numericRating : null,
+            createdAt: new Date(),
+        };
+
+        post.markModified('reviews');
+        post.reviews = [...post.reviews, newReview];
+        await post.save();
+
+        return res.status(201).send({
+            message: 'Review added successfully',
+            review: newReview,
+        });
+    } catch (error) {
+        console.error('Review error:', error);
+        res.status(500).send({ message: error.message });
     }
 });
 

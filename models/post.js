@@ -1,198 +1,260 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+const User = require('./User');
 
 // ===== Base Schema لجميع المنتجات =====
 const basePostsSchema = new mongoose.Schema(
-	{
-		seller: {
-			name: {type: String},
-			slug: {type: String},
-			user: {type: mongoose.Schema.Types.ObjectId, ref: "User", required: true},
-		},
-		product_name: {type: String, required: true, trim: true},
-		category: {type: String, required: true},
-		subcategory: {type: String, required: true},
-		price: {type: Number, required: true, min: [1, "Price must be positive"]},
-		description: {type: String, maxlength: 500},
-		image: {
-			url: {type: String, required: true},
-			publicId: {type: String, required: true},
-		},
-		likes: {type: [String], default: []},
-		sale: {type: Boolean, default: false},
-		discount: {type: Number, min: 0, max: 100},
-		location: {type: String},
-		in_stock: {type: Boolean, default: true},
-	},
-	{timestamps: true, discriminatorKey: "category"},
+    {
+        seller: {
+            name: { type: String },
+            slug: { type: String },
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+                required: true,
+            },
+        },
+        product_name: { type: String, required: true, trim: true },
+        category: { type: String, required: true },
+        subcategory: { type: String, required: true },
+        price: {
+            type: Number,
+            required: true,
+            min: [1, 'Price must be positive'],
+        },
+        description: { type: String, maxlength: 500 },
+        image: {
+            url: { type: String, required: true },
+            publicId: { type: String, required: true },
+        },
+        likes: { type: [String], default: [] },
+        reviews: [
+            {
+                user: {
+                    type: {
+                        _id: mongoose.Schema.Types.ObjectId,
+                        name: { first: String, last: String },
+                        image: { type: String },
+                    },
+                    required: false,
+                },
+                comment: {
+                    type: String,
+                    required: true,
+                },
+                rating: {
+                    type: Number,
+                    min: 0,
+                    max: 5,
+                },
+                createdAt: {
+                    type: Date,
+                    default: Date.now,
+                },
+            },
+        ],
+        sale: { type: Boolean, default: false },
+        discount: { type: Number, min: 0, max: 100 },
+        location: { type: String },
+        in_stock: { type: Boolean, default: true },
+    },
+    { timestamps: true, discriminatorKey: 'category' },
 );
 
-const Posts = mongoose.model("Posts", basePostsSchema);
+const Posts = mongoose.model('Posts', basePostsSchema);
 
 /* ================== House ================== */
 const houseSchema = new mongoose.Schema({
-	type: {
-		type: String,
-		enum: ["kitchen", "storage", "decor", "maintenance"],
-		required: true,
-	},
-	brand: {type: String},
-	material: {type: String},
-	color: {type: String},
-	dimensions: {type: String},
-	capacity: {type: Number},
-	powerWatts: {type: Number},
-	usageType: {type: String},
+    type: {
+        type: String,
+        enum: ['kitchen', 'storage', 'decor', 'maintenance'],
+        required: true,
+    },
+    brand: { type: String },
+    material: { type: String },
+    color: { type: String },
+    dimensions: { type: String },
+    capacity: { type: Number },
+    powerWatts: { type: Number },
+    usageType: { type: String },
 });
-Posts.discriminator("House", houseSchema);
+Posts.discriminator('House', houseSchema);
 
 /* ================== Garden ================== */
 const gardenSchema = new mongoose.Schema({
-	type: {
-		type: String,
-		enum: ["plants", "watering", "tools", "outdoorDecor"],
-		required: true,
-	},
-	brand: {type: String},
-	plantType: {type: String},
-	season: {type: String},
-	sunExposure: {type: String},
-	hoseLength: {type: Number},
-	automatic: {type: Boolean},
-	toolType: {type: String},
-	weatherResistant: {type: Boolean},
+    type: {
+        type: String,
+        enum: ['plants', 'watering', 'tools', 'outdoorDecor'],
+        required: true,
+    },
+    brand: { type: String },
+    plantType: { type: String },
+    season: { type: String },
+    sunExposure: { type: String },
+    hoseLength: { type: Number },
+    automatic: { type: Boolean },
+    toolType: { type: String },
+    weatherResistant: { type: Boolean },
 });
-Posts.discriminator("Garden", gardenSchema);
+Posts.discriminator('Garden', gardenSchema);
 
 /* ================== Cars ================== */
 const carSchema = new mongoose.Schema({
-	type: {type: String, enum: ["private", "electric", "parts"], required: true},
-	brand: {type: String, required: true},
-	year: {
-		type: Number,
-		required: function () {
-			return this.type !== "parts";
-		},
-	},
-	fuel: {
-		type: String,
-		enum: ["gasoline", "diesel", "hybrid", "electric"],
-		required: function () {
-			return this.type === "private";
-		},
-	},
-	batteryCapacity: {type: Number},
-	rangeKm: {type: Number},
-	mileage: {type: Number, min: 0},
-	color: {type: String},
+    type: {
+        type: String,
+        enum: ['private', 'electric', 'parts'],
+        required: true,
+    },
+    brand: { type: String, required: true },
+    year: {
+        type: Number,
+        required: function () {
+            return this.type !== 'parts';
+        },
+    },
+    fuel: {
+        type: String,
+        enum: ['gasoline', 'diesel', 'hybrid', 'electric'],
+        required: function () {
+            return this.type === 'private';
+        },
+    },
+    batteryCapacity: { type: Number },
+    rangeKm: { type: Number },
+    mileage: { type: Number, min: 0 },
+    color: { type: String },
 });
-Posts.discriminator("Cars", carSchema);
+Posts.discriminator('Cars', carSchema);
 
 /* ================== Bikes ================== */
 const bikeSchema = new mongoose.Schema({
-	type: {type: String, enum: ["kids", "mountain", "road"], required: true},
-	frameSize: {type: String, required: true},
-	color: {type: String},
-	weight: {type: Number}, // للفئة road
-	suspension: {type: Boolean}, // للفئة mountain
+    type: { type: String, enum: ['kids', 'mountain', 'road'], required: true },
+    frameSize: { type: String, required: true },
+    color: { type: String },
+    weight: { type: Number }, // للفئة road
+    suspension: { type: Boolean }, // للفئة mountain
 });
-Posts.discriminator("Bikes", bikeSchema);
+Posts.discriminator('Bikes', bikeSchema);
 
 /* ================== Trucks ================== */
 const truckSchema = new mongoose.Schema({
-	type: {type: String, enum: ["light", "heavy"], required: true},
-	brand: {type: String, required: true},
-	loadCapacityTons: {type: Number, required: true},
-	axles: {type: Number}, // للفئة heavy
+    type: { type: String, enum: ['light', 'heavy'], required: true },
+    brand: { type: String, required: true },
+    loadCapacityTons: { type: Number, required: true },
+    axles: { type: Number }, // للفئة heavy
 });
-Posts.discriminator("Trucks", truckSchema);
+Posts.discriminator('Trucks', truckSchema);
 
 /* ================== Electric Vehicles ================== */
 const electricSchema = new mongoose.Schema({
-	type: {type: String, enum: ["cars", "scooters"], required: true},
-	brand: {type: String, required: true},
-	batteryCapacity: {type: Number},
-	rangeKm: {type: Number},
+    type: { type: String, enum: ['cars', 'scooters'], required: true },
+    brand: { type: String, required: true },
+    batteryCapacity: { type: Number },
+    rangeKm: { type: Number },
 });
-Posts.discriminator("ElectricVehicles", electricSchema);
+Posts.discriminator('ElectricVehicles', electricSchema);
 
 /* ================== Men Clothes ================== */
 const menClothesSchema = new mongoose.Schema({
-	type: {type: String, enum: ["casual", "formal", "shoes"], required: true},
-	size: {type: String, required: true},
-	material: {type: String},
-	color: {type: String},
+    type: { type: String, enum: ['casual', 'formal', 'shoes'], required: true },
+    size: { type: String, required: true },
+    material: { type: String },
+    color: { type: String },
 });
-Posts.discriminator("MenClothes", menClothesSchema);
+Posts.discriminator('MenClothes', menClothesSchema);
 
 /* ================== Women Clothes ================== */
 const womenClothesSchema = new mongoose.Schema({
-	type: {type: String, enum: ["casual", "dresses", "shoes"], required: true},
-	size: {type: String, required: true},
-	material: {type: String},
-	color: {type: String},
-	length: {type: String}, // للفئة dresses
-	heelHeight: {type: Number}, // للفئة shoes
+    type: {
+        type: String,
+        enum: ['casual', 'dresses', 'shoes'],
+        required: true,
+    },
+    size: { type: String, required: true },
+    material: { type: String },
+    color: { type: String },
+    length: { type: String }, // للفئة dresses
+    heelHeight: { type: Number }, // للفئة shoes
 });
-Posts.discriminator("WomenClothes", womenClothesSchema);
+Posts.discriminator('WomenClothes', womenClothesSchema);
 
 /* ================== Baby ================== */
 const babySchema = new mongoose.Schema({
-	type: {type: String, enum: ["clothes", "care", "feeding"], required: true},
-	ageGroup: {
-		type: String,
-		required: function () {
-			return this.type === "clothes" || this.type === "feeding";
-		},
-	}, // للفئة clothes & feeding
-	brand: {
-		type: String,
-		required: function () {
-			return this.type === "feeding";
-		},
-	},
-	material: {type: String},
+    type: {
+        type: String,
+        enum: ['clothes', 'care', 'feeding'],
+        required: true,
+    },
+    ageGroup: {
+        type: String,
+        required: function () {
+            return this.type === 'clothes' || this.type === 'feeding';
+        },
+    }, // للفئة clothes & feeding
+    brand: {
+        type: String,
+        required: function () {
+            return this.type === 'feeding';
+        },
+    },
+    material: { type: String },
 });
-Posts.discriminator("Baby", babySchema);
+Posts.discriminator('Baby', babySchema);
 
 /* ================== Kids ================== */
 const kidsSchema = new mongoose.Schema({
-	type: {type: String, enum: ["educational", "toys", "outdoor"], required: true},
-	ageGroup: {type: String, required: true},
-	safeMaterial: {type: Boolean},
+    type: {
+        type: String,
+        enum: ['educational', 'toys', 'outdoor'],
+        required: true,
+    },
+    ageGroup: { type: String, required: true },
+    safeMaterial: { type: Boolean },
 });
-Posts.discriminator("Kids", kidsSchema);
+Posts.discriminator('Kids', kidsSchema);
 
 /* ================== Health ================== */
 const healthSchema = new mongoose.Schema({
-	type: {type: String, enum: ["personalCare", "medical", "fitness"], required: true},
-	brand: {type: String},
-	expiryDate: {type: String}, // للحفاظ على توافق مع categoriesLogic
+    type: {
+        type: String,
+        enum: ['personalCare', 'medical', 'fitness'],
+        required: true,
+    },
+    brand: { type: String },
+    expiryDate: { type: String }, // للحفاظ على توافق مع categoriesLogic
 });
-Posts.discriminator("Health", healthSchema);
+Posts.discriminator('Health', healthSchema);
 
 /* ================== Beauty ================== */
 const beautySchema = new mongoose.Schema({
-	type: {type: String, enum: ["makeup", "skincare", "hair"], required: true},
-	brand: {type: String},
-	expiryDate: {type: String},
+    type: {
+        type: String,
+        enum: ['makeup', 'skincare', 'hair'],
+        required: true,
+    },
+    brand: { type: String },
+    expiryDate: { type: String },
 });
-Posts.discriminator("Beauty", beautySchema);
+Posts.discriminator('Beauty', beautySchema);
 
 /* ================== Watches ================== */
 const watchesSchema = new mongoose.Schema({
-	type: {type: String, enum: ["classic", "smart", "hand"], required: true},
-	brand: {type: String},
-	waterResistant: {type: Boolean},
+    type: { type: String, enum: ['classic', 'smart', 'hand'], required: true },
+    brand: { type: String },
+    waterResistant: { type: Boolean },
 });
-Posts.discriminator("0Watches", watchesSchema);
+Posts.discriminator('Watches', watchesSchema);
 
 /* ================== Cleaning ================== */
 const cleaningSchema = new mongoose.Schema({
-	type: {type: String, enum: ["detergents", "tools", "disinfection"], required: true},
-	brand: {type: String},
-	volume: {type: Number},
+    type: {
+        type: String,
+        enum: ['detergents', 'tools', 'disinfection'],
+        required: true,
+    },
+    brand: { type: String },
+    volume: { type: Number },
 });
-Posts.discriminator("Cleaning", cleaningSchema);
+Posts.discriminator('Cleaning', cleaningSchema);
 
 basePostsSchema.index({ category: 1 });
 basePostsSchema.index({ brand: 1 });
