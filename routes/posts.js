@@ -397,7 +397,14 @@ router.patch('/:postId/reviews', auth, async (req, res) => {
         // }
 
         const newReview = {
-            user: {_id: req.payload._id, name:{ first: req.payload.name.first, last: req.payload.name.last } },
+            user: {
+                _id: req.payload._id,
+                name: {
+                    first: req.payload.name.first,
+                    last: req.payload.name.last,
+                },
+                image: req.payload.image.url,
+            },
             comment: comment.trim(),
             rating: rating !== undefined ? numericRating : null,
             createdAt: new Date(),
