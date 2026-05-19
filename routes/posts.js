@@ -15,10 +15,15 @@ const { getPostSchema } = require('../schema/postsSchema');
 router.get('/', async (req, res) => {
     try {
         // find the Post
-        const post = await Posts.find();
+        const post = await Posts.find().populate({
+            path: 'seller.user',
+            select: 'name image slug',
+            model: 'Users',
+        });
         if (!post) return res.status(404).send('No Posts to provide');
         res.status(200).send(post);
     } catch (error) {
+        console.error('Error fetching posts:', error);
         res.status(500).json({ 'Internal server error': error.message });
     }
 });
@@ -175,7 +180,6 @@ router.post('/', auth, async (req, res) => {
             name: req.payload.name.first,
             slug: req.payload.slug,
             user: req.payload._id,
-            imageUrl: req.payload.image.url,
         };
 
         const post = new Posts({

@@ -7,11 +7,7 @@ const basePostsSchema = new mongoose.Schema(
         seller: {
             name: { type: String },
             slug: { type: String },
-            user: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'User',
-                required: true,
-            },
+            user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
         },
         product_name: { type: String, required: true, trim: true },
         category: { type: String, required: true },
