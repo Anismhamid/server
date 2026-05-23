@@ -1,51 +1,83 @@
+// routes/featuredRegister.js
+
+
 const express = require('express');
 const router = express.Router();
+const Stripe = require('stripe');
 
 const FeaturedAd = require('../models/FeaturedAd');
 const Posts = require('../models/post');
 const auth = require('../middlewares/auth');
+const cron = require('node-cron');
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // buy promotion
 router.post('/buy', auth, async (req, res) => {
     try {
         const { listingId, type, startDate, endDate } = req.body;
 
-        // Check if listin exists
-        const listing = await Posts.find({ listingId: listingId });
-        if (!listing)
-            return res.status(404).json({ message: 'Listing not found' });
+        const listing = await Posts.findById(listingId);
 
-        // التحقق من عدم وجود homepage مكرر نشط
-        if (type === 'homepage') {
-            const activeHomepage = await FeaturedAd.countDocuments({
-                type: 'homepage',
-                isActive: true,
-                startDate: { $lte: new Date(endDate) },
-                endDate: { $gte: new Date(startDate) },
+        if (!listing) {
+            return res.status(404).json({
+                message: 'Listing not found',
             });
-
-            if (activeHomepage >= 8) {
-                return res
-                    .status(400)
-                    .json({ message: 'Maximum 8 homepage ads allowed' });
-            }
         }
 
-        const ad = new FeaturedAd({
-            listingId,
-            userId: req.payload._id,
-            type,
-            startDate: new Date(startDate),
-            endDate: new Date(endDate),
-            isActive: true,
+        const prices = {
+            highlight: 10,
+            top: 25,
+            homepage: 50,
+        };
+
+        if (!prices[type]) {
+            return res.status(400).json({
+                message: 'Invalid promotion type',
+            });
+        }
+console.log("ENV KEY =", process.env.STRIPE_SECRET_KEY);
+console.log("KEY LENGTH =", process.env.STRIPE_SECRET_KEY?.length);
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            mode: 'payment',
+
+            success_url: `${process.env.CLIENT_URL}/payment/success`,
+
+            cancel_url: `${process.env.CLIENT_URL}/payment/cancel`,
+
+            metadata: {
+                userId: req.payload._id.toString(),
+                listingId,
+                type,
+                startDate,
+                endDate,
+            },
+
+            line_items: [
+                {
+                    price_data: {
+                        currency: 'ils',
+                        product_data: {
+                            name: `Featured Ad ${type}`,
+                        },
+                        unit_amount: prices[type] * 100,
+                    },
+                    quantity: 1,
+                },
+            ],
         });
 
-        await ad.save();
-
-        res.json({ message: 'Featured Ad purchased successfully', ad });
+        res.json({
+            url: session.url,
+        });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ message: 'Server error' });
+
+        res.status(500).json({
+            message: 'Payment failed',
+            error: err.message,
+        });
     }
 });
 
@@ -94,8 +126,16 @@ router.get('/homepage', async (req, res) => {
 router.delete(`/delete/:adId`, auth, async (req, res) => {
     const { adId } = req.params;
     try {
-        const ad = await FeaturedAd.findOneAndDelete({ _id: adId });
-        if (!ad) return res.status(404).send('This listing is not found');
+        const ad = await FeaturedAd.findOneAndDelete({
+            _id: adId,
+            userId: req.payload._id,
+        });
+
+        if (!ad) {
+            return res.status(404).json({
+                message: 'Ad not found or unauthorized',
+            });
+        }
 
         res.status(200).send('success');
     } catch (err) {
