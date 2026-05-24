@@ -13,7 +13,8 @@ const app = require("./app");
 const {allowedOrigins} = require("./config/allowOrigins");
 
 const connectDB = require("./config/db");
-console.log("MONGO URI:", process.env.DB);
+
+
 // MongoDB connection
 connectDB();
 

@@ -14,7 +14,7 @@ const discounts = require('./routes/discountAndOffers');
 const cities = require('./routes/cities');
 const messages = require('./routes/messages');
 const images = require('./routes/deleteImage');
-startFeaturedAdsCron = require('./utils/PaymentController/featuredAdsCron');
+const startFeaturedAdsCron = require('./utils/PaymentController/featuredAdsCron');
 const app = express();
 
 const corsOptions = {
@@ -38,12 +38,7 @@ const corsOptions = {
 // Apply CORS middleware
 app.use(cors(corsOptions));
 
-app.use((err, req, res, next) => {
-    if (err instanceof Error && err.message === 'Not allowed by CORS') {
-        return res.status(403).send('CORS error: Access denied');
-    }
-    next(err);
-});
+
 const featuredAdWebhook = require('./utils/PaymentController/controller');
 
 // =======================
@@ -64,9 +59,9 @@ app.use(express.json({ limit: '5mb' }));
 app.use(helmet());
 app.use(logger);
 logToFile();
-startFeaturedAdsCron();
 app.use(limiter);
 app.use(morgan('dev'));
+startFeaturedAdsCron();
 
 // =======================
 // ROUTES
@@ -79,5 +74,15 @@ app.use('/api/discounts', discounts);
 app.use('/api/cities', cities);
 app.use('/api/messages', messages);
 app.use('/api/images', images);
+
+// =======================
+// GLOBAL ERROR HANDLER
+// =======================
+app.use((err, req, res, next) => {
+    if (err instanceof Error && err.message === 'Not allowed by CORS') {
+        return res.status(403).send('CORS error: Access denied');
+    }
+    next(err);
+});
 
 module.exports = app;
