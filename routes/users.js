@@ -1,527 +1,612 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const User = require("../models/User");
-const Jwt = require("jsonwebtoken");
-const {compareSync, genSaltSync, hashSync} = require("bcryptjs");
-const _ = require("lodash");
-const auth = require("../middlewares/auth");
-const {verifyGoogleToken} = require("../utils/googleAuth");
-const {userSchema, loginSchema} = require("../schema/userSchema");
-const completeUserSchema = require("../schema/completeUserSchema");
-const editUserProfileSchema = require("../schema/editUserProfile");
-const chalk = require("chalk");
+const User = require('../models/User');
+const Jwt = require('jsonwebtoken');
+const { compareSync, genSaltSync, hashSync } = require('bcryptjs');
+const _ = require('lodash');
+const auth = require('../middlewares/auth');
+const { verifyGoogleToken } = require('../utils/googleAuth');
+const { userSchema, loginSchema } = require('../schema/userSchema');
+const completeUserSchema = require('../schema/completeUserSchema');
+const editUserProfileSchema = require('../schema/editUserProfile');
+const chalk = require('chalk');
 
 // users role
 const roleType = {
-	Admin: "Admin",
-	Moderator: "Moderator",
-	Client: "Client",
-	Delivery: "delivery",
+    Admin: 'Admin',
+    Moderator: 'Moderator',
+    Client: 'Client',
+    Delivery: 'delivery',
 };
 
 // for generating token
 const generateToken = (user) => {
-	return Jwt.sign(
-		_.pick(user, [
-			"_id",
-			"name.first",
-			"name.last",
-			"slug",
-			"email",
-			"role",
-			"image.url",
-			"phone.phone_1",
-			"phone.phone_2",
-			"address.city",
-			"address.street",
-			"address.houseNumber",
-		]),
-		process.env.JWT_SECRET,
-	);
+    return Jwt.sign(
+        _.pick(user, [
+            '_id',
+            'name.first',
+            'name.last',
+            'slug',
+            'email',
+            'role',
+            'image.url',
+            'phone.phone_1',
+            'phone.phone_2',
+            'address.city',
+            'address.street',
+            'address.houseNumber',
+        ]),
+        process.env.JWT_SECRET,
+    );
 };
 
 // ----- רישום משתמש -----
 
 // Register new user
-router.post("/", async (req, res) => {
-	try {
-		// validate the body
-		const {error} = userSchema.validate(req.body, {
-			abortEarly: false,
-			stripUnknown: false,
-		});
-		if (error) {
-			return res.status(400).json({
-				code: "VALIDATION_ERROR",
-				message: error.details.map((d) => d.message).join(", "),
-			});
-		}
+router.post('/', async (req, res) => {
+    try {
+        // validate the body
+        const { error } = userSchema.validate(req.body, {
+            abortEarly: false,
+            stripUnknown: false,
+        });
+        if (error) {
+            return res.status(400).json({
+                code: 'VALIDATION_ERROR',
+                message: error.details.map((d) => d.message).join(', '),
+            });
+        }
 
+        // check if user exists
+        let user = await User.findOne({ email: req.body.email }).select(
+            '-password',
+        );
+        if (user)
+            return res.status(409).json({
+                code: 'EMAIL_EXISTS',
+                message: 'Email already exists',
+            });
 
-		// check if user exists
-		let user = await User.findOne({email: req.body.email}).select("-password");
-		if (user)
-			return res.status(409).json({
-				code: "EMAIL_EXISTS",
-				message: "Email already exists",
-			});
+        user = new User({
+            ...req.body,
+            registeredAt: new Date(),
+            status: true,
+        });
 
-		user = new User({
-			...req.body,
-			registeredAt: new Date(),
-			status: true,
-		});
+        const salt = genSaltSync(10);
+        user.password = hashSync(user.password, salt);
 
-		const salt = genSaltSync(10);
-		user.password = hashSync(user.password, salt);
+        await user.save();
 
-		await user.save();
+        const io = req.app.get('io');
+        io.emit('user:registered', {
+            userId: user._id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+        });
 
-		const io = req.app.get("io");
-		io.emit("user:registered", {
-			userId: user._id,
-			name: user.name,
-			email: user.email,
-			role: user.role,
-		});
+        // creatre token
+        const token = generateToken(user);
 
-		// creatre token
-		const token = generateToken(user);
-
-		// return the token
-		res.status(200).send(token);
-	} catch (error) {
-		res.status(500).send("Internal server error");
-	}
+        // return the token
+        res.status(200).send(token);
+    } catch (error) {
+        res.status(500).send('Internal server error');
+    }
 });
 
 // ----- התחברות -----
 
 // Login users
-router.post("/login", async (req, res) => {
-	try {
-		// Validate body
-		const {error} = loginSchema.validate(req.body);
-		if (error) return res.status(400).send(error.details[0].message);
+// router.post("/login", async (req, res) => {
+// 	try {
+// 		// Validate body
+// 		const {error} = loginSchema.validate(req.body);
+// 		if (error) return res.status(400).send(error.details[0].message);
 
-		// Check if user exists and try to compare the users password
-		let user = await User.findOne({email: req.body.email});
-		if (!user || !compareSync(req.body.password, user.password))
-			return res.status(400).send("invalid email or password");
+// 		// Check if user exists and try to compare the users password
+// 		let user = await User.findOne({email: req.body.email});
+// 		if (!user || !compareSync(req.body.password, user.password))
+// 			return res.status(400).send("invalid email or password");
 
-		// push the activity time
-		user.activity.push(new Date().toLocaleString());
-		user.status = true;
-		await user.save();
+// 		// push the activity time
+// 		user.activity.push(new Date().toLocaleString());
+// 		user.status = true;
+// 		await user.save();
 
-		const io = req.app.get("io");
-		io.emit("user:newUserLoggedIn", {
-			userId: user._id,
-			email: user.email,
-			role: user.role,
-		});
+// 		const io = req.app.get("io");
+// 		io.emit("user:newUserLoggedIn", {
+// 			userId: user._id,
+// 			email: user.email,
+// 			role: user.role,
+// 		});
 
-		const token = generateToken(user);
+// 		const token = generateToken(user);
 
-		res.status(200).send(token);
-	} catch (error) {
-		res.status(500).send(error.message);
-		// res.status(500).send("Internal server error");
-	}
+// 		res.status(200).send(token);
+// 	} catch (error) {
+// 		res.status(500).send(error.message);
+// 		// res.status(500).send("Internal server error");
+// 	}
+// });
+
+router.post('/login', async (req, res) => {
+    try {
+        const { error } = loginSchema.validate(req.body);
+
+        if (error) {
+            return res.status(400).send(error.details[0].message);
+        }
+
+        const user = await User.findOne({
+            email: req.body.email,
+        });
+
+        if (!user) {
+            return res.status(400).send('invalid email or password');
+        }
+
+        if (!user.password) {
+            return res.status(400).send('This account has no password');
+        }
+
+        const isValid = compareSync(req.body.password, user.password);
+
+        if (!isValid) {
+            return res.status(400).send('invalid email or password');
+        }
+
+        // حماية activity
+        if (!Array.isArray(user.activity)) {
+            user.activity = [];
+        }
+
+        user.activity.push(new Date().toLocaleString());
+
+        user.status = true;
+
+        await user.save();
+
+        // حماية io
+        const io = req.app.get('io');
+
+        if (io) {
+            io.emit('user:newUserLoggedIn', {
+                userId: user._id,
+                email: user.email,
+                role: user.role,
+            });
+        }
+
+        const token = generateToken(user);
+
+        res.status(200).send(token);
+    } catch (error) {
+        console.error('LOGIN ERROR:');
+        console.error(error);
+
+        res.status(500).send(error.message);
+    }
 });
 
 // ----- Google OAuth -----
 
 // check if google user exists returns true - false
-router.get("/google/verify/:id", async (req, res) => {
-	const user = await User.findOne({googleId: req.params.id});
-	if (user) return res.send({exists: true});
-	res.send({exists: false});
+router.get('/google/verify/:id', async (req, res) => {
+    const user = await User.findOne({ googleId: req.params.id });
+    if (user) return res.send({ exists: true });
+    res.send({ exists: false });
 });
 
 function generateSlug(first, last) {
-	return `${first.toLowerCase()}-${last.toLowerCase()}-${Date.now()}`;
+    return `${first.toLowerCase()}-${last.toLowerCase()}-${Date.now()}`;
 }
 
 // register or login the new google user into database or login
-router.post("/google", async (req, res) => {
-	try {
-		const io = req.app.get("io");
+router.post('/google', async (req, res) => {
+    try {
+        const io = req.app.get('io');
 
-		const {credentialToken} = req.body;
-		if (!credentialToken) return res.status(400).send("Missing token");
+        const { credentialToken } = req.body;
+        if (!credentialToken) return res.status(400).send('Missing token');
 
-		const payload = await verifyGoogleToken(credentialToken);
-		if (!payload.email_verified) return res.status(401).send("Email not verified");
+        const payload = await verifyGoogleToken(credentialToken);
+        if (!payload.email_verified)
+            return res.status(401).send('Email not verified');
 
-		if (!payload || !payload.sub || !payload.email) {
-			return res.status(400).send("Invalid Google payload");
-		}
-		// check if user exists
-		let user = await User.findOne({email: payload.email});
-		if (user) {
-			user.activity.push(new Date().toLocaleString("he-IL"));
-			user.status = true;
+        if (!payload || !payload.sub || !payload.email) {
+            return res.status(400).send('Invalid Google payload');
+        }
+        // check if user exists
+        let user = await User.findOne({ email: payload.email });
+        if (user) {
+            user.activity.push(new Date().toLocaleString('he-IL'));
+            user.status = true;
 
-			const token = generateToken(user);
+            await user.save();
 
-			io.emit("user:newUserLoggedIn", {
-				userId: user._id,
-				email: user.email,
-				role: user.role,
-				slug: user.slug,
-			});
-			return res.status(200).send(token);
-		}
+            const token = generateToken(user);
 
-		// if user not exist create a new one from payload
-		user = new User({
-			name: {
-				first: payload.given_name || "Google",
-				last: payload.family_name || "User",
-			},
-			phone: {
-				phone_1: req.body.phone.phone_1 || "",
-				phone_2: req.body.phone.phone_2 || "",
-			},
-			address: {
-				city: req.body.address.city || "",
-				street: req.body.address.street || "",
-				houseNumber: req.body.address.houseNumber || "",
-			},
-			email: payload.email,
-			password: hashSync(payload.sub, 10),
-			image: {
-				url: payload.picture,
-				alt: `${payload.given_name} ${payload.family_name}`,
-			},
-			role: "Client",
-			activity: [new Date().toLocaleString("he-IL")],
-			registrAt: new Date().toLocaleString("he-IL"),
-			googleId: payload.sub,
-			status: false,
-			slug: generateSlug(payload.given_name, payload.family_name),
-		});
-		// save the user
-		await user.save();
+            io.emit('user:newUserLoggedIn', {
+                userId: user._id,
+                email: user.email,
+                role: user.role,
+                slug: user.slug,
+            });
+            return res.status(200).send(token);
+        }
 
-		io.emit("user:registered", {
-			id: user._id,
-			name: user.name,
-			email: user.email,
-			role: user.role,
-			slug: user.slug,
-		});
+        // if user not exist create a new one from payload
+        user = new User({
+            name: {
+                first: payload.given_name || 'Google',
+                last: payload.family_name || 'User',
+            },
+            phone: {
+                phone_1: req.body.phone.phone_1 || '',
+                phone_2: req.body.phone.phone_2 || '',
+            },
+            address: {
+                city: req.body.address.city || '',
+                street: req.body.address.street || '',
+                houseNumber: req.body.address.houseNumber || '',
+            },
+            email: payload.email,
+            password: hashSync(payload.sub, 10),
+            image: {
+                url: payload.picture,
+                alt: `${payload.given_name} ${payload.family_name}`,
+            },
+            role: 'Client',
+            activity: [new Date().toLocaleString('he-IL')],
+            registeredAt: new Date().toLocaleString('he-IL'),
+            googleId: payload.sub,
+            status: false,
+            slug: generateSlug(payload.given_name, payload.family_name),
+        });
+        // save the user
+        await user.save();
 
-		const token = generateToken(user);
+        io.emit('user:registered', {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            slug: user.slug,
+        });
 
-		res.status(201).send(token);
-	} catch (error) {
-		res.status(500).json({
-			error: error.message,
-			// error:"Internal server error"
-		});
-	}
+        const token = generateToken(user);
+
+        res.status(201).send(token);
+    } catch (error) {
+		console.error(error)
+        res.status(500).json({
+            error: error.message,
+            // error:"Internal server error"
+        });
+    }
 });
 
 // ----- משתמשים -----
 
 // get all users (Admin / moderators)
-router.get("/", auth, async (req, res) => {
-	try {
-		// check if user have permission to get the users
-		if (
-			req.payload.role !== roleType.Admin &&
-			req.payload.role !== roleType.Moderator &&
-			req.payload.role !== roleType.Client
-		)
-			return res
-				.status(401)
-				.send({error: "You do not have permission to access this resource"});
+router.get('/', auth, async (req, res) => {
+    try {
+        // check if user have permission to get the users
+        if (
+            req.payload.role !== roleType.Admin &&
+            req.payload.role !== roleType.Moderator &&
+            req.payload.role !== roleType.Client
+        )
+            return res.status(401).send({
+                error: 'You do not have permission to access this resource',
+            });
 
-		const users = await User.find().select("-password");
-		if (!users) return res.status(404).send("No users found yet");
+        const users = await User.find().select('-password');
+        if (!users) return res.status(404).send('No users found yet');
 
-		res.status(200).send(users);
-	} catch (error) {
-		res.status(500).send("Internal server error");
-	}
+        res.status(200).send(users);
+    } catch (error) {
+        res.status(500).send('Internal server error');
+    }
 });
 
 // Get single user (Admin or Moderator or oner user only)
-router.get("/:userId", auth, async (req, res) => {
-	try {
-		const {role, _id} = req.payload;
-		const {userId} = req.params;
+router.get('/:userId', auth, async (req, res) => {
+    try {
+        const { role, _id } = req.payload;
+        const { userId } = req.params;
 
-		//	check if user have permission to get the user by id
-		if (
-			_id !== userId &&
-			role !== roleType.Admin &&
-			role !== roleType.Moderator &&
-			role !== roleType.Delivery
-		)
-			return res
-				.status(401)
-				.send({error: "You do not have permission to access this resource"});
+        //	check if user have permission to get the user by id
+        if (
+            _id !== userId &&
+            role !== roleType.Admin &&
+            role !== roleType.Moderator &&
+            role !== roleType.Delivery
+        )
+            return res.status(401).send({
+                error: 'You do not have permission to access this resource',
+            });
 
-		const user = await User.findById(userId).select("-password");
-		if (!user) return res.status(404).send({message: "user Not Found"});
+        const user = await User.findById(userId).select('-password');
+        if (!user) return res.status(404).send({ message: 'user Not Found' });
 
-		res.status(200).send(user);
-	} catch (error) {
-		res.status(500).send("Internal server error");
-	}
+        res.status(200).send(user);
+    } catch (error) {
+        res.status(500).send('Internal server error');
+    }
 });
 
-router.get("/customer/:slug", async (req, res) => {
-	try {
-		const {slug} = req.params;
-		console.log("SLUG PARAM:", slug);
+router.get('/customer/:slug', async (req, res) => {
+    try {
+        const { slug } = req.params;
+        console.log('SLUG PARAM:', slug);
 
-		const user = await User.findOne({slug: slug}).select("-password");
-		if (!user) return res.status(404).send({message: "user Not Found"});
+        const user = await User.findOne({ slug: slug }).select('-password');
+        if (!user) return res.status(404).send({ message: 'user Not Found' });
 
-		res.status(200).send(user);
-	} catch (error) {
-		res.status(500).send("Internal server error");
-	}
+        res.status(200).send(user);
+    } catch (error) {
+        res.status(500).send('Internal server error');
+    }
 });
 
 // Update user role (Admin only)
-router.patch("/role/:userEmail", auth, async (req, res) => {
-	try {
-		// Check permission
-		if (req.payload.role !== roleType.Admin)
-			return res.status(401).send({error: "Access denied. Admins only"});
+router.patch('/role/:userEmail', auth, async (req, res) => {
+    try {
+        // Check permission
+        if (req.payload.role !== roleType.Admin)
+            return res
+                .status(401)
+                .send({ error: 'Access denied. Admins only' });
 
-		const user = await User.findOneAndUpdate(
-			{email: req.params.userEmail},
-			{role: req.body.role},
-			{new: true},
-		);
+        const user = await User.findOneAndUpdate(
+            { email: req.params.userEmail },
+            { role: req.body.role },
+            { new: true },
+        );
 
-		// Check if user exists
-		if (!user) {
-			return res.status(404).send({message: "User not found"});
-		}
+        // Check if user exists
+        if (!user) {
+            return res.status(404).send({ message: 'User not found' });
+        }
 
-		res.status(200).send(user);
-	} catch (error) {
-		res.status(500).send(error.message);
-	}
+        res.status(200).send(user);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
 });
 
 // compleate user data
-router.patch("/compleate/:userId", auth, async (req, res) => {
-	try {
-		// validate body
-		const {error} = completeUserSchema.validate(req.body);
-		if (error) return res.status(400).send(error.details[0].message);
+router.patch('/compleate/:userId', auth, async (req, res) => {
+    try {
+        // validate body
+        const { error } = completeUserSchema.validate(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
 
-		const isAdmin = req.payload.role === roleType.Admin;
-		const isSelf = req.params.userId === req.payload._id;
+        const isAdmin = req.payload.role === roleType.Admin;
+        const isSelf = req.params.userId === req.payload._id;
 
-		// Check permission
-		if (!isAdmin && !isSelf) return res.status(401).send("Forbidden");
+        // Check permission
+        if (!isAdmin && !isSelf) return res.status(401).send('Forbidden');
 
-		const updateData = {
-			phone: {
-				phone_1: req.body.phone.phone_1,
-				phone_2: req.body.phone.phone_2,
-			},
-			image: {
-				url: req.body.image.url,
-			},
+        const updateData = {
+            phone: {
+                phone_1: req.body.phone.phone_1,
+                phone_2: req.body.phone.phone_2,
+            },
+            image: {
+                url: req.body.image.url,
+            },
 
-			address: {
-				city: req.body.address.city,
-				street: req.body.address.street,
-				houseNumber: req.body.address.houseNumber,
-			},
-			gender: req.body.gender,
-		};
-		const user = await User.findByIdAndUpdate(req.params.userId, updateData, {
-			new: true,
-		})
-			.select("-password,-_v")
-			.lean();
+            address: {
+                city: req.body.address.city,
+                street: req.body.address.street,
+                houseNumber: req.body.address.houseNumber,
+            },
+            gender: req.body.gender,
+        };
+        const user = await User.findByIdAndUpdate(
+            req.params.userId,
+            updateData,
+            {
+                new: true,
+            },
+        )
+            .select('-password,-_v')
+            .lean();
 
-		// Check if user exists
-		if (!user) {
-			return res.status(404).send("User not found");
-		}
+        // Check if user exists
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
 
-		res.status(200).send(user);
-	} catch (error) {
-		res.status(500).send(error.message);
-	}
+        res.status(200).send(user);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
 });
 
 // Edit user profile
-router.patch("/edit-user/:userId", auth, async (req, res) => {
-	try {
-		// Check if IDs match
-		const isSelf = req.params.userId === req.payload._id.toString();
-		const isAdmin = req.payload.role === roleType.Admin;
+router.patch('/edit-user/:userId', auth, async (req, res) => {
+    try {
+        // Check if IDs match
+        const isSelf = req.params.userId === req.payload._id.toString();
+        const isAdmin = req.payload.role === roleType.Admin;
 
-		// validate body
-		const {error} = editUserProfileSchema.validate(req.body);
-		if (error) return res.status(400).send(error.details[0].message);
+        // validate body
+        const { error } = editUserProfileSchema.validate(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
 
-		// Check permission
-		if (!isAdmin && !isSelf) {
-			return res.status(403).send("Forbidden");
-		}
+        // Check permission
+        if (!isAdmin && !isSelf) {
+            return res.status(403).send('Forbidden');
+        }
 
-		// Check if user exists
-		const userExists = await User.findById(req.params.userId);
+        // Check if user exists
+        const userExists = await User.findById(req.params.userId);
 
-		if (!userExists) {
-			return res.status(404).send("User not found");
-		}
+        if (!userExists) {
+            return res.status(404).send('User not found');
+        }
 
-		const updateData = {
-			name: {
-				first: req.body.name.first,
-				last: req.body.name.last,
-			},
-			phone: {
-				phone_1: req.body.phone.phone_1,
-				phone_2: req.body.phone.phone_2,
-			},
-			image: {
-				url: req.body.image.url,
-				alt: req.body.image.alt,
-			},
-			address: {
-				city: req.body.address.city,
-				street: req.body.address.street,
-				houseNumber: req.body.address.houseNumber,
-			},
-			gender: req.body.gender || "",
-		};
+        const updateData = {
+            name: {
+                first: req.body.name.first,
+                last: req.body.name.last,
+            },
+            phone: {
+                phone_1: req.body.phone.phone_1,
+                phone_2: req.body.phone.phone_2,
+            },
+            image: {
+                url: req.body.image.url,
+                alt: req.body.image.alt,
+            },
+            address: {
+                city: req.body.address.city,
+                street: req.body.address.street,
+                houseNumber: req.body.address.houseNumber,
+            },
+            gender: req.body.gender || '',
+        };
 
-		const user = await User.findByIdAndUpdate(req.params.userId, updateData, {
-			new: true,
-		})
-			.select("-password -__v")
-			.lean();
+        const user = await User.findByIdAndUpdate(
+            req.params.userId,
+            updateData,
+            {
+                new: true,
+            },
+        )
+            .select('-password -__v')
+            .lean();
 
-		// Check if user exists
-		if (!user) {
-			res.status(500).json({
-				message: error.message,
-				stack: process.env.NODE_ENV === "development" ? error.stack : undefined,
-			});
-		}
+        // Check if user exists
+        if (!user) {
+            res.status(500).json({
+                message: error.message,
+                stack:
+                    process.env.NODE_ENV === 'development'
+                        ? error.stack
+                        : undefined,
+            });
+        }
 
-		res.status(200).send(user);
-	} catch (error) {
-		res.status(500).send(error.message);
-	}
+        res.status(200).send(user);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
 });
 
 // change password
-router.patch("/password/:userId", auth, async (req, res) => {
-	try {
-		const {userId} = req.params;
-		const {newPassword} = req.body;
-		const isAdmin = req.payload.role === roleType.Admin;
-		const isSelf = req.payload._id === userId;
+router.patch('/password/:userId', auth, async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const { newPassword } = req.body;
+        const isAdmin = req.payload.role === roleType.Admin;
+        const isSelf = req.payload._id === userId;
 
-		if (!newPassword || newPassword.length < 6) {
-			return res
-				.status(400)
-				.send({message: "Password must contain at least 6 characters"});
-		}
+        if (!newPassword || newPassword.length < 6) {
+            return res.status(400).send({
+                message: 'Password must contain at least 6 characters',
+            });
+        }
 
-		const user = await User.findById(userId);
-		if (!user) return res.status(404).send({message: "User not found"});
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).send({ message: 'User not found' });
 
-		if (!isAdmin && !isSelf) {
-			return res.status(403).send({error: "No permission to change password"});
-		}
+        if (!isAdmin && !isSelf) {
+            return res
+                .status(403)
+                .send({ error: 'No permission to change password' });
+        }
 
-		user.password = hashSync(newPassword, 10);
-		await user.save();
+        user.password = hashSync(newPassword, 10);
+        await user.save();
 
-		res.status(200).send({success: "Password updated successfully"});
-	} catch (err) {
-		res.status(500).send({error: "Internal server error"});
-	}
+        res.status(200).send({ success: 'Password updated successfully' });
+    } catch (err) {
+        res.status(500).send({ error: 'Internal server error' });
+    }
 });
 
-router.delete("/:userId", auth, async (req, res) => {
-	try {
-		const isAdmin = req.payload.role === roleType.Admin;
-		const isSelf = req.payload._id === req.params.userId;
+router.delete('/:userId', auth, async (req, res) => {
+    try {
+        const isAdmin = req.payload.role === roleType.Admin;
+        const isSelf = req.payload._id === req.params.userId;
 
-		if (!isAdmin && !isSelf)
-			return res.status(401).send({error: "Unauthorized, Cannot make this change"});
+        if (!isAdmin && !isSelf)
+            return res
+                .status(401)
+                .send({ error: 'Unauthorized, Cannot make this change' });
 
-		const user = await User.findByIdAndDelete(req.params.userId);
-		res.status(200).send(user);
-	} catch (error) {
-		res.status(500).send("Internal server error");
-	}
+        const user = await User.findByIdAndDelete(req.params.userId);
+        res.status(200).send(user);
+    } catch (error) {
+        res.status(500).send('Internal server error');
+    }
 });
 
 // update user status online | ofline
-router.patch("/status/:userId", async (req, res) => {
-	try {
-		// 2. Update and return the user
-		const updatedUser = await User.findByIdAndUpdate(
-			req.params.userId,
-			{status: req.body.status},
-			{new: true},
-		);
-		console.log(chalk.red(`user-${updatedUser.name.first} to-${updatedUser.status}`));
+router.patch('/status/:userId', async (req, res) => {
+    try {
+        // 2. Update and return the user
+        const updatedUser = await User.findByIdAndUpdate(
+            req.params.userId,
+            { status: req.body.status },
+            { new: true },
+        );
+        console.log(
+            chalk.red(
+                `user-${updatedUser.name.first} to-${updatedUser.status}`,
+            ),
+        );
 
-		if (!updatedUser) {
-			return res.status(404).send("User not found");
-		}
-		res.status(200).send(updatedUser);
-	} catch (error) {
-		console.error("Status update error:", error);
-		res.status(500).send("Internal server error");
-	}
+        if (!updatedUser) {
+            return res.status(404).send('User not found');
+        }
+        res.status(200).send(updatedUser);
+    } catch (error) {
+        console.error('Status update error:', error);
+        res.status(500).send('Internal server error');
+    }
 });
 
 // في ملف الخادم (مثال باستخدام Express)
-router.get("/check-slug/:slug", async (req, res) => {
-	try {
-		const {slug} = req.params;
+router.get('/check-slug/:slug', async (req, res) => {
+    try {
+        const { slug } = req.params;
 
-		// التحقق من الصيغة
-		if (!/^[a-z0-9-]+$/.test(slug)) {
-			return res.status(400).json({
-				available: false,
-				message: "تنسيق اسم المستخدم غير صالح",
-			});
-		}
+        // التحقق من الصيغة
+        if (!/^[a-z0-9-]+$/.test(slug)) {
+            return res.status(400).json({
+                available: false,
+                message: 'تنسيق اسم المستخدم غير صالح',
+            });
+        }
 
-		if (slug.length < 3 || slug.length > 30) {
-			return res.status(400).json({
-				available: false,
-				message: "يجب أن يكون طول اسم المستخدم بين 3 و 30 حرفاً",
-			});
-		}
+        if (slug.length < 3 || slug.length > 30) {
+            return res.status(400).json({
+                available: false,
+                message: 'يجب أن يكون طول اسم المستخدم بين 3 و 30 حرفاً',
+            });
+        }
 
-		// التحقق من وجود slug في قاعدة البيانات
-		const existingUser = await User.findOne({slug});
+        // التحقق من وجود slug في قاعدة البيانات
+        const existingUser = await User.findOne({ slug });
 
-		return res.status(200).json({
-			available: !existingUser,
-			message: existingUser ? "اسم المستخدم محجوز" : "اسم المستخدم متاح",
-		});
-	} catch (error) {
-		console.error("Error checking slug:", error);
-		res.status(500).json({
-			available: false,
-			message: "حدث خطأ أثناء التحقق من اسم المستخدم",
-		});
-	}
+        return res.status(200).json({
+            available: !existingUser,
+            message: existingUser ? 'اسم المستخدم محجوز' : 'اسم المستخدم متاح',
+        });
+    } catch (error) {
+        console.error('Error checking slug:', error);
+        res.status(500).json({
+            available: false,
+            message: 'حدث خطأ أثناء التحقق من اسم المستخدم',
+        });
+    }
 });
 
 module.exports = router;

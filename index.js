@@ -8,11 +8,12 @@ const chalk = require("chalk");
 const expressRoutes = require("express-list-routes");
 
 const app = require("./app");
-const connectDB = require("./config/db");
 
 // Cors origins from .env
 const {allowedOrigins} = require("./config/allowOrigins");
 
+const connectDB = require("./config/db");
+console.log("MONGO URI:", process.env.DB);
 // MongoDB connection
 connectDB();
 
