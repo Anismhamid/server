@@ -14,7 +14,7 @@ const discounts = require('./routes/discountAndOffers');
 const cities = require('./routes/cities');
 const messages = require('./routes/messages');
 const images = require('./routes/deleteImage');
-const startFeaturedAdsCron = require('./utils/PaymentController/featuredAdsCron');
+// const startFeaturedAdsCron = require('./utils/PaymentController/featuredAdsCron');
 const app = express();
 
 const corsOptions = {
@@ -39,20 +39,20 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 
-const featuredAdWebhook = require('./utils/PaymentController/controller');
+// const featuredAdWebhook = require('./utils/PaymentController/controller');
 
 // =======================
 // WEBHOOK  FOR STRIPE PAYMENTS
 // =======================
-app.use(
-    '/api/featured-ads/webhook',
-    express.raw({ type: 'application/json' }),
-    featuredAdWebhook,
-);
+// app.use(
+//     '/api/featured-ads/webhook',
+//     express.raw({ type: 'application/json' }),
+//     featuredAdWebhook,
+// );
 
-app.use("/api/stripe-webhook", require("./routes/stripeWebhook"));
+// app.use("/api/stripe-webhook", require("./routes/stripeWebhook"));
 
-// =======================
+// // =======================
 // NORMAL MIDDLEWARES
 // =======================
 app.use(express.json({ limit: '5mb' }));
@@ -61,7 +61,7 @@ app.use(logger);
 logToFile();
 app.use(limiter);
 app.use(morgan('dev'));
-startFeaturedAdsCron();
+// startFeaturedAdsCron();
 
 // =======================
 // ROUTES
