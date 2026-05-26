@@ -1,23 +1,19 @@
-const mongoose = require("mongoose");
-const chalk = require("chalk");
+const mongoose = require('mongoose');
+const chalk = require('chalk');
 
 const connectDB = async () => {
     try {
         if (!process.env.DB) {
-            throw new Error("DB variable missing in .env");
+            throw new Error('DB variable missing in .env');
         }
 
         const conn = await mongoose.connect(process.env.DB);
 
         console.log(
-            chalk.blue(
-                `Connected to MongoDB: ${conn.connection.host}`
-            )
+            chalk.blue(`Connected to MongoDB: ${conn.connection.host}`),
         );
     } catch (error) {
-        console.error(
-            chalk.red("MongoDB connection failed:")
-        );
+        console.error(chalk.red('MongoDB connection failed:'));
 
         console.error(error.message);
 

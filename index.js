@@ -2,6 +2,8 @@ require("dotenv").config({
 	path: process.env.NODE_ENV === "production" ? ".env.production" : ".env",
 });
 
+const {setServers} = require("node:dns/promises");
+
 const {createServer} = require("http");
 const {Server} = require("socket.io");
 const chalk = require("chalk");
@@ -11,7 +13,7 @@ const app = require("./app");
 
 // Cors origins from .env
 const {allowedOrigins} = require("./config/allowOrigins");
-
+setServers(["1.1.1.1","8.8.8.8"])
 const connectDB = require("./config/db");
 
 
