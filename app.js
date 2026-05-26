@@ -61,7 +61,7 @@ app.use(logger);
 logToFile();
 app.use(limiter);
 app.use(morgan('dev'));
-// startFeaturedAdsCron();
+startFeaturedAdsCron();
 
 // =======================
 // ROUTES
