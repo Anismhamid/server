@@ -1,4 +1,5 @@
-// utils/PaymentController/controller.js
+// This controller handles Stripe webhook events for featured ad payments.
+// It listens for 'checkout.session.completed' events and activates the corresponding ad.
 
 const express = require('express');
 const Stripe = require('stripe');
@@ -6,62 +7,56 @@ const FeaturedAd = require('../../models/FeaturedAd');
 
 const router = express.Router();
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: '2024-06-20',
-});
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 router.post('/', async (req, res) => {
-    const sig = req.headers['stripe-signature'];
 
-    let event;
+    console.log('=== WEBHOOK CALLED ===');
 
     try {
-        event = stripe.webhooks.constructEvent(
+
+        const event = stripe.webhooks.constructEvent(
             req.body,
-            sig,
-            process.env.STRIPE_WEBHOOK_SECRET,
+            req.headers['stripe-signature'],
+            process.env.STRIPE_WEBHOOK_SECRET
         );
-    } catch (err) {
-        console.error('Webhook:', err.message);
 
-        return res.status(400).send(`Webhook Error: ${err.message}`);
-    }
+        console.log("Event:", event.type);
 
-    if (event.type === 'checkout.session.completed') {
-        const session = event.data.object;
+        if (event.type === 'checkout.session.completed') {
 
-        const { userId, listingId, type, startDate, endDate } =
-            session.metadata || {};
+            const session = event.data.object;
 
-        if (!userId || !listingId || !type) {
-            return res.status(400).send('Missing metadata');
-        }
+            const { userId, listingId, type, startDate, endDate } =
+                session.metadata || {};
 
-        const existingAd = await FeaturedAd.findOne({
-            stripeSessionId: session.id,
-        });
-
-        if (existingAd) {
-            return res.json({
-                received: true,
+            const existingAd = await FeaturedAd.findOne({
+                stripeSessionId: session.id,
             });
+
+            if (!existingAd) {
+
+                await FeaturedAd.create({
+                    userId,
+                    listingId,
+                    type,
+                    startDate: new Date(startDate),
+                    endDate: new Date(endDate),
+                    isActive: true,
+                    paid: true,
+                    stripeSessionId: session.id,
+                });
+
+                console.log('✅ Ad activated');
+            }
         }
 
-        await FeaturedAd.create({
-            userId,
-            listingId,
-            type,
-            startDate,
-            endDate,
-            isActive: true,
-            paid: true,
-            stripeSessionId: session.id,
-        });
-    }
+        res.json({ received: true });
 
-    res.json({
-        received: true,
-    });
+    } catch (err) {
+        console.error('Webhook Error:', err.message);
+        return res.status(400).send(err.message);
+    }
 });
 
 module.exports = router;

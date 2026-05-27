@@ -15,6 +15,7 @@ const cities = require('./routes/cities');
 const messages = require('./routes/messages');
 const images = require('./routes/deleteImage');
 const startFeaturedAdsCron = require('./utils/PaymentController/featuredAdsCron');
+const featuredAdWebhookController = require('./utils/PaymentController/controller');
 const app = express();
 
 const corsOptions = {
@@ -38,20 +39,15 @@ const corsOptions = {
 // Apply CORS middleware
 app.use(cors(corsOptions));
 
-
-const featuredAdWebhook = require('./utils/PaymentController/controller');
-
 // =======================
 // WEBHOOK  FOR STRIPE PAYMENTS
 // =======================
+
 app.use(
     '/api/featured-ads/webhook',
     express.raw({ type: 'application/json' }),
-    featuredAdWebhook,
+    featuredAdWebhookController,
 );
-
-app.use("/api/stripe-webhook", require("./routes/stripeWebhook"));
-
 // // =======================
 // NORMAL MIDDLEWARES
 // =======================

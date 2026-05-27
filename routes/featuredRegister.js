@@ -1,6 +1,5 @@
 // routes/featuredRegister.js
 
-
 const express = require('express');
 const router = express.Router();
 const Stripe = require('stripe');
@@ -36,8 +35,7 @@ router.post('/buy', auth, async (req, res) => {
                 message: 'Invalid promotion type',
             });
         }
-console.log("ENV KEY =", process.env.STRIPE_SECRET_KEY);
-console.log("KEY LENGTH =", process.env.STRIPE_SECRET_KEY?.length);
+
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             mode: 'payment',

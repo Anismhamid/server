@@ -1,50 +1,45 @@
-const express = require('express');
-const router = express.Router();
-const Stripe = require('stripe');
-const FeaturedAd = require('../models/FeaturedAd');
+// const express = require('express');
+// const router = express.Router();
+// const Stripe = require('stripe');
+// const FeaturedAd = require('../models/FeaturedAd');
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-router.post(
-    '/',
-    express.raw({ type: 'application/json' }),
-    async (req, res) => {
-        const sig = req.headers['stripe-signature'];
+// router.post('/', async (req, res) => {
+//     console.log("Webhook reached");
 
-        let event;
+//     try {
+//         const event = stripe.webhooks.constructEvent(
+//             req.body,
+//             req.headers['stripe-signature'],
+//             process.env.STRIPE_WEBHOOK_SECRET
+//         );
 
-        try {
-            event = stripe.webhooks.constructEvent(
-                req.body,
-                sig,
-                process.env.STRIPE_WEBHOOK_SECRET,
-            );
-        } catch (err) {
-            console.log('Webhook Error:', err.message);
-            return res.status(400).send(`Webhook Error: ${err.message}`);
-        }
+//         console.log("Event:", event.type);
 
-        // 🎯 الدفع نجح
-        if (event.type === 'checkout.session.completed') {
-            const session = event.data.object;
+//         if (event.type === 'checkout.session.completed') {
+//             const session = event.data.object;
 
-            const { userId, listingId, type, startDate, endDate } =
-                session.metadata;
+//             await FeaturedAd.create({
+//                 userId: session.metadata.userId,
+//                 listingId: session.metadata.listingId,
+//                 type: session.metadata.type,
+//                 startDate: new Date(session.metadata.startDate),
+//                 endDate: new Date(session.metadata.endDate),
+//                 paid: true,
+//                 stripeSessionId: session.id,
+//                 isActive: true,
+//             });
 
-            await FeaturedAd.create({
-                userId,
-                listingId,
-                type,
-                startDate,
-                endDate,
-                isActive: true,
-            });
+//             console.log("✅ Ad activated");
+//         }
 
-            console.log('✅ Ad activated after payment');
-        }
+//         res.json({ received: true });
 
-        res.json({ received: true });
-    },
-);
+//     } catch(err){
+//         console.log(err);
+//         res.status(400).send(err.message);
+//     }
+// });
 
-module.exports = router;
+// module.exports = router;
