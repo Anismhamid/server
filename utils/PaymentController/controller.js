@@ -1,12 +1,8 @@
-// This controller handles Stripe webhook events for featured ad payments.
-// It listens for 'checkout.session.completed' events and activates the corresponding ad.
-
 const express = require('express');
 const Stripe = require('stripe');
 const FeaturedAd = require('../../models/FeaturedAd');
 
 const router = express.Router();
-
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 router.post('/', async (req, res) => {
@@ -15,11 +11,6 @@ router.post('/', async (req, res) => {
             req.body,
             req.headers['stripe-signature'],
             process.env.STRIPE_WEBHOOK_SECRET,
-        );
-        console.log('🔔 Webhook received'); // أضف هاد أول شي
-        console.log(
-            'Event type:',
-            req.headers['stripe-signature'] ? 'has signature' : 'no signature',
         );
 
         if (event.type === 'checkout.session.completed') {
@@ -35,24 +26,20 @@ router.post('/', async (req, res) => {
 
             // Guard 2: validate required metadata
             if (!userId || !listingId || !type) {
-                console.error(
-                    'Missing required metadata for session:',
-                    session.id,
-                );
+                console.error('Missing required metadata for session:', session.id);
                 return res.json({ received: true });
             }
 
             // Guard 3: validate dates
-            if (
-                !startDate ||
-                !endDate ||
-                isNaN(Date.parse(startDate)) ||
-                isNaN(Date.parse(endDate))
-            ) {
-                console.error(
-                    'Invalid metadata dates for session:',
-                    session.id,
-                );
+            if (!startDate || !endDate || isNaN(Date.parse(startDate)) || isNaN(Date.parse(endDate))) {
+                console.error('Invalid metadata dates for session:', session.id);
+                return res.json({ received: true });
+            }
+
+            // Guard 4: idempotency
+            const existingAd = await FeaturedAd.findOne({ stripeSessionId: session.id });
+            if (existingAd) {
+                console.log(`⚠️ Duplicate ignored: ${session.id}`);
                 return res.json({ received: true });
             }
 
@@ -71,6 +58,7 @@ router.post('/', async (req, res) => {
         }
 
         res.json({ received: true });
+
     } catch (err) {
         console.error('Webhook Error:', err.message);
         return res.status(400).send(err.message);
