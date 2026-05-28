@@ -24,7 +24,7 @@ const corsOptions = {
         if (!origin) return callback(null, true);
 
         // Check against allowed origins
-        if (allowedOrigins.indexOf(origin) !== -1) {
+        if (allowedOrigins.indexOf(origin) || 'http://localhost:5173') {
             callback(null, true);
         } else {
             console.log('Blocked by CORS:', origin);
@@ -36,28 +36,36 @@ const corsOptions = {
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 };
 
-// Apply CORS middleware
+// =======================
+// SECURITY & LOGGING
+// =======================
 app.use(cors(corsOptions));
+app.use(helmet());
+app.use(morgan('dev'));
+app.use(logger);
 
 // =======================
-// WEBHOOK  FOR STRIPE PAYMENTS
+// STRIPE WEBHOOK
+// Must be before express.json()
 // =======================
-
 app.use(
     '/api/featured-ads/webhook',
     express.raw({ type: 'application/json' }),
     featuredAdWebhookController,
 );
-// // =======================
-// NORMAL MIDDLEWARES
+
+// =======================
+// BODY PARSING & RATE LIMITING
 // =======================
 app.use(express.json({ limit: '5mb' }));
-app.use(helmet());
-app.use(logger);
-logToFile();
+app.use(express.urlencoded({ extended: true, limit: '5mb' }));
 app.use(limiter);
-app.use(morgan('dev'));
+
+// =======================
+// STARTUP JOBS
+// =======================
 startFeaturedAdsCron();
+logToFile();
 
 // =======================
 // ROUTES
@@ -72,13 +80,26 @@ app.use('/api/messages', messages);
 app.use('/api/images', images);
 
 // =======================
+// 404 HANDLER
+// =======================
+app.use((req, res) => {
+    res.status(404).json({
+        message: `Route ${req.method} ${req.path} not found`,
+    });
+});
+
+// =======================
 // GLOBAL ERROR HANDLER
 // =======================
 app.use((err, req, res, next) => {
-    if (err instanceof Error && err.message === 'Not allowed by CORS') {
-        return res.status(403).send('CORS error: Access denied');
+    if (err.message === 'Not allowed by CORS') {
+        return res.status(403).json({ message: 'CORS error: Access denied' });
     }
-    next(err);
+
+    console.error(err.stack);
+    res.status(err.status || 500).json({
+        message: err.message || 'Internal Server Error',
+    });
 });
 
 module.exports = app;
