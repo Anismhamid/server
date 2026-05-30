@@ -111,7 +111,56 @@ router.get('/homepage', async (req, res) => {
         })
             .sort({ createdAt: -1 })
             .limit(100)
-            .populate('listingId');
+            .populate({
+                path: 'listingId',
+                select: 'product_name category location price image seller sale discount in_stock brand',
+            });
+
+        res.json({ ads });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// GET /api/featured-ads/highlight
+router.get('/highlight', async (req, res) => {
+    try {
+        const ads = await FeaturedAd.find({
+            type: 'highlight',
+            isActive: true,
+            startDate: { $lte: new Date() },
+            endDate: { $gte: new Date() },
+        })
+            .sort({ createdAt: -1 })
+            .limit(100)
+            .populate({
+                path: 'listingId',
+                select: 'product_name category location price image seller sale discount in_stock brand',
+            });
+
+        res.json({ ads });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// GET /api/featured-ads/top
+router.get('/top', async (req, res) => {
+    try {
+        const ads = await FeaturedAd.find({
+            type: 'top',
+            isActive: true,
+            startDate: { $lte: new Date() },
+            endDate: { $gte: new Date() },
+        })
+            .sort({ createdAt: -1 })
+            .limit(100)
+            .populate({
+                path: 'listingId',
+                select: 'product_name category location price image seller sale discount in_stock brand',
+            });
 
         res.json({ ads });
     } catch (err) {

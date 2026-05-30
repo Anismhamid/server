@@ -92,7 +92,7 @@ router.post('/', async (req, res) => {
         // return the token
         res.status(200).send(token);
     } catch (error) {
-        res.status(500).send('Internal server error');
+        res.status(500).send(error);
     }
 });
 
