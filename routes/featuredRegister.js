@@ -191,4 +191,21 @@ router.delete(`/delete/:adId`, auth, async (req, res) => {
     }
 });
 
+router.post(
+    '/test-webhook',
+    express.raw({ type: 'application/json' }),
+    (req, res) => {
+        console.log('=== TEST WEBHOOK RECEIVED ===');
+        console.log('Headers:', req.headers);
+        console.log('Body:', req.body?.toString().substring(0, 200));
+        console.log('Stripe Signature:', req.headers['stripe-signature']);
+
+        res.json({
+            message: 'Webhook test endpoint working',
+            headers: req.headers,
+            bodyLength: req.body?.length,
+        });
+    },
+);
+
 module.exports = router;

@@ -43,27 +43,35 @@ const corsOptions = {
 // SECURITY & LOGGING
 // =======================
 app.use(cors(corsOptions));
-app.use(helmet());
-app.use(morgan('dev'));
-app.use(logger);
-app.use(limiter);
-logToFile();
+
 
 // =======================
-// STRIPE WEBHOOK
-// Must be before express.json()
+// WEBHOOK - IMPORTANT: Must be BEFORE express.json()
 // =======================
+console.log('Registering webhook route at: /api/featured-ads/webhook');
 app.use(
     '/api/featured-ads/webhook',
     express.raw({ type: 'application/json' }),
-    featuredAdWebhookController,
+    featuredAdWebhookController
 );
+
+// Test webhook endpoint
+app.post('/api/featured-ads/test-webhook', express.raw({ type: 'application/json' }), (req, res) => {
+    console.log('Test webhook hit!');
+    console.log('Headers:', req.headers);
+    res.json({ received: true });
+});
 
 // =======================
 // BODY PARSING & RATE LIMITING
 // =======================
 app.use(express.json({ limit: '5mb' }));
-app.use(express.urlencoded({ extended: true, limit: '5mb' }));
+// app.use(express.urlencoded({ extended: true, limit: '5mb' }));
+app.use(helmet());
+app.use(logger);
+logToFile();
+app.use(limiter);
+app.use(morgan('dev'));
 
 // =======================
 // STARTUP JOBS
