@@ -168,10 +168,27 @@ const womenClothesSchema = new mongoose.Schema({
     size: { type: String, required: true },
     material: { type: String },
     color: { type: String },
-    length: { type: String }, // للفئة dresses
-    heelHeight: { type: Number }, // للفئة shoes
+    length: { type: String },
+    heelHeight: { type: Number },
 });
 Posts.discriminator('WomenClothes', womenClothesSchema);
+
+const womenBagsSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        enum: ['handbags', 'toteBags', 'backpacks', 'clutches'],
+        required: true,
+    },
+    size: {
+        type: String,
+        required: true,
+    },
+    material: { type: String },
+    color: { type: String },
+    length: { type: String },
+    heelHeight: { type: Number },
+});
+Posts.discriminator('WomenBags', womenBagsSchema);
 
 /* ================== Baby ================== */
 const babySchema = new mongoose.Schema({

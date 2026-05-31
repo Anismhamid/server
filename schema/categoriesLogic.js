@@ -182,6 +182,14 @@ const womenClothesSchema = Joi.object({
     heelHeight: Joi.number(), // للفئة shoes
 }).options({ stripUnknown: true });
 
+const womenBagsSchema = Joi.object({
+    ...baseProductSchema,
+    type: Joi.string().valid('handbags', 'toteBags', 'backpacks', 'clutches').required(),
+    size: Joi.string().required(),
+    material: Joi.string(),
+    color: Joi.string(),
+}).options({ stripUnknown: true });
+
 /* ================== Baby ================== */
 const babySchema = Joi.object({
     ...baseProductSchema,
@@ -240,6 +248,7 @@ module.exports = {
     electricVehiclesSchema,
     menClothesSchema,
     womenClothesSchema,
+    womenBagsSchema,
     babySchema,
     kidsSchema,
     healthSchema,
