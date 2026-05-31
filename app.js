@@ -24,7 +24,10 @@ const corsOptions = {
         if (!origin) return callback(null, true);
 
         // Check against allowed origins
-        if (allowedOrigins.indexOf(origin) || 'http://localhost:5173') {
+        if (
+            allowedOrigins.includes(origin) ||
+            origin === 'http://localhost:5173'
+        ) {
             callback(null, true);
         } else {
             console.log('Blocked by CORS:', origin);
@@ -43,6 +46,8 @@ app.use(cors(corsOptions));
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(logger);
+app.use(limiter);
+logToFile();
 
 // =======================
 // STRIPE WEBHOOK
@@ -59,13 +64,12 @@ app.use(
 // =======================
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: true, limit: '5mb' }));
-app.use(limiter);
 
 // =======================
 // STARTUP JOBS
 // =======================
 startFeaturedAdsCron();
-logToFile();
+
 
 // =======================
 // ROUTES
@@ -86,6 +90,13 @@ app.use((req, res) => {
     res.status(404).json({
         message: `Route ${req.method} ${req.path} not found`,
     });
+});
+
+app.use((req, res, next) => {
+    if (req.originalUrl === '/api/featured-ads/webhook') {
+        return next();
+    }
+    return logger(req, res, next);
 });
 
 // =======================

@@ -13,9 +13,14 @@ router.post('/', async (req, res) => {
             sig,
             process.env.STRIPE_WEBHOOK_SECRET,
         );
+        console.log('=== WEBHOOK CALLED ===');
+        console.log('EVENT TYPE:', event.type);
 
         if (event.type === 'checkout.session.completed') {
+            console.log('CHECKOUT COMPLETED');
             const session = event.data.object;
+            console.log('SESSION ID:', session.id);
+            console.log('METADATA:', session.metadata);
 
             // Guard 1: must be paid
             if (session.payment_status !== 'paid') {
@@ -57,6 +62,8 @@ router.post('/', async (req, res) => {
                 return res.json({ received: true });
             }
 
+            console.log('CREATING FEATURED AD');
+
             await FeaturedAd.create({
                 userId,
                 listingId,
@@ -67,7 +74,8 @@ router.post('/', async (req, res) => {
                 paid: true,
                 stripeSessionId: session.id,
             });
-
+            console.log('FEATURED AD CREATED');
+            console.log(session.metadata);
             console.log(`✅ Ad activated for listing ${listingId}`);
         }
 
@@ -77,7 +85,5 @@ router.post('/', async (req, res) => {
         return res.status(400).send(err.message);
     }
 });
-
-
 
 module.exports = router;
