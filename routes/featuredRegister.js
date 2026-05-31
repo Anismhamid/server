@@ -50,6 +50,13 @@ router.post('/buy', auth, async (req, res) => {
                 type,
                 startDate,
                 endDate,
+                session_id: '{CHECKOUT_SESSION_ID}',
+            },
+
+            payment_intent_data: {
+                metadata: {
+                    session_id: '{CHECKOUT_SESSION_ID}',
+                },
             },
 
             line_items: [
