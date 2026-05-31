@@ -12,16 +12,106 @@ const cron = require('node-cron');
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // buy promotion
+// router.post('/buy', auth, async (req, res) => {
+//     try {
+//         const { listingId, type, startDate, endDate } = req.body;
+
+//         const listing = await Posts.findById(listingId);
+
+//         if (!listing) {
+//             return res.status(404).json({
+//                 message: 'Listing not found',
+//             });
+//         }
+
+//         const prices = {
+//             highlight: 10,
+//             top: 25,
+//             homepage: 50,
+//         };
+
+//         if (!prices[type]) {
+//             return res.status(400).json({
+//                 message: 'Invalid promotion type',
+//             });
+//         }
+
+//         const session = await stripe.checkout.sessions.create({
+//             payment_method_types: ['card'],
+//             mode: 'payment',
+
+//             success_url: `${process.env.CLIENT_URL}/payment/success`,
+
+//             cancel_url: `${process.env.CLIENT_URL}/payment/cancel`,
+
+//             metadata: {
+//                 userId: req.payload._id.toString(),
+//                 listingId,
+//                 type,
+//                 startDate,
+//                 endDate,
+//                 session_id: '{CHECKOUT_SESSION_ID}',
+//             },
+
+//             payment_intent_data: {
+//                 metadata: {
+//                     session_id: '{CHECKOUT_SESSION_ID}',
+//                 },
+//             },
+
+//             line_items: [
+//                 {
+//                     price_data: {
+//                         currency: 'ils',
+//                         product_data: {
+//                             name: `Featured Ad ${type}`,
+//                         },
+//                         unit_amount: prices[type] * 100,
+//                     },
+//                     quantity: 1,
+//                 },
+//             ],
+//         });
+
+//         res.json({
+//             url: session.url,
+//         });
+//     } catch (err) {
+//         console.error(err);
+
+//         res.status(500).json({
+//             message: 'Payment failed',
+//             error: err.message,
+//         });
+//     }
+// });
+
 router.post('/buy', auth, async (req, res) => {
     try {
+        console.log('=== BUY ROUTE ===');
+
+        // Extract user ID (your existing code)
+        let userId = null;
+        if (req.payload) {
+            userId = req.payload._id || req.payload.id || req.payload.userId;
+            if (userId && typeof userId === 'object' && userId.$oid) {
+                userId = userId.$oid;
+            }
+            if (userId && userId.toString) {
+                userId = userId.toString();
+            }
+        }
+
+        if (!userId) {
+            return res.status(401).json({ message: 'User not authenticated' });
+        }
+
         const { listingId, type, startDate, endDate } = req.body;
 
+        // Validate
         const listing = await Posts.findById(listingId);
-
         if (!listing) {
-            return res.status(404).json({
-                message: 'Listing not found',
-            });
+            return res.status(404).json({ message: 'Listing not found' });
         }
 
         const prices = {
@@ -31,40 +121,38 @@ router.post('/buy', auth, async (req, res) => {
         };
 
         if (!prices[type]) {
-            return res.status(400).json({
-                message: 'Invalid promotion type',
-            });
+            return res.status(400).json({ message: 'Invalid promotion type' });
         }
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             mode: 'payment',
-
-            success_url: `${process.env.CLIENT_URL}/payment/success`,
-
+            success_url: `${process.env.CLIENT_URL}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${process.env.CLIENT_URL}/payment/cancel`,
-
             metadata: {
-                userId: req.payload._id.toString(),
-                listingId,
-                type,
-                startDate,
-                endDate,
-                session_id: '{CHECKOUT_SESSION_ID}',
+                userId: userId,
+                listingId: listingId,
+                type: type,
+                startDate: startDate,
+                endDate: endDate,
             },
-
+            // THIS IS THE KEY FIX - metadata needs to be in payment_intent_data
             payment_intent_data: {
                 metadata: {
-                    session_id: '{CHECKOUT_SESSION_ID}',
+                    userId: userId,
+                    listingId: listingId,
+                    type: type,
+                    startDate: startDate,
+                    endDate: endDate,
                 },
             },
-
             line_items: [
                 {
                     price_data: {
                         currency: 'ils',
                         product_data: {
-                            name: `Featured Ad ${type}`,
+                            name: `Featured Ad - ${type}`,
+                            description: `Promote "${listing.product_name || listing.title}"`,
                         },
                         unit_amount: prices[type] * 100,
                     },
@@ -73,16 +161,15 @@ router.post('/buy', auth, async (req, res) => {
             ],
         });
 
+        console.log('Session created:', session.id);
+
         res.json({
             url: session.url,
+            sessionId: session.id, // Send this back to frontend
         });
     } catch (err) {
-        console.error(err);
-
-        res.status(500).json({
-            message: 'Payment failed',
-            error: err.message,
-        });
+        console.error('Payment error:', err);
+        res.status(500).json({ message: 'Payment failed', error: err.message });
     }
 });
 

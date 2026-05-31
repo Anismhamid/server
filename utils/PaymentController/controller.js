@@ -90,14 +90,13 @@
 
 // utils/PaymentController/controller.js
 
-
 const Stripe = require('stripe');
 const FeaturedAd = require('../../models/FeaturedAd');
-
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 module.exports = async (req, res) => {
     console.log('=== WEBHOOK CALLED ===');
+    console.log('Event timestamp:', new Date().toISOString());
 
     const sig = req.headers['stripe-signature'];
 
@@ -110,33 +109,100 @@ module.exports = async (req, res) => {
 
         console.log('EVENT TYPE:', event.type);
 
-        // Handle multiple event types
-        if (event.type === 'checkout.session.completed') {
-            const session = event.data.object;
-            await handleCheckoutSession(session);
-        } else if (event.type === 'payment_intent.succeeded') {
+        // Handle payment_intent.succeeded (this is what you're receiving)
+        if (event.type === 'payment_intent.succeeded') {
             const paymentIntent = event.data.object;
-            console.log('Payment intent succeeded:', paymentIntent.id);
+            console.log('✅ Payment succeeded for:', paymentIntent.id);
 
-            // Get the checkout session from the payment intent
-            if (paymentIntent.metadata?.session_id) {
-                const session = await stripe.checkout.sessions.retrieve(
-                    paymentIntent.metadata.session_id,
-                );
-                await handleCheckoutSession(session);
-            } else {
-                // If no session in metadata, we need to look it up
-                console.log('No session_id in payment intent metadata');
+            // Get metadata from payment intent
+            const { userId, listingId, type, startDate, endDate } =
+                paymentIntent.metadata || {};
+
+            console.log('Metadata:', {
+                userId,
+                listingId,
+                type,
+                startDate,
+                endDate,
+            });
+
+            if (!userId || !listingId || !type) {
+                console.error('Missing metadata in payment intent');
+                return res.json({ received: true });
             }
+
+            // Check for duplicate using payment intent ID
+            const existingAd = await FeaturedAd.findOne({
+                stripePaymentIntentId: paymentIntent.id,
+            });
+
+            if (existingAd) {
+                console.log(
+                    '⚠️ Duplicate webhook ignored for payment intent:',
+                    paymentIntent.id,
+                );
+                return res.json({ received: true });
+            }
+
+            // Create the featured ad
+            const newAd = await FeaturedAd.create({
+                userId: userId.toString(),
+                listingId: listingId,
+                type: type,
+                startDate: new Date(startDate),
+                endDate: new Date(endDate),
+                isActive: true,
+                paid: true,
+                stripePaymentIntentId: paymentIntent.id,
+            });
+
+            console.log(`✅ Ad activated successfully! ID: ${newAd._id}`);
+            console.log(
+                `Listing: ${listingId}, User: ${userId}, Type: ${type}`,
+            );
         } else if (event.type === 'payment_intent.created') {
             console.log('Payment intent created - waiting for completion');
-            // Don't do anything yet, wait for succeeded event
+            // Don't do anything, wait for succeeded event
+        } else if (event.type === 'checkout.session.completed') {
+            // This will work if you add this event type in Stripe dashboard
+            const session = event.data.object;
+            console.log('Checkout session completed:', session.id);
+
+            const { userId, listingId, type, startDate, endDate } =
+                session.metadata || {};
+
+            if (
+                userId &&
+                listingId &&
+                type &&
+                session.payment_status === 'paid'
+            ) {
+                const existingAd = await FeaturedAd.findOne({
+                    stripeSessionId: session.id,
+                });
+
+                if (!existingAd) {
+                    await FeaturedAd.create({
+                        userId: userId.toString(),
+                        listingId,
+                        type,
+                        startDate: new Date(startDate),
+                        endDate: new Date(endDate),
+                        isActive: true,
+                        paid: true,
+                        stripeSessionId: session.id,
+                        stripePaymentIntentId: session.payment_intent,
+                    });
+                    console.log('✅ Ad activated via checkout session');
+                }
+            }
         }
 
         res.json({ received: true });
     } catch (err) {
         console.error('Webhook Error:', err.message);
-        return res.status(400).send(err.message);
+        console.error('Error stack:', err.stack);
+        return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 };
 
