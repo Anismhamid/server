@@ -124,6 +124,7 @@ router.post('/buy', auth, async (req, res) => {
             return res.status(400).json({ message: 'Invalid promotion type' });
         }
 
+        // Create Stripe session
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             mode: 'payment',
@@ -165,7 +166,7 @@ router.post('/buy', auth, async (req, res) => {
 
         res.json({
             url: session.url,
-            sessionId: session.id, // Send this back to frontend
+            sessionId: session.id,
         });
     } catch (err) {
         console.error('Payment error:', err);
