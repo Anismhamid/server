@@ -1,15 +1,16 @@
 const express = require('express');
 const Stripe = require('stripe');
 const FeaturedAd = require('../../models/FeaturedAd');
-
 const router = express.Router();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 router.post('/', async (req, res) => {
     try {
+        const sig = req.headers['stripe-signature'];
+
         const event = stripe.webhooks.constructEvent(
             req.body,
-            req.headers['stripe-signature'],
+            sig,
             process.env.STRIPE_WEBHOOK_SECRET,
         );
 
@@ -26,18 +27,31 @@ router.post('/', async (req, res) => {
 
             // Guard 2: validate required metadata
             if (!userId || !listingId || !type) {
-                console.error('Missing required metadata for session:', session.id);
+                console.error(
+                    'Missing required metadata for session:',
+                    session.id,
+                );
                 return res.json({ received: true });
             }
 
             // Guard 3: validate dates
-            if (!startDate || !endDate || isNaN(Date.parse(startDate)) || isNaN(Date.parse(endDate))) {
-                console.error('Invalid metadata dates for session:', session.id);
+            if (
+                !startDate ||
+                !endDate ||
+                isNaN(Date.parse(startDate)) ||
+                isNaN(Date.parse(endDate))
+            ) {
+                console.error(
+                    'Invalid metadata dates for session:',
+                    session.id,
+                );
                 return res.json({ received: true });
             }
 
             // Guard 4: idempotency
-            const existingAd = await FeaturedAd.findOne({ stripeSessionId: session.id });
+            const existingAd = await FeaturedAd.findOne({
+                stripeSessionId: session.id,
+            });
             if (existingAd) {
                 console.log(`⚠️ Duplicate ignored: ${session.id}`);
                 return res.json({ received: true });
@@ -58,11 +72,12 @@ router.post('/', async (req, res) => {
         }
 
         res.json({ received: true });
-
     } catch (err) {
         console.error('Webhook Error:', err.message);
         return res.status(400).send(err.message);
     }
 });
+
+
 
 module.exports = router;
