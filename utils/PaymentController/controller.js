@@ -118,12 +118,10 @@ module.exports = async (req, res) => {
                 dbSession.endSession();
                 throw err;
             }
-        }
-
-        /* =========================================
+        } else if (event.type === 'payment_intent.succeeded') {
+            /* =========================================
            PAYMENT INTENT FALLBACK
         ========================================= */
-        else if (event.type === 'payment_intent.succeeded') {
             const paymentIntent = event.data.object;
 
             const metadata = paymentIntent.metadata || {};
@@ -180,12 +178,10 @@ module.exports = async (req, res) => {
                 dbSession.endSession();
                 throw err;
             }
-        }
-
-        /* =========================================
-           DEBUG EVENTS
-        ========================================= */
-        else if (event.type === 'payment_intent.created') {
+        } else if (event.type === 'payment_intent.created') {
+            /* =========================================
+            DEBUG EVENTS
+            ========================================= */
             console.log('Payment intent created');
         } else if (event.type === 'charge.succeeded') {
             console.log('Charge succeeded');
