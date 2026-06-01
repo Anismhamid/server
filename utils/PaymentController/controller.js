@@ -134,6 +134,13 @@ module.exports = async (req, res) => {
                     paid: true,
                     stripePaymentIntentId: paymentIntent.id,
                 });
+
+                const updatedPost = await Posts.findByIdAndUpdate(
+                    listingId,
+                    { $set: { featured: true } },
+                    { new: true, runValidators: true },
+                );
+                
                 console.log(
                     `✅ Ad activated via payment intent! ID: ${newAd._id}`,
                 );
