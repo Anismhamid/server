@@ -48,7 +48,7 @@ const basePostsSchema = new mongoose.Schema(
                 },
             },
         ],
-        futured: { type: Boolean, default: false },
+        featured: { type: Boolean, default: false },
         sale: { type: Boolean, default: false },
         discount: { type: Number, min: 0, max: 100 },
         location: { type: String },

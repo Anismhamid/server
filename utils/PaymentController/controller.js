@@ -90,10 +90,11 @@ module.exports = async (req, res) => {
                 stripeSessionId: session.id,
                 stripePaymentIntentId: session.payment_intent,
             });
-            const updatePost = await Posts.findByIdAndUpdate(
+
+            const updatedPost = await Posts.findByIdAndUpdate(
                 listingId,
-                { futured: true },
-                { new: true },
+                { $set: { featured: true } },
+                { new: true, runValidators: true },
             );
 
             console.log(`✅ Ad activated successfully! ID: ${newAd._id}`);
