@@ -98,6 +98,7 @@ module.exports = async (req, res) => {
             );
 
             console.log(`✅ Ad activated successfully! ID: ${newAd._id}`);
+            console.log(`Post ${updatedPost} is now featured`);
             console.log(
                 `Listing: ${listingId}, User: ${userId}, Type: ${type}`,
             );
