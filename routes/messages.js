@@ -79,8 +79,8 @@ router.post(
 
             // Populated message
             const populatedMessage = await Message.findById(newMessage._id)
-                .populate('from', 'name email role image')
-                .populate('to', 'name email role image')
+                .populate('from', 'name email role image status')
+                .populate('to', 'name email role image status')
                 .populate('replyTo', 'message from to');
 
             const io = req.app.get('io');
@@ -128,8 +128,8 @@ router.get('/conversation/:otherUserId', auth, async (req, res) => {
 
         const messages = await Message.find({ roomId })
             .sort({ createdAt: -1 })
-            .populate('from', 'name email role image')
-            .populate('to', 'name email role image')
+            .populate('from', 'name email role image status')
+            .populate('to', 'name email role image status')
             .skip(skip)
             .limit(limit);
         // .populate("replyTo", "message from to");
@@ -191,8 +191,8 @@ router.get('/conversations', auth, async (req, res) => {
             $or: [{ from: userId }, { to: userId }],
         })
             .sort({ createdAt: -1 })
-            .populate('from', 'name email role image')
-            .populate('to', 'name email role image');
+            .populate('from', 'name email role image status')
+            .populate('to', 'name email role image status');
 
         const conversationsMap = {};
 
