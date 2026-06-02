@@ -35,6 +35,7 @@ const generateToken = (user) => {
             'address.city',
             'address.street',
             'address.houseNumber',
+            'status',
         ]),
         process.env.JWT_SECRET,
     );

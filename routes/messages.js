@@ -79,8 +79,8 @@ router.post(
 
             // Populated message
             const populatedMessage = await Message.findById(newMessage._id)
-                .populate('from', 'name email role')
-                .populate('to', 'name email role')
+                .populate('from', 'name email role image')
+                .populate('to', 'name email role image')
                 .populate('replyTo', 'message from to');
 
             const io = req.app.get('io');
@@ -128,8 +128,8 @@ router.get('/conversation/:otherUserId', auth, async (req, res) => {
 
         const messages = await Message.find({ roomId })
             .sort({ createdAt: -1 })
-            .populate('from', 'name email role')
-            .populate('to', 'name email role')
+            .populate('from', 'name email role image')
+            .populate('to', 'name email role image')
             .skip(skip)
             .limit(limit);
         // .populate("replyTo", "message from to");
@@ -191,13 +191,13 @@ router.get('/conversations', auth, async (req, res) => {
             $or: [{ from: userId }, { to: userId }],
         })
             .sort({ createdAt: -1 })
-            .populate('from', 'name email role')
-            .populate('to', 'name email role');
+            .populate('from', 'name email role image')
+            .populate('to', 'name email role image');
 
         const conversationsMap = {};
 
         messages.forEach((msg) => {
-            if (!msg.from || !msg.to) return; // حماية إضافية
+            if (!msg.from || !msg.to) return;
 
             const otherUser =
                 msg.from._id.toString() === userId ? msg.to : msg.from;
