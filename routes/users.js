@@ -177,6 +177,11 @@ router.post('/login', async (req, res) => {
                 userId: user._id,
                 email: user.email,
                 role: user.role,
+                status: user.status,
+            });
+            io.emit('user:statusChanged', {
+                userId: user._id.toString(),
+                status: user.status,
             });
         }
 
@@ -234,7 +239,14 @@ router.post('/google', async (req, res) => {
                 email: user.email,
                 role: user.role,
                 slug: user.slug,
+                status: user.status,
             });
+
+            io.emit('user:statusChanged', {
+                userId: user._id.toString(),
+                status: user.status,
+            });
+
             return res.status(200).send(token);
         }
 
@@ -281,7 +293,7 @@ router.post('/google', async (req, res) => {
 
         res.status(201).send(token);
     } catch (error) {
-		console.error(error)
+        console.error(error);
         res.status(500).json({
             error: error.message,
             // error:"Internal server error"
@@ -365,7 +377,7 @@ router.patch('/role/:userEmail', auth, async (req, res) => {
         const user = await User.findOneAndUpdate(
             { email: req.params.userEmail },
             { role: req.body.role },
-            { new: true },
+            { returnDocument: 'after' },
         );
 
         // Check if user exists
@@ -567,6 +579,15 @@ router.patch('/status/:userId', async (req, res) => {
         if (!updatedUser) {
             return res.status(404).send('User not found');
         }
+
+        const io = req.app.get('io');
+        if (io) {
+            io.emit('user:statusChanged', {
+                userId: updatedUser._id,
+                status: updatedUser.status,
+            });
+        }
+
         res.status(200).send(updatedUser);
     } catch (error) {
         console.error('Status update error:', error);
