@@ -172,18 +172,17 @@ router.post('/login', async (req, res) => {
         // حماية io
         const io = req.app.get('io');
 
-        if (io) {
-            io.emit('user:newUserLoggedIn', {
-                userId: user._id,
-                email: user.email,
-                role: user.role,
-                status: user.status,
-            });
-            io.emit('user:statusChanged', {
-                userId: user._id.toString(),
-                status: user.status,
-            });
-        }
+        io.emit('user:newUserLoggedIn', {
+            userId: user._id,
+            email: user.email,
+            role: user.role,
+            status: user.status,
+        });
+
+        io.emit('user:statusChanged', {
+            userId: user._id.toString(),
+            status: user.status,
+        });
 
         const token = generateToken(user);
 
@@ -377,7 +376,7 @@ router.patch('/role/:userEmail', auth, async (req, res) => {
         const user = await User.findOneAndUpdate(
             { email: req.params.userEmail },
             { role: req.body.role },
-            { returnDocument: 'after' },
+            { new: true },
         );
 
         // Check if user exists
@@ -424,7 +423,7 @@ router.patch('/compleate/:userId', auth, async (req, res) => {
             req.params.userId,
             updateData,
             {
-                new: true,
+              new:true
             },
         )
             .select('-password,-_v')
@@ -489,7 +488,7 @@ router.patch('/edit-user/:userId', auth, async (req, res) => {
             req.params.userId,
             updateData,
             {
-                new: true,
+                new:true
             },
         )
             .select('-password -__v')
@@ -562,9 +561,10 @@ router.delete('/:userId', auth, async (req, res) => {
 });
 
 // update user status online | ofline
-router.patch('/status/:userId', async (req, res) => {
+router.patch('/status/:userId', auth, async (req, res) => {
     try {
-        // 2. Update and return the user
+        const io = req.app.get('io');
+
         const updatedUser = await User.findByIdAndUpdate(
             req.params.userId,
             { status: req.body.status },
@@ -580,13 +580,10 @@ router.patch('/status/:userId', async (req, res) => {
             return res.status(404).send('User not found');
         }
 
-        const io = req.app.get('io');
-        if (io) {
-            io.emit('user:statusChanged', {
-                userId: updatedUser._id,
-                status: updatedUser.status,
-            });
-        }
+        io.emit('user:statusChanged', {
+            userId: updatedUser._id,
+            status: updatedUser.status,
+        });
 
         res.status(200).send(updatedUser);
     } catch (error) {
