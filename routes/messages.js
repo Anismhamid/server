@@ -51,8 +51,7 @@ router.post(
 
             if (fromUserId === toUserId)
                 return res.status(400).send('Cannot message yourself');
-            console.log('fromUserId:', fromUserId);
-            console.log('toUserId:', toUserId);
+
             const toUser = await Users.findById(toUserId).select('-password');
             if (!toUser) return res.status(404).send('Recipient not found');
 
