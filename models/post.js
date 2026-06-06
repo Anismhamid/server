@@ -53,6 +53,7 @@ const basePostsSchema = new mongoose.Schema(
         discount: { type: Number, min: 0, max: 100 },
         location: { type: String },
         in_stock: { type: Boolean, default: true },
+        status: { type: String, enum: ['pending', 'sold', 'accepted'] },
     },
     { timestamps: true, discriminatorKey: 'category' },
 );

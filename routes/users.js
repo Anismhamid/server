@@ -592,7 +592,6 @@ router.patch('/status/:userId', auth, async (req, res) => {
     }
 });
 
-// في ملف الخادم (مثال باستخدام Express)
 router.get('/check-slug/:slug', async (req, res) => {
     try {
         const { slug } = req.params;
