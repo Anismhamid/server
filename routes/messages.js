@@ -234,4 +234,38 @@ router.get('/conversations', auth, async (req, res) => {
     }
 });
 
+// ====== Delete one message from user woner ======
+router.delete('/:messageId', auth, async (req, res) => {
+    try {
+        const { messageId } = req.params;
+        const { _id: userId } = req.payload;
+
+        const deletedMessage = await Message.findOneAndDelete({
+            _id: messageId,
+            from: userId,
+        });
+
+        if (!deletedMessage) {
+            return res.status(404).json({
+                success: false,
+                message: 'Message not found or access denied',
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'Message deleted successfully',
+        });
+    } catch (error) {
+        console.error('Delete message error:', error);
+
+        return res.status(500).json({
+            success: false,
+            message: 'Internal server error',
+        });
+    }
+});
+
+
+
 module.exports = router;
