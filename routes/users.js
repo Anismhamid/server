@@ -224,7 +224,7 @@ router.post('/google', async (req, res) => {
             return res.status(400).send('Invalid Google payload');
         }
         // check if user exists
-        let user = await User.findOne({ email: payload.email });
+        let user = await User.findOne({ googleId: payload.googleId });
         if (user) {
             user.activity.push(new Date().toLocaleString('he-IL'));
             user.status = true;
@@ -249,7 +249,7 @@ router.post('/google', async (req, res) => {
             return res.status(200).send(token);
         }
 
-        // if user not exist create a new one from payload
+        // if user not exist create a new one from payload and save the new user
         user = new User({
             name: {
                 first: payload.given_name || 'Google',
@@ -277,7 +277,7 @@ router.post('/google', async (req, res) => {
             status: false,
             slug: generateSlug(payload.given_name, payload.family_name),
         });
-        // save the user
+
         await user.save();
 
         io.emit('user:registered', {
@@ -423,7 +423,7 @@ router.patch('/compleate/:userId', auth, async (req, res) => {
             req.params.userId,
             updateData,
             {
-              new:true
+                new: true,
             },
         )
             .select('-password,-_v')
@@ -488,7 +488,7 @@ router.patch('/edit-user/:userId', auth, async (req, res) => {
             req.params.userId,
             updateData,
             {
-                new:true
+                new: true,
             },
         )
             .select('-password -__v')
