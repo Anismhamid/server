@@ -78,8 +78,8 @@ router.post(
 
             // Populated message
             const populatedMessage = await Message.findById(newMessage._id)
-                .populate('from', 'name email role image status')
-                .populate('to', 'name email role image status')
+                .populate('from', 'name email role image status slug')
+                .populate('to', 'name email role image status slug')
                 .populate('replyTo', 'message from to');
 
             const io = req.app.get('io');
@@ -190,8 +190,8 @@ router.get('/conversations', auth, async (req, res) => {
             $or: [{ from: userId }, { to: userId }],
         })
             .sort({ createdAt: -1 })
-            .populate('from', 'name email role image status')
-            .populate('to', 'name email role image status');
+            .populate('from', 'name email role image status slug')
+            .populate('to', 'name email role image status slug');
 
         const conversationsMap = {};
 
