@@ -224,7 +224,9 @@ router.post('/google', async (req, res) => {
             return res.status(400).send('Invalid Google payload');
         }
         // check if user exists
-        let user = await User.findOne({ googleId: payload.googleId });
+
+        let user = await User.findOne({ email: payload.email });
+
         if (user) {
             user.activity.push(new Date().toLocaleString('he-IL'));
             user.status = true;
@@ -285,6 +287,14 @@ router.post('/google', async (req, res) => {
             name: user.name,
             email: user.email,
             role: user.role,
+            slug: user.slug,
+        });
+
+        console.log('USER USED TO GENERATE TOKEN');
+        console.log({
+            id: user._id,
+            email: user.email,
+            googleId: user.googleId,
             slug: user.slug,
         });
 
