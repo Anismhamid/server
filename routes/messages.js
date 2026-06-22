@@ -168,7 +168,7 @@ router.patch('/mark-as-seen/:fromUserId', auth, async (req, res) => {
         const connectedUsers = req.app.get('connectedUsers');
 
         (connectedUsers.get(fromUserId) || []).forEach((id) =>
-            io.to(id).emit('message:seen', { by: toUserId }),
+            io.to(id).emit('message:seen', { from: toUserId}),
         );
 
         res.sendStatus(200);
@@ -265,7 +265,5 @@ router.delete('/:messageId', auth, async (req, res) => {
         });
     }
 });
-
-
 
 module.exports = router;
