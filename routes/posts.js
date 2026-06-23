@@ -1,4 +1,3 @@
-
 const cloudinary = require('../utils/cloudinary');
 const mongoose = require('mongoose');
 
@@ -161,24 +160,37 @@ router.post('/', auth, async (req, res) => {
         // get category and subcategory schema
         const schema = getPostSchema(category, type);
 
-        // Add type and category to the data if they are not already exiests		const dataToValidate = {
+        // Add type and category to the data
         const dataToValidate = {
             ...postData,
             category,
             type,
         };
-        console.log(dataToValidate);
+
+        console.log('Data to validate:', dataToValidate);
+        console.log('Payload:', req.payload);
+
         // validate schema
         const { error } = await schema.validate(dataToValidate);
 
         // if error return the error
-        if (error) return res.status(400).send(error.details[0].message);
+        if (error) {
+            console.error('Validation error:', error.details[0]);
+            return res.status(400).send(error.details[0].message);
+        }
 
         // Create a new post using the data from the request body
         const seller = {
-            name: req.payload.name.first,
+            _id: req.payload._id,
+            name: {
+                first: req.payload.name.first,
+                last: req.payload.name.last,
+            },
+            image: {
+                url: req.payload.image?.url,
+                alt: req.payload.image?.alt,
+            },
             slug: req.payload.slug,
-            user: req.payload._id,
         };
 
         const post = new Posts({
@@ -195,6 +207,7 @@ router.post('/', auth, async (req, res) => {
         // Send the created post back in the response
         res.status(201).send(post);
     } catch (error) {
+        console.error('Error creating post:', error);
         res.status(500).send(error.message);
     }
 });
@@ -336,19 +349,16 @@ router.get('/:category', async (req, res) => {
 router.patch('/:postId/like', auth, async (req, res) => {
     try {
         const { postId } = req.params;
-        const userId = req.payload._id;
+        const userId = req.payload._id.toString();
 
         const post = await Posts.findById(postId);
         if (!post) return res.status(404).send({ message: 'Post not found' });
 
-        // Check if user already liked the post
         const alreadyLiked = post.likes.includes(userId);
 
         if (alreadyLiked) {
-            // Remove like (unlike)
-            post.likes = post.likes.filter((id) => id !== userId);
+            post.likes.pull(userId); // ✅ Mongoose method بدل filter
         } else {
-            // Add like
             post.likes.push(userId);
         }
 

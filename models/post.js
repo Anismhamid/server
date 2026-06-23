@@ -1,13 +1,24 @@
 const mongoose = require('mongoose');
 const User = require('./User');
+const { first } = require('lodash');
 
 // ===== Base Schema لجميع المنتجات =====
 const basePostsSchema = new mongoose.Schema(
     {
         seller: {
-            name: { type: String },
+            _id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+            },
+            name: {
+                first: { type: String },
+                last: { type: String },
+            },
+            image: {
+                url: { type: String, default: '' },
+                alt: { type: String, default: '' },
+            },
             slug: { type: String },
-            user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
         },
         product_name: { type: String, required: true, trim: true },
         category: { type: String, required: true },
