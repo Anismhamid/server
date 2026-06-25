@@ -1,0 +1,194 @@
+[{
+  "_id": {
+    "$oid": "6a3d53173e1109b51d72e8c4"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "product_name": "Baby Lotion",
+  "category": "Baby",
+  "subcategory": "care",
+  "price": 10,
+  "description": "קרם עדין לעור תינוק רך מאוד",
+  "image": {
+    "url": "https://via.placeholder.com/300",
+    "publicId": "seed/baby-lotion"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "in_stock": true,
+  "type": "care",
+  "ageGroup": "0-6 months",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-25T16:11:03.232Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-25T16:11:03.232Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a3d53173e1109b51d72e8c5"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "product_name": "Baby Bottle",
+  "category": "Baby",
+  "subcategory": "feeding",
+  "price": 15,
+  "description": "בקבוק האכלה איכותי ונוח לשימוש",
+  "image": {
+    "url": "https://via.placeholder.com/300",
+    "publicId": "seed/baby-bottle"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "in_stock": true,
+  "type": "feeding",
+  "ageGroup": "0-6 months",
+  "brand": "Philips Avent",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-25T16:11:03.233Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-25T16:11:03.233Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a3d53173e1109b51d72e8c6"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "product_name": "Kitchen Mixer",
+  "category": "House",
+  "subcategory": "kitchen",
+  "price": 120,
+  "description": "מיקסר חשמלי חזק למטבח",
+  "image": {
+    "url": "https://via.placeholder.com/300",
+    "publicId": "seed/mixer"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "in_stock": true,
+  "type": "kitchen",
+  "brand": "Bosch",
+  "material": "Stainless Steel",
+  "powerWatts": 500,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-25T16:11:03.233Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-25T16:11:03.233Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a3d53173e1109b51d72e8c7"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "product_name": "Toyota Corolla",
+  "category": "Cars",
+  "subcategory": "private",
+  "price": 15000,
+  "description": "רכב משפחתי אמין וחסכוני",
+  "image": {
+    "url": "https://via.placeholder.com/300",
+    "publicId": "seed/car"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "in_stock": true,
+  "type": "private",
+  "brand": "Toyota",
+  "year": 2020,
+  "fuel": "gasoline",
+  "mileage": 40000,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-25T16:11:03.233Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-25T16:11:03.233Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a3d53173e1109b51d72e8c8"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "product_name": "Mountain Bike",
+  "category": "Bikes",
+  "subcategory": "mountain",
+  "price": 600,
+  "description": "אופני שטח חזקים לשטח הררי",
+  "image": {
+    "url": "https://via.placeholder.com/300",
+    "publicId": "seed/bike"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "in_stock": true,
+  "type": "mountain",
+  "frameSize": "M",
+  "suspension": true,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-25T16:11:03.233Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-25T16:11:03.233Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a3d53173e1109b51d72e8c9"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "product_name": "Ariel Detergent",
+  "category": "Cleaning",
+  "subcategory": "detergents",
+  "price": 12,
+  "description": "אבקת כביסה איכותית לבגדים נקיים",
+  "image": {
+    "url": "https://via.placeholder.com/300",
+    "publicId": "seed/detergent"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "in_stock": true,
+  "type": "detergents",
+  "brand": "Ariel",
+  "volume": 2,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-25T16:11:03.233Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-25T16:11:03.233Z"
+  }
+}]

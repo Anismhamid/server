@@ -1,5 +1,3 @@
-const mongoose = require('mongoose');
-
 const messageSchema = new mongoose.Schema(
     {
         from: {
@@ -19,35 +17,32 @@ const messageSchema = new mongoose.Schema(
         },
         warning: { type: Boolean, default: false },
         isImportant: { type: Boolean, default: false },
+
         replyTo: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Users',
-        },
-        fileUrl: {
-            type: String,
+            ref: 'Message',
             default: null,
         },
 
-        fileType: {
-            type: String,
-            default: null,
-        },
+        fileUrl: String,
+        fileType: String,
+
         status: {
             type: String,
             enum: ['pending', 'sent', 'delivered', 'seen'],
             default: 'pending',
         },
+
         roomId: {
             type: String,
             required: true,
-            index: true,
         },
     },
     { timestamps: true },
 );
 
+// indexes (optimized)
+messageSchema.index({ roomId: 1, createdAt: -1 });
 messageSchema.index({ to: 1, status: 1 });
-messageSchema.index({ from: 1, to: 1 });
-messageSchema.index({ roomId: 1, createdAt: 1 });
 
 module.exports = mongoose.model('Message', messageSchema);

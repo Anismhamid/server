@@ -127,10 +127,11 @@ router.get('/conversation/:otherUserId', auth, async (req, res) => {
 
         const messages = await Message.find({ roomId })
             .sort({ createdAt: -1 })
-            .populate('from', 'name email role image status')
-            .populate('to', 'name email role image status')
             .skip(skip)
-            .limit(limit);
+            .limit(limit)
+            .populate('from', 'name image slug')
+            .populate('to', 'name image slug')
+            .lean();
         // .populate("replyTo", "message from to");
 
         const unreadCount = await Message.countDocuments({
@@ -168,7 +169,7 @@ router.patch('/mark-as-seen/:fromUserId', auth, async (req, res) => {
         const connectedUsers = req.app.get('connectedUsers');
 
         (connectedUsers.get(fromUserId) || []).forEach((id) =>
-            io.to(id).emit('message:seen', { from: toUserId}),
+            io.to(id).emit('message:seen', { from: toUserId }),
         );
 
         res.sendStatus(200);

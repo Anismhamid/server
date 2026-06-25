@@ -40,11 +40,18 @@ async function seedPosts() {
             return;
         }
 
+        const seller = await User.findOne();
+        if (!seller) {
+            console.log(chalk.red('No users found. Seed users first.'));
+            return;
+        }
+
         const posts = [
-            // ================= Baby - care =================
+            // ================= Baby =================
             {
+                seller: seller._id,
                 product_name: 'Baby Lotion',
-                description: 'Gentle baby skin care',
+                description: 'קרם עדין לעור תינוק רך מאוד',
                 price: 10,
                 category: 'Baby',
                 type: 'care',
@@ -56,10 +63,10 @@ async function seedPosts() {
                 ageGroup: '0-6 months',
             },
 
-            // ================= Baby - feeding =================
             {
+                seller: seller._id,
                 product_name: 'Baby Bottle',
-                description: 'Feeding bottle',
+                description: 'בקבוק האכלה איכותי ונוח לשימוש',
                 price: 15,
                 category: 'Baby',
                 type: 'feeding',
@@ -72,10 +79,11 @@ async function seedPosts() {
                 ageGroup: '0-6 months',
             },
 
-            // ================= House - kitchen =================
+            // ================= House =================
             {
+                seller: seller._id,
                 product_name: 'Kitchen Mixer',
-                description: 'Electric mixer',
+                description: 'מיקסר חשמלי חזק למטבח',
                 price: 120,
                 category: 'House',
                 type: 'kitchen',
@@ -89,10 +97,11 @@ async function seedPosts() {
                 powerWatts: 500,
             },
 
-            // ================= Cars - private =================
+            // ================= Cars =================
             {
+                seller: seller._id,
                 product_name: 'Toyota Corolla',
-                description: 'Family car',
+                description: 'רכב משפחתי אמין וחסכוני',
                 price: 15000,
                 category: 'Cars',
                 type: 'private',
@@ -107,10 +116,11 @@ async function seedPosts() {
                 mileage: 40000,
             },
 
-            // ================= Bikes - mountain =================
+            // ================= Bikes =================
             {
+                seller: seller._id,
                 product_name: 'Mountain Bike',
-                description: 'Off-road bike',
+                description: 'אופני שטח חזקים לשטח הררי',
                 price: 600,
                 category: 'Bikes',
                 type: 'mountain',
@@ -125,8 +135,9 @@ async function seedPosts() {
 
             // ================= Cleaning =================
             {
+                seller: seller._id,
                 product_name: 'Ariel Detergent',
-                description: 'Laundry detergent',
+                description: 'אבקת כביסה איכותית לבגדים נקיים',
                 price: 12,
                 category: 'Cleaning',
                 type: 'detergents',
@@ -143,8 +154,9 @@ async function seedPosts() {
         await Posts.insertMany(posts);
 
         console.log(
-            chalk.greenBright(`Inserted ${posts.length} posts successfully.`),
+            chalk.greenBright(`Inserted ${posts.length} posts successfully.`)
         );
+
     } catch (error) {
         console.log(error);
     }

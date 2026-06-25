@@ -6,19 +6,8 @@ const { first } = require('lodash');
 const basePostsSchema = new mongoose.Schema(
     {
         seller: {
-            _id: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'User',
-            },
-            name: {
-                first: { type: String },
-                last: { type: String },
-            },
-            image: {
-                url: { type: String, default: '' },
-                alt: { type: String, default: '' },
-            },
-            slug: { type: String },
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Users',
         },
         product_name: { type: String, required: true, trim: true },
         category: { type: String, required: true },

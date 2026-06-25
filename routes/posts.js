@@ -12,17 +12,16 @@ const { getPostSchema } = require('../schema/postsSchema');
 // Get all posts for search in home page
 router.get('/', async (req, res) => {
     try {
-        // find the Post
-        const post = await Posts.find().populate({
-            path: 'seller',
-            select: 'name image slug',
-            model: 'Users',
-        });
-        if (!post) return res.status(404).send('No Posts to provide');
-        res.status(200).send(post);
+        const posts = await Posts.find()
+            .populate({
+                path: 'seller',
+                select: 'name image slug'
+            });
+
+        return res.status(200).json(posts);
     } catch (error) {
         console.error('Error fetching posts:', error);
-        res.status(500).json({ 'Internal server error': error.message });
+        return res.status(500).json({ error: error.message });
     }
 });
 
@@ -180,22 +179,9 @@ router.post('/', auth, async (req, res) => {
         }
 
         // Create a new post using the data from the request body
-        const seller = {
-            _id: req.payload._id,
-            name: {
-                first: req.payload.name.first,
-                last: req.payload.name.last,
-            },
-            image: {
-                url: req.payload.image?.url,
-                alt: req.payload.image?.alt,
-            },
-            slug: req.payload.slug,
-        };
-
         const post = new Posts({
             ...dataToValidate,
-            seller,
+            seller: req.payload._id,
         });
 
         // Save the new post to the database
