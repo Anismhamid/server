@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     try {
         // find the Post
         const post = await Posts.find().populate({
-            path: 'seller.user',
+            path: 'seller',
             select: 'name image slug',
             model: 'Users',
         });
