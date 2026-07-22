@@ -42,7 +42,6 @@ const corsOptions = {
 // SECURITY & LOGGING
 // =======================
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); 
 
 // =======================
 // WEBHOOK - IMPORTANT: Must be BEFORE express.json()
