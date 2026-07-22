@@ -1,5 +1,8 @@
 const allowedOrigins = [
     // Existing origins
+    'https://localhost', // Capacitor Android/iOS WebView origin
+    'capacitor://localhost', // iOS Capacitor scheme
+    'http://localhost',
     'http://localhost:5173',
     'http://localhost:4173',
     'http://localhost:8201',
