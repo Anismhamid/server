@@ -64,7 +64,6 @@ app.post('/api/featured-ads/test-webhook', express.raw({ type: 'application/json
 // BODY PARSING & RATE LIMITING
 // =======================
 app.use(express.json({ limit: '5mb' }));
-// app.use(express.urlencoded({ extended: true, limit: '5mb' }));
 app.use(helmet());
 app.use(logger);
 logToFile();
