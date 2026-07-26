@@ -43,10 +43,8 @@ app.set('io', io);
 app.set('connectedUsers', connectedUsers);
 
 io.on('connection', (socket) => {
-    console.log('Handshake auth:', socket.handshake.auth);
     const { userId, name, role } = socket.handshake.auth;
     if (!userId) {
-        console.log('Connection without userId');
         return;
     }
 
@@ -56,12 +54,9 @@ io.on('connection', (socket) => {
 
     socket.join(userId);
 
-    console.log(`User ${userId} connected. Role: ${role}`);
-
     // If Admin/Moderator, join admins room
     if (role === 'Admin' || role === 'Moderator') {
         socket.join('admins');
-        console.log(`${name} joined 'admins' room`);
     }
 
     // Typing events
@@ -76,7 +71,6 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', (reason) => {
-        console.log(`User ${userId} disconnected. Reason:`, reason);
 
         const ids = connectedUsers.get(userId) || [];
         const newIds = ids.filter((id) => id !== socket.id);
