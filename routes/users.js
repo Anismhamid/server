@@ -42,11 +42,11 @@ const generateToken = (user) => {
 };
 
 // Save FCM push token
-router.post('/push-token', auth, async (req, res) => {
+router.patch('/push-token', auth, async (req, res) => {
     try {
-        const { token } = req.payload;
+        const { pushToken } = req.body;
 
-        if (!token) {
+        if (!pushToken) {
             return res.status(400).send({
                 message: 'Push token is required',
             });
@@ -60,20 +60,15 @@ router.post('/push-token', auth, async (req, res) => {
             });
         }
 
-        user.pushToken = token;
+        user.pushToken = pushToken;
 
         await user.save();
 
-        console.log(
-            'FCM TOKEN SAVED:',
-            user.email,
-            token
-        );
+        console.log('FCM TOKEN SAVED:', user.email, pushToken);
 
         res.status(200).send({
             message: 'Push token saved',
         });
-
     } catch (error) {
         console.error('Save push token error:', error);
 
