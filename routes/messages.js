@@ -4,6 +4,7 @@ const auth = require('../middlewares/auth');
 const Users = require('../models/User');
 const Message = require('../models/Message');
 const { body, validationResult } = require('express-validator');
+const admin = require('../config/firebase');
 
 // Permissions
 const messagePermissions = {
@@ -81,7 +82,39 @@ router.post(
                 .populate('from', 'name email role image status slug')
                 .populate('to', 'name email role image status slug')
                 .populate('replyTo', 'message from to');
+            // ===== Send FCM Push Notification =====
 
+            if (toUser.pushToken) {
+                try {
+                    await admin.messaging().send({
+                        token: toUser.pushToken,
+
+                        notification: {
+                            title: `رسالة من ${populatedMessage.from.name.first}`,
+                            body: message,
+                        },
+
+                        data: {
+                            type: 'chat',
+                            messageId: String(newMessage._id),
+                            senderId: String(fromUserId),
+                        },
+
+                        android: {
+                            priority: 'high',
+
+                            notification: {
+                                channelId: 'default',
+                                sound: 'default',
+                            },
+                        },
+                    });
+
+                    console.log('FCM notification sent:', toUser.email);
+                } catch (error) {
+                    console.error('FCM send error:', error.message);
+                }
+            }
             const io = req.app.get('io');
             const connectedUsers = req.app.get('connectedUsers');
 

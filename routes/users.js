@@ -41,6 +41,48 @@ const generateToken = (user) => {
     );
 };
 
+// Save FCM push token
+router.post('/push-token', auth, async (req, res) => {
+    try {
+        const { token } = req.payload;
+
+        if (!token) {
+            return res.status(400).send({
+                message: 'Push token is required',
+            });
+        }
+
+        const user = await User.findById(req.payload._id);
+
+        if (!user) {
+            return res.status(404).send({
+                message: 'User not found',
+            });
+        }
+
+        user.pushToken = token;
+
+        await user.save();
+
+        console.log(
+            'FCM TOKEN SAVED:',
+            user.email,
+            token
+        );
+
+        res.status(200).send({
+            message: 'Push token saved',
+        });
+
+    } catch (error) {
+        console.error('Save push token error:', error);
+
+        res.status(500).send({
+            message: error.message,
+        });
+    }
+});
+
 // ----- רישום משתמש -----
 
 // Register new user
