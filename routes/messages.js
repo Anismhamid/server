@@ -82,35 +82,73 @@ router.post(
                 .populate('from', 'name email role image status slug')
                 .populate('to', 'name email role image status slug')
                 .populate('replyTo', 'message from to');
+
             // ===== Send FCM Push Notification =====
 
-            if (toUser.pushToken) {
+            if (toUser.pushTokens && toUser.pushTokens.length > 0) {
                 try {
-                    await admin.messaging().send({
-                        token: toUser.pushToken,
-
-                        notification: {
-                            title: `رسالة من ${populatedMessage.from.name.first}`,
-                            body: message,
-                        },
-
-                        data: {
-                            type: 'chat',
-                            messageId: String(newMessage._id),
-                            senderId: String(fromUserId),
-                        },
-
-                        android: {
-                            priority: 'high',
+                    const response = await admin
+                        .messaging()
+                        .sendEachForMulticast({
+                            tokens: toUser.pushTokens,
 
                             notification: {
-                                channelId: 'default',
-                                sound: 'default',
+                                title: `رسالة من ${populatedMessage.from.name.first}`,
+                                body: message,
                             },
-                        },
+
+                            data: {
+                                type: 'chat',
+                                messageId: String(newMessage._id),
+                                senderId: String(fromUserId),
+                            },
+
+                            android: {
+                                priority: 'high',
+
+                                notification: {
+                                    channelId: 'chat',
+                                    sound: 'notification',
+                                },
+                            },
+                        });
+
+                    console.log(
+                        'FCM sent:',
+                        response.successCount,
+                        '/',
+                        toUser.pushTokens.length,
+                    );
+
+                    // حذف التوكنات الغير صالحة
+                    const invalidTokens = [];
+
+                    response.responses.forEach((result, index) => {
+                        if (!result.success) {
+                            const errorCode = result.error?.code;
+
+                            if (
+                                errorCode ===
+                                    'messaging/registration-token-not-registered' ||
+                                errorCode ===
+                                    'messaging/invalid-registration-token'
+                            ) {
+                                invalidTokens.push(toUser.pushTokens[index]);
+                            }
+                        }
                     });
 
-                    console.log('FCM notification sent:', toUser.email);
+                    if (invalidTokens.length) {
+                        await Users.findByIdAndUpdate(toUserId, {
+                            $pull: {
+                                pushTokens: {
+                                    $in: invalidTokens,
+                                },
+                            },
+                        });
+
+                        console.log('Removed invalid tokens:', invalidTokens);
+                    }
                 } catch (error) {
                     console.error('FCM send error:', error.message);
                 }

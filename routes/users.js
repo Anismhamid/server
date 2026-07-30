@@ -46,13 +46,25 @@ router.patch('/push-token', auth, async (req, res) => {
     try {
         const { pushToken } = req.body;
 
+        const userId = req.payload._id;
+
         if (!pushToken) {
             return res.status(400).send({
                 message: 'Push token is required',
             });
         }
 
-        const user = await User.findById(req.payload._id);
+        const user = await User.findByIdAndUpdate(
+            userId,
+            {
+                $addToSet: {
+                    pushTokens: pushToken,
+                },
+            },
+            {
+                new: true,
+            },
+        );
 
         if (!user) {
             return res.status(404).send({
@@ -60,14 +72,11 @@ router.patch('/push-token', auth, async (req, res) => {
             });
         }
 
-        user.pushToken = pushToken;
-
-        await user.save();
-
         console.log('FCM TOKEN SAVED:', user.email, pushToken);
 
         res.status(200).send({
             message: 'Push token saved',
+            pushTokens: user.pushTokens,
         });
     } catch (error) {
         console.error('Save push token error:', error);

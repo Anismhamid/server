@@ -69,9 +69,9 @@ const userSchema = new mongoose.Schema(
         },
         messageStatus: { type: String, default: 'unread' },
         terms: { type: String },
-        pushToken: {
-            type: String,
-            default: null,
+        pushTokens: {
+            type: [String],
+            default: [],
         },
     },
     { timestamps: true },
