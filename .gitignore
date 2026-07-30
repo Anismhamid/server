@@ -6,3 +6,5 @@
 /fruit-store.messages.json
 /fruit-store.users
 node_modules
+config/*.json
+config/firebase.js
