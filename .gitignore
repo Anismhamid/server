@@ -7,4 +7,3 @@
 /fruit-store.users
 node_modules
 config/*.json
-config/firebase.js
