@@ -44,21 +44,23 @@ const generateToken = (user) => {
 // Save FCM push token
 router.patch('/push-token', auth, async (req, res) => {
     try {
-        const { pushToken } = req.body;
+        console.log('BODY:', req.body);
+        console.log('PAYLOAD:', req.payload);
+
+        const { pushTokens } = req.body;
         const userId = req.payload._id;
 
-        if (!pushToken) {
+        if (!pushTokens) {
             return res.status(400).send({
                 message: 'Push token is required',
             });
         }
-        
 
         const user = await User.findByIdAndUpdate(
             userId,
             {
                 $addToSet: {
-                    pushTokens: pushToken,
+                    pushTokens: pushTokens,
                 },
             },
             { new: true },
