@@ -43,6 +43,9 @@ const generateToken = (user) => {
 
 // Save FCM push token
 router.patch('/push-token', auth, async (req, res) => {
+    console.log('🔥 PUSH TOKEN REQUEST');
+    console.log(req.body);
+    console.log(req.payload);
     try {
         console.log('BODY:', req.body);
         console.log('PAYLOAD:', req.payload);
@@ -76,7 +79,7 @@ router.patch('/push-token', auth, async (req, res) => {
 
         res.send({
             message: 'Push token saved',
-            tokens: user.pushToken,
+            tokens: user.pushTokens,
         });
     } catch (error) {
         console.error(error);
