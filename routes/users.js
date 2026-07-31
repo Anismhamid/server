@@ -60,7 +60,7 @@ router.patch('/push-token', auth, async (req, res) => {
                     pushTokens: pushToken,
                 },
             },
-            { new: true }
+            { new: true },
         );
 
         if (!user) {
@@ -69,18 +69,13 @@ router.patch('/push-token', auth, async (req, res) => {
             });
         }
 
-        console.log(
-            '🔥 FCM TOKEN SAVED:',
-            user.email,
-            pushToken
-        );
+        console.log('🔥 FCM TOKEN SAVED:', user.email, pushToken);
 
         res.send({
             message: 'Push token saved',
-            tokens:user.pushTokens
+            tokens: user.pushTokens,
         });
-
-    } catch(error){
+    } catch (error) {
         console.error(error);
         res.status(500).send(error.message);
     }
