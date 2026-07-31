@@ -47,10 +47,10 @@ router.patch('/push-token', auth, async (req, res) => {
         console.log('BODY:', req.body);
         console.log('PAYLOAD:', req.payload);
 
-        const { pushTokens } = req.body;
+        const { pushToken } = req.body;
         const userId = req.payload._id;
 
-        if (!pushTokens) {
+        if (!pushToken) {
             return res.status(400).send({
                 message: 'Push token is required',
             });
@@ -60,7 +60,7 @@ router.patch('/push-token', auth, async (req, res) => {
             userId,
             {
                 $addToSet: {
-                    pushTokens: pushTokens,
+                    pushTokens: pushToken,
                 },
             },
             { new: true },
@@ -76,7 +76,7 @@ router.patch('/push-token', auth, async (req, res) => {
 
         res.send({
             message: 'Push token saved',
-            tokens: user.pushTokens,
+            tokens: user.pushToken,
         });
     } catch (error) {
         console.error(error);
