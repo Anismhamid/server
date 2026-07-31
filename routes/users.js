@@ -44,7 +44,8 @@ const generateToken = (user) => {
 // Save FCM push token
 router.patch('/push-token', auth, async (req,res)=>{
     try {
-
+ console.log("HEADERS:", req.headers.authorization);
+        console.log("BODY RECEIVED:", req.body);
         const { pushToken } = req.body;
 
         if(!pushToken){
