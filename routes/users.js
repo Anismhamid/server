@@ -42,47 +42,46 @@ const generateToken = (user) => {
 };
 
 // Save FCM push token
-router.patch('/push-token', auth, async (req, res) => {
-    console.log('🔥 PUSH TOKEN REQUEST');
-    console.log(req.body);
-    console.log(req.payload);
+router.patch('/push-token', auth, async (req,res)=>{
     try {
-        console.log('BODY:', req.body);
-        console.log('PAYLOAD:', req.payload);
 
         const { pushToken } = req.body;
-        const userId = req.payload._id;
 
-        if (!pushToken) {
+        if(!pushToken){
             return res.status(400).send({
-                message: 'Push token is required',
+                message:"Push token is required"
             });
         }
+
 
         const user = await User.findByIdAndUpdate(
-            userId,
+            req.payload._id,
             {
-                $addToSet: {
-                    pushTokens: pushToken,
-                },
+                $addToSet:{
+                    pushTokens: pushToken
+                }
             },
-            { new: true },
+            {
+                new:true
+            }
         );
 
-        if (!user) {
-            return res.status(404).send({
-                message: 'User not found',
-            });
-        }
 
-        console.log('🔥 FCM TOKEN SAVED:', user.email, pushToken);
+        console.log(
+            "🔥 FCM TOKEN SAVED:",
+            user.email,
+            pushToken
+        );
+
 
         res.send({
-            message: 'Push token saved',
-            tokens: user.pushTokens,
+            message:"Push token saved",
+            tokens:user.pushTokens
         });
-    } catch (error) {
-        console.error(error);
+
+
+    }catch(error){
+        console.log(error);
         res.status(500).send(error.message);
     }
 });
