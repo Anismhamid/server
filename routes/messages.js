@@ -4,7 +4,7 @@ const auth = require('../middlewares/auth');
 const Users = require('../models/User');
 const Message = require('../models/Message');
 const { body, validationResult } = require('express-validator');
-const admin = require('../config/firebase');
+const firebase = require('../config/firebase');
 
 // Permissions
 const messagePermissions = {
@@ -87,8 +87,8 @@ router.post(
 
             if (toUser.pushTokens && toUser.pushTokens.length > 0) {
                 try {
-                    const response = await admin
-                        .messaging()
+                    const response = await firebase
+                        .messaging
                         .sendEachForMulticast({
                             tokens: toUser.pushTokens,
 

@@ -45,7 +45,6 @@ const generateToken = (user) => {
 router.patch('/push-token', auth, async (req, res) => {
     try {
         const { pushToken } = req.body;
-
         const userId = req.payload._id;
 
         if (!pushToken) {
@@ -61,9 +60,7 @@ router.patch('/push-token', auth, async (req, res) => {
                     pushTokens: pushToken,
                 },
             },
-            {
-                new: true,
-            },
+            { new: true }
         );
 
         if (!user) {
@@ -72,18 +69,20 @@ router.patch('/push-token', auth, async (req, res) => {
             });
         }
 
-        console.log('FCM TOKEN SAVED:', user.email, pushToken);
+        console.log(
+            '🔥 FCM TOKEN SAVED:',
+            user.email,
+            pushToken
+        );
 
-        res.status(200).send({
+        res.send({
             message: 'Push token saved',
-            pushTokens: user.pushTokens,
+            tokens:user.pushTokens
         });
-    } catch (error) {
-        console.error('Save push token error:', error);
 
-        res.status(500).send({
-            message: error.message,
-        });
+    } catch(error){
+        console.error(error);
+        res.status(500).send(error.message);
     }
 });
 
