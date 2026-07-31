@@ -52,6 +52,7 @@ router.patch('/push-token', auth, async (req, res) => {
                 message: 'Push token is required',
             });
         }
+        
 
         const user = await User.findByIdAndUpdate(
             userId,
