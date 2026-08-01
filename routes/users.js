@@ -38,45 +38,78 @@ const generateToken = (user) => {
             'status',
         ]),
         process.env.JWT_SECRET,
+        { expiresIn: '7d', algorithm: 'HS256' },
     );
 };
 
 // Save FCM push token
 router.patch('/push-token', auth, async (req, res) => {
-    console.log('========== PUSH TOKEN DEBUG ==========');
-    console.log('HEADERS:', req.headers);
-    console.log('BODY:', req.body);
-    console.log('======================================');
     try {
         const { pushToken } = req.body;
 
-        if (!pushToken) {
-            return res.status(400).send({
-                message: 'Push token is required',
+        // Validate input
+        if (
+            !pushToken ||
+            typeof pushToken !== 'string' ||
+            pushToken.trim().length === 0
+        ) {
+            return res.status(400).json({
+                success: false,
+                message: 'Valid push token is required',
+            });
+        }
+
+        // Optional: Validate token format
+        if (pushToken.length < 20) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid push token format',
             });
         }
 
         const user = await User.findByIdAndUpdate(
             req.payload._id,
             {
-                $addToSet: {
-                    pushTokens: pushToken,
-                },
+                $addToSet: { pushTokens: pushToken.trim() },
             },
-            {
-                new: true,
-            },
+            { new: true },
         );
 
-        console.log('🔥 FCM TOKEN SAVED:', user.email, pushToken);
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found',
+            });
+        }
 
-        res.send({
-            message: 'Push token saved',
-            tokens: user.pushTokens,
+        // Log without exposing sensitive data
+        console.info('Push token updated:', {
+            userId: req.payload._id,
+            email: user.email,
+            totalTokens: user.pushTokens.length,
+        });
+
+        res.json({
+            success: true,
+            message: 'Push token saved successfully',
         });
     } catch (error) {
-        console.log(error);
-        res.status(500).send(error.message);
+        console.error('Error saving push token:', {
+            userId: req.payload._id,
+            error: error.message,
+        });
+
+        if (error.name === 'CastError') {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid user ID',
+            });
+        }
+
+        res.status(500).json({
+            success: false,
+            message: 'Failed to save push token',
+        });
     }
 });
 
@@ -326,14 +359,6 @@ router.post('/google', async (req, res) => {
             name: user.name,
             email: user.email,
             role: user.role,
-            slug: user.slug,
-        });
-
-        console.log('USER USED TO GENERATE TOKEN');
-        console.log({
-            id: user._id,
-            email: user.email,
-            googleId: user.googleId,
             slug: user.slug,
         });
 
