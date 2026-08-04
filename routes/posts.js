@@ -438,7 +438,6 @@ router.delete('/:postId/reviews/:reviewId', auth, async (req, res) => {
         const { postId, reviewId } = req.params;
         const userId = req.payload._id;
 
-
         const post = await Posts.findById(postId);
 
         if (!post) {
@@ -448,16 +447,21 @@ router.delete('/:postId/reviews/:reviewId', auth, async (req, res) => {
         }
 
 
-        const review = post.reviews.id(reviewId);
+        const review = post.reviews.find(
+            r => r._id.toString() === reviewId
+        );
+
 
         if (!review) {
+            console.log("Available reviews:");
+            console.log(post.reviews.map(r => r._id));
+
             return res.status(404).send({
                 message: 'Review not found'
             });
         }
 
 
-        // التأكد أن صاحب التعليق هو نفسه
         if (review.user._id.toString() !== userId.toString()) {
             return res.status(403).send({
                 message: 'You cannot delete this review'
@@ -465,7 +469,10 @@ router.delete('/:postId/reviews/:reviewId', auth, async (req, res) => {
         }
 
 
-        review.deleteOne();
+        post.reviews = post.reviews.filter(
+            r => r._id.toString() !== reviewId
+        );
+
 
         await post.save();
 
@@ -475,7 +482,7 @@ router.delete('/:postId/reviews/:reviewId', auth, async (req, res) => {
         });
 
 
-    } catch (error) {
+    } catch(error) {
         console.log(error);
 
         res.status(500).send({
@@ -483,7 +490,6 @@ router.delete('/:postId/reviews/:reviewId', auth, async (req, res) => {
         });
     }
 });
-
 // Update a specific review for a post
 router.patch('/:postId/reviews/:reviewId', auth, async (req, res) => {
     try {
