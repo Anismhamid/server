@@ -12,11 +12,10 @@ const { getPostSchema } = require('../schema/postsSchema');
 // Get all posts for search in home page
 router.get('/', async (req, res) => {
     try {
-        const posts = await Posts.find()
-            .populate({
-                path: 'seller',
-                select: 'name image slug'
-            });
+        const posts = await Posts.find().populate({
+            path: 'seller',
+            select: 'name image slug',
+        });
 
         return res.status(200).json(posts);
     } catch (error) {
@@ -202,7 +201,10 @@ router.post('/', auth, async (req, res) => {
 router.get('/spicific/:postId', async (req, res) => {
     try {
         // Find the post by post_name
-        const post = await Posts.findById(req.params.postId);
+        const post = await Posts.findById(req.params.postId).populate({
+            path: 'seller',
+            select: 'name image slug _id',
+        });
 
         if (!post) return res.status(404).send('post not found');
 
@@ -219,7 +221,7 @@ router.put('/:postId', auth, async (req, res) => {
         const post = await Posts.findById(req.params.postId);
         if (!post) return res.status(404).send('Post not found');
 
-        if (req.payload.slug !== post.seller.slug) {
+        if (req.payload._id.toString() !== post.seller.toString()) {
             return res.status(403).send('Access denied');
         }
 
