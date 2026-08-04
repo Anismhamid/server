@@ -221,7 +221,11 @@ router.put('/:postId', auth, async (req, res) => {
         const post = await Posts.findById(req.params.postId);
         if (!post) return res.status(404).send('Post not found');
 
-        if (req.payload._id.toString() !== post.seller.toString()) {
+        const isOwner = req.payload._id.toString() === post.seller.toString();
+        const isAdminOrMod =
+            req.payload.role === 'Admin' || req.payload.role === 'Moderator';
+
+        if (!isOwner && !isAdminOrMod) {
             return res.status(403).send('Access denied');
         }
 
@@ -262,11 +266,13 @@ router.delete('/:postId', auth, async (req, res) => {
         if (!post) return res.status(404).send('This post is not found');
 
         // Safe access to seller.slug
-        const sellerSlug = post.seller.slug;
+        const isOwner =
+            req.payload._id.toString() === post.seller.toString();
+
         const canDelete =
             req.payload.role === 'Admin' ||
             req.payload.role === 'Moderator' ||
-            (req.payload.slug && sellerSlug && req.payload.slug === sellerSlug);
+            isOwner;
 
         if (!canDelete) {
             return res
