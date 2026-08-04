@@ -369,6 +369,7 @@ router.patch('/:postId/like', auth, async (req, res) => {
     }
 });
 
+// PATCH the reviews for a specific post
 router.patch('/:postId/reviews', auth, async (req, res) => {
     try {
         const { postId } = req.params;
@@ -428,6 +429,140 @@ router.patch('/:postId/reviews', auth, async (req, res) => {
     } catch (error) {
         console.error('Review error:', error);
         res.status(500).send({ message: error.message });
+    }
+});
+
+// Delete a specific review from a post
+router.delete('/:postId/reviews/:reviewId', auth, async (req, res) => {
+    try {
+        const { postId, reviewId } = req.params;
+        const userId = req.payload._id;
+
+
+        const post = await Posts.findById(postId);
+
+        if (!post) {
+            return res.status(404).send({
+                message: 'Post not found'
+            });
+        }
+
+
+        const review = post.reviews.id(reviewId);
+
+        if (!review) {
+            return res.status(404).send({
+                message: 'Review not found'
+            });
+        }
+
+
+        // التأكد أن صاحب التعليق هو نفسه
+        if (review.user._id.toString() !== userId.toString()) {
+            return res.status(403).send({
+                message: 'You cannot delete this review'
+            });
+        }
+
+
+        review.deleteOne();
+
+        await post.save();
+
+
+        res.send({
+            message: 'Review deleted successfully'
+        });
+
+
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).send({
+            message: error.message
+        });
+    }
+});
+
+// Update a specific review for a post
+router.patch('/:postId/reviews/:reviewId', auth, async (req, res) => {
+    try {
+        const { postId, reviewId } = req.params;
+        const { comment, rating } = req.body;
+        const userId = req.payload._id;
+
+
+        const post = await Posts.findById(postId);
+
+        if (!post) {
+            return res.status(404).send({
+                message: 'Post not found'
+            });
+        }
+
+
+        const review = post.reviews.id(reviewId);
+
+        if (!review) {
+            return res.status(404).send({
+                message: 'Review not found'
+            });
+        }
+
+
+        if (review.user._id.toString() !== userId.toString()) {
+            return res.status(403).send({
+                message: 'You cannot edit this review'
+            });
+        }
+
+
+        if (comment !== undefined) {
+            if (!comment.trim()) {
+                return res.status(400).send({
+                    message: 'Comment is required'
+                });
+            }
+
+            review.comment = comment.trim();
+        }
+
+
+        if (rating !== undefined) {
+
+            const numericRating = Number(rating);
+
+
+            if (numericRating < 1 || numericRating > 5) {
+                return res.status(400).send({
+                    message: 'Rating must be between 1 and 5'
+                });
+            }
+
+
+            review.rating = numericRating;
+        }
+
+
+        review.updatedAt = new Date();
+
+
+        await post.save();
+
+
+        res.send({
+            message: 'Review updated successfully',
+            review
+        });
+
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).send({
+            message: error.message
+        });
     }
 });
 
