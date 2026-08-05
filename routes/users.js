@@ -113,30 +113,42 @@ router.patch('/push-token', auth, async (req, res) => {
     }
 });
 
-router.delete('/push-token', auth, async (req, res) => {
-    try {
-        const user = await User.findById(req.user._id);
+router.delete('/push-token', auth, async (req,res)=>{
 
-        if (!user) {
+    try {
+
+        const user = await User.findById(req.user._id).select('-password');
+
+
+        if(!user){
             return res.status(404).json({
-                message: 'User not found',
+                message:'User not found'
             });
         }
 
-        user.pushToken = undefined;
+
+        user.pushToken = null;
 
         await user.save();
 
-        res.json({
-            message: 'Push token removed',
-        });
-    } catch (error) {
-        console.error('Remove push token error:', error);
 
-        res.status(500).json({
-            message: error.message,
+        return res.json({
+            message:'Push token removed'
+        });
+
+
+    } catch(error){
+
+        console.error(
+            'Remove push token error:',
+            error
+        );
+
+        return res.status(500).json({
+            message:error.message
         });
     }
+
 });
 
 // ----- רישום משתמש -----
