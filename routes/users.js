@@ -127,7 +127,7 @@ router.delete('/push-token', auth, async (req,res)=>{
         }
 
 
-        user.pushToken = null;
+        user.pushToken = [];
 
         await user.save();
 
