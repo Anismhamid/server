@@ -117,7 +117,7 @@ router.delete('/push-token', auth, async (req,res)=>{
 
     try {
 
-        const user = await User.findById(req.user._id).select('-password');
+        const user = await User.findById(req.payload._id).select('-password');
 
 
         if(!user){
