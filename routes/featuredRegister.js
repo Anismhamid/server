@@ -196,13 +196,14 @@ router.get('/me', auth, async (req, res) => {
 });
 
 // GET /api/featured-ads/homepage
+// GET /api/featured-ads/homepage
 router.get('/homepage', async (req, res) => {
     try {
         const ads = await FeaturedAd.find({
             type: 'homepage',
             isActive: true,
-            // startDate: { $lte: new Date() },
-            // endDate: { $gte: new Date() },
+            startDate: { $lte: new Date() },
+            endDate: { $gte: new Date() },
         })
             .sort({ createdAt: -1 })
             .limit(100)
@@ -211,12 +212,18 @@ router.get('/homepage', async (req, res) => {
                 select: 'product_name category location price image seller sale discount in_stock brand',
             });
 
-         res.status(200).send(ads);
+        // ✅ CRITICAL FIX: Filter out any ads where populate failed (listingId is null)
+        const validAds = ads.filter(ad => ad.listingId !== null);
+
+        console.log(`🔍 Found ${ads.length} homepage ads. Valid: ${validAds.length}`);
+        
+        res.status(200).send(validAds);
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Server error' });
     }
 });
+
 
 // GET /api/featured-ads/highlight
 router.get('/highlight', async (req, res) => {
