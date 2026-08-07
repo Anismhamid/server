@@ -221,7 +221,7 @@ router.put('/:postId', auth, async (req, res) => {
         const post = await Posts.findById(req.params.postId);
         if (!post) return res.status(404).send('Post not found');
 
-        const isOwner = req.payload._id.toString() === post.seller.toString();
+        const isOwner = req.payload._id.toString() === post.seller._id.toString();
         const isAdminOrMod =
             req.payload.role === 'Admin' || req.payload.role === 'Moderator';
 
@@ -253,7 +253,6 @@ router.put('/:postId', auth, async (req, res) => {
     }
 });
 
-
 // Delete post
 router.delete('/:postId', auth, async (req, res) => {
     const { postId } = req.params;
@@ -268,8 +267,7 @@ router.delete('/:postId', auth, async (req, res) => {
         if (!post) return res.status(404).send('This post is not found');
 
         // Safe access to seller.slug
-        const isOwner =
-            req.payload._id.toString() === post.seller.toString();
+        const isOwner = req.payload._id.toString() === post.seller.toString();
 
         const canDelete =
             req.payload.role === 'Admin' ||
@@ -444,51 +442,41 @@ router.delete('/:postId/reviews/:reviewId', auth, async (req, res) => {
 
         if (!post) {
             return res.status(404).send({
-                message: 'Post not found'
+                message: 'Post not found',
             });
         }
 
-
-        const review = post.reviews.find(
-            r => r._id.toString() === reviewId
-        );
-
+        const review = post.reviews.find((r) => r._id.toString() === reviewId);
 
         if (!review) {
-            console.log("Available reviews:");
-            console.log(post.reviews.map(r => r._id));
+            console.log('Available reviews:');
+            console.log(post.reviews.map((r) => r._id));
 
             return res.status(404).send({
-                message: 'Review not found'
+                message: 'Review not found',
             });
         }
-
 
         if (review.user._id.toString() !== userId.toString()) {
             return res.status(403).send({
-                message: 'You cannot delete this review'
+                message: 'You cannot delete this review',
             });
         }
 
-
         post.reviews = post.reviews.filter(
-            r => r._id.toString() !== reviewId
+            (r) => r._id.toString() !== reviewId,
         );
-
 
         await post.save();
 
-
         res.send({
-            message: 'Review deleted successfully'
+            message: 'Review deleted successfully',
         });
-
-
-    } catch(error) {
+    } catch (error) {
         console.log(error);
 
         res.status(500).send({
-            message: error.message
+            message: error.message,
         });
     }
 });
@@ -499,77 +487,63 @@ router.patch('/:postId/reviews/:reviewId', auth, async (req, res) => {
         const { comment, rating } = req.body;
         const userId = req.payload._id;
 
-
         const post = await Posts.findById(postId);
 
         if (!post) {
             return res.status(404).send({
-                message: 'Post not found'
+                message: 'Post not found',
             });
         }
-
 
         const review = post.reviews.id(reviewId);
 
         if (!review) {
             return res.status(404).send({
-                message: 'Review not found'
+                message: 'Review not found',
             });
         }
-
 
         if (review.user._id.toString() !== userId.toString()) {
             return res.status(403).send({
-                message: 'You cannot edit this review'
+                message: 'You cannot edit this review',
             });
         }
-
 
         if (comment !== undefined) {
             if (!comment.trim()) {
                 return res.status(400).send({
-                    message: 'Comment is required'
+                    message: 'Comment is required',
                 });
             }
 
             review.comment = comment.trim();
         }
 
-
         if (rating !== undefined) {
-
             const numericRating = Number(rating);
-
 
             if (numericRating < 1 || numericRating > 5) {
                 return res.status(400).send({
-                    message: 'Rating must be between 1 and 5'
+                    message: 'Rating must be between 1 and 5',
                 });
             }
-
 
             review.rating = numericRating;
         }
 
-
         review.updatedAt = new Date();
-
 
         await post.save();
 
-
         res.send({
             message: 'Review updated successfully',
-            review
+            review,
         });
-
-
     } catch (error) {
-
         console.log(error);
 
         res.status(500).send({
-            message: error.message
+            message: error.message,
         });
     }
 });
