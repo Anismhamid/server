@@ -225,7 +225,7 @@ router.put('/:postId', auth, async (req, res) => {
         const isAdminOrMod =
             req.payload.role === 'Admin' || req.payload.role === 'Moderator';
 
-        if (!isOwner && !isAdminOrMod) {
+        if (!isOwner || !isAdminOrMod) {
             return res.status(403).send('Access denied');
         }
 

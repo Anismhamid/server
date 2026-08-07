@@ -1,1573 +1,337 @@
 [{
   "_id": {
-    "$oid": "6975df3ee1443cc2d28379f6"
+    "$oid": "6a3e5d6fdc9e00b032a11afe"
   },
   "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6975de52e1443cc2d28379e3"
-    }
+    "_id": {
+      "$oid": "6979d4774f1db7cd4a712604"
+    },
+    "name": {
+      "first": "Anis",
+      "last": "Mhamied"
+    },
+    "image": {
+      "url": "https://lh3.googleusercontent.com/a/ACg8ocI2mPb6ys7aqePyz56Xd3o7GUiD48PeIKH26OSAfIshs54PqZ1EPg=s96-c",
+      "alt": ""
+    },
+    "slug": "anis-mhamied-1769591927900"
   },
-  "product_name": "mazda 3",
-  "category": "Cars",
-  "subcategory": "private",
-  "price": 8000,
-  "description": "3J'1G DD(J9 (391 E9BHD",
-  "image": {
-    "url": "https://res.cloudinary.com/drxqielit/image/upload/v1769361447/u60tiuvluijrl6xhised.jpg",
-    "publicId": "pgwxny76rmor9vgjjv0x"
-  },
-  "likes": [
-    "69753d0a5d8b8ede78afd1c9",
-    "6980c609317475fe5c733aed",
-    "6984903c9e0bc4d9ed0741c2"
-  ],
-  "sale": false,
-  "discount": 0,
-  "location": "",
-  "in_stock": true,
-  "type": "private",
-  "brand": "mazda",
-  "year": 2008,
-  "fuel": "gasoline",
-  "mileage": 220000,
-  "color": "#000000",
-  "createdAt": {
-    "$date": "2026-01-25T09:15:42.996Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-21T10:56:25.464Z"
-  },
-  "__v": 55
-},
-{
-  "_id": {
-    "$oid": "6983727b9e0bc4d9ed074144"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "·‰‘ Í‹Í ﬁ’È—ŸÍ Á‹–·ŸÍ ”“› N-NUP",
-  "category": "House",
-  "subcategory": "decor",
-  "price": 5580,
-  "description": "Á‹–·ŸÍ, ‡’◊‘ ’ﬁ‚’Ê—Í ﬁ’È‹›!\n·‰‘ ﬁ”“› ‡’‰Ë Í‚‡ŸÁ ‹·‹’ﬂ È‹€› ‘ﬁ’ﬂ ·“‡’ﬂ ’·ÿŸŸ‹,\n‘Ÿ– ﬁË’‰”Í ——” –ËŸ“ –Ÿ€’ÍŸ ’‡‚Ÿ› ‹ﬁ“‚ ’ﬁÍ‡Á‘ —Á‹’Í.\n‹·‰‘ Ÿ”Ÿ’Í ﬁÈ’‰‚’Í ‘Ÿ’ÊË’Í ﬁË–‘ –‹“‡ÿŸ, €ËŸ’Í ŸÈŸ—‘ ‡È‹‰’Í ‚‹ —·Ÿ· ’Ê’Á‹\nﬁ‚Â ﬁ‹– ’‚‹Ÿ’ ËÊ’‚’Í –‹·ÿŸ’Í –Ÿ€’ÍŸ’Í ’◊÷Á’Í ‘ﬁÍ’◊’Í —ÈÍŸ ’‚Ë—.\n‘ﬁ‹ÊÍ ‘ﬁ‚Ê—Í - È‹—’ €’Ë·– –’ ·‰Í ”’ ﬁ’È—ŸÍ ﬁ–’Í’ ‘”“› ‹‹’Á ·’‰Ÿ ﬁ’È‹›.\n\nﬁŸ”’Í:\nË’◊— - ﬁŸ”’Í ‹—◊ŸË‘\nË’◊— ﬁÈ‚‡Í Ÿ” - 18 ·\"ﬁ\n‚’ﬁÁ -  90 ·\"ﬁ\n‚’ﬁÁ ŸÈŸ—‘ - 55 ·\"ﬁ\n“’—‘ “— ·‰‘ - 80 ·\"ﬁ\n“’—‘ ŸÈŸ—‘ - 45 ·\"ﬁ\n“’—‘ Ë“‹ - 12 ·\"ﬁ",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1770222192/t7irs5ufxiyns1bhvbfq.webp",
-    "publicId": "t7irs5ufxiyns1bhvbfq"
-  },
-  "likes": [
-    "6984903c9e0bc4d9ed0741c2",
-    "6980c609317475fe5c733aed",
-    "698c815ff696efcb31ef1ae7",
-    "6979d4774f1db7cd4a712604"
-  ],
-  "sale": false,
-  "discount": 0,
-  "location": "",
-  "in_stock": true,
-  "type": "decor",
-  "material": "N-NUP",
-  "color": "#B6A493",
-  "createdAt": {
-    "$date": "2026-02-04T16:23:23.772Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-21T10:57:02.776Z"
-  },
-  "__v": 56
-},
-{
-  "_id": {
-    "$oid": "69bfa8d5d38b498d75b8d720"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Kitchen Mixer",
+  "product_name": "ÿßÿßÿßÿß",
   "category": "House",
   "subcategory": "kitchen",
-  "price": 120,
-  "description": "Electric kitchen mixer",
+  "price": 20,
+  "description": "ÿßÿßÿßÿßÿßÿßÿß",
+  "likes": [
+    "6979d4774f1db7cd4a712604",
+    "6980c609317475fe5c733aed"
+  ],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ÿßŸÖ ÿßŸÑŸÅÿ≠ŸÖ",
+  "in_stock": true,
+  "createdAt": {
+    "$date": "2026-06-26T11:07:27.354Z"
+  },
+  "type": "kitchen",
+  "brand": "ÿßŸÑÿπ",
+  "material": "ÿßÿßÿß",
+  "powerWatts": 100,
+  "reviews": [
+    {
+      "user": {
+        "name": {
+          "first": "Anis",
+          "last": "Mhamied"
+        },
+        "_id": {
+          "$oid": "6979d4774f1db7cd4a712604"
+        },
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocI2mPb6ys7aqePyz56Xd3o7GUiD48PeIKH26OSAfIshs54PqZ1EPg=s96-c"
+      },
+      "comment": "3333",
+      "rating": 5,
+      "createdAt": {
+        "$date": "2026-07-03T18:54:24.391Z"
+      },
+      "_id": {
+        "$oid": "6a4805602a797561aca34d05"
+      }
+    },
+    {
+      "user": {
+        "name": {
+          "first": "Anis",
+          "last": "Mhamied"
+        },
+        "_id": {
+          "$oid": "6979d4774f1db7cd4a712604"
+        },
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocI2mPb6ys7aqePyz56Xd3o7GUiD48PeIKH26OSAfIshs54PqZ1EPg=s96-c"
+      },
+      "comment": "1\n2\n3\n3\n3",
+      "rating": 5,
+      "createdAt": {
+        "$date": "2026-07-03T18:59:06.608Z"
+      },
+      "_id": {
+        "$oid": "6a48067a2a797561aca34da8"
+      }
+    },
+    {
+      "user": {
+        "name": {
+          "first": "Anis",
+          "last": "Mhamied"
+        },
+        "_id": {
+          "$oid": "6979d4774f1db7cd4a712604"
+        },
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocI2mPb6ys7aqePyz56Xd3o7GUiD48PeIKH26OSAfIshs54PqZ1EPg=s96-c"
+      },
+      "comment": "1",
+      "rating": 5,
+      "createdAt": {
+        "$date": "2026-07-03T18:59:12.139Z"
+      },
+      "_id": {
+        "$oid": "6a4806802a797561aca34dad"
+      }
+    },
+    {
+      "user": {
+        "name": {
+          "first": "Anis",
+          "last": "Mhamied"
+        },
+        "_id": {
+          "$oid": "6979d4774f1db7cd4a712604"
+        },
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocI2mPb6ys7aqePyz56Xd3o7GUiD48PeIKH26OSAfIshs54PqZ1EPg=s96-c"
+      },
+      "comment": "2",
+      "rating": 5,
+      "createdAt": {
+        "$date": "2026-07-03T18:59:18.603Z"
+      },
+      "_id": {
+        "$oid": "6a4806862a797561aca34db3"
+      }
+    },
+    {
+      "user": {
+        "name": {
+          "first": "Anis",
+          "last": "Mhamied"
+        },
+        "_id": {
+          "$oid": "6979d4774f1db7cd4a712604"
+        },
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocI2mPb6ys7aqePyz56Xd3o7GUiD48PeIKH26OSAfIshs54PqZ1EPg=s96-c"
+      },
+      "comment": "3",
+      "rating": 5,
+      "createdAt": {
+        "$date": "2026-07-03T18:59:23.663Z"
+      },
+      "_id": {
+        "$oid": "6a48068b2a797561aca34dba"
+      }
+    },
+    {
+      "user": {
+        "name": {
+          "first": "anes",
+          "last": "mhamid"
+        },
+        "_id": {
+          "$oid": "6980c609317475fe5c733aed"
+        },
+        "image": "https://images.unsplash.com/photo-1779044991881-b1d0763fefe4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw0fHx8ZW58MHx8fHx8"
+      },
+      "comment": "123456",
+      "rating": 5,
+      "createdAt": {
+        "$date": "2026-08-04T17:38:09.796Z"
+      },
+      "_id": {
+        "$oid": "6a722381f56aaf09f155db58"
+      }
+    },
+    {
+      "user": {
+        "name": {
+          "first": "anes",
+          "last": "mhamid"
+        },
+        "_id": {
+          "$oid": "6980c609317475fe5c733aed"
+        },
+        "image": "https://images.unsplash.com/photo-1779044991881-b1d0763fefe4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw0fHx8ZW58MHx8fHx8"
+      },
+      "comment": "123456798",
+      "rating": 4.5,
+      "createdAt": {
+        "$date": "2026-08-04T17:49:45.649Z"
+      },
+      "_id": {
+        "$oid": "6a722639f56aaf09f155e161"
+      }
+    },
+    {
+      "user": {
+        "name": {
+          "first": "anes",
+          "last": "mhamid"
+        },
+        "_id": {
+          "$oid": "6980c609317475fe5c733aed"
+        },
+        "image": "https://images.unsplash.com/photo-1779044991881-b1d0763fefe4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw0fHx8ZW58MHx8fHx8"
+      },
+      "comment": "1231231",
+      "rating": 4.5,
+      "createdAt": {
+        "$date": "2026-08-04T17:51:42.465Z"
+      },
+      "_id": {
+        "$oid": "6a7226aef56aaf09f155e1d7"
+      }
+    },
+    {
+      "user": {
+        "name": {
+          "first": "anes",
+          "last": "mhamid"
+        },
+        "_id": {
+          "$oid": "6980c609317475fe5c733aed"
+        },
+        "image": "https://images.unsplash.com/photo-1779044991881-b1d0763fefe4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw0fHx8ZW58MHx8fHx8"
+      },
+      "comment": "wwww",
+      "rating": 5,
+      "createdAt": {
+        "$date": "2026-08-04T17:51:48.405Z"
+      },
+      "_id": {
+        "$oid": "6a7226b4f56aaf09f155e1e2"
+      }
+    },
+    {
+      "user": {
+        "name": {
+          "first": "anes",
+          "last": "mhamid"
+        },
+        "_id": {
+          "$oid": "6980c609317475fe5c733aed"
+        },
+        "image": "https://images.unsplash.com/photo-1779044991881-b1d0763fefe4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw0fHx8ZW58MHx8fHx8"
+      },
+      "comment": "eee",
+      "rating": 5,
+      "createdAt": {
+        "$date": "2026-08-04T17:52:11.759Z"
+      },
+      "_id": {
+        "$oid": "6a7226cbf56aaf09f155e246"
+      }
+    }
+  ],
+  "updatedAt": {
+    "$date": "2026-08-04T18:13:30.295Z"
+  },
+  "__v": 18,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/drxqielit/image/upload/v1782472043/jjfodwjro4veznycdufb.jpg",
+      "publicId": "jjfodwjro4veznycdufb"
+    },
+    {
+      "url": "https://res.cloudinary.com/drxqielit/image/upload/v1783106107/%D8%B3%D8%B3%D8%B3%D8%B3%D8%B3%D8%B3_dgmae3.jpg",
+      "publicId": "jjfodwjro4veznycdufb"
+    }
+  ],
   "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774168482/r0fmdrtyfkjtkmevqzzr.jpg",
-    "publicId": "r0fmdrtyfkjtkmevqzzr"
+    "url": "https://res.cloudinary.com/drxqielit/image/upload/v1782472043/jjfodwjro4veznycdufb.jpg",
+    "publicId": "jjfodwjro4veznycdufb"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a61f2646fd5327e32e06bfb"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "product_name": "ŸÖŸÑÿßŸÇÿ∑",
+  "category": "Garden",
+  "subcategory": "tools",
+  "price": 600,
+  "description": "◊¢◊ë◊ï◊ì◊™ ◊¢◊§◊®",
+  "image": {
+    "url": "https://res.cloudinary.com/drxqielit/image/upload/v1784803931/lohcwhvurxyom3wf14q1.jpg",
+    "publicId": "lohcwhvurxyom3wf14q1"
+  },
+  "likes": [
+    "6980c609317475fe5c733aed",
+    "6a6452894f8634ca93d6f70f",
+    "6979d4774f1db7cd4a712604"
+  ],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "",
+  "in_stock": true,
+  "createdAt": {
+    "$date": "2026-07-23T10:52:20.976Z"
+  },
+  "type": "tools",
+  "brand": "◊©◊ò◊ú",
+  "toolType": "◊¢◊ë◊ï◊ì◊ï◊™ ◊¢◊§◊®",
+  "reviews": [],
+  "updatedAt": {
+    "$date": "2026-08-07T21:54:58.141Z"
+  },
+  "__v": 3
+},
+{
+  "_id": {
+    "$oid": "6a7010772b77d71ced0331a4"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "product_name": "◊ô◊ï◊†◊ì◊ê◊ô i20",
+  "category": "Cars",
+  "subcategory": "private",
+  "price": 17000,
+  "description": "◊®◊õ◊ë ◊¢◊ô◊®◊ï◊†◊ô ◊ê◊û◊ô◊ü ◊ë◊û◊¶◊ë ◊ò◊ï◊ë ◊û◊ê◊ï◊ì, ◊û◊™◊ê◊ô◊ù ◊û◊¶◊ï◊ô◊ü ◊õ◊®◊õ◊ë ◊©◊†◊ô ◊ú◊û◊©◊§◊ó◊î. ◊î◊®◊õ◊ë ◊ë◊û◊¶◊ë ◊û◊õ◊†◊ô ◊™◊ß◊ô◊ü, ◊û◊ï◊õ◊ü ◊ú◊û◊¢◊ë◊® ◊ë◊¢◊ú◊ï◊™ ◊û◊ô◊ô◊ì◊ô. ◊ò◊°◊ò ◊¢◊ì ◊û◊ê◊ô 27",
+  "image": {
+    "url": "https://res.cloudinary.com/drxqielit/image/upload/v1785729131/bcjl7enp2am0xwkv1nre.jpg",
+    "publicId": "bcjl7enp2am0xwkv1nre"
   },
   "likes": [
     "6980c609317475fe5c733aed"
   ],
+  "featured": false,
   "sale": false,
-  "location": "Indoor",
-  "in_stock": true,
-  "type": "kitchen",
-  "brand": "Bosch",
-  "material": "Stainless Steel",
-  "powerWatts": 500,
-  "createdAt": {
-    "$date": "2026-03-22T08:31:17.753Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T08:35:12.454Z"
-  },
-  "__v": 1,
-  "discount": 0
-},
-{
-  "_id": {
-    "$oid": "69bfaa0ad38b498d75b8d735"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Wood Storage Cabinet",
-  "category": "House",
-  "subcategory": "storage",
-  "price": 2499.99,
-  "description": "Spacious wooden storage cabinet",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774168681/xkhkykzq3tmngvb5cvi2.jpg",
-    "publicId": "xkhkykzq3tmngvb5cvi2"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "storage",
-  "material": "Wood",
-  "dimensions": "180x80x40",
-  "capacity": 200,
-  "createdAt": {
-    "$date": "2026-03-22T08:36:26.294Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T08:38:15.361Z"
-  },
-  "__v": 0,
   "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfc6acd838b0229648ec81"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Indoor Palm Plant",
-  "category": "Garden",
-  "subcategory": "plants",
-  "price": 40,
-  "description": "Decorative indoor palm",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774177715/iaiw2biapruaiiy16vwj.avif",
-    "publicId": "iaiw2biapruaiiy16vwj"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "plants",
-  "plantType": "Palm",
-  "season": "summer",
-  "sunExposure": "indirect light",
-  "createdAt": {
-    "$date": "2026-03-22T10:38:36.259Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T11:08:38.500Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfc6b6d838b0229648ec83"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Tesla Model 3",
-  "category": "Cars",
-  "subcategory": "electric",
-  "price": 35000,
-  "description": "Electric car with long range",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774177661/tznofwa1zsb8lsdnvtnx.avif",
-    "publicId": "tznofwa1zsb8lsdnvtnx"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "electric",
-  "brand": "Tesla",
-  "year": 2022,
-  "batteryCapacity": 75,
-  "rangeKm": 500,
-  "createdAt": {
-    "$date": "2026-03-22T10:38:46.390Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T11:07:44.250Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfc6bad838b0229648ec85"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Road Bike Pro",
-  "category": "Bikes",
-  "subcategory": "road",
-  "price": 900,
-  "description": "Lightweight road bike",
-  "image": {
-    "url": "https://res.cloudinary.com/demo/image/upload/bike.jpg",
-    "publicId": "products/road-bike"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "road",
-  "frameSize": "L",
-  "weight": 8.5,
-  "createdAt": {
-    "$date": "2026-03-22T10:38:50.587Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T10:38:50.587Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "69bfc6c5d838b0229648ec89"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Ford Light Truck",
-  "category": "Trucks",
-  "subcategory": "light",
-  "price": 22000,
-  "description": "Reliable light transport truck",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774177771/crvwx1zjp75c4iwjlhj7.jpg",
-    "publicId": "crvwx1zjp75c4iwjlhj7"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "light",
-  "brand": "Ford",
-  "loadCapacityTons": 3,
-  "createdAt": {
-    "$date": "2026-03-22T10:39:01.860Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T11:09:32.844Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfc6cad838b0229648ec8b"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Tide Liquid Detergent",
-  "category": "Cleaning",
-  "subcategory": "detergents",
-  "price": 10,
-  "description": "Powerful cleaning detergent",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774446221/uuvsody3cf95q5412hkd.jpg",
-    "publicId": "uuvsody3cf95q5412hkd"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "detergents",
-  "brand": "Tide",
-  "volume": 1.5,
-  "createdAt": {
-    "$date": "2026-03-22T10:39:06.188Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-25T13:43:44.633Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfc6e6d838b0229648ec8f"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Men Running Shoes",
-  "category": "MenClothes",
-  "subcategory": "shoes",
-  "price": 60,
-  "description": "Comfortable sports shoes",
-  "image": {
-    "url": "https://res.cloudinary.com/demo/image/upload/shoes.jpg",
-    "publicId": "products/men-shoes"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "shoes",
-  "size": "42",
-  "color": "Black",
-  "createdAt": {
-    "$date": "2026-03-22T10:39:34.608Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T10:39:34.608Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "69bfc6f0d838b0229648ec91"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Women's Casual Shirt",
-  "category": "WomenClothes",
-  "subcategory": "casual",
-  "price": 35,
-  "description": "Stylish casual wear",
-  "image": {
-    "url": "https://res.cloudinary.com/demo/image/upload/shirt.jpg",
-    "publicId": "products/women-shirt"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "casual",
-  "size": "M",
-  "color": "Blue",
-  "createdAt": {
-    "$date": "2026-03-22T10:39:44.878Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T10:39:44.878Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "69bfc89e952505e88727e049"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Baby Shampoo",
-  "category": "Baby",
-  "subcategory": "care",
-  "price": 8,
-  "description": "Gentle baby care shampoo",
-  "image": {
-    "url": "https://res.cloudinary.com/demo/image/upload/baby.jpg",
-    "publicId": "products/baby-shampoo"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "care",
-  "ageGroup": "10-15",
-  "createdAt": {
-    "$date": "2026-03-22T10:46:54.515Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T10:46:54.515Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "69bfc8c3952505e88727e04d"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Kids Learning Tablet",
-  "category": "Kids",
-  "subcategory": "educational",
-  "price": 80,
-  "description": "Educational device for children",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774178493/galxt9wzoolyqwmfbpxe.jpg",
-    "publicId": "galxt9wzoolyqwmfbpxe"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "educational",
-  "ageGroup": "5-10",
-  "safeMaterial": true,
-  "createdAt": {
-    "$date": "2026-03-22T10:47:31.339Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T11:21:36.275Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfc8cd952505e88727e04f"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Lipstick Set",
-  "category": "Beauty",
-  "subcategory": "makeup",
-  "price": 200,
-  "description": "Premium makeup set",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774446149/pi4rz7lloap3j4pmehvb.jpg",
-    "publicId": "pi4rz7lloap3j4pmehvb"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "makeup",
-  "brand": "MAC",
-  "createdAt": {
-    "$date": "2026-03-22T10:47:41.328Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-25T13:42:32.242Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfc8d3952505e88727e051"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Samsung Galaxy Watch",
-  "category": "Watches",
-  "subcategory": "smart",
-  "price": 1299,
-  "description": "Smartwatch with fitness tracking",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774178865/cbs0aoulvrje9ynlgypj.jpg",
-    "publicId": "cbs0aoulvrje9ynlgypj"
-  },
-  "likes": [],
-  "sale": false,
+  "location": "",
   "in_stock": true,
   "createdAt": {
-    "$date": "2026-03-22T10:47:47.854Z"
+    "$date": "2026-08-03T03:52:23.718Z"
   },
-  "updatedAt": {
-    "$date": "2026-03-22T11:27:48.288Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfc8e6952505e88727e053"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Xiaomi Electric Scooter",
-  "category": "ElectricVehicles",
-  "subcategory": "scooters",
-  "price": 500,
-  "description": "Urban electric scooter",
-  "image": {
-    "url": "https://res.cloudinary.com/demo/image/upload/scooter.jpg",
-    "publicId": "products/scooter"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "scooters",
-  "brand": "Xiaomi",
-  "rangeKm": 30,
-  "createdAt": {
-    "$date": "2026-03-22T10:48:06.504Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T10:48:06.504Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "69bfcb2c528846645845962f"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Kitchen Blender",
-  "category": "House",
-  "subcategory": "kitchen",
-  "price": 650,
-  "description": "High-speed blender for kitchen use",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774177880/gsst1kahhtelgrpbxirx.jpg",
-    "publicId": "gsst1kahhtelgrpbxirx"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "kitchen",
-  "brand": "Philips",
-  "material": "Plastic",
-  "powerWatts": 600,
-  "createdAt": {
-    "$date": "2026-03-22T10:57:48.882Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T11:11:31.534Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfcb325288466458459631"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Rose Plant",
-  "category": "Garden",
-  "subcategory": "plants",
-  "price": 20,
-  "description": "Fresh decorative rose plant",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774178073/p8halqdvmdgc6sfonko5.jpg",
-    "publicId": "p8halqdvmdgc6sfonko5"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "plants",
-  "plantType": "Rose",
-  "season": "spring",
-  "sunExposure": "full sun",
-  "createdAt": {
-    "$date": "2026-03-22T10:57:54.442Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T11:14:36.192Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfcb385288466458459633"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Honda Civic 2019",
-  "category": "Cars",
-  "subcategory": "private",
-  "price": 13000,
-  "description": "Reliable used car",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774446380/qg8gpyowryhcg6xkczgz.jpg",
-    "publicId": "qg8gpyowryhcg6xkczgz"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
   "type": "private",
-  "brand": "Honda",
-  "year": 2019,
+  "brand": "◊ô◊ï◊†◊ì◊ê◊ô",
+  "year": 2011,
   "fuel": "gasoline",
-  "mileage": 60000,
-  "color": "silver",
-  "createdAt": {
-    "$date": "2026-03-22T10:58:00.075Z"
-  },
+  "mileage": 160000,
+  "color": "White",
+  "reviews": [],
   "updatedAt": {
-    "$date": "2026-03-25T13:46:39.170Z"
+    "$date": "2026-08-03T03:53:04.303Z"
   },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfcb3c5288466458459635"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Road Racing Bike",
-  "category": "Bikes",
-  "subcategory": "road",
-  "price": 800,
-  "description": "Lightweight professional bike",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774446600/vyfwrsdnzudltajrpclh.jpg",
-    "publicId": "vyfwrsdnzudltajrpclh"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "road",
-  "frameSize": "L",
-  "weight": 7.8,
-  "createdAt": {
-    "$date": "2026-03-22T10:58:04.521Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-25T13:50:04.282Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfcb415288466458459637"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Mercedes Heavy Truck",
-  "category": "Trucks",
-  "subcategory": "heavy",
-  "price": 75000,
-  "description": "Heavy duty truck for transport",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774446531/sbubzn5oqimhoim15so0.avif",
-    "publicId": "sbubzn5oqimhoim15so0"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "heavy",
-  "brand": "Mercedes",
-  "loadCapacityTons": 18,
-  "axles": 4,
-  "createdAt": {
-    "$date": "2026-03-22T10:58:09.137Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-25T13:48:55.950Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfcb445288466458459639"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Clorox Cleaner",
-  "category": "Cleaning",
-  "subcategory": "detergents",
-  "price": 9,
-  "description": "Multi-purpose cleaning liquid",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774446277/vozi3p2taoygmlwyoy1e.jpg",
-    "publicId": "vozi3p2taoygmlwyoy1e"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "detergents",
-  "brand": "Clorox",
-  "volume": 1,
-  "createdAt": {
-    "$date": "2026-03-22T10:58:12.609Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-25T13:44:40.252Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfcb4e528846645845963b"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Men T-Shirt",
-  "category": "MenClothes",
-  "subcategory": "casual",
-  "price": 25,
-  "description": "Cotton casual t-shirt",
-  "image": {
-    "url": "https://via.placeholder.com/300",
-    "publicId": "postman/men-tshirt"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "casual",
-  "size": "M",
-  "material": "Cotton",
-  "color": "Black",
-  "createdAt": {
-    "$date": "2026-03-22T10:58:22.806Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T10:58:22.806Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "69bfcb52528846645845963d"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Evening Dress",
-  "category": "WomenClothes",
-  "subcategory": "dresses",
-  "price": 120,
-  "description": "Elegant long dress",
-  "image": {
-    "url": "https://via.placeholder.com/300",
-    "publicId": "postman/dress"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "dresses",
-  "size": "L",
-  "length": "long",
-  "createdAt": {
-    "$date": "2026-03-22T10:58:26.060Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T10:58:26.060Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "69bfcb8ad37f320d72169480"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Baby Feeding Bottle",
-  "category": "Baby",
-  "subcategory": "feeding",
-  "price": 18,
-  "description": "Safe feeding bottle for infants",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774178339/p2peasbg7esimh9lha8m.jpg",
-    "publicId": "p2peasbg7esimh9lha8m"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "feeding",
-  "ageGroup": "0-6 months",
-  "brand": "Philips Avent",
-  "createdAt": {
-    "$date": "2026-03-22T10:59:22.890Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T11:19:01.350Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfcbce145b9ade15516815"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Makeup Kit",
-  "category": "Beauty",
-  "subcategory": "makeup",
-  "price": 60,
-  "description": "Complete makeup set",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774446091/z8stg20nbkkdwabcdyjz.jpg",
-    "publicId": "z8stg20nbkkdwabcdyjz"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "makeup",
-  "brand": "MAC",
-  "createdAt": {
-    "$date": "2026-03-22T11:00:30.975Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-25T13:41:36.985Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfcbd8145b9ade15516817"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "È‚’ﬂ ·‰’Ëÿ ◊€› ”“› Xiaomi Watch 2 PRO",
-  "category": "Watches",
-  "subcategory": "smart",
-  "price": 878.99,
-  "description": "È‚’ﬂ ·‰’Ëÿ ◊€› ÈŸ–’ﬁŸ ”“› Xiaomi Watch 2 PRO —Ê—‚ È◊’Ë",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774179051/pna2uhlisvikygydwrfx.jpg",
-    "publicId": "pna2uhlisvikygydwrfx"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "createdAt": {
-    "$date": "2026-03-22T11:00:40.288Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T11:31:00.980Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfcbdf145b9ade15516819"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Electric Scooter X",
-  "category": "ElectricVehicles",
-  "subcategory": "scooters",
-  "price": 450,
-  "description": "Urban electric scooter",
-  "image": {
-    "url": "https://via.placeholder.com/300",
-    "publicId": "postman/scooter"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "scooters",
-  "brand": "Xiaomi",
-  "rangeKm": 35,
-  "createdAt": {
-    "$date": "2026-03-22T11:00:47.312Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T11:00:47.312Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "69bfcbf7145b9ade1551681b"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Electric Scooter X",
-  "category": "ElectricVehicles",
-  "subcategory": "scooters",
-  "price": 450,
-  "description": "Urban electric scooter",
-  "image": {
-    "url": "https://via.placeholder.com/300",
-    "publicId": "postman/scooter"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "scooters",
-  "brand": "Xiaomi",
-  "rangeKm": 35,
-  "createdAt": {
-    "$date": "2026-03-22T11:01:11.044Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T11:01:11.044Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "69bfcbfa145b9ade1551681d"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Electric Scooter X",
-  "category": "ElectricVehicles",
-  "subcategory": "scooters",
-  "price": 450,
-  "description": "Urban electric scooter",
-  "image": {
-    "url": "https://via.placeholder.com/300",
-    "publicId": "postman/scooter"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "scooters",
-  "brand": "Xiaomi",
-  "rangeKm": 35,
-  "createdAt": {
-    "$date": "2026-03-22T11:01:14.815Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T11:01:14.815Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "69bfcc01145b9ade1551681f"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Electric Drill",
-  "category": "House",
-  "subcategory": "maintenance",
-  "price": 599,
-  "description": "Powerful drill for home maintenance",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774177837/uogvfoag3mq9stiyeoyf.jpg",
-    "publicId": "uogvfoag3mq9stiyeoyf"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "maintenance",
-  "brand": "Makita",
-  "usageType": "indoor",
-  "createdAt": {
-    "$date": "2026-03-22T11:01:21.274Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T11:10:42.623Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfcc05145b9ade15516821"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Garden Shovel",
-  "category": "Garden",
-  "subcategory": "tools",
-  "price": 18,
-  "description": "Durable gardening tool",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774178104/apj2punv5v55g81j2tbb.jpg",
-    "publicId": "apj2punv5v55g81j2tbb"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "tools",
-  "brand": "Stihl",
-  "toolType": "digging",
-  "createdAt": {
-    "$date": "2026-03-22T11:01:25.146Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T11:15:06.172Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfcc0a145b9ade15516823"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Tesla Model Y",
-  "category": "Cars",
-  "subcategory": "electric",
-  "price": 42000,
-  "description": "Electric SUV",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774446428/yjujjptp69b6ikkmx26t.jpg",
-    "publicId": "yjujjptp69b6ikkmx26t"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "electric",
-  "brand": "Tesla",
-  "year": 2023,
-  "batteryCapacity": 75,
-  "rangeKm": 520,
-  "createdAt": {
-    "$date": "2026-03-22T11:01:30.963Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-25T13:47:11.582Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfcc10145b9ade15516825"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "honda Car Brake Pads",
-  "category": "Cars",
-  "subcategory": "parts",
-  "price": 80,
-  "description": "High quality brake pads",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774446480/fjcl2vjqfo5qlvd03osp.jpg",
-    "publicId": "fjcl2vjqfo5qlvd03osp"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "parts",
-  "brand": "Brembo",
-  "createdAt": {
-    "$date": "2026-03-22T11:01:36.851Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-25T13:48:02.897Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfcc15145b9ade15516827"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Kids Bicycle",
-  "category": "Bikes",
-  "subcategory": "kids",
-  "price": 120,
-  "description": "Small bike for children",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774446634/oy8np7vxdeksfg2ps7qb.jpg",
-    "publicId": "oy8np7vxdeksfg2ps7qb"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "kids",
-  "frameSize": "XS",
-  "color": "Red",
-  "createdAt": {
-    "$date": "2026-03-22T11:01:41.357Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-25T13:50:37.283Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfcc1b145b9ade15516829"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Isuzu Light Truck",
-  "category": "Trucks",
-  "subcategory": "light",
-  "price": 28000,
-  "description": "Efficient transport truck",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774446563/oxczdc2yo96raoccophp.jpg",
-    "publicId": "oxczdc2yo96raoccophp"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "light",
-  "brand": "Isuzu",
-  "loadCapacityTons": 4,
-  "createdAt": {
-    "$date": "2026-03-22T11:01:47.365Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-25T13:49:26.357Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfcc1f145b9ade1551682b"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Surface Disinfectant",
-  "category": "Cleaning",
-  "subcategory": "disinfection",
-  "price": 11,
-  "description": "Kills germs and bacteria",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774446321/vdksofye7ejdaskrko56.webp",
-    "publicId": "vdksofye7ejdaskrko56"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "disinfection",
-  "brand": "Dettol",
-  "volume": 1,
-  "createdAt": {
-    "$date": "2026-03-22T11:01:51.177Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-25T13:45:25.291Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfcc24145b9ade1551682d"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Formal Shirt",
-  "category": "MenClothes",
-  "subcategory": "formal",
-  "price": 40,
-  "description": "Elegant formal shirt",
-  "image": {
-    "url": "https://via.placeholder.com/300",
-    "publicId": "postman/formal-shirt"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "formal",
-  "size": "L",
-  "material": "Cotton",
-  "createdAt": {
-    "$date": "2026-03-22T11:01:56.366Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T11:01:56.366Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "69bfcc33145b9ade1551682f"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Women's Heels",
-  "category": "WomenClothes",
-  "subcategory": "shoes",
-  "price": 85,
-  "description": "Elegant high heel shoes",
-  "image": {
-    "url": "https://via.placeholder.com/300",
-    "publicId": "postman/women-heels"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "shoes",
-  "size": "38",
-  "heelHeight": 10,
-  "createdAt": {
-    "$date": "2026-03-22T11:02:11.397Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T11:02:11.397Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "69bfcc3b145b9ade15516831"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Baby Clothes Set",
-  "category": "Baby",
-  "subcategory": "clothes",
-  "price": 22,
-  "description": "Soft cotton clothes for babies",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774178379/xpwvstssfpzbbpg1xyy3.jpg",
-    "publicId": "xpwvstssfpzbbpg1xyy3"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "clothes",
-  "ageGroup": "0-12 months",
-  "material": "Cotton",
-  "createdAt": {
-    "$date": "2026-03-22T11:02:19.649Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T11:19:41.759Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfcc41145b9ade15516833"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Kids Slide",
-  "category": "Kids",
-  "subcategory": "outdoor",
-  "price": 150,
-  "description": "Outdoor playground slide",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774178810/bl9wczgmvrneu0pxmepq.jpg",
-    "publicId": "bl9wczgmvrneu0pxmepq"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "outdoor",
-  "ageGroup": "3-8",
-  "createdAt": {
-    "$date": "2026-03-22T11:02:25.659Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T11:26:53.299Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfcc46145b9ade15516835"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Face Serum",
-  "category": "Beauty",
-  "subcategory": "skincare",
-  "price": 35,
-  "description": "Hydrating skincare serum",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774446187/n3fw3lewfxerrecqtyfb.jpg",
-    "publicId": "n3fw3lewfxerrecqtyfb"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "skincare",
-  "brand": "L'Oreal",
-  "expiryDate": "2027-01-01",
-  "createdAt": {
-    "$date": "2026-03-22T11:02:30.275Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-25T13:43:10.631Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfcc4d145b9ade15516837"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Classic Watch",
-  "category": "Watches",
-  "subcategory": "classic",
-  "price": 6450,
-  "description": "Luxury analog watch",
-  "image": {
-    "url": "http://res.cloudinary.com/drxqielit/image/upload/v1774179139/yu3fooqsifzfruqf8rof.webp",
-    "publicId": "yu3fooqsifzfruqf8rof"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "createdAt": {
-    "$date": "2026-03-22T11:02:37.256Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T11:32:21.299Z"
-  },
-  "__v": 0,
-  "discount": 0,
-  "location": ""
-},
-{
-  "_id": {
-    "$oid": "69bfcc52145b9ade15516839"
-  },
-  "seller": {
-    "name": "anes",
-    "slug": "anes-mhamid",
-    "user": {
-      "$oid": "6980c609317475fe5c733aed"
-    }
-  },
-  "product_name": "Electric Car",
-  "category": "ElectricVehicles",
-  "subcategory": "cars",
-  "price": 30000,
-  "description": "Eco-friendly electric vehicle",
-  "image": {
-    "url": "https://via.placeholder.com/300",
-    "publicId": "postman/ev-car"
-  },
-  "likes": [],
-  "sale": false,
-  "in_stock": true,
-  "type": "cars",
-  "brand": "Nissan",
-  "batteryCapacity": 60,
-  "rangeKm": 400,
-  "createdAt": {
-    "$date": "2026-03-22T11:02:42.594Z"
-  },
-  "updatedAt": {
-    "$date": "2026-03-22T11:02:42.594Z"
-  },
-  "__v": 0
+  "__v": 1
 }]
