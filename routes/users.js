@@ -16,7 +16,6 @@ const roleType = {
     Admin: 'Admin',
     Moderator: 'Moderator',
     Client: 'Client',
-    Delivery: 'delivery',
 };
 
 // for generating token
