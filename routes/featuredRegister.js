@@ -201,8 +201,8 @@ router.get('/homepage', async (req, res) => {
         const ads = await FeaturedAd.find({
             type: 'homepage',
             isActive: true,
-            startDate: { $lte: new Date() },
-            endDate: { $gte: new Date() },
+            // startDate: { $lte: new Date() },
+            // endDate: { $gte: new Date() },
         })
             .sort({ createdAt: -1 })
             .limit(100)
@@ -211,7 +211,7 @@ router.get('/homepage', async (req, res) => {
                 select: 'product_name category location price image seller sale discount in_stock brand',
             });
 
-        res.json({ ads });
+         res.status(200).send(ads);
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Server error' });
@@ -234,7 +234,7 @@ router.get('/highlight', async (req, res) => {
                 select: 'product_name category location price image seller sale discount in_stock brand',
             });
 
-        res.json({ ads });
+        res.status(200).send(ads);
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Server error' });
@@ -257,7 +257,7 @@ router.get('/top', async (req, res) => {
                 select: 'product_name category location price image seller sale discount in_stock brand',
             });
 
-        res.json({ ads });
+        res.status(200).send(ads);
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Server error' });
