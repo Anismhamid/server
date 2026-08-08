@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema(
             match: [/\S+@\S+\.\S+/, 'Please enter a valid email'], // אימות תקינות האימייל
         },
         password: {
-            require: true,
+            required: true,
             type: String,
             minlength: 6,
         },
