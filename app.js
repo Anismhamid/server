@@ -17,6 +17,7 @@ const images = require('./routes/deleteImage');
 const startFeaturedAdsCron = require('./utils/PaymentController/featuredAdsCron');
 const featuredAdWebhookController = require('./utils/PaymentController/controller');
 const app = express();
+app.set('trust proxy', 1);
 
 const corsOptions = {
     origin: function (origin, callback) {
@@ -50,15 +51,19 @@ console.log('Registering webhook route at: /api/featured-ads/webhook');
 app.use(
     '/api/featured-ads/webhook',
     express.raw({ type: 'application/json' }),
-    featuredAdWebhookController
+    featuredAdWebhookController,
 );
 
 // Test webhook endpoint
-app.post('/api/featured-ads/test-webhook', express.raw({ type: 'application/json' }), (req, res) => {
-    console.log('Test webhook hit!');
-    console.log('Headers:', req.headers);
-    res.json({ received: true });
-});
+app.post(
+    '/api/featured-ads/test-webhook',
+    express.raw({ type: 'application/json' }),
+    (req, res) => {
+        console.log('Test webhook hit!');
+        console.log('Headers:', req.headers);
+        res.json({ received: true });
+    },
+);
 
 // =======================
 // BODY PARSING & RATE LIMITING
@@ -68,13 +73,13 @@ app.use(helmet());
 app.use(logger);
 logToFile();
 app.use(limiter);
+
 app.use(morgan('dev'));
 
 // =======================
 // STARTUP JOBS
 // =======================
 startFeaturedAdsCron();
-
 
 // =======================
 // ROUTES
