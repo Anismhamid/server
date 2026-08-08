@@ -1,22 +1,32 @@
-const nodemailer = require('nodemailer');
-
-const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT) || 587,
-    secure: false, // true لـ 465
-    auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-    },
-});
+// utils/mailer.js
+// ✅ استخدام Brevo HTTP API بدل SMTP - Render حاجبة كل بورتات SMTP
+// (25, 465, 587) عالخطط المجانية من 26 سبتمبر 2025
 
 const sendEmail = async ({ to, subject, html }) => {
-    await transporter.sendMail({
-        from: process.env.EMAIL_FROM || '"صفقة" <no-reply@safqa.app>',
-        to,
-        subject,
-        html,
+    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            'api-key': process.env.BREVO_API_KEY,
+        },
+        body: JSON.stringify({
+            sender: {
+                name: 'صفقة',
+                email: process.env.EMAIL_FROM,
+            },
+            to: [{ email: to }],
+            subject,
+            htmlContent: html,
+        }),
     });
+
+    if (!response.ok) {
+        const errorBody = await response.text();
+        throw new Error(`Brevo API error (${response.status}): ${errorBody}`);
+    }
+
+    return response.json();
 };
 
 module.exports = { sendEmail };
