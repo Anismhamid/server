@@ -10,6 +10,12 @@ const { userSchema, loginSchema } = require('../schema/userSchema');
 const completeUserSchema = require('../schema/completeUserSchema');
 const editUserProfileSchema = require('../schema/editUserProfile');
 const chalk = require('chalk');
+const rateLimit = require('express-rate-limit');
+
+const {
+    forgotPassword,
+    resetPassword,
+} = require('../controllers/authController');
 
 // users role
 const roleType = {
@@ -40,6 +46,15 @@ const generateToken = (user) => {
         { expiresIn: '7d', algorithm: 'HS256' },
     );
 };
+
+const forgotPasswordLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 5, // 5 محاولات كل 15 دقيقة لكل IP
+    message: { message: 'Too many requests, try again later' },
+});
+
+router.post('/forgot-password', forgotPasswordLimiter, forgotPassword);
+router.post('/reset-password/:token', resetPassword);
 
 // Save FCM push token
 router.patch('/push-token', auth, async (req, res) => {
@@ -112,42 +127,30 @@ router.patch('/push-token', auth, async (req, res) => {
     }
 });
 
-router.delete('/push-token', auth, async (req,res)=>{
-
+router.delete('/push-token', auth, async (req, res) => {
     try {
-
         const user = await User.findById(req.payload._id).select('-password');
 
-
-        if(!user){
+        if (!user) {
             return res.status(404).json({
-                message:'User not found'
+                message: 'User not found',
             });
         }
-
 
         user.pushTokens = [];
 
         await user.save();
 
-
         return res.json({
-            message:'Push token removed'
+            message: 'Push token removed',
         });
-
-
-    } catch(error){
-
-        console.error(
-            'Remove push token error:',
-            error
-        );
+    } catch (error) {
+        console.error('Remove push token error:', error);
 
         return res.status(500).json({
-            message:error.message
+            message: error.message,
         });
     }
-
 });
 
 // ----- רישום משתמש -----
