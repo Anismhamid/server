@@ -470,7 +470,7 @@ module.exports = {
     cleaningSchema,
     houseSchema,
     gardenSchema,
-    MotorcyclesSchema,
+    motorcyclesSchema,
 
     artSchema,
     gamingSchema,
