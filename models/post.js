@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const User = require('./User');
-const { first } = require('lodash');
 
 // ===== Base Schema لجميع المنتجات =====
 const basePostsSchema = new mongoose.Schema(
@@ -26,12 +24,9 @@ const basePostsSchema = new mongoose.Schema(
         reviews: [
             {
                 user: {
-                    type: {
-                        _id: mongoose.Schema.Types.ObjectId,
-                        name: { first: String, last: String },
-                        image: { type: String },
-                    },
-                    required: false,
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'Users',
+                    required: true,
                 },
                 comment: {
                     type: String,
@@ -50,13 +45,28 @@ const basePostsSchema = new mongoose.Schema(
         ],
         featured: { type: Boolean, default: false },
         sale: { type: Boolean, default: false },
-        discount: { type: Number, min: 0, max: 100 },
+        discount: {
+            type: Number,
+            min: 0,
+            max: 100,
+            default: 0,
+        },
         location: { type: String },
         in_stock: { type: Boolean, default: true },
-        status: { type: String, enum: ['pending', 'sold', 'accepted'] },
+        status: {
+            type: String,
+            enum: ['pending', 'sold', 'accepted'],
+            default: 'pending',
+        },
     },
     { timestamps: true, discriminatorKey: 'category' },
 );
+
+basePostsSchema.index({ category: 1, subcategory: 1 });
+basePostsSchema.index({ category: 1, price: 1 });
+basePostsSchema.index({ seller: 1, createdAt: -1 });
+basePostsSchema.index({ in_stock: 1, featured: 1, createdAt: -1 });
+basePostsSchema.index({ location: 1, category: 1 });
 
 const Posts = mongoose.model('Posts', basePostsSchema);
 
@@ -271,9 +281,211 @@ const cleaningSchema = new mongoose.Schema({
 });
 Posts.discriminator('Cleaning', cleaningSchema);
 
-basePostsSchema.index({ category: 1 });
-basePostsSchema.index({ brand: 1 });
-basePostsSchema.index({ type: 1 });
-basePostsSchema.index({ price: 1 });
+/* ================== Motorcycles ================== */
+const motorcycleSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        enum: ['street', 'sport', 'cruiser', 'offRoad', 'scooter', 'parts'],
+        required: true,
+    },
+    brand: {
+        type: String,
+        required: function () {
+            return this.type !== 'parts';
+        },
+    },
+    year: {
+        type: Number,
+        required: function () {
+            return this.type !== 'parts';
+        },
+    },
+
+    engineCapacity: {
+        type: Number,
+        required: function () {
+            return this.type !== 'parts';
+        },
+    }, // CC
+    mileage: { type: Number, min: 0 },
+    fuel: {
+        type: String,
+        enum: ['gasoline', 'electric'],
+    },
+    color: { type: String },
+    partType: {
+        type: String,
+        required: function () {
+            return this.type === 'parts';
+        },
+    },
+});
+Posts.discriminator('Motorcycles', motorcycleSchema);
+
+const electronicsSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        enum: ['smartphones', 'laptops', 'tablets', 'accessories', 'audio'],
+        required: true,
+    },
+    brand: { type: String, required: true },
+    model: { type: String },
+    processor: { type: String },
+    ram: { type: Number }, // GB
+    storage: { type: Number }, // GB
+    screenSize: { type: Number },
+    resolution: { type: String },
+    operatingSystem: { type: String },
+    condition: {
+        type: String,
+        enum: ['new', 'like_new', 'excellent', 'good', 'fair'],
+        default: 'good',
+    },
+    batteryLife: { type: Number }, // ساعات
+    includedAccessories: [String],
+    networkType: {
+        type: String,
+        enum: ['4G', '5G', 'WiFi', 'Bluetooth'],
+    },
+    color: { type: String },
+    warranty: { type: String },
+});
+Posts.discriminator('Electronics', electronicsSchema);
+
+const artSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        enum: [
+            'paintings',
+            'sculptures',
+            'photography',
+            'crafts',
+            'collectibles',
+        ],
+        required: true,
+    },
+    artist: { type: String },
+    creationYear: { type: Number },
+    dimensions: { type: String },
+    technique: { type: String }, // مثل: زيتي، أكريليك، مائي
+    certificate: { type: Boolean, default: false },
+    provenance: { type: String }, // تاريخ القطعة
+    condition: { type: String },
+    framed: { type: Boolean, default: false },
+});
+Posts.discriminator('Art', artSchema);
+
+const gamingSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        enum: ['consoles', 'games', 'accessories', 'pc_gaming'],
+        required: true,
+    },
+    platform: {
+        type: String,
+        enum: ['PlayStation', 'Xbox', 'Nintendo', 'PC', 'Mobile'],
+    },
+    genre: { type: String },
+    edition: { type: String },
+    multiplayer: { type: Boolean, default: false },
+    rating: { type: String },
+    language: { type: String },
+    releaseYear: { type: Number },
+});
+Posts.discriminator('Gaming', gamingSchema);
+
+const realEstateSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        enum: ['apartment', 'house', 'villa', 'commercial', 'land'],
+        required: true,
+    },
+    area: { type: Number, required: true }, // بالمتر المربع
+    rooms: { type: Number },
+    bathrooms: { type: Number },
+    floors: { type: Number },
+    hasParking: { type: Boolean, default: false },
+    hasElevator: { type: Boolean, default: false },
+    furnished: { type: Boolean, default: false },
+    rentalType: {
+        type: String,
+        enum: ['sale', 'rent', 'daily'],
+        default: 'sale',
+    },
+    propertyAge: { type: Number }, // بالسنوات
+    geoLocation: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            default: 'Point',
+        },
+        coordinates: {
+            type: [Number],
+            required: true,
+        },
+    },
+});
+
+realEstateSchema.index({
+    geoLocation: '2dsphere',
+});
+
+Posts.discriminator('RealEstate', realEstateSchema);
+
+const petsSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        enum: ['dogs', 'cats', 'birds', 'fish', 'small_animals', 'supplies'],
+        required: true,
+    },
+    breed: { type: String },
+    age: { type: Number }, // بالشهور
+    gender: {
+        type: String,
+        enum: ['male', 'female'],
+    },
+    vaccinated: { type: Boolean, default: false },
+    neutered: { type: Boolean, default: false },
+    microchipped: { type: Boolean, default: false },
+    color: { type: String },
+    weight: { type: Number }, // كجم
+    healthIssues: { type: String },
+    temperament: { type: String },
+    // للمستلزمات
+    brand: { type: String },
+    size: { type: String },
+    material: { type: String },
+});
+Posts.discriminator('Pets', petsSchema);
+
+/* ================== Furniture ================== */
+const furnitureSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        enum: [
+            'living_room',
+            'bedroom',
+            'dining',
+            'office',
+            'outdoor',
+            'kitchen',
+        ],
+        required: true,
+    },
+    brand: { type: String },
+    material: { type: String },
+    color: { type: String },
+    dimensions: { type: String },
+    weight: { type: Number },
+    assemblyRequired: { type: Boolean, default: false },
+    condition: {
+        type: String,
+        enum: ['new', 'like_new', 'good', 'fair'],
+        default: 'good',
+    },
+    style: { type: String },
+    includesAccessories: { type: Boolean, default: false },
+});
+Posts.discriminator('Furniture', furnitureSchema);
 
 module.exports = Posts;
