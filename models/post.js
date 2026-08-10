@@ -28,18 +28,25 @@ const basePostsSchema = new mongoose.Schema(
                     ref: 'Users',
                     required: true,
                 },
+
                 comment: {
                     type: String,
                     required: true,
                 },
+
                 rating: {
                     type: Number,
                     min: 0,
                     max: 5,
                 },
+
                 createdAt: {
                     type: Date,
                     default: Date.now,
+                },
+
+                updatedAt: {
+                    type: Date,
                 },
             },
         ],
