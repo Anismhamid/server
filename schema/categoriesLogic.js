@@ -16,20 +16,25 @@ const CATEGORIES = {
     House: 'House',
     Garden: 'Garden',
     Electronics: 'Electronics',
-    Kids: 'Kids',
-    Baby: 'Baby',
-    Beauty: 'Beauty',
-    Cleaning: 'Cleaning',
-    Health: 'Health',
-    Watches: 'Watches',
+    Cars: 'Cars',
+    Motorcycles: 'Motorcycles',
+    Bikes: 'Bikes',
+    Trucks: 'Trucks',
+    ElectricVehicles: 'ElectricVehicles',
     MenClothes: 'MenClothes',
     WomenClothes: 'WomenClothes',
     WomenBags: 'WomenBags',
-    Cars: 'Cars',
-    Motorcycles: 'Motorcycles',
-    Trucks: 'Trucks',
-    Bikes: 'Bikes',
-    ElectricVehicles: 'ElectricVehicles',
+    Baby: 'Baby',
+    Kids: 'Kids',
+    Health: 'Health',
+    Beauty: 'Beauty',
+    Watches: 'Watches',
+    Cleaning: 'Cleaning',
+    Art: 'Art',
+    Gaming: 'Gaming',
+    RealEstate: 'RealEstate',
+    Pets: 'Pets',
+    Furniture: 'Furniture',
 };
 
 /* ================== Base Schema لجميع المنتجات ================== */
@@ -126,6 +131,75 @@ const carsSchema = Joi.object({
     rangeKm: Joi.number().optional(),
 }).options({ stripUnknown: true });
 
+/* ================== Motorcycles ================== */
+const motorcyclesSchema = Joi.object({
+    ...baseProductSchema,
+
+    type: Joi.string()
+        .valid('street', 'sport', 'cruiser', 'offRoad', 'scooter', 'parts')
+        .required(),
+
+    brand: Joi.string().when('type', {
+        is: 'parts',
+        then: Joi.optional(),
+        otherwise: Joi.required(),
+    }),
+
+    year: Joi.number().when('type', {
+        is: 'parts',
+        then: Joi.optional(),
+        otherwise: Joi.required(),
+    }),
+
+    engineCapacity: Joi.number().when('type', {
+        is: 'parts',
+        then: Joi.optional(),
+        otherwise: Joi.required(),
+    }),
+
+    mileage: Joi.number().min(0),
+
+    fuel: Joi.string().valid('gasoline', 'electric'),
+
+    color: Joi.string(),
+
+    partType: Joi.string().when('type', {
+        is: 'parts',
+        then: Joi.required(),
+        otherwise: Joi.optional(),
+    }),
+}).options({ stripUnknown: true });
+
+/* ================== Electronics ================== */
+const electronicsSchema = Joi.object({
+    ...baseProductSchema,
+
+    type: Joi.string()
+        .valid('smartphones', 'laptops', 'tablets', 'accessories', 'audio')
+        .required(),
+
+    brand: Joi.string().required(),
+    model: Joi.string(),
+    processor: Joi.string(),
+    ram: Joi.number(),
+    storage: Joi.number(),
+    screenSize: Joi.number(),
+    resolution: Joi.string(),
+    operatingSystem: Joi.string(),
+
+    condition: Joi.string()
+        .valid('new', 'like_new', 'excellent', 'good', 'fair')
+        .default('good'),
+
+    batteryLife: Joi.number(),
+    includedAccessories: Joi.array().items(Joi.string()),
+
+    networkType: Joi.string().valid('4G', '5G', 'WiFi', 'Bluetooth'),
+
+    color: Joi.string(),
+    warranty: Joi.string(),
+}).options({ stripUnknown: true });
+
 /* ================== Bikes ================== */
 const bikesSchema = Joi.object({
     ...baseProductSchema,
@@ -184,7 +258,9 @@ const womenClothesSchema = Joi.object({
 
 const womenBagsSchema = Joi.object({
     ...baseProductSchema,
-    type: Joi.string().valid('handbags', 'toteBags', 'backpacks', 'clutches').required(),
+    type: Joi.string()
+        .valid('handbags', 'toteBags', 'backpacks', 'clutches')
+        .required(),
     size: Joi.string().required(),
     material: Joi.string(),
     color: Joi.string(),
@@ -240,21 +316,165 @@ const cleaningSchema = Joi.object({
     volume: Joi.number(),
 }).options({ stripUnknown: true });
 
+/* ================== Art ================== */
+const artSchema = Joi.object({
+    ...baseProductSchema,
+
+    type: Joi.string()
+        .valid(
+            'paintings',
+            'sculptures',
+            'photography',
+            'crafts',
+            'collectibles',
+        )
+        .required(),
+
+    artist: Joi.string(),
+    creationYear: Joi.number(),
+    dimensions: Joi.string(),
+    technique: Joi.string(),
+    certificate: Joi.boolean().default(false),
+    provenance: Joi.string(),
+    condition: Joi.string(),
+    framed: Joi.boolean().default(false),
+}).options({ stripUnknown: true });
+
+/* ================== Gaming ================== */
+const gamingSchema = Joi.object({
+    ...baseProductSchema,
+
+    type: Joi.string()
+        .valid('consoles', 'games', 'accessories', 'pc_gaming')
+        .required(),
+
+    platform: Joi.string().valid(
+        'PlayStation',
+        'Xbox',
+        'Nintendo',
+        'PC',
+        'Mobile',
+    ),
+
+    genre: Joi.string(),
+    edition: Joi.string(),
+    multiplayer: Joi.boolean().default(false),
+    rating: Joi.string(),
+    language: Joi.string(),
+    releaseYear: Joi.number(),
+}).options({ stripUnknown: true });
+
+/* ================== Real Estate ================== */
+const realEstateSchema = Joi.object({
+    ...baseProductSchema,
+
+    type: Joi.string()
+        .valid('apartment', 'house', 'villa', 'commercial', 'land')
+        .required(),
+
+    area: Joi.number().required(),
+    rooms: Joi.number(),
+    bathrooms: Joi.number(),
+    floors: Joi.number(),
+
+    hasParking: Joi.boolean().default(false),
+    hasElevator: Joi.boolean().default(false),
+    furnished: Joi.boolean().default(false),
+
+    rentalType: Joi.string().valid('sale', 'rent', 'daily').default('sale'),
+
+    propertyAge: Joi.number(),
+
+    geoLocation: Joi.object({
+        type: Joi.string().valid('Point').default('Point'),
+
+        coordinates: Joi.array().items(Joi.number()).length(2).required(),
+    }),
+}).options({ stripUnknown: true });
+
+/* ================== Pets ================== */
+const petsSchema = Joi.object({
+    ...baseProductSchema,
+
+    type: Joi.string()
+        .valid('dogs', 'cats', 'birds', 'fish', 'small_animals', 'supplies')
+        .required(),
+
+    breed: Joi.string(),
+    age: Joi.number().min(0),
+
+    gender: Joi.string().valid('male', 'female'),
+
+    vaccinated: Joi.boolean().default(false),
+    neutered: Joi.boolean().default(false),
+    microchipped: Joi.boolean().default(false),
+
+    color: Joi.string(),
+    weight: Joi.number().min(0),
+    healthIssues: Joi.string(),
+    temperament: Joi.string(),
+
+    brand: Joi.string(),
+    size: Joi.string(),
+    material: Joi.string(),
+}).options({ stripUnknown: true });
+
+/* ================== Furniture ================== */
+const furnitureSchema = Joi.object({
+    ...baseProductSchema,
+
+    type: Joi.string()
+        .valid(
+            'living_room',
+            'bedroom',
+            'dining',
+            'office',
+            'outdoor',
+            'kitchen',
+        )
+        .required(),
+
+    brand: Joi.string(),
+    material: Joi.string(),
+    color: Joi.string(),
+    dimensions: Joi.string(),
+    weight: Joi.number(),
+
+    assemblyRequired: Joi.boolean().default(false),
+
+    condition: Joi.string()
+        .valid('new', 'like_new', 'good', 'fair')
+        .default('good'),
+
+    style: Joi.string(),
+    includesAccessories: Joi.boolean().default(false),
+}).options({ stripUnknown: true });
+
 /* ================== Export ================== */
 module.exports = {
     carsSchema,
     bikesSchema,
     trucksSchema,
     electricVehiclesSchema,
+
     menClothesSchema,
     womenClothesSchema,
     womenBagsSchema,
     babySchema,
+
     kidsSchema,
     healthSchema,
     beautySchema,
     watchesSchema,
+
     cleaningSchema,
     houseSchema,
     gardenSchema,
+    MotorcyclesSchema,
+
+    artSchema,
+    gamingSchema,
+    realEstateSchema,
+    petsSchema,
+    furnitureSchema,
 };

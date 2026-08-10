@@ -14,6 +14,11 @@ const {
     beautySchema,
     watchesSchema,
     cleaningSchema,
+    artSchema,
+    gamingSchema,
+    realEstateSchema,
+    petsSchema,
+    furnitureSchema,
 } = require('./categoriesLogic');
 
 const schemas = {
@@ -32,6 +37,11 @@ const schemas = {
     Beauty: beautySchema,
     Watches: watchesSchema,
     Cleaning: cleaningSchema,
+    Art: artSchema,
+    Gaming: gamingSchema,
+    RealEstate: realEstateSchema,
+    Pets: petsSchema,
+    Furniture: furnitureSchema,
 };
 
 /**
