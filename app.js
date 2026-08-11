@@ -8,6 +8,7 @@ const morgan = require('morgan');
 
 const users = require('./routes/users');
 const posts = require('./routes/posts');
+const ai = require('./routes/ai');
 const businessInfo = require('./routes/businessInfo');
 const featuredAd = require('./routes/featuredRegister');
 const discounts = require('./routes/discountAndOffers');
@@ -92,6 +93,7 @@ app.use('/api/discounts', discounts);
 app.use('/api/cities', cities);
 app.use('/api/messages', messages);
 app.use('/api/images', images);
+app.use('/api/ai', ai);
 
 // =======================
 // 404 HANDLER
