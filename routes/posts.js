@@ -555,12 +555,12 @@ router.patch('/:postId/reviews/:reviewId', auth, async (req, res) => {
 // Example backend route (Node.js/Express)
 router.post('/posts/:postId/increment-views', async (req, res) => {
     try {
-        const post = await Post.findByIdAndUpdate(
+        const post = await Posts.findByIdAndUpdate(
             req.params.postId,
             { $inc: { views: 1 } },
             { new: true }
         );
-        res.json({ success: true, views: post.views });
+        res.status(200).json({ success: true, views: post.views });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
