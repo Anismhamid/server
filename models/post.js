@@ -7,6 +7,7 @@ const basePostsSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Users',
         },
+        views: { type: Number, default: 0 },
         product_name: { type: String, required: true, trim: true },
         category: { type: String, required: true },
         subcategory: { type: String, required: true },
