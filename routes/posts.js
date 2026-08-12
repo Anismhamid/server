@@ -552,17 +552,38 @@ router.patch('/:postId/reviews/:reviewId', auth, async (req, res) => {
     }
 });
 
-// Example backend route (Node.js/Express)
-router.post('/posts/:postId/increment-views', async (req, res) => {
+router.patch('/:postId/increment-views', async (req, res) => {
     try {
+        const { postId } = req.params;
+
         const post = await Posts.findByIdAndUpdate(
-            req.params.postId,
+            postId,
             { $inc: { views: 1 } },
-            { new: true }
+            {
+                new: true,
+                runValidators: false,
+            }
         );
-        res.status(200).json({ success: true, views: post.views });
+
+        if (!post) {
+            return res.status(404).json({
+                success: false,
+                message: 'Post not found',
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            views: post.views,
+        });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Increment views error:', error);
+
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to increment post views',
+            error: error.message,
+        });
     }
 });
 
