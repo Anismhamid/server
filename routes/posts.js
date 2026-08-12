@@ -553,7 +553,7 @@ router.patch('/:postId/reviews/:reviewId', auth, async (req, res) => {
 });
 
 // Example backend route (Node.js/Express)
-app.post('/posts/:postId/increment-views', async (req, res) => {
+router.post('/posts/:postId/increment-views', async (req, res) => {
     try {
         const post = await Post.findByIdAndUpdate(
             req.params.postId,
