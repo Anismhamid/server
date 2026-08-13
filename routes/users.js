@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const Posts = require('../models/post');
 const Jwt = require('jsonwebtoken');
 const { compareSync, genSaltSync, hashSync } = require('bcryptjs');
 const _ = require('lodash');
@@ -469,12 +470,53 @@ router.get('/customer/:slug', async (req, res) => {
         const { slug } = req.params;
         console.log('SLUG PARAM:', slug);
 
-        const user = await User.findOne({ slug: slug }).select('-password');
+        const user = await User.findOne({ slug }).select('-password');
         if (!user) return res.status(404).send({ message: 'user Not Found' });
 
         res.status(200).send(user);
     } catch (error) {
         res.status(500).send('Internal server error');
+    }
+});
+
+router.get('/customer/:slug/posts', async (req, res) => {
+    try {
+        const { slug } = req.params;
+
+        console.log('🔎 CUSTOMER POSTS SLUG:', slug);
+
+        const user = await User.findOne({ slug }).select('_id');
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found',
+            });
+        }
+
+        console.log('👤 USER ID:', user._id);
+
+        const posts = await Posts.find({
+            seller: user._id,
+        }).sort({ createdAt: -1 });
+
+        console.log('📦 POSTS FOUND:', posts.length);
+
+        return res.status(200).json({
+            success: true,
+            count: posts.length,
+            posts,
+        });
+    } catch (error) {
+        console.error('❌ CUSTOMER POSTS ERROR:', error);
+
+        return res.status(500).json({
+            success: false,
+            message:
+                error instanceof Error
+                    ? error.message
+                    : 'Internal server error',
+        });
     }
 });
 

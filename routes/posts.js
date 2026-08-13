@@ -321,20 +321,6 @@ router.delete('/:postId', auth, async (req, res) => {
 });
 //______________End-All-posts__________
 
-router.get('/customer/:slug', async (req, res) => {
-    try {
-        const { slug } = req.params;
-
-        const posts = await Posts.find({ 'seller.slug': slug });
-        if (!posts || posts.length === 0)
-            return res.status(404).send('No posts for this user');
-
-        res.status(200).send(posts);
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
-});
-
 router.get('/:category', async (req, res) => {
     try {
         const category = req.params.category;
@@ -562,7 +548,7 @@ router.patch('/:postId/increment-views', async (req, res) => {
             {
                 new: true,
                 runValidators: false,
-            }
+            },
         );
 
         if (!post) {
