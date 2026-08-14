@@ -87,9 +87,8 @@ router.post(
 
             if (toUser.pushTokens && toUser.pushTokens.length > 0) {
                 try {
-                    const response = await firebase
-                        .messaging
-                        .sendEachForMulticast({
+                    const response =
+                        await firebase.messaging.sendEachForMulticast({
                             tokens: toUser.pushTokens,
 
                             notification: {
@@ -239,8 +238,17 @@ router.patch('/mark-as-seen/:fromUserId', auth, async (req, res) => {
         const io = req.app.get('io');
         const connectedUsers = req.app.get('connectedUsers');
 
+        const seenData = {
+            from: toUserId, // من قرأ الرسائل (المستخدم الحالي)
+            to: fromUserId, // إلى من تم إرسال الرسائل (المستخدم الآخر)
+        };
+
         (connectedUsers.get(fromUserId) || []).forEach((id) =>
-            io.to(id).emit('message:seen', { from: toUserId }),
+            io.to(id).emit('message:seen', { from: seenData }),
+        );
+
+        (connectedUsers.get(toUserId) || []).forEach((id) =>
+            io.to(id).emit('message:seen', seenData),
         );
 
         res.sendStatus(200);
