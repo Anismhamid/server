@@ -21,7 +21,7 @@ const aiSearch = async (req, res) => {
         }
 
         // 1. Natural language → filters
-        const filters = parseSearchQuery(query);
+        const filters = parseSearchQuery(req.body.query);
 
         // 2. Filters → MongoDB
         const mongoQuery = buildMongoQuery(filters);

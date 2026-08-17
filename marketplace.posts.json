@@ -1,0 +1,6550 @@
+[{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a18a"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 2,
+  "product_name": "iPhone 15 Pro 256GB",
+  "category": "Electronics",
+  "subcategory": "smartphones",
+  "price": 3200,
+  "description": "آيفون 15 برو سعة 256 جيجا، بحالة ممتازة، يدعم 5G.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/electronics-iPhone-15-Pro-256GB"
+  },
+  "likes": [
+    "6980c609317475fe5c733aed"
+  ],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "smartphones",
+  "brand": "Apple",
+  "model": "iPhone 15 Pro",
+  "ram": 8,
+  "storage": 256,
+  "screenSize": 6.1,
+  "operatingSystem": "iOS",
+  "condition": "excellent",
+  "includedAccessories": [],
+  "networkType": "5G",
+  "color": "Natural Titanium",
+  "warranty": "No warranty",
+  "__v": 1,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.042Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:46:50.653Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a18b"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "آيفون 15 برو 256 جيجا",
+  "category": "Electronics",
+  "subcategory": "smartphones",
+  "price": 3150,
+  "description": "Apple iPhone 15 Pro 256GB بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/electronics-آيفون-15-برو-256-جيجا"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "smartphones",
+  "brand": "Apple",
+  "model": "iPhone 15 Pro",
+  "ram": 8,
+  "storage": 256,
+  "screenSize": 6.1,
+  "operatingSystem": "iOS",
+  "condition": "excellent",
+  "includedAccessories": [],
+  "networkType": "5G",
+  "color": "Blue Titanium",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a18c"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "אייפון 15 פרו 256 גיגה",
+  "category": "Electronics",
+  "subcategory": "smartphones",
+  "price": 3250,
+  "description": "Apple iPhone 15 Pro 256GB במצב מצוין.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/electronics-אייפון-15-פרו-256-גיגה"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "smartphones",
+  "brand": "Apple",
+  "model": "iPhone 15 Pro",
+  "ram": 8,
+  "storage": 256,
+  "screenSize": 6.1,
+  "operatingSystem": "iOS",
+  "condition": "excellent",
+  "includedAccessories": [],
+  "networkType": "5G",
+  "color": "Black Titanium",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a18d"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 2,
+  "product_name": "Samsung Galaxy S24 256GB",
+  "category": "Electronics",
+  "subcategory": "smartphones",
+  "price": 2400,
+  "description": "Samsung Galaxy S24 256GB، هاتف حديث بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/electronics-Samsung-Galaxy-S24-256GB"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "smartphones",
+  "brand": "Samsung",
+  "model": "Galaxy S24",
+  "ram": 8,
+  "storage": 256,
+  "screenSize": 6.2,
+  "operatingSystem": "Android",
+  "condition": "excellent",
+  "includedAccessories": [],
+  "networkType": "5G",
+  "color": "Black",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T15:11:48.743Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a18e"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Samsung Galaxy S24 Ultra 512GB",
+  "category": "Electronics",
+  "subcategory": "smartphones",
+  "price": 3600,
+  "description": "سامسونج S24 Ultra مساحة 512 جيجا.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/electronics-Samsung-Galaxy-S24-Ultra-512GB"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "smartphones",
+  "brand": "Samsung",
+  "model": "Galaxy S24 Ultra",
+  "ram": 12,
+  "storage": 512,
+  "screenSize": 6.8,
+  "operatingSystem": "Android",
+  "condition": "like_new",
+  "includedAccessories": [],
+  "networkType": "5G",
+  "color": "Titanium Gray",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a18f"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Samsung Galaxy A55 128GB",
+  "category": "Electronics",
+  "subcategory": "smartphones",
+  "price": 1300,
+  "description": "هاتف سامسونج A55 مساحة 128 جيجا.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/electronics-Samsung-Galaxy-A55-128GB"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "smartphones",
+  "brand": "Samsung",
+  "model": "Galaxy A55",
+  "ram": 8,
+  "storage": 128,
+  "screenSize": 6.6,
+  "operatingSystem": "Android",
+  "condition": "good",
+  "includedAccessories": [],
+  "networkType": "5G",
+  "color": "Blue",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a190"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Xiaomi Redmi Note 13 Pro 256GB",
+  "category": "Electronics",
+  "subcategory": "smartphones",
+  "price": 1100,
+  "description": "شاومي ريدمي نوت 13 برو سعة 256 جيجا.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/electronics-Xiaomi-Redmi-Note-13-Pro-256GB"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "smartphones",
+  "brand": "Xiaomi",
+  "model": "Redmi Note 13 Pro",
+  "ram": 8,
+  "storage": 256,
+  "screenSize": 6.67,
+  "operatingSystem": "Android",
+  "condition": "good",
+  "includedAccessories": [],
+  "networkType": "5G",
+  "color": "Black",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a191"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "MacBook Pro M3 16GB 512GB",
+  "category": "Electronics",
+  "subcategory": "laptops",
+  "price": 6200,
+  "description": "MacBook Pro بمعالج M3، رام 16 جيجا وتخزين 512 جيجا.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/electronics-MacBook-Pro-M3-16GB-512GB"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "laptops",
+  "brand": "Apple",
+  "model": "MacBook Pro M3",
+  "processor": "Apple M3",
+  "ram": 16,
+  "storage": 512,
+  "screenSize": 14,
+  "operatingSystem": "macOS",
+  "condition": "like_new",
+  "includedAccessories": [],
+  "color": "Space Gray",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a192"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Lenovo ThinkPad 16GB 512GB",
+  "category": "Electronics",
+  "subcategory": "laptops",
+  "price": 2200,
+  "description": "لابتوب Lenovo ThinkPad مناسب للعمل والدراسة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/electronics-Lenovo-ThinkPad-16GB-512GB"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "laptops",
+  "brand": "Lenovo",
+  "model": "ThinkPad",
+  "processor": "Intel Core i5",
+  "ram": 16,
+  "storage": 512,
+  "screenSize": 14,
+  "operatingSystem": "Windows",
+  "condition": "good",
+  "includedAccessories": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a193"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "iPad Air 256GB",
+  "category": "Electronics",
+  "subcategory": "tablets",
+  "price": 2500,
+  "description": "آيباد Air مساحة 256 جيجا بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/electronics-iPad-Air-256GB"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "tablets",
+  "brand": "Apple",
+  "model": "iPad Air",
+  "ram": 8,
+  "storage": 256,
+  "screenSize": 10.9,
+  "operatingSystem": "iPadOS",
+  "condition": "excellent",
+  "includedAccessories": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a194"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "AirPods Pro 2",
+  "category": "Electronics",
+  "subcategory": "audio",
+  "price": 700,
+  "description": "سماعات Apple AirPods Pro الجيل الثاني.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/electronics-AirPods-Pro-2"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "audio",
+  "brand": "Apple",
+  "model": "AirPods Pro 2",
+  "condition": "like_new",
+  "includedAccessories": [],
+  "networkType": "Bluetooth",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a195"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Sony WH-1000XM5",
+  "category": "Electronics",
+  "subcategory": "audio",
+  "price": 1100,
+  "description": "سماعات Sony لاسلكية مع عزل ضوضاء.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/electronics-Sony-WH-1000XM5"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "audio",
+  "brand": "Sony",
+  "model": "WH-1000XM5",
+  "condition": "excellent",
+  "includedAccessories": [],
+  "networkType": "Bluetooth",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a196"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Toyota Corolla 2022 Gasoline",
+  "category": "Cars",
+  "subcategory": "private",
+  "price": 78000,
+  "description": "تويوتا كورولا 2022 بنزين، سيارة عائلية اقتصادية.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/cars-Toyota-Corolla-2022-Gasoline"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "private",
+  "brand": "Toyota",
+  "year": 2022,
+  "fuel": "gasoline",
+  "mileage": 55000,
+  "color": "White",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a197"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Toyota Corolla 2020 Hybrid",
+  "category": "Cars",
+  "subcategory": "private",
+  "price": 69000,
+  "description": "Toyota Corolla 2020 Hybrid اقتصادية في استهلاك الوقود.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/cars-Toyota-Corolla-2020-Hybrid"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "private",
+  "brand": "Toyota",
+  "year": 2020,
+  "fuel": "hybrid",
+  "mileage": 85000,
+  "color": "Silver",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a198"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "יונדאי טוסון 2021",
+  "category": "Cars",
+  "subcategory": "private",
+  "price": 85000,
+  "description": "יונדאי טוסון 2021, רכב משפחתי במצב מצוין.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/cars-יונדאי-טוסון-2021"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "private",
+  "brand": "Hyundai",
+  "year": 2021,
+  "fuel": "gasoline",
+  "mileage": 65000,
+  "color": "Black",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a199"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Hyundai Tucson 2022",
+  "category": "Cars",
+  "subcategory": "private",
+  "price": 92000,
+  "description": "Hyundai Tucson 2022 gasoline.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/cars-Hyundai-Tucson-2022"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "private",
+  "brand": "Hyundai",
+  "year": 2022,
+  "fuel": "gasoline",
+  "mileage": 45000,
+  "color": "White",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a19a"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "BMW 320i 2021",
+  "category": "Cars",
+  "subcategory": "private",
+  "price": 125000,
+  "description": "BMW 320i موديل 2021، بنزين، بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/cars-BMW-320i-2021"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "private",
+  "brand": "BMW",
+  "year": 2021,
+  "fuel": "gasoline",
+  "mileage": 50000,
+  "color": "Black",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a19b"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Mercedes C200 2020",
+  "category": "Cars",
+  "subcategory": "private",
+  "price": 118000,
+  "description": "Mercedes C200 2020 gasoline.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/cars-Mercedes-C200-2020"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "private",
+  "brand": "Mercedes",
+  "year": 2020,
+  "fuel": "gasoline",
+  "mileage": 70000,
+  "color": "Gray",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a19c"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Kia Niro 2022 Hybrid",
+  "category": "Cars",
+  "subcategory": "private",
+  "price": 90000,
+  "description": "Kia Niro 2022 hybrid.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/cars-Kia-Niro-2022-Hybrid"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "private",
+  "brand": "Kia",
+  "year": 2022,
+  "fuel": "hybrid",
+  "mileage": 42000,
+  "color": "White",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a19d"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Tesla Model 3 2022",
+  "category": "Cars",
+  "subcategory": "electric",
+  "price": 115000,
+  "description": "Tesla Model 3 كهربائية موديل 2022.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/cars-Tesla-Model-3-2022"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "electric",
+  "brand": "Tesla",
+  "year": 2022,
+  "batteryCapacity": 75,
+  "rangeKm": 500,
+  "mileage": 38000,
+  "color": "White",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a19e"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "نبات داخلي Monstera",
+  "category": "Garden",
+  "subcategory": "plants",
+  "price": 120,
+  "description": "نبتة مونستيرا جميلة مناسبة للمنزل.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/garden-نبات-داخلي-Monstera"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "plants",
+  "plantType": "Monstera",
+  "season": "All year",
+  "sunExposure": "Partial shade",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a19f"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "زيتونة للحديقة",
+  "category": "Garden",
+  "subcategory": "plants",
+  "price": 300,
+  "description": "شجرة زيتون مناسبة للحدائق.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/garden-زيتونة-للحديقة"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "plants",
+  "plantType": "Olive",
+  "season": "Summer",
+  "sunExposure": "Full sun",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1a0"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "خرطوم مياه 30 متر",
+  "category": "Garden",
+  "subcategory": "watering",
+  "price": 180,
+  "description": "خرطوم مياه للحديقة بطول 30 متر.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/garden-خرطوم-مياه-30-متر"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "watering",
+  "hoseLength": 30,
+  "automatic": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.043Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1a1"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "نظام ري أوتوماتيكي",
+  "category": "Garden",
+  "subcategory": "watering",
+  "price": 450,
+  "description": "מערכת השקיה אוטומטית לגינה.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/garden-نظام-ري-أوتوماتيكي"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "watering",
+  "hoseLength": 50,
+  "automatic": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1a2"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "مقص أغصان احترافي",
+  "category": "Garden",
+  "subcategory": "tools",
+  "price": 140,
+  "description": "أداة لتقليم الأشجار والأغصان.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/garden-مقص-أغصان-احترافي"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "tools",
+  "brand": "STIHL",
+  "toolType": "Pruning",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1a3"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "أدوات حفر للحديقة",
+  "category": "Garden",
+  "subcategory": "tools",
+  "price": 250,
+  "description": "مجموعة أدوات حفر وزراعة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/garden-أدوات-حفر-للحديقة"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "tools",
+  "brand": "STIHL",
+  "toolType": "Digging",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1a4"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "طقم أثاث حديقة",
+  "category": "Garden",
+  "subcategory": "outdoorDecor",
+  "price": 1800,
+  "description": "طقم أثاث خارجي للحديقة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/garden-طقم-أثاث-حديقة"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "outdoorDecor",
+  "weatherResistant": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1a5"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "خلاط مطبخ Bosch",
+  "category": "House",
+  "subcategory": "kitchen",
+  "price": 550,
+  "description": "خلاط مطبخ Bosch قوي 500W.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/house-خلاط-مطبخ-Bosch"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "kitchen",
+  "brand": "Bosch",
+  "material": "Stainless Steel",
+  "powerWatts": 500,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1a6"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "ماكينة قهوة DeLonghi",
+  "category": "House",
+  "subcategory": "kitchen",
+  "price": 900,
+  "description": "ماكينة قهوة منزلية من DeLonghi.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/house-ماكينة-قهوة-DeLonghi"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "kitchen",
+  "brand": "DeLonghi",
+  "material": "Stainless Steel",
+  "powerWatts": 1450,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1a7"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "خزانة تخزين كبيرة",
+  "category": "House",
+  "subcategory": "storage",
+  "price": 700,
+  "description": "خزانة تخزين كبيرة للمنزل.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/house-خزانة-تخزين-كبيرة"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "storage",
+  "material": "Wood",
+  "color": "White",
+  "dimensions": "180x80x40 cm",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1a8"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "مرآة ديكور دائرية",
+  "category": "House",
+  "subcategory": "decor",
+  "price": 220,
+  "description": "مرآة دائرية للديكور المنزلي.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/house-مرآة-ديكور-دائرية"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "decor",
+  "material": "Glass",
+  "color": "Gold",
+  "dimensions": "80 cm",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1a9"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "أدوات صيانة منزلية",
+  "category": "House",
+  "subcategory": "maintenance",
+  "price": 350,
+  "description": "مجموعة أدوات صيانة للمنزل.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/house-أدوات-صيانة-منزلية"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "maintenance",
+  "usageType": "Home repair",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1aa"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "دراجة جبلية Mountain Bike",
+  "category": "Bikes",
+  "subcategory": "mountain",
+  "price": 1200,
+  "description": "دراجة جبلية قوية للطرق الوعرة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/bikes-دراجة-جبلية-Mountain-Bike"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "mountain",
+  "frameSize": "M",
+  "color": "Black",
+  "suspension": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1ab"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "دراجة جبلية 29 إنش",
+  "category": "Bikes",
+  "subcategory": "mountain",
+  "price": 1800,
+  "description": "Mountain bike 29 inch.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/bikes-دراجة-جبلية-29-إنش"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "mountain",
+  "frameSize": "L",
+  "color": "Red",
+  "suspension": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1ac"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "دراجة طريق Road Bike",
+  "category": "Bikes",
+  "subcategory": "road",
+  "price": 2200,
+  "description": "دراجة طريق خفيفة وسريعة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/bikes-دراجة-طريق-Road-Bike"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "road",
+  "frameSize": "M",
+  "color": "Blue",
+  "weight": 8.5,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1ad"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "دراجة أطفال",
+  "category": "Bikes",
+  "subcategory": "kids",
+  "price": 400,
+  "description": "دراجة أطفال مناسبة من 6 إلى 10 سنوات.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/bikes-دراجة-أطفال"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "kids",
+  "frameSize": "S",
+  "color": "Green",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1ae"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Toyota Hilux Light Truck",
+  "category": "Trucks",
+  "subcategory": "light",
+  "price": 110000,
+  "description": "شاحنة خفيفة Toyota Hilux.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/trucks-Toyota-Hilux-Light-Truck"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "light",
+  "brand": "Toyota",
+  "loadCapacityTons": 1,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1af"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Mercedes Heavy Truck",
+  "category": "Trucks",
+  "subcategory": "heavy",
+  "price": 280000,
+  "description": "شاحنة مرسيدس ثقيلة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/trucks-Mercedes-Heavy-Truck"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "heavy",
+  "brand": "Mercedes",
+  "loadCapacityTons": 15,
+  "axles": 3,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1b0"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Volvo FH Truck",
+  "category": "Trucks",
+  "subcategory": "heavy",
+  "price": 320000,
+  "description": "Volvo FH heavy truck.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/trucks-Volvo-FH-Truck"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "heavy",
+  "brand": "Volvo",
+  "loadCapacityTons": 18,
+  "axles": 4,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1b1"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Xiaomi Electric Scooter",
+  "category": "ElectricVehicles",
+  "subcategory": "scooters",
+  "price": 2200,
+  "description": "سكوتر كهربائي Xiaomi بمدى 40 كم.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/electricvehicles-Xiaomi-Electric-Scooter"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "scooters",
+  "brand": "Xiaomi",
+  "batteryCapacity": 12,
+  "rangeKm": 40,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1b2"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Segway Electric Scooter",
+  "category": "ElectricVehicles",
+  "subcategory": "scooters",
+  "price": 3000,
+  "description": "Segway electric scooter.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/electricvehicles-Segway-Electric-Scooter"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "scooters",
+  "brand": "Segway",
+  "batteryCapacity": 15,
+  "rangeKm": 50,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1b3"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Tesla Electric Car",
+  "category": "ElectricVehicles",
+  "subcategory": "cars",
+  "price": 120000,
+  "description": "سيارة كهربائية Tesla.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/electricvehicles-Tesla-Electric-Car"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "cars",
+  "brand": "Tesla",
+  "batteryCapacity": 75,
+  "rangeKm": 500,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1b4"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "قميص رجالي Casual",
+  "category": "MenClothes",
+  "subcategory": "casual",
+  "price": 120,
+  "description": "قميص رجالي كاجوال.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/menclothes-قميص-رجالي-Casual"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "casual",
+  "size": "L",
+  "material": "Cotton",
+  "color": "Blue",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1b5"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "بدلة رجالية رسمية",
+  "category": "MenClothes",
+  "subcategory": "formal",
+  "price": 850,
+  "description": "بدلة رجالية رسمية أنيقة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/menclothes-بدلة-رجالية-رسمية"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "formal",
+  "size": "L",
+  "material": "Wool",
+  "color": "Black",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1b6"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Nike Air Max Men",
+  "category": "MenClothes",
+  "subcategory": "shoes",
+  "price": 450,
+  "description": "حذاء Nike Air Max للرجال.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/menclothes-Nike-Air-Max-Men"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "shoes",
+  "size": "43",
+  "material": "Mesh",
+  "color": "Black",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1b7"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "فستان نسائي أسود",
+  "category": "WomenClothes",
+  "subcategory": "dresses",
+  "price": 300,
+  "description": "فستان نسائي أسود أنيق.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/womenclothes-فستان-نسائي-أسود"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "dresses",
+  "size": "M",
+  "material": "Cotton",
+  "color": "Black",
+  "length": "Long",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1b8"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "فستان سهرة أحمر",
+  "category": "WomenClothes",
+  "subcategory": "dresses",
+  "price": 600,
+  "description": "فستان سهرة أحمر للمناسبات.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/womenclothes-فستان-سهرة-أحمر"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "dresses",
+  "size": "L",
+  "material": "Silk",
+  "color": "Red",
+  "length": "Long",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1b9"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Nike Women Shoes",
+  "category": "WomenClothes",
+  "subcategory": "shoes",
+  "price": 400,
+  "description": "حذاء Nike نسائي.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/womenclothes-Nike-Women-Shoes"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "shoes",
+  "size": "39",
+  "material": "Mesh",
+  "color": "White",
+  "heelHeight": 0,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1ba"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "شنطة يد نسائية جلد",
+  "category": "WomenBags",
+  "subcategory": "handbags",
+  "price": 500,
+  "description": "شنطة يد جلد نسائية.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/womenbags-شنطة-يد-نسائية-جلد"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "handbags",
+  "size": "Medium",
+  "material": "Leather",
+  "color": "Black",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1bb"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Tote Bag Large",
+  "category": "WomenBags",
+  "subcategory": "toteBags",
+  "price": 350,
+  "description": "Large women tote bag.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/womenbags-Tote-Bag-Large"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "toteBags",
+  "size": "Large",
+  "material": "Leather",
+  "color": "Brown",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1bc"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "شنطة ظهر نسائية",
+  "category": "WomenBags",
+  "subcategory": "backpacks",
+  "price": 280,
+  "description": "شنطة ظهر عملية.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/womenbags-شنطة-ظهر-نسائية"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "backpacks",
+  "size": "Large",
+  "material": "Nylon",
+  "color": "Black",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1bd"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Clutch Evening Bag",
+  "category": "WomenBags",
+  "subcategory": "clutches",
+  "price": 220,
+  "description": "شنطة صغيرة للمناسبات.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/womenbags-Clutch-Evening-Bag"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "clutches",
+  "size": "Small",
+  "material": "Leather",
+  "color": "Gold",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1be"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "ملابس أطفال حديثي الولادة",
+  "category": "Baby",
+  "subcategory": "clothes",
+  "price": 100,
+  "description": "ملابس أطفال قطنية من 0 إلى 6 أشهر.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/baby-ملابس-أطفال-حديثي-الولادة"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "clothes",
+  "ageGroup": "0-6 months",
+  "material": "Cotton",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1bf"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Baby Feeding Bottle Philips Avent",
+  "category": "Baby",
+  "subcategory": "feeding",
+  "price": 80,
+  "description": "رضاعة أطفال Philips Avent.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/baby-Baby-Feeding-Bottle-Philips-Avent"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "feeding",
+  "ageGroup": "0-6 months",
+  "brand": "Philips Avent",
+  "material": "Plastic",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1c0"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Baby Care Set",
+  "category": "Baby",
+  "subcategory": "care",
+  "price": 150,
+  "description": "مجموعة عناية للطفل.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/baby-Baby-Care-Set"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "care",
+  "material": "Plastic",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1c1"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "لعبة تعليمية للأطفال",
+  "category": "Kids",
+  "subcategory": "educational",
+  "price": 120,
+  "description": "لعبة تعليمية لتنمية مهارات الطفل.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/kids-لعبة-تعليمية-للأطفال"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "educational",
+  "ageGroup": "4-7 years",
+  "safeMaterial": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1c2"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "LEGO Building Set",
+  "category": "Kids",
+  "subcategory": "toys",
+  "price": 250,
+  "description": "LEGO construction toy.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/kids-LEGO-Building-Set"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "toys",
+  "ageGroup": "6-12 years",
+  "safeMaterial": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1c3"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Kids Outdoor Scooter",
+  "category": "Kids",
+  "subcategory": "outdoor",
+  "price": 300,
+  "description": "سكوتر أطفال للعب في الخارج.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/kids-Kids-Outdoor-Scooter"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "outdoor",
+  "ageGroup": "6-10 years",
+  "safeMaterial": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1c4"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Electric Toothbrush",
+  "category": "Health",
+  "subcategory": "personalCare",
+  "price": 180,
+  "description": "فرشاة أسنان كهربائية.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/health-Electric-Toothbrush"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "personalCare",
+  "brand": "Oral-B",
+  "expiryDate": "2028-12-31",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1c5"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Digital Blood Pressure Monitor",
+  "category": "Health",
+  "subcategory": "medical",
+  "price": 250,
+  "description": "جهاز قياس ضغط الدم الرقمي.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/health-Digital-Blood-Pressure-Monitor"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "medical",
+  "brand": "Omron",
+  "expiryDate": "2030-12-31",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1c6"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Dumbbell Set 20KG",
+  "category": "Health",
+  "subcategory": "fitness",
+  "price": 350,
+  "description": "مجموعة أوزان رياضية 20 كيلو.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/health-Dumbbell-Set-20KG"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "fitness",
+  "brand": "Generic",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.044Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1c7"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Maybelline Makeup Set",
+  "category": "Beauty",
+  "subcategory": "makeup",
+  "price": 220,
+  "description": "مجموعة مكياج Maybelline.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/beauty-Maybelline-Makeup-Set"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "makeup",
+  "brand": "Maybelline",
+  "expiryDate": "2028-06-30",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1c8"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "La Roche Posay Skincare",
+  "category": "Beauty",
+  "subcategory": "skincare",
+  "price": 180,
+  "description": "منتجات عناية بالبشرة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/beauty-La-Roche-Posay-Skincare"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "skincare",
+  "brand": "La Roche Posay",
+  "expiryDate": "2028-08-31",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1c9"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Dyson Hair Dryer",
+  "category": "Beauty",
+  "subcategory": "hair",
+  "price": 1600,
+  "description": "مجفف شعر Dyson.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/beauty-Dyson-Hair-Dryer"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "hair",
+  "brand": "Dyson",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1ca"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Casio Classic Watch",
+  "category": "Watches",
+  "subcategory": "classic",
+  "price": 250,
+  "description": "ساعة Casio كلاسيكية.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/watches-Casio-Classic-Watch"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "classic",
+  "brand": "Casio",
+  "waterResistant": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1cb"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Apple Watch Series 9",
+  "category": "Watches",
+  "subcategory": "smart",
+  "price": 1300,
+  "description": "Apple Watch Series 9.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/watches-Apple-Watch-Series-9"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "smart",
+  "brand": "Apple",
+  "waterResistant": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1cc"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Rolex Classic Watch",
+  "category": "Watches",
+  "subcategory": "classic",
+  "price": 25000,
+  "description": "ساعة Rolex كلاسيكية.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/watches-Rolex-Classic-Watch"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "classic",
+  "brand": "Rolex",
+  "waterResistant": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1cd"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Ariel Laundry Detergent 2L",
+  "category": "Cleaning",
+  "subcategory": "detergents",
+  "price": 35,
+  "description": "مسحوق غسيل Ariel حجم 2 لتر.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/cleaning-Ariel-Laundry-Detergent-2L"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "detergents",
+  "brand": "Ariel",
+  "volume": 2,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1ce"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "ممسحة أرضيات احترافية",
+  "category": "Cleaning",
+  "subcategory": "tools",
+  "price": 100,
+  "description": "ممسحة لتنظيف الأرضيات.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/cleaning-ممسحة-أرضيات-احترافية"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "tools",
+  "brand": "Vileda",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1cf"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Disinfectant 1L",
+  "category": "Cleaning",
+  "subcategory": "disinfection",
+  "price": 30,
+  "description": "مطهر منزلي 1 لتر.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/cleaning-Disinfectant-1L"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "disinfection",
+  "brand": "Sano",
+  "volume": 1,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1d0"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Honda CB500 2021",
+  "category": "Motorcycles",
+  "subcategory": "street",
+  "price": 32000,
+  "description": "Honda CB500 street motorcycle.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/motorcycles-Honda-CB500-2021"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "street",
+  "brand": "Honda",
+  "year": 2021,
+  "engineCapacity": 500,
+  "mileage": 25000,
+  "fuel": "gasoline",
+  "color": "Red",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1d1"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Yamaha R6 2020",
+  "category": "Motorcycles",
+  "subcategory": "sport",
+  "price": 48000,
+  "description": "Yamaha R6 sport motorcycle.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/motorcycles-Yamaha-R6-2020"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "sport",
+  "brand": "Yamaha",
+  "year": 2020,
+  "engineCapacity": 600,
+  "mileage": 18000,
+  "fuel": "gasoline",
+  "color": "Blue",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1d2"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Harley Davidson Cruiser",
+  "category": "Motorcycles",
+  "subcategory": "cruiser",
+  "price": 75000,
+  "description": "Harley Davidson cruiser.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/motorcycles-Harley-Davidson-Cruiser"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "cruiser",
+  "brand": "Harley Davidson",
+  "year": 2021,
+  "engineCapacity": 1200,
+  "mileage": 22000,
+  "fuel": "gasoline",
+  "color": "Black",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1d3"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Honda Off Road Bike",
+  "category": "Motorcycles",
+  "subcategory": "offRoad",
+  "price": 29000,
+  "description": "Honda off road motorcycle.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/motorcycles-Honda-Off-Road-Bike"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "offRoad",
+  "brand": "Honda",
+  "year": 2022,
+  "engineCapacity": 450,
+  "mileage": 9000,
+  "fuel": "gasoline",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1d4"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Yamaha Scooter 2022",
+  "category": "Motorcycles",
+  "subcategory": "scooter",
+  "price": 18000,
+  "description": "Yamaha scooter 2022.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/motorcycles-Yamaha-Scooter-2022"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "scooter",
+  "brand": "Yamaha",
+  "year": 2022,
+  "engineCapacity": 300,
+  "mileage": 12000,
+  "fuel": "gasoline",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1d5"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "لوحة زيتية طبيعية",
+  "category": "Art",
+  "subcategory": "paintings",
+  "price": 1200,
+  "description": "لوحة فنية زيتية مرسومة يدويًا.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/art-لوحة-زيتية-طبيعية"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "paintings",
+  "artist": "Ahmad Khalil",
+  "creationYear": 2024,
+  "dimensions": "80x120 cm",
+  "technique": "Oil",
+  "certificate": true,
+  "framed": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1d6"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "تمثال رخامي",
+  "category": "Art",
+  "subcategory": "sculptures",
+  "price": 2500,
+  "description": "تمثال رخامي فني.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/art-تمثال-رخامي"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "sculptures",
+  "artist": "Unknown",
+  "creationYear": 2020,
+  "dimensions": "50x30x30 cm",
+  "technique": "Marble",
+  "certificate": false,
+  "framed": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1d7"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "صورة فوتوغرافية للمدينة",
+  "category": "Art",
+  "subcategory": "photography",
+  "price": 500,
+  "description": "تصوير فني للمدينة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/art-صورة-فوتوغرافية-للمدينة"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "photography",
+  "artist": "Mohammad",
+  "creationYear": 2025,
+  "dimensions": "60x40 cm",
+  "technique": "Photography",
+  "certificate": false,
+  "framed": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1d8"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "قطعة Collectible قديمة",
+  "category": "Art",
+  "subcategory": "collectibles",
+  "price": 1800,
+  "description": "قطعة تجميعية قديمة ونادرة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/art-قطعة-Collectible-قديمة"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "collectibles",
+  "creationYear": 1995,
+  "certificate": true,
+  "provenance": "Private collection",
+  "condition": "Excellent",
+  "framed": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1d9"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "PlayStation 5",
+  "category": "Gaming",
+  "subcategory": "consoles",
+  "price": 1800,
+  "description": "بلايستيشن 5 بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/gaming-PlayStation-5"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "consoles",
+  "platform": "PlayStation",
+  "edition": "Standard",
+  "multiplayer": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1da"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "PlayStation 5 Slim",
+  "category": "Gaming",
+  "subcategory": "consoles",
+  "price": 2000,
+  "description": "PS5 Slim جديد تقريبًا.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/gaming-PlayStation-5-Slim"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "consoles",
+  "platform": "PlayStation",
+  "edition": "Slim",
+  "multiplayer": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1db"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "FIFA 25 PS5",
+  "category": "Gaming",
+  "subcategory": "games",
+  "price": 180,
+  "description": "لعبة FIFA 25 للبلايستيشن 5.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/gaming-FIFA-25-PS5"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "games",
+  "platform": "PlayStation",
+  "genre": "Sports",
+  "multiplayer": true,
+  "releaseYear": 2024,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1dc"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Xbox Series X",
+  "category": "Gaming",
+  "subcategory": "consoles",
+  "price": 1900,
+  "description": "Xbox Series X.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/gaming-Xbox-Series-X"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "consoles",
+  "platform": "Xbox",
+  "edition": "Standard",
+  "multiplayer": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1dd"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Nintendo Switch OLED",
+  "category": "Gaming",
+  "subcategory": "consoles",
+  "price": 1400,
+  "description": "Nintendo Switch OLED.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/gaming-Nintendo-Switch-OLED"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "consoles",
+  "platform": "Nintendo",
+  "edition": "OLED",
+  "multiplayer": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1de"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Gaming Keyboard RGB",
+  "category": "Gaming",
+  "subcategory": "accessories",
+  "price": 300,
+  "description": "لوحة مفاتيح Gaming RGB.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/gaming-Gaming-Keyboard-RGB"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "accessories",
+  "platform": "PC",
+  "multiplayer": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1df"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "شقة للبيع 4 غرف",
+  "category": "RealEstate",
+  "subcategory": "apartment",
+  "price": 850000,
+  "description": "شقة للبيع، أربع غرف، موقف سيارة ومصعد.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/realestate-شقة-للبيع-4-غرف"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "apartment",
+  "area": 120,
+  "rooms": 4,
+  "bathrooms": 2,
+  "floors": 1,
+  "hasParking": true,
+  "hasElevator": true,
+  "furnished": false,
+  "rentalType": "sale",
+  "propertyAge": 5,
+  "geoLocation": {
+    "type": "Point",
+    "coordinates": [
+      35.3219,
+      32.5175
+    ]
+  },
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1e0"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "شقة للإيجار 3 غرف",
+  "category": "RealEstate",
+  "subcategory": "apartment",
+  "price": 3200,
+  "description": "شقة للإيجار ثلاث غرف.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/realestate-شقة-للإيجار-3-غرف"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "apartment",
+  "area": 95,
+  "rooms": 3,
+  "bathrooms": 1,
+  "floors": 2,
+  "hasParking": true,
+  "hasElevator": true,
+  "furnished": false,
+  "rentalType": "rent",
+  "propertyAge": 8,
+  "geoLocation": {
+    "type": "Point",
+    "coordinates": [
+      35.3219,
+      32.5175
+    ]
+  },
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1e1"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "بيت مستقل للبيع",
+  "category": "RealEstate",
+  "subcategory": "house",
+  "price": 1500000,
+  "description": "بيت مستقل للبيع مع حديقة وموقف.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/realestate-بيت-مستقل-للبيع"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "house",
+  "area": 220,
+  "rooms": 6,
+  "bathrooms": 3,
+  "floors": 2,
+  "hasParking": true,
+  "hasElevator": false,
+  "furnished": false,
+  "rentalType": "sale",
+  "propertyAge": 10,
+  "geoLocation": {
+    "type": "Point",
+    "coordinates": [
+      35.3219,
+      32.5175
+    ]
+  },
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1e2"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "فيلا فاخرة للبيع",
+  "category": "RealEstate",
+  "subcategory": "villa",
+  "price": 2800000,
+  "description": "فيلا فاخرة مع حديقة ومسبح.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/realestate-فيلا-فاخرة-للبيع"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "حيفا",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "villa",
+  "area": 350,
+  "rooms": 7,
+  "bathrooms": 4,
+  "floors": 2,
+  "hasParking": true,
+  "hasElevator": false,
+  "furnished": true,
+  "rentalType": "sale",
+  "propertyAge": 3,
+  "geoLocation": {
+    "type": "Point",
+    "coordinates": [
+      34.9896,
+      32.794
+    ]
+  },
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1e3"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "أرض للبيع 500 متر",
+  "category": "RealEstate",
+  "subcategory": "land",
+  "price": 700000,
+  "description": "قطعة أرض للبيع مساحة 500 متر.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/realestate-أرض-للبيع-500-متر"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "الناصرة",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "land",
+  "area": 500,
+  "hasParking": false,
+  "hasElevator": false,
+  "furnished": false,
+  "rentalType": "sale",
+  "geoLocation": {
+    "type": "Point",
+    "coordinates": [
+      35.3035,
+      32.6996
+    ]
+  },
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1e4"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Golden Retriever Puppy",
+  "category": "Pets",
+  "subcategory": "dogs",
+  "price": 2500,
+  "description": "جرو Golden Retriever لطيف.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/pets-Golden-Retriever-Puppy"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "dogs",
+  "breed": "Golden Retriever",
+  "age": 4,
+  "gender": "male",
+  "vaccinated": true,
+  "neutered": false,
+  "microchipped": true,
+  "color": "Golden",
+  "weight": 12,
+  "temperament": "Friendly",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1e5"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "قط شيرازي",
+  "category": "Pets",
+  "subcategory": "cats",
+  "price": 1200,
+  "description": "قط شيرازي جميل وهادئ.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/pets-قط-شيرازي"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "cats",
+  "breed": "Persian",
+  "age": 8,
+  "gender": "female",
+  "vaccinated": true,
+  "neutered": true,
+  "microchipped": true,
+  "color": "White",
+  "weight": 4,
+  "temperament": "Calm",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1e6"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "عصفور كناري",
+  "category": "Pets",
+  "subcategory": "birds",
+  "price": 150,
+  "description": "كناري أصفر جميل.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/pets-عصفور-كناري"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "birds",
+  "breed": "Canary",
+  "age": 12,
+  "gender": "male",
+  "vaccinated": false,
+  "neutered": false,
+  "microchipped": false,
+  "color": "Yellow",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1e7"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "طعام قطط Royal Canin",
+  "category": "Pets",
+  "subcategory": "supplies",
+  "price": 180,
+  "description": "طعام قطط Royal Canin.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/pets-طعام-قطط-Royal-Canin"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "supplies",
+  "vaccinated": false,
+  "neutered": false,
+  "microchipped": false,
+  "brand": "Royal Canin",
+  "size": "10kg",
+  "material": "Food",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1e8"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "كنبة زاوية رمادية",
+  "category": "Furniture",
+  "subcategory": "living_room",
+  "price": 2500,
+  "description": "كنبة زاوية رمادية لغرفة المعيشة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/furniture-كنبة-زاوية-رمادية"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "living_room",
+  "material": "Fabric",
+  "color": "Gray",
+  "dimensions": "280x180 cm",
+  "assemblyRequired": false,
+  "condition": "like_new",
+  "style": "Modern",
+  "includesAccessories": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1e9"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "غرفة نوم كاملة",
+  "category": "Furniture",
+  "subcategory": "bedroom",
+  "price": 3500,
+  "description": "غرفة نوم كاملة مع سرير وخزانة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/furniture-غرفة-نوم-كاملة"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "bedroom",
+  "material": "Wood",
+  "color": "White",
+  "dimensions": "200x180 cm",
+  "assemblyRequired": false,
+  "condition": "good",
+  "style": "Modern",
+  "includesAccessories": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1ea"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "طاولة طعام 6 كراسي",
+  "category": "Furniture",
+  "subcategory": "dining",
+  "price": 1800,
+  "description": "طاولة طعام خشبية مع 6 كراسي.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/furniture-طاولة-طعام-6-كراسي"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "dining",
+  "material": "Wood",
+  "color": "Brown",
+  "dimensions": "180x90 cm",
+  "assemblyRequired": false,
+  "condition": "good",
+  "style": "Classic",
+  "includesAccessories": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1eb"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "مكتب خشبي للعمل",
+  "category": "Furniture",
+  "subcategory": "office",
+  "price": 700,
+  "description": "مكتب خشبي مناسب للعمل من المنزل.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/furniture-مكتب-خشبي-للعمل"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "office",
+  "material": "Wood",
+  "color": "Brown",
+  "dimensions": "140x70 cm",
+  "assemblyRequired": false,
+  "condition": "like_new",
+  "style": "Modern",
+  "includesAccessories": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1ec"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "طقم أثاث خارجي",
+  "category": "Furniture",
+  "subcategory": "outdoor",
+  "price": 2200,
+  "description": "طقم أثاث خارجي مقاوم للطقس.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/furniture-طقم-أثاث-خارجي"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "outdoor",
+  "material": "Metal",
+  "color": "Black",
+  "assemblyRequired": false,
+  "condition": "new",
+  "style": "Modern",
+  "includesAccessories": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddaf31bd4e3404916a1ed"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "خزانة مطبخ خشبية",
+  "category": "Furniture",
+  "subcategory": "kitchen",
+  "price": 1500,
+  "description": "خزانة مطبخ خشبية كبيرة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+    "publicId": "seed/furniture-خزانة-مطبخ-خشبية"
+  },
+  "likes": [],
+  "reviews": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "ام الفحم",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "kitchen",
+  "material": "Wood",
+  "color": "White",
+  "assemblyRequired": false,
+  "condition": "good",
+  "style": "Modern",
+  "includesAccessories": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T14:55:47.045Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddd4be280d34de836737f"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "iPhone 15 Pro 256GB",
+  "category": "Electronics",
+  "subcategory": "smartphones",
+  "price": 2800,
+  "description": "iPhone 15 Pro 256GB بحالة ممتازة، يعمل بشكل كامل.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1696446701796-da61225697cc?w=800",
+    "publicId": "seed/iphone-15-pro"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "smartphones",
+  "brand": "Apple",
+  "model": "iPhone 15 Pro",
+  "ram": 8,
+  "storage": 256,
+  "screenSize": 6.1,
+  "operatingSystem": "iOS",
+  "condition": "excellent",
+  "includedAccessories": [],
+  "networkType": "5G",
+  "color": "Natural Titanium",
+  "warranty": "No warranty",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T15:05:47.648Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T15:05:47.648Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddd4be280d34de8367380"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Samsung Galaxy S24 256GB",
+  "category": "Electronics",
+  "subcategory": "smartphones",
+  "price": 2200,
+  "description": "Samsung Galaxy S24 256GB بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=800",
+    "publicId": "seed/samsung-s24"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": true,
+  "discount": 10,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "smartphones",
+  "brand": "Samsung",
+  "model": "Galaxy S24",
+  "ram": 8,
+  "storage": 256,
+  "screenSize": 6.2,
+  "operatingSystem": "Android",
+  "condition": "like_new",
+  "includedAccessories": [],
+  "networkType": "5G",
+  "color": "Black",
+  "warranty": "6 months",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T15:05:47.648Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T15:05:47.648Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddd4be280d34de8367381"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Samsung Galaxy A55 128GB",
+  "category": "Electronics",
+  "subcategory": "smartphones",
+  "price": 1200,
+  "description": "هاتف Samsung Galaxy A55 128GB بحالة جيدة جداً.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800",
+    "publicId": "seed/samsung-a55"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "smartphones",
+  "brand": "Samsung",
+  "model": "Galaxy A55",
+  "ram": 8,
+  "storage": 128,
+  "screenSize": 6.6,
+  "operatingSystem": "Android",
+  "condition": "good",
+  "includedAccessories": [],
+  "networkType": "5G",
+  "color": "Blue",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T15:05:47.648Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T15:05:47.648Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddd4be280d34de8367382"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 1,
+  "product_name": "Toyota Corolla 2022",
+  "category": "Cars",
+  "subcategory": "private",
+  "price": 68000,
+  "description": "Toyota Corolla 2022 سيارة عائلية اقتصادية بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1623869675781-80aa31012a5a?w=800",
+    "publicId": "seed/toyota-corolla-2022"
+  },
+  "likes": [],
+  "featured": true,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "private",
+  "brand": "Toyota",
+  "year": 2022,
+  "fuel": "gasoline",
+  "mileage": 52000,
+  "color": "White",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T15:05:47.648Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T15:23:50.930Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddd4be280d34de8367383"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Hyundai Tucson 2021",
+  "category": "Cars",
+  "subcategory": "private",
+  "price": 79000,
+  "description": "Hyundai Tucson 2021 SUV عائلية بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1633500770365-9f2a9a5a4d4c?w=800",
+    "publicId": "seed/hyundai-tucson-2021"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "private",
+  "brand": "Hyundai",
+  "year": 2021,
+  "fuel": "gasoline",
+  "mileage": 64000,
+  "color": "Black",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T15:05:47.648Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T15:05:47.648Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddd4be280d34de8367384"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 1,
+  "product_name": "Toyota Prius 2020 Hybrid",
+  "category": "Cars",
+  "subcategory": "private",
+  "price": 62000,
+  "description": "Toyota Prius 2020 היברידית חסכונית מאוד בדלק.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1550355291-bbee04a92027?w=800",
+    "publicId": "seed/toyota-prius"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": true,
+  "discount": 5,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "private",
+  "brand": "Toyota",
+  "year": 2020,
+  "fuel": "hybrid",
+  "mileage": 72000,
+  "color": "Silver",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T15:05:47.648Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T15:50:55.714Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddd4be280d34de8367385"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 4,
+  "product_name": "Yamaha R6 2020",
+  "category": "Motorcycles",
+  "subcategory": "sport",
+  "price": 48000,
+  "description": "Yamaha R6 sport motorcycle موديل 2020 بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800",
+    "publicId": "seed/yamaha-r6"
+  },
+  "likes": [
+    "6980c609317475fe5c733aed"
+  ],
+  "featured": true,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "sport",
+  "brand": "Yamaha",
+  "year": 2020,
+  "engineCapacity": 600,
+  "mileage": 18000,
+  "fuel": "gasoline",
+  "color": "Blue",
+  "reviews": [],
+  "__v": 1,
+  "createdAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T15:37:32.197Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddd4be280d34de8367386"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 15,
+  "product_name": "Honda Off Road Bike",
+  "category": "Motorcycles",
+  "subcategory": "offRoad",
+  "price": 29000,
+  "description": "Honda off road motorcycle مناسبة للطرق الوعرة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800",
+    "publicId": "seed/honda-offroad"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "offRoad",
+  "brand": "Honda",
+  "year": 2021,
+  "engineCapacity": 450,
+  "mileage": 12000,
+  "fuel": "gasoline",
+  "color": "Red",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T15:36:28.840Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddd4be280d34de8367387"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Mountain Bike",
+  "category": "Bikes",
+  "subcategory": "mountain",
+  "price": 1800,
+  "description": "دراجة جبلية قوية مع نظام تعليق أمامي.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=800",
+    "publicId": "seed/mountain-bike"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "mountain",
+  "frameSize": "M",
+  "color": "Black",
+  "suspension": true,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddd4be280d34de8367388"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 25,
+  "product_name": "PlayStation 5",
+  "category": "Gaming",
+  "subcategory": "consoles",
+  "price": 1800,
+  "description": "PlayStation 5 بحالة ممتازة مع يد تحكم.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=800",
+    "publicId": "seed/playstation-5"
+  },
+  "likes": [
+    "6980c609317475fe5c733aed"
+  ],
+  "featured": true,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "consoles",
+  "platform": "PlayStation",
+  "edition": "Standard",
+  "multiplayer": true,
+  "language": "English",
+  "releaseYear": 2020,
+  "reviews": [],
+  "__v": 1,
+  "createdAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:19:50.562Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddd4be280d34de8367389"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "PlayStation 5 FC 25",
+  "category": "Gaming",
+  "subcategory": "games",
+  "price": 180,
+  "description": "لعبة كرة قدم PlayStation بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=800",
+    "publicId": "seed/fc25"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "games",
+  "platform": "PlayStation",
+  "genre": "Sports",
+  "multiplayer": true,
+  "language": "English",
+  "releaseYear": 2024,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddd4be280d34de836738a"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Corner Sofa",
+  "category": "Furniture",
+  "subcategory": "living_room",
+  "price": 3500,
+  "description": "كنبة زاوية مريحة لغرفة المعيشة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800",
+    "publicId": "seed/corner-sofa"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": true,
+  "discount": 15,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "living_room",
+  "brand": "IKEA",
+  "material": "Fabric",
+  "color": "Gray",
+  "dimensions": "280x180 cm",
+  "assemblyRequired": false,
+  "condition": "good",
+  "style": "Modern",
+  "includesAccessories": false,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddd4be280d34de836738b"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Dining Table",
+  "category": "Furniture",
+  "subcategory": "dining",
+  "price": 2200,
+  "description": "طاولة طعام خشبية لأربعة إلى ستة أشخاص.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=800",
+    "publicId": "seed/dining-table"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "dining",
+  "material": "Wood",
+  "color": "Brown",
+  "dimensions": "180x90 cm",
+  "assemblyRequired": false,
+  "condition": "like_new",
+  "style": "Modern",
+  "includesAccessories": false,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddd4be280d34de836738c"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Kitchen Mixer Bosch",
+  "category": "House",
+  "subcategory": "kitchen",
+  "price": 650,
+  "description": "خلاط ومضرب كهربائي Bosch للمطبخ.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1570222094114-d054a817e56b?w=800",
+    "publicId": "seed/bosch-mixer"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "kitchen",
+  "brand": "Bosch",
+  "material": "Stainless Steel",
+  "color": "Silver",
+  "powerWatts": 800,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddd4be280d34de836738d"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Garden Shovel",
+  "category": "Garden",
+  "subcategory": "tools",
+  "price": 120,
+  "description": "مجرفة قوية لأعمال الحديقة والحفر.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800",
+    "publicId": "seed/garden-shovel"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "tools",
+  "brand": "Stanley",
+  "toolType": "Shovel",
+  "weatherResistant": true,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddd4be280d34de836738e"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Indoor Monstera Plant",
+  "category": "Garden",
+  "subcategory": "plants",
+  "price": 150,
+  "description": "نبتة Monstera جميلة مناسبة للمنزل.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=800",
+    "publicId": "seed/monstera"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "plants",
+  "plantType": "Monstera",
+  "season": "All year",
+  "sunExposure": "Indirect sunlight",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddd4be280d34de836738f"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Apple Watch Series 9",
+  "category": "Watches",
+  "subcategory": "smart",
+  "price": 1300,
+  "description": "Apple Watch Series 9 بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1544117519-31a4b719223d?w=800",
+    "publicId": "seed/apple-watch-9"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "smart",
+  "brand": "Apple",
+  "waterResistant": true,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddd4be280d34de8367390"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 4,
+  "product_name": "Disinfectant 1L",
+  "category": "Cleaning",
+  "subcategory": "disinfection",
+  "price": 30,
+  "description": "مطهر منزلي 1 لتر للتنظيف والتعقيم.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=800",
+    "publicId": "seed/disinfectant-1l"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "disinfection",
+  "brand": "Sano",
+  "volume": 1,
+  "reviews": [
+    {
+      "user": {
+        "$oid": "6980c609317475fe5c733aed"
+      },
+      "comment": "555",
+      "rating": 5,
+      "createdAt": {
+        "$date": "2026-08-13T15:28:17.155Z"
+      },
+      "_id": {
+        "$oid": "6a7de2911e1f2a3c7fbf16c0"
+      }
+    }
+  ],
+  "__v": 1,
+  "createdAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T15:28:19.496Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddd4be280d34de8367391"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Men Casual T-Shirt",
+  "category": "MenClothes",
+  "subcategory": "casual",
+  "price": 90,
+  "description": "قميص رجالي كاجوال قطن 100%.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800",
+    "publicId": "seed/men-tshirt"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "casual",
+  "size": "L",
+  "material": "Cotton",
+  "color": "Black",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddd4be280d34de8367392"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 2,
+  "product_name": "Women's Evening Dress",
+  "category": "WomenClothes",
+  "subcategory": "dresses",
+  "price": 350,
+  "description": "فستان نسائي أنيق للمناسبات.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=800",
+    "publicId": "seed/women-dress"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": true,
+  "discount": 20,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "dresses",
+  "size": "M",
+  "material": "Polyester",
+  "color": "Black",
+  "length": "Long",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T15:23:10.628Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddd4be280d34de8367393"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 3,
+  "product_name": "Modern Apartment 4 Rooms",
+  "category": "RealEstate",
+  "subcategory": "apartment",
+  "price": 1250000,
+  "description": "شقة حديثة للبيع، أربع غرف مع موقف سيارة ومصعد.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
+    "publicId": "seed/apartment-4-rooms"
+  },
+  "likes": [],
+  "featured": true,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "apartment",
+  "area": 110,
+  "rooms": 4,
+  "bathrooms": 2,
+  "floors": 1,
+  "hasParking": true,
+  "hasElevator": true,
+  "furnished": false,
+  "rentalType": "sale",
+  "propertyAge": 4,
+  "geoLocation": {
+    "type": "Point",
+    "coordinates": [
+      35.1528,
+      32.5179
+    ]
+  },
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T15:23:41.887Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7ddd4be280d34de8367394"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Golden Retriever Puppy",
+  "category": "Pets",
+  "subcategory": "dogs",
+  "price": 2500,
+  "description": "جرو Golden Retriever اجتماعي ونشيط.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1552053831-71594a27632d?w=800",
+    "publicId": "seed/golden-retriever"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "dogs",
+  "breed": "Golden Retriever",
+  "age": 8,
+  "gender": "male",
+  "vaccinated": true,
+  "neutered": false,
+  "microchipped": true,
+  "color": "Golden",
+  "weight": 12,
+  "temperament": "Friendly",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T15:05:47.649Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deb1fb121969c875ee9df"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "iPhone 15 Pro 256GB",
+  "category": "Electronics",
+  "subcategory": "smartphones",
+  "price": 2800,
+  "description": "iPhone 15 Pro 256GB بحالة ممتازة، يعمل بشكل كامل.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1696446701796-da61225697cc?w=800",
+    "publicId": "seed/iphone-15-pro"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "smartphones",
+  "brand": "Apple",
+  "model": "iPhone 15 Pro",
+  "ram": 8,
+  "storage": 256,
+  "screenSize": 6.1,
+  "operatingSystem": "iOS",
+  "condition": "excellent",
+  "includedAccessories": [],
+  "networkType": "5G",
+  "color": "Natural Titanium",
+  "warranty": "No warranty",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:04:47.367Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:04:47.367Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deb1fb121969c875ee9e0"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Samsung Galaxy S24 256GB",
+  "category": "Electronics",
+  "subcategory": "smartphones",
+  "price": 2200,
+  "description": "Samsung Galaxy S24 256GB بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=800",
+    "publicId": "seed/samsung-s24"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": true,
+  "discount": 10,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "smartphones",
+  "brand": "Samsung",
+  "model": "Galaxy S24",
+  "ram": 8,
+  "storage": 256,
+  "screenSize": 6.2,
+  "operatingSystem": "Android",
+  "condition": "like_new",
+  "includedAccessories": [],
+  "networkType": "5G",
+  "color": "Black",
+  "warranty": "6 months",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:04:47.367Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:04:47.367Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deb1fb121969c875ee9e1"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Samsung Galaxy A55 128GB",
+  "category": "Electronics",
+  "subcategory": "smartphones",
+  "price": 1200,
+  "description": "هاتف Samsung Galaxy A55 128GB بحالة جيدة جداً.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800",
+    "publicId": "seed/samsung-a55"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "smartphones",
+  "brand": "Samsung",
+  "model": "Galaxy A55",
+  "ram": 8,
+  "storage": 128,
+  "screenSize": 6.6,
+  "operatingSystem": "Android",
+  "condition": "good",
+  "includedAccessories": [],
+  "networkType": "5G",
+  "color": "Blue",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:04:47.367Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:04:47.367Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deb1fb121969c875ee9e2"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Toyota Corolla 2022",
+  "category": "Cars",
+  "subcategory": "private",
+  "price": 68000,
+  "description": "Toyota Corolla 2022 سيارة عائلية اقتصادية بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1623869675781-80aa31012a5a?w=800",
+    "publicId": "seed/toyota-corolla-2022"
+  },
+  "likes": [],
+  "featured": true,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "private",
+  "brand": "Toyota",
+  "year": 2022,
+  "fuel": "gasoline",
+  "mileage": 52000,
+  "color": "White",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:04:47.367Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:04:47.367Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deb1fb121969c875ee9e3"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Hyundai Tucson 2021",
+  "category": "Cars",
+  "subcategory": "private",
+  "price": 79000,
+  "description": "Hyundai Tucson 2021 SUV عائلية بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1633500770365-9f2a9a5a4d4c?w=800",
+    "publicId": "seed/hyundai-tucson-2021"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "private",
+  "brand": "Hyundai",
+  "year": 2021,
+  "fuel": "gasoline",
+  "mileage": 64000,
+  "color": "Black",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:04:47.367Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:04:47.367Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deb1fb121969c875ee9e4"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Toyota Prius 2020 Hybrid",
+  "category": "Cars",
+  "subcategory": "private",
+  "price": 62000,
+  "description": "Toyota Prius 2020 היברידית חסכונית מאוד בדלק.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1550355291-bbee04a92027?w=800",
+    "publicId": "seed/toyota-prius"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": true,
+  "discount": 5,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "private",
+  "brand": "Toyota",
+  "year": 2020,
+  "fuel": "hybrid",
+  "mileage": 72000,
+  "color": "Silver",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:04:47.367Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:04:47.367Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deb1fb121969c875ee9e5"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Yamaha R6 2020",
+  "category": "Motorcycles",
+  "subcategory": "sport",
+  "price": 48000,
+  "description": "Yamaha R6 sport motorcycle موديل 2020 بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800",
+    "publicId": "seed/yamaha-r6"
+  },
+  "likes": [],
+  "featured": true,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "sport",
+  "brand": "Yamaha",
+  "year": 2020,
+  "engineCapacity": 600,
+  "mileage": 18000,
+  "fuel": "gasoline",
+  "color": "Blue",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:04:47.367Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:04:47.367Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deb1fb121969c875ee9e6"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Honda Off Road Bike",
+  "category": "Motorcycles",
+  "subcategory": "offRoad",
+  "price": 29000,
+  "description": "Honda off road motorcycle مناسبة للطرق الوعرة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800",
+    "publicId": "seed/honda-offroad"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "offRoad",
+  "brand": "Honda",
+  "year": 2021,
+  "engineCapacity": 450,
+  "mileage": 12000,
+  "fuel": "gasoline",
+  "color": "Red",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deb1fb121969c875ee9e7"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Mountain Bike",
+  "category": "Bikes",
+  "subcategory": "mountain",
+  "price": 1800,
+  "description": "دراجة جبلية قوية مع نظام تعليق أمامي.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=800",
+    "publicId": "seed/mountain-bike"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "mountain",
+  "frameSize": "M",
+  "color": "Black",
+  "suspension": true,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deb1fb121969c875ee9e8"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "PlayStation 5",
+  "category": "Gaming",
+  "subcategory": "consoles",
+  "price": 1800,
+  "description": "PlayStation 5 بحالة ممتازة مع يد تحكم.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=800",
+    "publicId": "seed/playstation-5"
+  },
+  "likes": [],
+  "featured": true,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "consoles",
+  "platform": "PlayStation",
+  "edition": "Standard",
+  "multiplayer": true,
+  "language": "English",
+  "releaseYear": 2020,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deb1fb121969c875ee9e9"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "PlayStation 5 FC 25",
+  "category": "Gaming",
+  "subcategory": "games",
+  "price": 180,
+  "description": "لعبة كرة قدم PlayStation بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=800",
+    "publicId": "seed/fc25"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "games",
+  "platform": "PlayStation",
+  "genre": "Sports",
+  "multiplayer": true,
+  "language": "English",
+  "releaseYear": 2024,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deb1fb121969c875ee9ea"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Corner Sofa",
+  "category": "Furniture",
+  "subcategory": "living_room",
+  "price": 3500,
+  "description": "كنبة زاوية مريحة لغرفة المعيشة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800",
+    "publicId": "seed/corner-sofa"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": true,
+  "discount": 15,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "living_room",
+  "brand": "IKEA",
+  "material": "Fabric",
+  "color": "Gray",
+  "dimensions": "280x180 cm",
+  "assemblyRequired": false,
+  "condition": "good",
+  "style": "Modern",
+  "includesAccessories": false,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deb1fb121969c875ee9eb"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Dining Table",
+  "category": "Furniture",
+  "subcategory": "dining",
+  "price": 2200,
+  "description": "طاولة طعام خشبية لأربعة إلى ستة أشخاص.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=800",
+    "publicId": "seed/dining-table"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "dining",
+  "material": "Wood",
+  "color": "Brown",
+  "dimensions": "180x90 cm",
+  "assemblyRequired": false,
+  "condition": "like_new",
+  "style": "Modern",
+  "includesAccessories": false,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deb1fb121969c875ee9ec"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Kitchen Mixer Bosch",
+  "category": "House",
+  "subcategory": "kitchen",
+  "price": 650,
+  "description": "خلاط ومضرب كهربائي Bosch للمطبخ.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1570222094114-d054a817e56b?w=800",
+    "publicId": "seed/bosch-mixer"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "kitchen",
+  "brand": "Bosch",
+  "material": "Stainless Steel",
+  "color": "Silver",
+  "powerWatts": 800,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deb1fb121969c875ee9ed"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Garden Shovel",
+  "category": "Garden",
+  "subcategory": "tools",
+  "price": 120,
+  "description": "مجرفة قوية لأعمال الحديقة والحفر.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800",
+    "publicId": "seed/garden-shovel"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "tools",
+  "brand": "Stanley",
+  "toolType": "Shovel",
+  "weatherResistant": true,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deb1fb121969c875ee9ee"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Indoor Monstera Plant",
+  "category": "Garden",
+  "subcategory": "plants",
+  "price": 150,
+  "description": "نبتة Monstera جميلة مناسبة للمنزل.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=800",
+    "publicId": "seed/monstera"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "plants",
+  "plantType": "Monstera",
+  "season": "All year",
+  "sunExposure": "Indirect sunlight",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deb1fb121969c875ee9ef"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Apple Watch Series 9",
+  "category": "Watches",
+  "subcategory": "smart",
+  "price": 1300,
+  "description": "Apple Watch Series 9 بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1544117519-31a4b719223d?w=800",
+    "publicId": "seed/apple-watch-9"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "smart",
+  "brand": "Apple",
+  "waterResistant": true,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deb1fb121969c875ee9f0"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Disinfectant 1L",
+  "category": "Cleaning",
+  "subcategory": "disinfection",
+  "price": 30,
+  "description": "مطهر منزلي 1 لتر للتنظيف والتعقيم.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=800",
+    "publicId": "seed/disinfectant-1l"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "disinfection",
+  "brand": "Sano",
+  "volume": 1,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deb1fb121969c875ee9f1"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Men Casual T-Shirt",
+  "category": "MenClothes",
+  "subcategory": "casual",
+  "price": 90,
+  "description": "قميص رجالي كاجوال قطن 100%.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800",
+    "publicId": "seed/men-tshirt"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "casual",
+  "size": "L",
+  "material": "Cotton",
+  "color": "Black",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deb1fb121969c875ee9f2"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Women's Evening Dress",
+  "category": "WomenClothes",
+  "subcategory": "dresses",
+  "price": 350,
+  "description": "فستان نسائي أنيق للمناسبات.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=800",
+    "publicId": "seed/women-dress"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": true,
+  "discount": 20,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "dresses",
+  "size": "M",
+  "material": "Polyester",
+  "color": "Black",
+  "length": "Long",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deb1fb121969c875ee9f3"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Modern Apartment 4 Rooms",
+  "category": "RealEstate",
+  "subcategory": "apartment",
+  "price": 1250000,
+  "description": "شقة حديثة للبيع، أربع غرف مع موقف سيارة ومصعد.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
+    "publicId": "seed/apartment-4-rooms"
+  },
+  "likes": [],
+  "featured": true,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "apartment",
+  "area": 110,
+  "rooms": 4,
+  "bathrooms": 2,
+  "floors": 1,
+  "hasParking": true,
+  "hasElevator": true,
+  "furnished": false,
+  "rentalType": "sale",
+  "propertyAge": 4,
+  "geoLocation": {
+    "type": "Point",
+    "coordinates": [
+      35.1528,
+      32.5179
+    ]
+  },
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deb1fb121969c875ee9f4"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Golden Retriever Puppy",
+  "category": "Pets",
+  "subcategory": "dogs",
+  "price": 2500,
+  "description": "جرو Golden Retriever اجتماعي ونشيط.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1552053831-71594a27632d?w=800",
+    "publicId": "seed/golden-retriever"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "dogs",
+  "breed": "Golden Retriever",
+  "age": 8,
+  "gender": "male",
+  "vaccinated": true,
+  "neutered": false,
+  "microchipped": true,
+  "color": "Golden",
+  "weight": 12,
+  "temperament": "Friendly",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:04:47.368Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deda8475b554533597ef4"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "iPhone 15 Pro 256GB",
+  "category": "Electronics",
+  "subcategory": "smartphones",
+  "price": 2800,
+  "description": "iPhone 15 Pro 256GB بحالة ممتازة، يعمل بشكل كامل.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1696446701796-da61225697cc?w=800",
+    "publicId": "seed/iphone-15-pro"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "smartphones",
+  "brand": "Apple",
+  "model": "iPhone 15 Pro",
+  "ram": 8,
+  "storage": 256,
+  "screenSize": 6.1,
+  "operatingSystem": "iOS",
+  "condition": "excellent",
+  "includedAccessories": [],
+  "networkType": "5G",
+  "color": "Natural Titanium",
+  "warranty": "No warranty",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:15:36.684Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:15:36.684Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deda8475b554533597ef5"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Samsung Galaxy S24 256GB",
+  "category": "Electronics",
+  "subcategory": "smartphones",
+  "price": 2200,
+  "description": "Samsung Galaxy S24 256GB بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=800",
+    "publicId": "seed/samsung-s24"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": true,
+  "discount": 10,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "smartphones",
+  "brand": "Samsung",
+  "model": "Galaxy S24",
+  "ram": 8,
+  "storage": 256,
+  "screenSize": 6.2,
+  "operatingSystem": "Android",
+  "condition": "like_new",
+  "includedAccessories": [],
+  "networkType": "5G",
+  "color": "Black",
+  "warranty": "6 months",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deda8475b554533597ef6"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Samsung Galaxy A55 128GB",
+  "category": "Electronics",
+  "subcategory": "smartphones",
+  "price": 1200,
+  "description": "هاتف Samsung Galaxy A55 128GB بحالة جيدة جداً.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800",
+    "publicId": "seed/samsung-a55"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "smartphones",
+  "brand": "Samsung",
+  "model": "Galaxy A55",
+  "ram": 8,
+  "storage": 128,
+  "screenSize": 6.6,
+  "operatingSystem": "Android",
+  "condition": "good",
+  "includedAccessories": [],
+  "networkType": "5G",
+  "color": "Blue",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deda8475b554533597ef7"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 1,
+  "product_name": "Toyota Corolla 2022",
+  "category": "Cars",
+  "subcategory": "private",
+  "price": 68000,
+  "description": "Toyota Corolla 2022 سيارة عائلية اقتصادية بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1623869675781-80aa31012a5a?w=800",
+    "publicId": "seed/toyota-corolla-2022"
+  },
+  "likes": [],
+  "featured": true,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "private",
+  "brand": "Toyota",
+  "year": 2022,
+  "fuel": "gasoline",
+  "mileage": 52000,
+  "color": "White",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:46:32.274Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deda8475b554533597ef8"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Hyundai Tucson 2021",
+  "category": "Cars",
+  "subcategory": "private",
+  "price": 79000,
+  "description": "Hyundai Tucson 2021 SUV عائلية بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1633500770365-9f2a9a5a4d4c?w=800",
+    "publicId": "seed/hyundai-tucson-2021"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "private",
+  "brand": "Hyundai",
+  "year": 2021,
+  "fuel": "gasoline",
+  "mileage": 64000,
+  "color": "Black",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deda8475b554533597ef9"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Toyota Prius 2020 Hybrid",
+  "category": "Cars",
+  "subcategory": "private",
+  "price": 62000,
+  "description": "Toyota Prius 2020 היברידית חסכונית מאוד בדלק.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1550355291-bbee04a92027?w=800",
+    "publicId": "seed/toyota-prius"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": true,
+  "discount": 5,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "private",
+  "brand": "Toyota",
+  "year": 2020,
+  "fuel": "hybrid",
+  "mileage": 72000,
+  "color": "Silver",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deda8475b554533597efa"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Yamaha R6 2020",
+  "category": "Motorcycles",
+  "subcategory": "sport",
+  "price": 48000,
+  "description": "Yamaha R6 sport motorcycle موديل 2020 بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800",
+    "publicId": "seed/yamaha-r6"
+  },
+  "likes": [],
+  "featured": true,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "sport",
+  "brand": "Yamaha",
+  "year": 2020,
+  "engineCapacity": 600,
+  "mileage": 18000,
+  "fuel": "gasoline",
+  "color": "Blue",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deda8475b554533597efb"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Honda Off Road Bike",
+  "category": "Motorcycles",
+  "subcategory": "offRoad",
+  "price": 29000,
+  "description": "Honda off road motorcycle مناسبة للطرق الوعرة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800",
+    "publicId": "seed/honda-offroad"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "offRoad",
+  "brand": "Honda",
+  "year": 2021,
+  "engineCapacity": 450,
+  "mileage": 12000,
+  "fuel": "gasoline",
+  "color": "Red",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deda8475b554533597efc"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Mountain Bike",
+  "category": "Bikes",
+  "subcategory": "mountain",
+  "price": 1800,
+  "description": "دراجة جبلية قوية مع نظام تعليق أمامي.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=800",
+    "publicId": "seed/mountain-bike"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "mountain",
+  "frameSize": "M",
+  "color": "Black",
+  "suspension": true,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deda8475b554533597efd"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 1,
+  "product_name": "PlayStation 5",
+  "category": "Gaming",
+  "subcategory": "consoles",
+  "price": 1800,
+  "description": "PlayStation 5 بحالة ممتازة مع يد تحكم.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=800",
+    "publicId": "seed/playstation-5"
+  },
+  "likes": [],
+  "featured": true,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "consoles",
+  "platform": "PlayStation",
+  "edition": "Standard",
+  "multiplayer": true,
+  "language": "English",
+  "releaseYear": 2020,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:42:44.500Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deda8475b554533597efe"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "PlayStation 5 FC 25",
+  "category": "Gaming",
+  "subcategory": "games",
+  "price": 180,
+  "description": "لعبة كرة قدم PlayStation بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=800",
+    "publicId": "seed/fc25"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "games",
+  "platform": "PlayStation",
+  "genre": "Sports",
+  "multiplayer": true,
+  "language": "English",
+  "releaseYear": 2024,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deda8475b554533597eff"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Corner Sofa",
+  "category": "Furniture",
+  "subcategory": "living_room",
+  "price": 3500,
+  "description": "كنبة زاوية مريحة لغرفة المعيشة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800",
+    "publicId": "seed/corner-sofa"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": true,
+  "discount": 15,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "living_room",
+  "brand": "IKEA",
+  "material": "Fabric",
+  "color": "Gray",
+  "dimensions": "280x180 cm",
+  "assemblyRequired": false,
+  "condition": "good",
+  "style": "Modern",
+  "includesAccessories": false,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deda8475b554533597f00"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Dining Table",
+  "category": "Furniture",
+  "subcategory": "dining",
+  "price": 2200,
+  "description": "طاولة طعام خشبية لأربعة إلى ستة أشخاص.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=800",
+    "publicId": "seed/dining-table"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "dining",
+  "material": "Wood",
+  "color": "Brown",
+  "dimensions": "180x90 cm",
+  "assemblyRequired": false,
+  "condition": "like_new",
+  "style": "Modern",
+  "includesAccessories": false,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deda8475b554533597f01"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Kitchen Mixer Bosch",
+  "category": "House",
+  "subcategory": "kitchen",
+  "price": 650,
+  "description": "خلاط ومضرب كهربائي Bosch للمطبخ.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1570222094114-d054a817e56b?w=800",
+    "publicId": "seed/bosch-mixer"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "kitchen",
+  "brand": "Bosch",
+  "material": "Stainless Steel",
+  "color": "Silver",
+  "powerWatts": 800,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deda8475b554533597f02"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Garden Shovel",
+  "category": "Garden",
+  "subcategory": "tools",
+  "price": 120,
+  "description": "مجرفة قوية لأعمال الحديقة والحفر.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800",
+    "publicId": "seed/garden-shovel"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "tools",
+  "brand": "Stanley",
+  "toolType": "Shovel",
+  "weatherResistant": true,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deda8475b554533597f03"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Indoor Monstera Plant",
+  "category": "Garden",
+  "subcategory": "plants",
+  "price": 150,
+  "description": "نبتة Monstera جميلة مناسبة للمنزل.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=800",
+    "publicId": "seed/monstera"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "plants",
+  "plantType": "Monstera",
+  "season": "All year",
+  "sunExposure": "Indirect sunlight",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deda8475b554533597f04"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Apple Watch Series 9",
+  "category": "Watches",
+  "subcategory": "smart",
+  "price": 1300,
+  "description": "Apple Watch Series 9 بحالة ممتازة.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1544117519-31a4b719223d?w=800",
+    "publicId": "seed/apple-watch-9"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "smart",
+  "brand": "Apple",
+  "waterResistant": true,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deda8475b554533597f05"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Disinfectant 1L",
+  "category": "Cleaning",
+  "subcategory": "disinfection",
+  "price": 30,
+  "description": "مطهر منزلي 1 لتر للتنظيف والتعقيم.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=800",
+    "publicId": "seed/disinfectant-1l"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "disinfection",
+  "brand": "Sano",
+  "volume": 1,
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deda8475b554533597f06"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Men Casual T-Shirt",
+  "category": "MenClothes",
+  "subcategory": "casual",
+  "price": 90,
+  "description": "قميص رجالي كاجوال قطن 100%.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800",
+    "publicId": "seed/men-tshirt"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "casual",
+  "size": "L",
+  "material": "Cotton",
+  "color": "Black",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deda8475b554533597f07"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Women's Evening Dress",
+  "category": "WomenClothes",
+  "subcategory": "dresses",
+  "price": 350,
+  "description": "فستان نسائي أنيق للمناسبات.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=800",
+    "publicId": "seed/women-dress"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": true,
+  "discount": 20,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "dresses",
+  "size": "M",
+  "material": "Polyester",
+  "color": "Black",
+  "length": "Long",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deda8475b554533597f08"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 0,
+  "product_name": "Modern Apartment 4 Rooms",
+  "category": "RealEstate",
+  "subcategory": "apartment",
+  "price": 1250000,
+  "description": "شقة حديثة للبيع، أربع غرف مع موقف سيارة ومصعد.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
+    "publicId": "seed/apartment-4-rooms"
+  },
+  "likes": [],
+  "featured": true,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "apartment",
+  "area": 110,
+  "rooms": 4,
+  "bathrooms": 2,
+  "floors": 1,
+  "hasParking": true,
+  "hasElevator": true,
+  "furnished": false,
+  "rentalType": "sale",
+  "propertyAge": 4,
+  "geoLocation": {
+    "type": "Point",
+    "coordinates": [
+      35.1528,
+      32.5179
+    ]
+  },
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a7deda8475b554533597f09"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 0,
+  "product_name": "Golden Retriever Puppy",
+  "category": "Pets",
+  "subcategory": "dogs",
+  "price": 2500,
+  "description": "جرو Golden Retriever اجتماعي ونشيط.",
+  "image": {
+    "url": "https://images.unsplash.com/photo-1552053831-71594a27632d?w=800",
+    "publicId": "seed/golden-retriever"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "dogs",
+  "breed": "Golden Retriever",
+  "age": 8,
+  "gender": "male",
+  "vaccinated": true,
+  "neutered": false,
+  "microchipped": true,
+  "color": "Golden",
+  "weight": 12,
+  "temperament": "Friendly",
+  "reviews": [],
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-13T16:15:36.685Z"
+  }
+}]
