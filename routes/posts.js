@@ -7,6 +7,7 @@ const router = express.Router();
 const Posts = require('../models/post');
 const auth = require('../middlewares/auth');
 const { getPostSchema } = require('../schema/postsSchema');
+const { requirePermission } = require('../middlewares/userPermissions');
 
 //==============All-posts==========
 // Get all posts for search in home page
@@ -156,51 +157,57 @@ router.get('/related-posts/:category', async (req, res) => {
 });
 
 // Post new post
-router.post('/', auth, async (req, res) => {
-    try {
-        const { category, type, ...postData } = req.body;
+router.post(
+    '/',
+    auth,
+    requirePermission('canUseAccount'),
+    requirePermission('canCreatePosts'),
+    async (req, res) => {
+        try {
+            const { category, type, ...postData } = req.body;
 
-        // get category and subcategory schema
-        const schema = getPostSchema(category, type);
+            // get category and subcategory schema
+            const schema = getPostSchema(category, type);
 
-        // Add type and category to the data
-        const dataToValidate = {
-            ...postData,
-            category,
-            type,
-        };
+            // Add type and category to the data
+            const dataToValidate = {
+                ...postData,
+                category,
+                type,
+            };
 
-        console.log('Data to validate:', dataToValidate);
-        console.log('Payload:', req.payload);
+            console.log('Data to validate:', dataToValidate);
+            console.log('Payload:', req.payload);
 
-        // validate schema
-        const { error } = await schema.validate(dataToValidate);
+            // validate schema
+            const { error } = await schema.validate(dataToValidate);
 
-        // if error return the error
-        if (error) {
-            console.error('Validation error:', error.details[0]);
-            return res.status(400).send(error.details[0].message);
+            // if error return the error
+            if (error) {
+                console.error('Validation error:', error.details[0]);
+                return res.status(400).send(error.details[0].message);
+            }
+
+            // Create a new post using the data from the request body
+            const post = new Posts({
+                ...dataToValidate,
+                seller: req.payload._id,
+            });
+
+            // Save the new post to the database
+            await post.save();
+
+            const io = req.app.get('io');
+            io.emit('post:new', post);
+
+            // Send the created post back in the response
+            res.status(201).send(post);
+        } catch (error) {
+            console.error('Error creating post:', error);
+            res.status(500).send(error.message);
         }
-
-        // Create a new post using the data from the request body
-        const post = new Posts({
-            ...dataToValidate,
-            seller: req.payload._id,
-        });
-
-        // Save the new post to the database
-        await post.save();
-
-        const io = req.app.get('io');
-        io.emit('post:new', post);
-
-        // Send the created post back in the response
-        res.status(201).send(post);
-    } catch (error) {
-        console.error('Error creating post:', error);
-        res.status(500).send(error.message);
-    }
-});
+    },
+);
 
 // Get spicific post by id
 router.get('/spicific/:postId', async (req, res) => {
@@ -227,7 +234,7 @@ router.get('/spicific/:postId', async (req, res) => {
 });
 
 // Update post
-router.put('/:postId', auth, async (req, res) => {
+router.put('/:postId', auth,requirePermission('canUseAccount'), async (req, res) => {
     try {
         const post = await Posts.findById(req.params.postId);
         if (!post) return res.status(404).send('Post not found');
@@ -266,7 +273,7 @@ router.put('/:postId', auth, async (req, res) => {
 });
 
 // Delete post
-router.delete('/:postId', auth, async (req, res) => {
+router.delete('/:postId',requirePermission('canUseAccount'), auth, async (req, res) => {
     const { postId } = req.params;
 
     try {
@@ -338,7 +345,7 @@ router.get('/:category', async (req, res) => {
 
 // ----- Like / Unlike a post -----
 // PATCH /api/posts/:postId/like
-router.patch('/:postId/like', auth, async (req, res) => {
+router.patch('/:postId/like',requirePermission('canUseAccount'), auth, async (req, res) => {
     try {
         const { postId } = req.params;
         const userId = req.payload._id.toString();
@@ -368,7 +375,7 @@ router.patch('/:postId/like', auth, async (req, res) => {
 });
 
 // PATCH the reviews for a specific post
-router.patch('/:postId/reviews', auth, async (req, res) => {
+router.patch('/:postId/reviews',requirePermission('canUseAccount'), auth, async (req, res) => {
     try {
         const { postId } = req.params;
         const { comment, rating } = req.body;
@@ -421,7 +428,7 @@ router.patch('/:postId/reviews', auth, async (req, res) => {
 });
 
 // Delete a specific review from a post
-router.delete('/:postId/reviews/:reviewId', auth, async (req, res) => {
+router.delete('/:postId/reviews/:reviewId',requirePermission('canUseAccount'), auth, async (req, res) => {
     try {
         const { postId, reviewId } = req.params;
         const userId = req.payload._id;
@@ -466,7 +473,7 @@ router.delete('/:postId/reviews/:reviewId', auth, async (req, res) => {
 });
 
 // Update a specific review for a post
-router.patch('/:postId/reviews/:reviewId', auth, async (req, res) => {
+router.patch('/:postId/reviews/:reviewId',requirePermission('canUseAccount'), auth, async (req, res) => {
     try {
         const { postId, reviewId } = req.params;
         const { comment, rating } = req.body;
@@ -538,7 +545,7 @@ router.patch('/:postId/reviews/:reviewId', auth, async (req, res) => {
     }
 });
 
-router.patch('/:postId/increment-views', async (req, res) => {
+router.patch('/:postId/increment-views',requirePermission('canUseAccount'), async (req, res) => {
     try {
         const { postId } = req.params;
 

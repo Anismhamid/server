@@ -12,7 +12,7 @@ const completeUserSchema = require('../schema/completeUserSchema');
 const editUserProfileSchema = require('../schema/editUserProfile');
 const chalk = require('chalk');
 const rateLimit = require('express-rate-limit');
-
+const {requirePermission} = require('../middlewares/userPermissions');
 const {
     forgotPassword,
     resetPassword,
@@ -28,23 +28,55 @@ const roleType = {
 // for generating token
 const generateToken = (user) => {
     return Jwt.sign(
-        _.pick(user, [
-            '_id',
-            'name.first',
-            'name.last',
-            'slug',
-            'email',
-            'role',
-            'image.url',
-            'phone.phone_1',
-            'phone.phone_2',
-            'address.city',
-            'address.street',
-            'address.houseNumber',
-            'status',
-        ]),
+        {
+            _id: user._id,
+            name: {
+                first: user.name?.first,
+                last: user.name?.last,
+            },
+            slug: user.slug,
+            email: user.email,
+            role: user.role,
+            image: {
+                url: user.image?.url,
+            },
+            phone: {
+                phone_1: user.phone?.phone_1,
+                phone_2: user.phone?.phone_2,
+            },
+            address: {
+                city: user.address?.city,
+                street: user.address?.street,
+                houseNumber: user.address?.houseNumber,
+            },
+
+            // Online / Offline فقط
+            status: user.status,
+
+            // حالة الحساب
+            accountStatus: user.accountStatus,
+
+            // صلاحيات الحساب
+            permissions: {
+                canLogin: user.permissions?.canLogin ?? true,
+
+                canCreatePosts: user.permissions?.canCreatePosts ?? true,
+
+                canSendMessages: user.permissions?.canSendMessages ?? true,
+
+                canSendOffers: user.permissions?.canSendOffers ?? true,
+
+                canUseAccount: user.permissions?.canUseAccount ?? true,
+
+                canAccessExistingData:
+                    user.permissions?.canAccessExistingData ?? true,
+            },
+        },
         process.env.JWT_SECRET,
-        { expiresIn: '7d', algorithm: 'HS256' },
+        {
+            expiresIn: '7d',
+            algorithm: 'HS256',
+        },
     );
 };
 
@@ -183,8 +215,21 @@ router.post('/', async (req, res) => {
 
         user = new User({
             ...req.body,
+
             registeredAt: new Date(),
+
             status: true,
+
+            accountStatus: 'active',
+
+            permissions: {
+                canLogin: true,
+                canCreatePosts: true,
+                canSendMessages: true,
+                canSendOffers: true,
+                canUseAccount: true,
+                canAccessExistingData: true,
+            },
         });
 
         const salt = genSaltSync(10);
@@ -259,6 +304,16 @@ router.post('/login', async (req, res) => {
 
         if (!user) {
             return res.status(400).send('invalid email or password');
+        }
+
+        if (
+            user.accountStatus === 'disabled' ||
+            user.permissions?.canLogin === false
+        ) {
+            return res.status(403).json({
+                code: 'LOGIN_DISABLED',
+                message: 'Login is disabled for this account',
+            });
         }
 
         if (!user.password) {
@@ -341,6 +396,16 @@ router.post('/google', async (req, res) => {
         let user = await User.findOne({ email: payload.email });
 
         if (user) {
+            if (
+                user.accountStatus === 'disabled' ||
+                user.permissions?.canLogin === false
+            ) {
+                return res.status(403).json({
+                    code: 'LOGIN_DISABLED',
+                    message: 'Login is disabled for this account',
+                });
+            }
+
             user.activity.push(new Date().toLocaleString('he-IL'));
             user.status = true;
 
@@ -389,7 +454,18 @@ router.post('/google', async (req, res) => {
             activity: [new Date().toLocaleString('he-IL')],
             registeredAt: new Date().toLocaleString('he-IL'),
             googleId: payload.sub,
-            status: false,
+            status: true,
+
+            accountStatus: 'active',
+
+            permissions: {
+                canLogin: true,
+                canCreatePosts: true,
+                canSendMessages: true,
+                canSendOffers: true,
+                canUseAccount: true,
+                canAccessExistingData: true,
+            },
             slug: generateSlug(payload.given_name, payload.family_name),
         });
 
@@ -418,7 +494,7 @@ router.post('/google', async (req, res) => {
 // ----- משתמשים -----
 
 // get all users (Admin / moderators)
-router.get('/', auth, async (req, res) => {
+router.get('/', auth, requirePermission('canUseAccount'), async (req, res) => {
     try {
         // check if user have permission to get the users
         if (
@@ -440,30 +516,36 @@ router.get('/', auth, async (req, res) => {
 });
 
 // Get single user (Admin or Moderator or oner user only)
-router.get('/:userId', auth, async (req, res) => {
-    try {
-        const { role, _id } = req.payload;
-        const { userId } = req.params;
+router.get(
+    '/:userId',
+    auth,
+    requirePermission('canUseAccount'),
+    async (req, res) => {
+        try {
+            const { role, _id } = req.payload;
+            const { userId } = req.params;
 
-        //	check if user have permission to get the user by id
-        if (
-            _id !== userId &&
-            role !== roleType.Admin &&
-            role !== roleType.Moderator &&
-            role !== roleType.Delivery
-        )
-            return res.status(401).send({
-                error: 'You do not have permission to access this resource',
-            });
+            //	check if user have permission to get the user by id
+            if (
+                _id !== userId &&
+                role !== roleType.Admin &&
+                role !== roleType.Moderator &&
+                role !== roleType.Delivery
+            )
+                return res.status(401).send({
+                    error: 'You do not have permission to access this resource',
+                });
 
-        const user = await User.findById(userId).select('-password');
-        if (!user) return res.status(404).send({ message: 'user Not Found' });
+            const user = await User.findById(userId).select('-password');
+            if (!user)
+                return res.status(404).send({ message: 'user Not Found' });
 
-        res.status(200).send(user);
-    } catch (error) {
-        res.status(500).send('Internal server error');
-    }
-});
+            res.status(200).send(user);
+        } catch (error) {
+            res.status(500).send('Internal server error');
+        }
+    },
+);
 
 router.get('/customer/:slug', async (req, res) => {
     try {
@@ -521,232 +603,263 @@ router.get('/customer/:slug/posts', async (req, res) => {
 });
 
 // Update user role (Admin only)
-router.patch('/role/:userEmail', auth, async (req, res) => {
-    try {
-        // Check permission
-        if (req.payload.role !== roleType.Admin)
-            return res
-                .status(401)
-                .send({ error: 'Access denied. Admins only' });
+router.patch(
+    '/role/:userEmail',
+    auth,
+    requirePermission('canUseAccount'),
+    async (req, res) => {
+        try {
+            // Check permission
+            if (req.payload.role !== roleType.Admin)
+                return res
+                    .status(401)
+                    .send({ error: 'Access denied. Admins only' });
 
-        const user = await User.findOneAndUpdate(
-            { email: req.params.userEmail },
-            { role: req.body.role },
-            { new: true },
-        );
+            const user = await User.findOneAndUpdate(
+                { email: req.params.userEmail },
+                { role: req.body.role },
+                { new: true },
+            );
 
-        // Check if user exists
-        if (!user) {
-            return res.status(404).send({ message: 'User not found' });
+            // Check if user exists
+            if (!user) {
+                return res.status(404).send({ message: 'User not found' });
+            }
+
+            res.status(200).send(user);
+        } catch (error) {
+            res.status(500).send(error.message);
         }
-
-        res.status(200).send(user);
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
-});
+    },
+);
 
 // compleate user data
-router.patch('/compleate/:userId', auth, async (req, res) => {
-    try {
-        // validate body
-        const { error } = completeUserSchema.validate(req.body);
-        if (error) return res.status(400).send(error.details[0].message);
+router.patch(
+    '/compleate/:userId',
+    auth,
+    requirePermission('canUseAccount'),
+    async (req, res) => {
+        try {
+            // validate body
+            const { error } = completeUserSchema.validate(req.body);
+            if (error) return res.status(400).send(error.details[0].message);
 
-        const isAdmin = req.payload.role === roleType.Admin;
-        const isSelf = req.params.userId === req.payload._id;
+            const isAdmin = req.payload.role === roleType.Admin;
+            const isSelf = req.params.userId === req.payload._id;
 
-        // Check permission
-        if (!isAdmin && !isSelf) return res.status(401).send('Forbidden');
+            // Check permission
+            if (!isAdmin && !isSelf) return res.status(401).send('Forbidden');
 
-        const updateData = {
-            phone: {
-                phone_1: req.body.phone.phone_1,
-                phone_2: req.body.phone.phone_2,
-            },
-            image: {
-                url: req.body.image.url,
-            },
+            const updateData = {
+                phone: {
+                    phone_1: req.body.phone.phone_1,
+                    phone_2: req.body.phone.phone_2,
+                },
+                image: {
+                    url: req.body.image.url,
+                },
 
-            address: {
-                city: req.body.address.city,
-                street: req.body.address.street,
-                houseNumber: req.body.address.houseNumber,
-            },
-            gender: req.body.gender,
-        };
-        const user = await User.findByIdAndUpdate(
-            req.params.userId,
-            updateData,
-            {
-                new: true,
-            },
-        )
-            .select('-password,-_v')
-            .lean();
+                address: {
+                    city: req.body.address.city,
+                    street: req.body.address.street,
+                    houseNumber: req.body.address.houseNumber,
+                },
+                gender: req.body.gender,
+            };
+            const user = await User.findByIdAndUpdate(
+                req.params.userId,
+                updateData,
+                {
+                    new: true,
+                },
+            )
+                .select('-password,-_v')
+                .lean();
 
-        // Check if user exists
-        if (!user) {
-            return res.status(404).send('User not found');
+            // Check if user exists
+            if (!user) {
+                return res.status(404).send('User not found');
+            }
+
+            res.status(200).send(user);
+        } catch (error) {
+            res.status(500).send(error.message);
         }
-
-        res.status(200).send(user);
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
-});
+    },
+);
 
 // Edit user profile
-router.patch('/edit-user/:userId', auth, async (req, res) => {
-    try {
-        // Check if IDs match
-        const isSelf = req.params.userId === req.payload._id.toString();
-        const isAdmin = req.payload.role === roleType.Admin;
+router.patch(
+    '/edit-user/:userId',
+    auth,
+    requirePermission('canUseAccount'),
+    async (req, res) => {
+        try {
+            // Check if IDs match
+            const isSelf = req.params.userId === req.payload._id.toString();
+            const isAdmin = req.payload.role === roleType.Admin;
 
-        // validate body
-        const { error } = editUserProfileSchema.validate(req.body);
-        if (error) return res.status(400).send(error.details[0].message);
+            // validate body
+            const { error } = editUserProfileSchema.validate(req.body);
+            if (error) return res.status(400).send(error.details[0].message);
 
-        // Check permission
-        if (!isAdmin && !isSelf) {
-            return res.status(403).send('Forbidden');
+            // Check permission
+            if (!isAdmin && !isSelf) {
+                return res.status(403).send('Forbidden');
+            }
+
+            // Check if user exists
+            const userExists = await User.findById(req.params.userId);
+
+            if (!userExists) {
+                return res.status(404).send('User not found');
+            }
+
+            const updateData = {
+                name: {
+                    first: req.body.name.first,
+                    last: req.body.name.last,
+                },
+                phone: {
+                    phone_1: req.body.phone.phone_1,
+                    phone_2: req.body.phone.phone_2,
+                },
+                image: {
+                    url: req.body.image.url,
+                    alt: req.body.image.alt,
+                },
+                address: {
+                    city: req.body.address.city,
+                    street: req.body.address.street,
+                    houseNumber: req.body.address.houseNumber,
+                },
+                gender: req.body.gender || '',
+            };
+
+            const user = await User.findByIdAndUpdate(
+                req.params.userId,
+                updateData,
+                {
+                    new: true,
+                },
+            )
+                .select('-password -__v')
+                .lean();
+
+            // Check if user exists
+            if (!user) {
+                res.status(500).json({
+                    message: error.message,
+                    stack:
+                        process.env.NODE_ENV === 'development'
+                            ? error.stack
+                            : undefined,
+                });
+            }
+
+            res.status(200).send(user);
+        } catch (error) {
+            res.status(500).send(error.message);
         }
-
-        // Check if user exists
-        const userExists = await User.findById(req.params.userId);
-
-        if (!userExists) {
-            return res.status(404).send('User not found');
-        }
-
-        const updateData = {
-            name: {
-                first: req.body.name.first,
-                last: req.body.name.last,
-            },
-            phone: {
-                phone_1: req.body.phone.phone_1,
-                phone_2: req.body.phone.phone_2,
-            },
-            image: {
-                url: req.body.image.url,
-                alt: req.body.image.alt,
-            },
-            address: {
-                city: req.body.address.city,
-                street: req.body.address.street,
-                houseNumber: req.body.address.houseNumber,
-            },
-            gender: req.body.gender || '',
-        };
-
-        const user = await User.findByIdAndUpdate(
-            req.params.userId,
-            updateData,
-            {
-                new: true,
-            },
-        )
-            .select('-password -__v')
-            .lean();
-
-        // Check if user exists
-        if (!user) {
-            res.status(500).json({
-                message: error.message,
-                stack:
-                    process.env.NODE_ENV === 'development'
-                        ? error.stack
-                        : undefined,
-            });
-        }
-
-        res.status(200).send(user);
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
-});
+    },
+);
 
 // change password
-router.patch('/password/:userId', auth, async (req, res) => {
-    try {
-        const { userId } = req.params;
-        const { newPassword } = req.body;
-        const isAdmin = req.payload.role === roleType.Admin;
-        const isSelf = req.payload._id === userId;
+router.patch(
+    '/password/:userId',
+    auth,
+    requirePermission('canUseAccount'),
+    async (req, res) => {
+        try {
+            const { userId } = req.params;
+            const { newPassword } = req.body;
+            const isAdmin = req.payload.role === roleType.Admin;
+            const isSelf = req.payload._id === userId;
 
-        if (!newPassword || newPassword.length < 6) {
-            return res.status(400).send({
-                message: 'Password must contain at least 6 characters',
-            });
+            if (!newPassword || newPassword.length < 6) {
+                return res.status(400).send({
+                    message: 'Password must contain at least 6 characters',
+                });
+            }
+
+            const user = await User.findById(userId);
+            if (!user)
+                return res.status(404).send({ message: 'User not found' });
+
+            if (!isAdmin && !isSelf) {
+                return res
+                    .status(403)
+                    .send({ error: 'No permission to change password' });
+            }
+
+            user.password = hashSync(newPassword, 10);
+            await user.save();
+
+            res.status(200).send({ success: 'Password updated successfully' });
+        } catch (err) {
+            res.status(500).send({ error: 'Internal server error' });
         }
+    },
+);
 
-        const user = await User.findById(userId);
-        if (!user) return res.status(404).send({ message: 'User not found' });
+router.delete(
+    '/:userId',
+    auth,
+    requirePermission('canUseAccount'),
+    async (req, res) => {
+        try {
+            const isAdmin = req.payload.role === roleType.Admin;
+            const isSelf = req.payload._id === req.params.userId;
 
-        if (!isAdmin && !isSelf) {
-            return res
-                .status(403)
-                .send({ error: 'No permission to change password' });
+            if (!isAdmin && !isSelf)
+                return res
+                    .status(401)
+                    .send({ error: 'Unauthorized, Cannot make this change' });
+
+            const user = await User.findByIdAndDelete(req.params.userId);
+            res.status(200).send(user);
+        } catch (error) {
+            res.status(500).send('Internal server error');
         }
-
-        user.password = hashSync(newPassword, 10);
-        await user.save();
-
-        res.status(200).send({ success: 'Password updated successfully' });
-    } catch (err) {
-        res.status(500).send({ error: 'Internal server error' });
-    }
-});
-
-router.delete('/:userId', auth, async (req, res) => {
-    try {
-        const isAdmin = req.payload.role === roleType.Admin;
-        const isSelf = req.payload._id === req.params.userId;
-
-        if (!isAdmin && !isSelf)
-            return res
-                .status(401)
-                .send({ error: 'Unauthorized, Cannot make this change' });
-
-        const user = await User.findByIdAndDelete(req.params.userId);
-        res.status(200).send(user);
-    } catch (error) {
-        res.status(500).send('Internal server error');
-    }
-});
+    },
+);
 
 // update user status online | ofline
-router.patch('/status/:userId', auth, async (req, res) => {
-    try {
-        const io = req.app.get('io');
+router.patch(
+    '/status/:userId',
+    auth,
+    requirePermission('canUseAccount'),
+    async (req, res) => {
+        try {
+            const io = req.app.get('io');
 
-        const updatedUser = await User.findByIdAndUpdate(
-            req.params.userId,
-            { status: req.body.status },
-            { new: true },
-        );
-        console.log(
-            chalk.red(
-                `user-${updatedUser.name.first} to-${updatedUser.status}`,
-            ),
-        );
+            const updatedUser = await User.findByIdAndUpdate(
+                req.params.userId,
+                { status: req.body.status },
+                { new: true },
+            );
+            console.log(
+                chalk.red(
+                    `user-${updatedUser.name.first} to-${updatedUser.status}`,
+                ),
+            );
 
-        if (!updatedUser) {
-            return res.status(404).send('User not found');
+            if (!updatedUser) {
+                return res.status(404).send('User not found');
+            }
+
+            io.emit('user:statusChanged', {
+                userId: updatedUser._id,
+                status: updatedUser.status,
+            });
+
+            res.status(200).send(updatedUser);
+        } catch (error) {
+            console.error('Status update error:', error);
+            res.status(500).send('Internal server error');
         }
-
-        io.emit('user:statusChanged', {
-            userId: updatedUser._id,
-            status: updatedUser.status,
-        });
-
-        res.status(200).send(updatedUser);
-    } catch (error) {
-        console.error('Status update error:', error);
-        res.status(500).send('Internal server error');
-    }
-});
+    },
+);
 
 router.get('/check-slug/:slug', async (req, res) => {
     try {
@@ -782,5 +895,210 @@ router.get('/check-slug/:slug', async (req, res) => {
         });
     }
 });
+
+router.patch(
+    '/account-status/:userId',
+    auth,
+    async (req, res) => {
+        try {
+            if (req.payload.role !== roleType.Admin) {
+                return res.status(403).json({
+                    success: false,
+                    code: 'ADMIN_ONLY',
+                    message: 'Admins only',
+                });
+            }
+
+            const { userId } = req.params;
+            const { accountStatus } = req.body;
+
+            if (!['active', 'disabled'].includes(accountStatus)) {
+                return res.status(400).json({
+                    success: false,
+                    code: 'INVALID_ACCOUNT_STATUS',
+                    message: 'Invalid account status',
+                });
+            }
+
+            /*
+             * لا تسمح للـ Admin بتعطيل نفسه
+             */
+            if (userId === req.payload._id.toString()) {
+                return res.status(400).json({
+                    success: false,
+                    code: 'CANNOT_DISABLE_SELF',
+                    message: 'You cannot disable your own account',
+                });
+            }
+
+            const user = await User.findByIdAndUpdate(
+                userId,
+                {
+                    $set: {
+                        accountStatus,
+                    },
+                },
+                {
+                    new: true,
+                    runValidators: true,
+                },
+            )
+                .select('-password')
+                .lean();
+
+            if (!user) {
+                return res.status(404).json({
+                    success: false,
+                    code: 'USER_NOT_FOUND',
+                    message: 'User not found',
+                });
+            }
+
+            const io = req.app.get('io');
+
+            io.emit('user:accountStatusChanged', {
+                userId: user._id.toString(),
+                accountStatus: user.accountStatus,
+            });
+
+            /*
+             * إذا تم تعطيل الحساب:
+             * نقطع حالة Online أيضًا.
+             */
+            if (accountStatus === 'disabled') {
+                await User.findByIdAndUpdate(userId, {
+                    $set: {
+                        status: false,
+                    },
+                });
+
+                io.emit('user:statusChanged', {
+                    userId: user._id.toString(),
+                    status: false,
+                });
+            }
+
+            return res.status(200).json({
+                success: true,
+                message:
+                    accountStatus === 'disabled'
+                        ? 'Account disabled successfully'
+                        : 'Account activated successfully',
+                user,
+            });
+        } catch (error) {
+            console.error(
+                'Account status update error:',
+                error,
+            );
+
+            return res.status(500).json({
+                success: false,
+                code: 'ACCOUNT_STATUS_UPDATE_ERROR',
+                message: 'Internal server error',
+            });
+        }
+    },
+);
+
+router.patch(
+    '/permissions/:userId',
+    auth,
+    async (req, res) => {
+        try {
+            if (req.payload.role !== roleType.Admin) {
+                return res.status(403).json({
+                    success: false,
+                    code: 'ADMIN_ONLY',
+                    message: 'Admins only',
+                });
+            }
+
+            const { userId } = req.params;
+
+            if (userId === req.payload._id.toString()) {
+                return res.status(400).json({
+                    success: false,
+                    code: 'CANNOT_CHANGE_SELF_PERMISSIONS',
+                    message: 'You cannot change your own permissions',
+                });
+            }
+
+            const allowedPermissions = [
+                'canLogin',
+                'canCreatePosts',
+                'canSendMessages',
+                'canSendOffers',
+                'canUseAccount',
+                'canAccessExistingData',
+            ];
+
+            const updates = {};
+
+            for (const permission of allowedPermissions) {
+                if (
+                    typeof req.body[permission] === 'boolean'
+                ) {
+                    updates[
+                        `permissions.${permission}`
+                    ] = req.body[permission];
+                }
+            }
+
+            if (Object.keys(updates).length === 0) {
+                return res.status(400).json({
+                    success: false,
+                    code: 'NO_VALID_PERMISSIONS',
+                    message: 'No valid permissions provided',
+                });
+            }
+
+            const user = await User.findByIdAndUpdate(
+                userId,
+                {
+                    $set: updates,
+                },
+                {
+                    new: true,
+                    runValidators: true,
+                },
+            )
+                .select('-password')
+                .lean();
+
+            if (!user) {
+                return res.status(404).json({
+                    success: false,
+                    code: 'USER_NOT_FOUND',
+                    message: 'User not found',
+                });
+            }
+
+            const io = req.app.get('io');
+
+            io.emit('user:permissionsChanged', {
+                userId: user._id.toString(),
+                permissions: user.permissions,
+            });
+
+            return res.status(200).json({
+                success: true,
+                message: 'Permissions updated successfully',
+                user,
+            });
+        } catch (error) {
+            console.error(
+                'Permission update error:',
+                error,
+            );
+
+            return res.status(500).json({
+                success: false,
+                code: 'PERMISSION_UPDATE_ERROR',
+                message: 'Internal server error',
+            });
+        }
+    },
+);
 
 module.exports = router;
