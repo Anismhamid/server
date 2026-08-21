@@ -287,9 +287,7 @@ router.post(
                                 errorCode ===
                                     'messaging/invalid-registration-token'
                             ) {
-                                invalidTokens.push(
-                                    toUser.pushTokens[index],
-                                );
+                                invalidTokens.push(toUser.pushTokens[index]);
                             }
                         }
                     });
@@ -309,10 +307,7 @@ router.post(
                         );
                     }
                 } catch (error) {
-                    console.error(
-                        'FCM send error:',
-                        error.message,
-                    );
+                    console.error('FCM send error:', error.message);
                 }
             }
 
@@ -325,25 +320,19 @@ router.post(
 
             // Recipient sockets
 
-            (
-                connectedUsers.get(toUserId.toString()) || []
-            ).forEach((socketId) => {
-                io.to(socketId).emit(
-                    'message:received',
-                    populatedMessage,
-                );
-            });
+            (connectedUsers.get(toUserId.toString()) || []).forEach(
+                (socketId) => {
+                    io.to(socketId).emit('message:received', populatedMessage);
+                },
+            );
 
             // Sender sockets
 
-            (
-                connectedUsers.get(fromUserId.toString()) || []
-            ).forEach((socketId) => {
-                io.to(socketId).emit(
-                    'message:sent',
-                    populatedMessage,
-                );
-            });
+            (connectedUsers.get(fromUserId.toString()) || []).forEach(
+                (socketId) => {
+                    io.to(socketId).emit('message:sent', populatedMessage);
+                },
+            );
 
             // ==========================================
             // 16. Unread count
@@ -354,17 +343,14 @@ router.post(
                 status: { $ne: 'seen' },
             });
 
-            (
-                connectedUsers.get(toUserId.toString()) || []
-            ).forEach((socketId) => {
-                io.to(socketId).emit(
-                    'message:unreadCount',
-                    {
+            (connectedUsers.get(toUserId.toString()) || []).forEach(
+                (socketId) => {
+                    io.to(socketId).emit('message:unreadCount', {
                         userId: fromUserId.toString(),
                         count: unreadCount,
-                    },
-                );
-            });
+                    });
+                },
+            );
 
             // ==========================================
             // 17. Response
@@ -391,6 +377,7 @@ router.get(
     '/conversation/:otherUserId',
     auth,
     requirePermission('canUseAccount'),
+    requirePermission('canSendMessages'),
     async (req, res) => {
         try {
             const userId = req.payload._id;
@@ -433,6 +420,7 @@ router.patch(
     '/mark-as-seen/:fromUserId',
     auth,
     requirePermission('canUseAccount'),
+    requirePermission('canSendMessages'),
     async (req, res) => {
         try {
             const toUserId = req.payload._id; // The person currently reading
@@ -473,6 +461,7 @@ router.get(
     '/conversations',
     auth,
     requirePermission('canUseAccount'),
+    requirePermission('canSendMessages'),
     async (req, res) => {
         try {
             if (!req.payload || !req.payload._id) {
@@ -538,6 +527,7 @@ router.delete(
     '/:messageId',
     auth,
     requirePermission('canUseAccount'),
+    requirePermission('canSendMessages'),
     async (req, res) => {
         try {
             const { messageId } = req.params;

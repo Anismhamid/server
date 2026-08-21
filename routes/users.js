@@ -257,39 +257,6 @@ router.post('/', async (req, res) => {
 
 // ----- התחברות -----
 
-// Login users
-// router.post("/login", async (req, res) => {
-// 	try {
-// 		// Validate body
-// 		const {error} = loginSchema.validate(req.body);
-// 		if (error) return res.status(400).send(error.details[0].message);
-
-// 		// Check if user exists and try to compare the users password
-// 		let user = await User.findOne({email: req.body.email});
-// 		if (!user || !compareSync(req.body.password, user.password))
-// 			return res.status(400).send("invalid email or password");
-
-// 		// push the activity time
-// 		user.activity.push(new Date().toLocaleString());
-// 		user.status = true;
-// 		await user.save();
-
-// 		const io = req.app.get("io");
-// 		io.emit("user:newUserLoggedIn", {
-// 			userId: user._id,
-// 			email: user.email,
-// 			role: user.role,
-// 		});
-
-// 		const token = generateToken(user);
-
-// 		res.status(200).send(token);
-// 	} catch (error) {
-// 		res.status(500).send(error.message);
-// 		// res.status(500).send("Internal server error");
-// 	}
-// });
-
 router.post('/login', async (req, res) => {
     try {
         const { error } = loginSchema.validate(req.body);
@@ -1099,6 +1066,48 @@ router.patch(
             });
         }
     },
+);
+
+router.patch(
+    '/permissions/:userId/login',
+    auth,
+    setPermission('canLogin'),
+    updateUserPermission,
+);
+
+router.patch(
+    '/permissions/:userId/create-posts',
+    auth,
+    setPermission('canCreatePosts'),
+    updateUserPermission,
+);
+
+router.patch(
+    '/permissions/:userId/messages',
+    auth,
+    setPermission('canSendMessages'),
+    updateUserPermission,
+);
+
+router.patch(
+    '/permissions/:userId/offers',
+    auth,
+    setPermission('canSendOffers'),
+    updateUserPermission,
+);
+
+router.patch(
+    '/permissions/:userId/use-account',
+    auth,
+    setPermission('canUseAccount'),
+    updateUserPermission,
+);
+
+router.patch(
+    '/permissions/:userId/access-existing-data',
+    auth,
+    setPermission('canAccessExistingData'),
+    updateUserPermission,
 );
 
 module.exports = router;

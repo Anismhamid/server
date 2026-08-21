@@ -234,98 +234,117 @@ router.get('/spicific/:postId', async (req, res) => {
 });
 
 // Update post
-router.put('/:postId', auth,requirePermission('canUseAccount'), async (req, res) => {
-    try {
-        const post = await Posts.findById(req.params.postId);
-        if (!post) return res.status(404).send('Post not found');
+router.put(
+    '/:postId',
+    auth,
+    requirePermission('canUseAccount'),
+    requirePermission('canCreatePosts'),
+    async (req, res) => {
+        try {
+            const post = await Posts.findById(req.params.postId);
+            if (!post) return res.status(404).send('Post not found');
 
-        const isOwner =
-            req.payload._id.toString() === post.seller._id.toString();
-        const isAdminOrMod =
-            req.payload.role === 'Admin' || req.payload.role === 'Moderator';
+            const isOwner =
+                req.payload._id.toString() === post.seller._id.toString();
+            const isAdminOrMod =
+                req.payload.role === 'Admin' ||
+                req.payload.role === 'Moderator';
 
-        if (!isOwner && !isAdminOrMod) {
-            return res.status(403).send('Access denied');
+            if (!isOwner && !isAdminOrMod) {
+                return res.status(403).send('Access denied');
+            }
+
+            const schema = getPostSchema(post.category, post.type);
+
+            const { error, value } = schema.validate(req.body, {
+                abortEarly: false,
+                allowUnknown: false,
+                presence: 'optional',
+            });
+
+            if (error) {
+                return res.status(400).send(error.details[0].message);
+            }
+
+            const updatedPost = await Posts.findByIdAndUpdate(
+                req.params.postId,
+                { $set: value },
+                { returnDocument: 'after', runValidators: true },
+            );
+
+            res.status(200).send(updatedPost);
+        } catch (error) {
+            res.status(500).send(error.message);
         }
-
-        const schema = getPostSchema(post.category, post.type);
-
-        const { error, value } = schema.validate(req.body, {
-            abortEarly: false,
-            allowUnknown: false,
-            presence: 'optional',
-        });
-
-        if (error) {
-            return res.status(400).send(error.details[0].message);
-        }
-
-        const updatedPost = await Posts.findByIdAndUpdate(
-            req.params.postId,
-            { $set: value },
-            { returnDocument: 'after', runValidators: true },
-        );
-
-        res.status(200).send(updatedPost);
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
-});
+    },
+);
 
 // Delete post
-router.delete('/:postId',requirePermission('canUseAccount'), auth, async (req, res) => {
-    const { postId } = req.params;
+router.delete(
+    '/:postId',
+    requirePermission('canUseAccount'),
+    requirePermission('canCreatePosts'),
+    auth,
+    async (req, res) => {
+        const { postId } = req.params;
 
-    try {
-        // Validate postId format
-        if (!postId || postId === 'undefined' || postId === 'null') {
-            return res.status(400).send('Invalid post ID');
-        }
-
-        const post = await Posts.findById(postId);
-        if (!post) return res.status(404).send('This post is not found');
-
-        // Safe access to seller.slug
-        const isOwner = req.payload._id.toString() === post.seller.toString();
-
-        const canDelete =
-            req.payload.role === 'Admin' ||
-            req.payload.role === 'Moderator' ||
-            isOwner;
-
-        if (!canDelete) {
-            return res
-                .status(403)
-                .send(
-                    "Access denied. You don't have permission to delete this post",
-                );
-        }
-
-        // Safe access to image.publicId
-        if (post.image && post.image.publicId) {
-            try {
-                await cloudinary.uploader.destroy(post.image.publicId);
-                console.log(`Deleted image: ${post.image.publicId}`);
-            } catch (cloudinaryError) {
-                console.error('Cloudinary deletion failed:', cloudinaryError);
+        try {
+            // Validate postId format
+            if (!postId || postId === 'undefined' || postId === 'null') {
+                return res.status(400).send('Invalid post ID');
             }
-        }
 
-        // Delete the post
-        await post.deleteOne();
-        return res.status(200).send('The post has been deleted successfully');
-    } catch (error) {
-        console.error('Delete Route Error:', error);
-        // Send actual error for debugging (but hide in postion)
-        return res.status(500).json({
-            error: error.message,
-            stack:
-                process.env.NODE_ENV === 'development'
-                    ? error.stack
-                    : undefined,
-        });
-    }
-});
+            const post = await Posts.findById(postId);
+            if (!post) return res.status(404).send('This post is not found');
+
+            // Safe access to seller.slug
+            const isOwner =
+                req.payload._id.toString() === post.seller.toString();
+
+            const canDelete =
+                req.payload.role === 'Admin' ||
+                req.payload.role === 'Moderator' ||
+                isOwner;
+
+            if (!canDelete) {
+                return res
+                    .status(403)
+                    .send(
+                        "Access denied. You don't have permission to delete this post",
+                    );
+            }
+
+            // Safe access to image.publicId
+            if (post.image && post.image.publicId) {
+                try {
+                    await cloudinary.uploader.destroy(post.image.publicId);
+                    console.log(`Deleted image: ${post.image.publicId}`);
+                } catch (cloudinaryError) {
+                    console.error(
+                        'Cloudinary deletion failed:',
+                        cloudinaryError,
+                    );
+                }
+            }
+
+            // Delete the post
+            await post.deleteOne();
+            return res
+                .status(200)
+                .send('The post has been deleted successfully');
+        } catch (error) {
+            console.error('Delete Route Error:', error);
+            // Send actual error for debugging (but hide in postion)
+            return res.status(500).json({
+                error: error.message,
+                stack:
+                    process.env.NODE_ENV === 'development'
+                        ? error.stack
+                        : undefined,
+            });
+        }
+    },
+);
 //______________End-All-posts__________
 
 router.get('/:category', async (req, res) => {
@@ -345,207 +364,235 @@ router.get('/:category', async (req, res) => {
 
 // ----- Like / Unlike a post -----
 // PATCH /api/posts/:postId/like
-router.patch('/:postId/like',requirePermission('canUseAccount'), auth, async (req, res) => {
-    try {
-        const { postId } = req.params;
-        const userId = req.payload._id.toString();
+router.patch(
+    '/:postId/like',
+    requirePermission('canUseAccount'),
+    requirePermission('canCreatePosts'),
+    auth,
+    async (req, res) => {
+        try {
+            const { postId } = req.params;
+            const userId = req.payload._id.toString();
 
-        const post = await Posts.findById(postId);
-        if (!post) return res.status(404).send({ message: 'Post not found' });
+            const post = await Posts.findById(postId);
+            if (!post)
+                return res.status(404).send({ message: 'Post not found' });
 
-        const alreadyLiked = post.likes.includes(userId);
+            const alreadyLiked = post.likes.includes(userId);
 
-        if (alreadyLiked) {
-            post.likes.pull(userId); // ✅ Mongoose method بدل filter
-        } else {
-            post.likes.push(userId);
+            if (alreadyLiked) {
+                post.likes.pull(userId); // ✅ Mongoose method بدل filter
+            } else {
+                post.likes.push(userId);
+            }
+
+            await post.save();
+
+            res.status(200).send({
+                postId: post._id,
+                liked: !alreadyLiked,
+                totalLikes: post.likes.length,
+            });
+        } catch (error) {
+            console.error('Like error:', error);
+            res.status(500).send({ message: 'Internal server error' });
         }
-
-        await post.save();
-
-        res.status(200).send({
-            postId: post._id,
-            liked: !alreadyLiked,
-            totalLikes: post.likes.length,
-        });
-    } catch (error) {
-        console.error('Like error:', error);
-        res.status(500).send({ message: 'Internal server error' });
-    }
-});
+    },
+);
 
 // PATCH the reviews for a specific post
-router.patch('/:postId/reviews',requirePermission('canUseAccount'), auth, async (req, res) => {
-    try {
-        const { postId } = req.params;
-        const { comment, rating } = req.body;
-        const { _id } = req.payload;
+router.patch(
+    '/:postId/reviews',
+    requirePermission('canUseAccount'),
+    requirePermission('canCreatePosts'),
+    auth,
+    async (req, res) => {
+        try {
+            const { postId } = req.params;
+            const { comment, rating } = req.body;
+            const { _id } = req.payload;
 
-        if (!comment || comment.trim().length === 0) {
-            return res.status(400).send({
-                message: 'Comment is required',
-            });
-        }
-
-        const numericRating = Number(rating);
-
-        if (rating !== undefined && (numericRating < 1 || numericRating > 5)) {
-            return res.status(400).send({
-                message: 'Rating must be between 1 and 5',
-            });
-        }
-
-        const post = await Posts.findById(postId);
-
-        if (!post) {
-            return res.status(404).send({
-                message: 'Post not found',
-            });
-        }
-
-        const newReview = {
-            user: _id,
-            comment: comment.trim(),
-            rating: rating !== undefined ? numericRating : null,
-            createdAt: new Date(),
-        };
-
-        post.reviews.push(newReview);
-
-        await post.save();
-
-        return res.status(201).send({
-            message: 'Review added successfully',
-            review: newReview,
-        });
-    } catch (error) {
-        console.error('Review error:', error);
-
-        return res.status(500).send({
-            message: error.message,
-        });
-    }
-});
-
-// Delete a specific review from a post
-router.delete('/:postId/reviews/:reviewId',requirePermission('canUseAccount'), auth, async (req, res) => {
-    try {
-        const { postId, reviewId } = req.params;
-        const userId = req.payload._id;
-
-        const post = await Posts.findById(postId);
-
-        if (!post) {
-            return res.status(404).send({
-                message: 'Post not found',
-            });
-        }
-
-        const review = post.reviews.id(reviewId);
-
-        if (!review) {
-            return res.status(404).send({
-                message: 'Review not found',
-            });
-        }
-
-        // review.user is ObjectId
-        if (String(review.user) !== String(userId)) {
-            return res.status(403).send({
-                message: 'You cannot delete this review',
-            });
-        }
-
-        review.deleteOne();
-
-        await post.save();
-
-        return res.send({
-            message: 'Review deleted successfully',
-        });
-    } catch (error) {
-        console.error('Delete review error:', error);
-
-        return res.status(500).send({
-            message: error.message,
-        });
-    }
-});
-
-// Update a specific review for a post
-router.patch('/:postId/reviews/:reviewId',requirePermission('canUseAccount'), auth, async (req, res) => {
-    try {
-        const { postId, reviewId } = req.params;
-        const { comment, rating } = req.body;
-        const userId = req.payload._id;
-
-        const post = await Posts.findById(postId);
-
-        if (!post) {
-            return res.status(404).send({
-                message: 'Post not found',
-            });
-        }
-
-        const review = post.reviews.id(reviewId);
-
-        if (!review) {
-            return res.status(404).send({
-                message: 'Review not found',
-            });
-        }
-
-        // review.user is ObjectId
-        if (String(review.user) !== String(userId)) {
-            return res.status(403).send({
-                message: 'You cannot edit this review',
-            });
-        }
-
-        if (comment !== undefined) {
-            if (!comment.trim()) {
+            if (!comment || comment.trim().length === 0) {
                 return res.status(400).send({
                     message: 'Comment is required',
                 });
             }
 
-            review.comment = comment.trim();
-        }
-
-        if (rating !== undefined) {
             const numericRating = Number(rating);
 
             if (
-                !Number.isFinite(numericRating) ||
-                numericRating < 1 ||
-                numericRating > 5
+                rating !== undefined &&
+                (numericRating < 1 || numericRating > 5)
             ) {
                 return res.status(400).send({
                     message: 'Rating must be between 1 and 5',
                 });
             }
 
-            review.rating = numericRating;
+            const post = await Posts.findById(postId);
+
+            if (!post) {
+                return res.status(404).send({
+                    message: 'Post not found',
+                });
+            }
+
+            const newReview = {
+                user: _id,
+                comment: comment.trim(),
+                rating: rating !== undefined ? numericRating : null,
+                createdAt: new Date(),
+            };
+
+            post.reviews.push(newReview);
+
+            await post.save();
+
+            return res.status(201).send({
+                message: 'Review added successfully',
+                review: newReview,
+            });
+        } catch (error) {
+            console.error('Review error:', error);
+
+            return res.status(500).send({
+                message: error.message,
+            });
         }
+    },
+);
 
-        review.updatedAt = new Date();
+// Delete a specific review from a post
+router.delete(
+    '/:postId/reviews/:reviewId',
+    requirePermission('canUseAccount'),
+    requirePermission('canCreatePosts'),
+    auth,
+    async (req, res) => {
+        try {
+            const { postId, reviewId } = req.params;
+            const userId = req.payload._id;
 
-        await post.save();
+            const post = await Posts.findById(postId);
 
-        return res.send({
-            message: 'Review updated successfully',
-            review,
-        });
-    } catch (error) {
-        console.error('Update review error:', error);
+            if (!post) {
+                return res.status(404).send({
+                    message: 'Post not found',
+                });
+            }
 
-        return res.status(500).send({
-            message: error.message,
-        });
-    }
-});
+            const review = post.reviews.id(reviewId);
 
-router.patch('/:postId/increment-views',requirePermission('canUseAccount'), async (req, res) => {
+            if (!review) {
+                return res.status(404).send({
+                    message: 'Review not found',
+                });
+            }
+
+            // review.user is ObjectId
+            if (String(review.user) !== String(userId)) {
+                return res.status(403).send({
+                    message: 'You cannot delete this review',
+                });
+            }
+
+            review.deleteOne();
+
+            await post.save();
+
+            return res.send({
+                message: 'Review deleted successfully',
+            });
+        } catch (error) {
+            console.error('Delete review error:', error);
+
+            return res.status(500).send({
+                message: error.message,
+            });
+        }
+    },
+);
+
+// Update a specific review for a post
+router.patch(
+    '/:postId/reviews/:reviewId',
+    requirePermission('canUseAccount'),
+    requirePermission('canCreatePosts'),
+    auth,
+    async (req, res) => {
+        try {
+            const { postId, reviewId } = req.params;
+            const { comment, rating } = req.body;
+            const userId = req.payload._id;
+
+            const post = await Posts.findById(postId);
+
+            if (!post) {
+                return res.status(404).send({
+                    message: 'Post not found',
+                });
+            }
+
+            const review = post.reviews.id(reviewId);
+
+            if (!review) {
+                return res.status(404).send({
+                    message: 'Review not found',
+                });
+            }
+
+            // review.user is ObjectId
+            if (String(review.user) !== String(userId)) {
+                return res.status(403).send({
+                    message: 'You cannot edit this review',
+                });
+            }
+
+            if (comment !== undefined) {
+                if (!comment.trim()) {
+                    return res.status(400).send({
+                        message: 'Comment is required',
+                    });
+                }
+
+                review.comment = comment.trim();
+            }
+
+            if (rating !== undefined) {
+                const numericRating = Number(rating);
+
+                if (
+                    !Number.isFinite(numericRating) ||
+                    numericRating < 1 ||
+                    numericRating > 5
+                ) {
+                    return res.status(400).send({
+                        message: 'Rating must be between 1 and 5',
+                    });
+                }
+
+                review.rating = numericRating;
+            }
+
+            review.updatedAt = new Date();
+
+            await post.save();
+
+            return res.send({
+                message: 'Review updated successfully',
+                review,
+            });
+        } catch (error) {
+            console.error('Update review error:', error);
+
+            return res.status(500).send({
+                message: error.message,
+            });
+        }
+    },
+);
+
+router.patch('/:postId/increment-views', async (req, res) => {
     try {
         const { postId } = req.params;
 
