@@ -41,6 +41,7 @@ const corsOptions = {
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 };
 
+
 // SECURITY & LOGGING
 // =======================
 app.use(cors(corsOptions));

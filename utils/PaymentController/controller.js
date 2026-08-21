@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
     const sig = req.headers['stripe-signature'];
 
     if (!sig) {
-        console.error('Missing stripe-signature');
+        console.error('❌ Missing stripe-signature');
         return res.status(400).send('Missing signature');
     }
 
@@ -25,40 +25,43 @@ module.exports = async (req, res) => {
         );
     } catch (err) {
         console.error('❌ Stripe signature verification failed:', err.message);
+
         return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
-    try {
-        console.log('EVENT TYPE:', event.type);
-        console.log('EVENT ID:', event.id);
+    console.log('EVENT TYPE:', event.type);
+    console.log('EVENT ID:', event.id);
 
-        /* =========================================
-           CHECKOUT SESSION COMPLETED
-        ========================================= */
+    try {
         if (event.type === 'checkout.session.completed') {
             const session = event.data.object;
 
+            console.log('Checkout Session:', session.id);
+            console.log('Payment status:', session.payment_status);
+
             if (session.payment_status !== 'paid') {
-                console.log('Payment not completed, skipping...');
+                console.log('⚠️ Payment not completed, skipping');
+
                 return res.json({ received: true });
             }
 
-            let metadata = session.metadata || {};
-
-            // safe parse if string
-            if (typeof metadata === 'string') {
-                try {
-                    metadata = JSON.parse(metadata);
-                } catch {
-                    console.error('Invalid metadata format');
-                    return res.json({ received: true });
-                }
-            }
+            const metadata = session.metadata || {};
 
             const { userId, listingId, type, startDate, endDate } = metadata;
 
-            if (!userId || !listingId || !type) {
-                console.error('Missing metadata fields');
+            console.log('Metadata:', metadata);
+
+            if (!userId || !listingId || !type || !startDate || !endDate) {
+                console.error('❌ Missing required metadata');
+
+                return res.json({ received: true });
+            }
+
+            const allowedTypes = ['highlight', 'top', 'homepage'];
+
+            if (!allowedTypes.includes(type)) {
+                console.error('❌ Invalid promotion type:', type);
+
                 return res.json({ received: true });
             }
 
@@ -66,29 +69,56 @@ module.exports = async (req, res) => {
             const end = new Date(endDate);
 
             if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
-                console.error('Invalid dates');
+                console.error('❌ Invalid dates');
+
                 return res.json({ received: true });
             }
 
-            /* ---------------- DUPLICATE CHECK ---------------- */
-            const exists = await FeaturedAd.findOne({
+            if (end <= start) {
+                console.error('❌ End date must be after start date');
+
+                return res.json({ received: true });
+            }
+
+            /*
+             * Verify listing
+             */
+            const listing = await Posts.findById(listingId);
+
+            if (!listing) {
+                console.error('❌ Listing not found:', listingId);
+
+                return res.json({ received: true });
+            }
+
+            /*
+             * Prevent duplicate webhook processing
+             */
+            const existingAd = await FeaturedAd.findOne({
                 stripeSessionId: session.id,
             });
 
-            if (exists) {
-                console.log('⚠️ Duplicate session ignored:', session.id);
-                return res.json({ received: true });
+            if (existingAd) {
+                console.log('⚠️ Session already processed:', session.id);
+
+                return res.json({
+                    received: true,
+                    alreadyProcessed: true,
+                });
             }
 
-            /* ---------------- TRANSACTION ---------------- */
+            /*
+             * Create FeaturedAd
+             */
             const dbSession = await FeaturedAd.startSession();
-            dbSession.startTransaction();
 
             try {
+                dbSession.startTransaction();
+
                 const [newAd] = await FeaturedAd.create(
                     [
                         {
-                            userId: userId.toString(),
+                            userId,
                             listingId,
                             type,
                             startDate: start,
@@ -99,99 +129,63 @@ module.exports = async (req, res) => {
                             stripePaymentIntentId: session.payment_intent,
                         },
                     ],
-                    { session: dbSession },
+                    {
+                        session: dbSession,
+                    },
                 );
 
                 const updatedPost = await Posts.findByIdAndUpdate(
                     listingId,
-                    { $set: { featured: true } },
-                    { new: true, session: dbSession },
+                    {
+                        $set: {
+                            featured: true,
+                        },
+                    },
+                    {
+                        new: true,
+                        session: dbSession,
+                    },
                 );
 
                 await dbSession.commitTransaction();
-                dbSession.endSession();
 
-                console.log('✅ Featured Ad created:', newAd._id);
+                console.log('✅ FeaturedAd created:', newAd._id);
+
                 console.log('✅ Post featured:', updatedPost?._id);
             } catch (err) {
                 await dbSession.abortTransaction();
-                dbSession.endSession();
+
+                console.error('❌ Transaction failed:', err);
+
                 throw err;
+            } finally {
+                await dbSession.endSession();
             }
         } else if (event.type === 'payment_intent.succeeded') {
-            /* =========================================
-           PAYMENT INTENT FALLBACK
-        ========================================= */
+
+        /*
+         * Payment intent is only logged.
+         * Do NOT create FeaturedAd here.
+         */
             const paymentIntent = event.data.object;
 
-            const metadata = paymentIntent.metadata || {};
-            const { userId, listingId, type, startDate, endDate } = metadata;
-
-            if (!userId || !listingId || !type) {
-                console.log('Missing metadata in payment intent');
-                return res.json({ received: true });
-            }
-
-            /* ---------------- DUPLICATE CHECK ---------------- */
-            const exists = await FeaturedAd.findOne({
-                stripePaymentIntentId: paymentIntent.id,
-            });
-
-            if (exists) {
-                console.log('⚠️ Duplicate payment intent ignored');
-                return res.json({ received: true });
-            }
-
-            const dbSession = await FeaturedAd.startSession();
-            dbSession.startTransaction();
-
-            try {
-                const [newAd] = await FeaturedAd.create(
-                    [
-                        {
-                            userId: userId.toString(),
-                            listingId,
-                            type,
-                            startDate: new Date(startDate),
-                            endDate: new Date(endDate),
-                            isActive: true,
-                            paid: true,
-                            stripePaymentIntentId: paymentIntent.id,
-                        },
-                    ],
-                    { session: dbSession },
-                );
-
-                const updatedPost = await Posts.findByIdAndUpdate(
-                    listingId,
-                    { $set: { featured: true } },
-                    { new: true, session: dbSession },
-                );
-
-                await dbSession.commitTransaction();
-                dbSession.endSession();
-
-                console.log('✅ Ad created via payment intent:', newAd._id);
-                console.log('✅ Post featured:', updatedPost?._id);
-            } catch (err) {
-                await dbSession.abortTransaction();
-                dbSession.endSession();
-                throw err;
-            }
+            console.log('💰 PaymentIntent succeeded:', paymentIntent.id);
         } else if (event.type === 'payment_intent.created') {
-            /* =========================================
-            DEBUG EVENTS
-            ========================================= */
-            console.log('Payment intent created');
+            console.log('PaymentIntent created');
         } else if (event.type === 'charge.succeeded') {
             console.log('Charge succeeded');
         } else {
             console.log('Unhandled event:', event.type);
         }
 
-        return res.json({ received: true });
+        return res.json({
+            received: true,
+        });
     } catch (err) {
-        console.error('❌ Webhook error:', err);
-        return res.status(500).send('Webhook failed');
+        console.error('❌ Webhook processing error:', err);
+
+        return res.status(500).json({
+            message: 'Webhook failed',
+        });
     }
 };

@@ -18,6 +18,11 @@ const featuredAdSchema = new mongoose.Schema(
             unique: true,
             sparse: true,
         },
+        stripePaymentIntentId: {
+            type: String,
+            unique: true,
+            sparse: true,
+        },
         userId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
@@ -48,6 +53,7 @@ const featuredAdSchema = new mongoose.Schema(
             index: true,
         },
     },
+
     {
         timestamps: true,
     },
