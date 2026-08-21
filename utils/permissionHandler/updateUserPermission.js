@@ -1,3 +1,11 @@
+const User = require('../../models/User');
+
+const roleType = {
+    Admin: 'Admin',
+    Moderator: 'Moderator',
+    Client: 'Client',
+};
+
 const updateUserPermission = async (req, res) => {
     try {
         if (req.payload.role !== roleType.Admin) {
@@ -46,13 +54,6 @@ const updateUserPermission = async (req, res) => {
             });
         }
 
-        /*
-         * لا تسمح بتعطيل canUseAccount
-         * إذا أردت منع الحساب بالكامل استخدم accountStatus.
-         *
-         * إذا كنت تريد السماح بذلك، احذف هذا الشرط.
-         */
-
         const user = await User.findByIdAndUpdate(
             userId,
             {
@@ -65,7 +66,7 @@ const updateUserPermission = async (req, res) => {
                 runValidators: true,
             },
         )
-            .select('-password')
+            .select('-password -__v')
             .lean();
 
         if (!user) {
@@ -92,10 +93,7 @@ const updateUserPermission = async (req, res) => {
             user,
         });
     } catch (error) {
-        console.error(
-            'Permission update error:',
-            error,
-        );
+        console.error('Permission update error:', error);
 
         return res.status(500).json({
             success: false,
@@ -103,4 +101,8 @@ const updateUserPermission = async (req, res) => {
             message: 'Internal server error',
         });
     }
+};
+
+module.exports = {
+    updateUserPermission,
 };

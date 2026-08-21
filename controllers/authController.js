@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 const bcrypt = require('bcrypt');
-const User = require('../models/User'); // عدّل المسار حسب مشروعك
+const User = require('../models/User');
 const { sendEmail } = require('../utils/mailer');
 
 const RESET_TOKEN_TTL_MS = 15 * 60 * 1000; // 15 دقيقة

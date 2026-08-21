@@ -1,50 +1,28 @@
-const Users = require('../models/User');
+const User = require('../models/User');
 
 const requirePermission = (permission) => {
     return async (req, res, next) => {
         try {
-            if (!req.payload?._id) {
-                return res.status(401).json({
-                    success: false,
-                    code: 'UNAUTHORIZED',
-                    message: 'Authentication required',
-                });
-            }
-
-            const user = await Users.findById(req.payload._id)
-                .select('accountStatus permissions role')
-                .lean();
+            const user = await User.findById(req.payload._id).select(
+                'permissions',
+            );
 
             if (!user) {
-                return res.status(401).json({
+                return res.status(404).json({
                     success: false,
                     code: 'USER_NOT_FOUND',
                     message: 'User not found',
                 });
             }
 
-            if (user.accountStatus === 'disabled') {
-                return res.status(403).json({
-                    success: false,
-                    code: 'ACCOUNT_DISABLED',
-                    message: 'Your account is disabled',
-                });
-            }
+            const hasPermission = user.permissions?.[permission] ?? true;
 
-            if (user.permissions?.canUseAccount === false) {
-                return res.status(403).json({
-                    success: false,
-                    code: 'ACCOUNT_USAGE_DISABLED',
-                    message: 'You cannot use your account',
-                });
-            }
-
-            if (user.permissions?.[permission] === false) {
+            if (!hasPermission) {
                 return res.status(403).json({
                     success: false,
                     code: 'PERMISSION_DENIED',
-                    permission,
-                    message: `Permission ${permission} is disabled`,
+                    message:
+                        'You do not have permission to perform this action',
                 });
             }
 
@@ -54,12 +32,21 @@ const requirePermission = (permission) => {
 
             return res.status(500).json({
                 success: false,
+                code: 'PERMISSION_CHECK_ERROR',
                 message: 'Internal server error',
             });
         }
     };
 };
 
+const setPermission = (permission) => {
+    return (req, res, next) => {
+        req.permission = permission;
+        next();
+    };
+};
+
 module.exports = {
     requirePermission,
+    setPermission,
 };
