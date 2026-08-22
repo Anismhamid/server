@@ -20,6 +20,7 @@ const {
     realEstateSchema,
     petsSchema,
     furnitureSchema,
+    electronicsSchema,
 } = require('./categoriesLogic');
 
 const schemas = {
@@ -44,6 +45,7 @@ const schemas = {
     RealEstate: realEstateSchema,
     Pets: petsSchema,
     Furniture: furnitureSchema,
+    Electronics:electronicsSchema,
 };
 
 /**

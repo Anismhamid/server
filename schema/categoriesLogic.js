@@ -456,7 +456,8 @@ module.exports = {
     bikesSchema,
     trucksSchema,
     electricVehiclesSchema,
-
+    electronicsSchema,
+    
     menClothesSchema,
     womenClothesSchema,
     womenBagsSchema,

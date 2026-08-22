@@ -274,7 +274,14 @@ router.put(
 
             res.status(200).send(updatedPost);
         } catch (error) {
-            res.status(500).send(error.message);
+            console.error('❌ Update post error:', error);
+            console.error('Post ID:', req.params.postId);
+            console.error('Body:', req.body);
+
+            return res.status(500).json({
+                success: false,
+                message: error.message || 'Internal Server Error',
+            });
         }
     },
 );
