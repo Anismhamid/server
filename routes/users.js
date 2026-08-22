@@ -787,15 +787,67 @@ router.delete(
             const isAdmin = req.payload.role === roleType.Admin;
             const isSelf = req.payload._id === req.params.userId;
 
-            if (!isAdmin && !isSelf)
-                return res
-                    .status(401)
-                    .send({ error: 'Unauthorized, Cannot make this change' });
+            if (!isAdmin && !isSelf) {
+                return res.status(401).json({
+                    success: false,
+                    message: 'Unauthorized, Cannot make this change',
+                });
+            }
 
-            const user = await User.findByIdAndDelete(req.params.userId);
-            res.status(200).send(user);
+            const userId = req.params.userId;
+
+            // ==========================================
+            // 1. التأكد أن المستخدم موجود
+            // ==========================================
+
+            const user = await User.findById(userId);
+
+            if (!user) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'User not found',
+                });
+            }
+
+            // ==========================================
+            // 2. حذف جميع الرسائل
+            // ==========================================
+
+            const deletedMessages = await Message.deleteMany({
+                $or: [{ from: userId }, { to: userId }],
+            });
+
+            // ==========================================
+            // 3. حذف جميع Posts الخاصة بالمستخدم
+            // ==========================================
+
+            const deletedPosts = await Post.deleteMany({
+                seller: userId,
+            });
+
+            // ==========================================
+            // 4. حذف الحساب
+            // ==========================================
+
+            await User.findByIdAndDelete(userId);
+
+            // ==========================================
+            // 5. Response
+            // ==========================================
+
+            return res.status(200).json({
+                success: true,
+                message:
+                    'User account, messages and posts deleted successfully',
+
+                deletedMessages: deletedMessages.deletedCount,
+                deletedPosts: deletedPosts.deletedCount,
+            });
         } catch (error) {
-            res.status(500).send('Internal server error');
+            return res.status(500).json({
+                success: false,
+                message: 'Internal server error',
+            });
         }
     },
 );
