@@ -263,7 +263,16 @@ router.put(
             });
 
             if (error) {
-                return res.status(400).send(error.details[0].message);
+                console.error('❌ Joi validation error:', error.details);
+
+                return res.status(400).json({
+                    success: false,
+                    message: 'Validation failed',
+                    errors: error.details.map((detail) => ({
+                        field: detail.path.join('.'),
+                        message: detail.message,
+                    })),
+                });
             }
 
             const updatedPost = await Posts.findByIdAndUpdate(
@@ -289,9 +298,9 @@ router.put(
 // Delete post
 router.delete(
     '/:postId',
+    auth,
     requirePermission('canUseAccount'),
     requirePermission('canCreatePosts'),
-    auth,
     async (req, res) => {
         const { postId } = req.params;
 

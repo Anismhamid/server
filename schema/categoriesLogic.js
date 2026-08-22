@@ -179,25 +179,25 @@ const electronicsSchema = Joi.object({
         .required(),
 
     brand: Joi.string().required(),
-    model: Joi.string(),
-    processor: Joi.string(),
-    ram: Joi.number(),
-    storage: Joi.number(),
-    screenSize: Joi.number(),
-    resolution: Joi.string(),
-    operatingSystem: Joi.string(),
+    model: Joi.string().allow(''),
+    processor: Joi.string().allow(''),
+    ram: Joi.number().allow(''),
+    storage: Joi.number().allow(''),
+    screenSize: Joi.number().allow(''),
+    resolution: Joi.string().allow(''),
+    operatingSystem: Joi.string().allow(''),
 
     condition: Joi.string()
         .valid('new', 'like_new', 'excellent', 'good', 'fair')
         .default('good'),
 
-    batteryLife: Joi.number(),
-    includedAccessories: Joi.array().items(Joi.string()),
+    batteryLife: Joi.number().allow(''),
+    includedAccessories: Joi.array().items(Joi.string()).allow(''),
 
-    networkType: Joi.string().valid('4G', '5G', 'WiFi', 'Bluetooth'),
+    networkType: Joi.string().valid('4G', '5G', 'WiFi', 'Bluetooth').allow(''),
 
-    color: Joi.string(),
-    warranty: Joi.string(),
+    color: Joi.string().allow(''),
+    warranty: Joi.string().allow(''),
 }).options({ stripUnknown: true });
 
 /* ================== Bikes ================== */
@@ -205,7 +205,7 @@ const bikesSchema = Joi.object({
     ...baseProductSchema,
     type: Joi.string().valid('kids', 'mountain', 'road').required(),
     frameSize: Joi.string().required(),
-    color: Joi.string(),
+    color: Joi.string().allow(''),
     weight: Joi.number().when('type', {
         is: 'road',
         then: Joi.required(),
@@ -434,11 +434,11 @@ const furnitureSchema = Joi.object({
         )
         .required(),
 
-    brand: Joi.string(),
-    material: Joi.string(),
-    color: Joi.string(),
-    dimensions: Joi.string(),
-    weight: Joi.number(),
+    brand: Joi.string().allow(''),
+    material: Joi.string().allow(''),
+    color: Joi.string().allow(''),
+    dimensions: Joi.string().allow(''),
+    weight: Joi.number().allow(''),
 
     assemblyRequired: Joi.boolean().default(false),
 
@@ -457,7 +457,7 @@ module.exports = {
     trucksSchema,
     electricVehiclesSchema,
     electronicsSchema,
-    
+
     menClothesSchema,
     womenClothesSchema,
     womenBagsSchema,
