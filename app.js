@@ -97,12 +97,12 @@ app.use('/api/messages', messages);
 app.use('/api/images', images);
 app.use('/api/ai', ai);
 
-app.use('/', sitemapRouter);
+app.use('/api', sitemapRouter);
 
 // =======================
 // ROOT HEALTH CHECK
 // =======================
-app.get('/', (_req, res) => {
+app.get('/api', (_req, res) => {
     res.status(200).send('Safqa API is running');
 });
 
