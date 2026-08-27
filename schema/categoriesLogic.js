@@ -85,11 +85,11 @@ const houseSchema = Joi.object({
 
     brand: Joi.string(),
     material: Joi.string(),
-    color: Joi.string(),
-    dimensions: Joi.string(),
-    capacity: Joi.number(),
-    powerWatts: Joi.number(),
-    usageType: Joi.string(),
+    color: Joi.string().allow('').optional(),
+    dimensions: Joi.string().allow('').optional(),
+    capacity: Joi.number().allow('').optional(),
+    powerWatts: Joi.number().allow('').optional(),
+    usageType: Joi.string().allow('').optional(),
 }).options({ stripUnknown: true });
 
 /* ================== Garden ================== */
