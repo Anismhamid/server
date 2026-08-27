@@ -11,7 +11,7 @@ const cron = require('node-cron');
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-// buy promotion
+
 // router.post('/buy', auth, async (req, res) => {
 //     try {
 //         const { listingId, type, startDate, endDate } = req.body;
@@ -86,6 +86,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 //     }
 // });
 
+// buy promotion
 router.post('/buy', auth, async (req, res) => {
     try {
         console.log('=== BUY ROUTE ===');
@@ -196,7 +197,6 @@ router.get('/me', auth, async (req, res) => {
 });
 
 // GET /api/featured-ads/homepage
-// GET /api/featured-ads/homepage
 router.get('/homepage', async (req, res) => {
     try {
         const ads = await FeaturedAd.find({
@@ -271,7 +271,7 @@ router.get('/top', async (req, res) => {
     }
 });
 
-// GET /api/featured-ads/delete
+// Delete /api/featured-ads/delete
 router.delete(`/delete/:adId`, auth, async (req, res) => {
     const { adId } = req.params;
     try {

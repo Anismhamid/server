@@ -17,6 +17,7 @@ const messages = require('./routes/messages');
 const images = require('./routes/deleteImage');
 const startFeaturedAdsCron = require('./utils/PaymentController/featuredAdsCron');
 const featuredAdWebhookController = require('./utils/PaymentController/controller');
+const sitemapRouter = require('./routes/sitemap');
 const app = express();
 app.set('trust proxy', 1);
 
@@ -85,6 +86,8 @@ startFeaturedAdsCron();
 // =======================
 // ROUTES
 // =======================
+
+app.use('/', sitemapRouter);
 app.use('/api/posts', posts);
 app.use('/api/users', users);
 app.use('/api/business-info', businessInfo);

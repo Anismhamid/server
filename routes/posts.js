@@ -8,6 +8,7 @@ const Posts = require('../models/post');
 const auth = require('../middlewares/auth');
 const { getPostSchema } = require('../schema/postsSchema');
 const { requirePermission } = require('../middlewares/userPermissions');
+const { invalidateSitemapCache } = require('../routes/sitemap');
 
 //==============All-posts==========
 // Get all posts for search in home page
@@ -196,6 +197,7 @@ router.post(
 
             // Save the new post to the database
             await post.save();
+            invalidateSitemapCache();
 
             const io = req.app.get('io');
             io.emit('post:new', post);
@@ -281,6 +283,8 @@ router.put(
                 { returnDocument: 'after', runValidators: true },
             );
 
+            invalidateSitemapCache();
+
             res.status(200).send(updatedPost);
         } catch (error) {
             console.error('❌ Update post error:', error);
@@ -345,6 +349,8 @@ router.delete(
 
             // Delete the post
             await post.deleteOne();
+
+            invalidateSitemapCache();
             return res
                 .status(200)
                 .send('The post has been deleted successfully');
