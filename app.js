@@ -87,7 +87,6 @@ startFeaturedAdsCron();
 // ROUTES
 // =======================
 
-app.use('/', sitemapRouter);
 app.use('/api/posts', posts);
 app.use('/api/users', users);
 app.use('/api/business-info', businessInfo);
@@ -97,6 +96,15 @@ app.use('/api/cities', cities);
 app.use('/api/messages', messages);
 app.use('/api/images', images);
 app.use('/api/ai', ai);
+
+app.use('/', sitemapRouter);
+
+// =======================
+// ROOT HEALTH CHECK
+// =======================
+app.get('/', (_req, res) => {
+    res.status(200).send('Safqa API is running');
+});
 
 // =======================
 // 404 HANDLER
