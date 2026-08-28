@@ -104,16 +104,22 @@ app.get('/sitemap-index.xml', (req, res) => {
 // =======================
 // ROBOTS.TXT
 // =======================
+// في index.js
+// =======================
+// ROBOTS.TXT - DYNAMIC ROUTE
+// =======================
 app.get('/robots.txt', (req, res) => {
-    const baseUrl = process.env.CLIENT_URL || 'https://server-32bo.onrender.com';
+    // استخدام CLIENT_URL من البيئة، مع fallback لـ Vercel
+    const baseUrl = process.env.CLIENT_URL || 'https://client-qqq1.vercel.app';
     
     res.type('text/plain');
-    res.send(`
-# robots.txt - Safqa Marketplace
+    res.send(`# robots.txt - Safqa Marketplace
 
+# السماح لجميع محركات البحث
 User-agent: *
 Allow: /
 
+# منع الصفحات الخاصة
 Disallow: /profile/
 Disallow: /messages/
 Disallow: /admin-settings/
@@ -127,13 +133,18 @@ Disallow: /forgot-password/
 Disallow: /api/
 Disallow: /admin/
 
+# منع الملفات غير المهمة
 Disallow: /*.json$
+Disallow: /*.xml$
+Disallow: /*.txt$
 Disallow: /*.log$
 
+# تأخير الزحف للصفحات الثقيلة
 Crawl-delay: 1
 
+# موقع Sitemap - ديناميكي حسب البيئة
 Sitemap: ${baseUrl}/api/sitemap/sitemap.xml
-    `);
+`);
 });
 
 // =======================
