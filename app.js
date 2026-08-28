@@ -88,7 +88,7 @@ app.use('/api/cities', cities);
 app.use('/api/messages', messages);
 app.use('/api/images', images);
 app.use('/api/ai', ai);
-app.use('/api/sitemap', sitemapRouter);
+app.use('/sitemap', sitemapRouter);
 
 // =======================
 // ROBOTS.TXT - DYNAMIC ROUTE
@@ -117,13 +117,11 @@ Disallow: /api/
 Disallow: /admin/
 
 Disallow: /*.json$
-Disallow: /*.xml$
-Disallow: /*.txt$
 Disallow: /*.log$
 
 Crawl-delay: 1
 
-Sitemap: ${baseUrl}/api/sitemap/sitemap.xml
+Sitemap: ${baseUrl}/sitemap/sitemap.xml
     `);
 });
 
@@ -131,11 +129,11 @@ Sitemap: ${baseUrl}/api/sitemap/sitemap.xml
 // SITEMAP REDIRECTS
 // =======================
 app.get('/sitemap.xml', (req, res) => {
-    res.redirect(301, '/api/sitemap/sitemap.xml');
+    res.redirect(301, '/sitemap/sitemap.xml');
 });
 
 app.get('/sitemap-index.xml', (req, res) => {
-    res.redirect(301, '/api/sitemap/');
+    res.redirect(301, '/sitemap/');
 });
 
 
@@ -151,8 +149,8 @@ app.get('/api', (_req, res) => {
             posts: '/api/posts',
             users: '/api/users',
             discounts: '/api/discounts',
-            sitemap: '/api/sitemap/sitemap.xml',
-            'sitemap-stats': '/api/sitemap/sitemap-stats',
+            sitemap: '/sitemap/sitemap.xml',
+            'sitemap-stats': '/sitemap/sitemap-stats',
         },
         timestamp: new Date().toISOString(),
     });
