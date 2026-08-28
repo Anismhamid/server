@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/index.js" },
+    { "source": "/sitemap.xml", "destination": "/index.js" },
+    { "source": "/sitemap-index.xml", "destination": "/index.js" },
+    { "source": "/robots.txt", "destination": "/index.js" },
+    { "source": "/(.*)", "destination": "/index.js" }
+  ]
+}
