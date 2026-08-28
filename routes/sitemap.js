@@ -1,14 +1,14 @@
 // server/routes/sitemap.js
-const { Router } = require('express');
+const express = require('express');
 const Post = require('../models/post');
 const compression = require('compression');
 
-const router = Router();
+const router = express.Router();
 
 // ===================== CONFIGURATION =====================
 const BASE_URL = process.env.CLIENT_URL || 'https://client-qqq1.vercel.app';
 const MAX_URLS_PER_SITEMAP = 50000; // Google's limit
-const CACHE_TTL = 1000 * 60 * 15; // 15 minutes (FIXED from 1 minute)
+const CACHE_TTL = 1000 * 60 * 15;
 const ENABLE_COMPRESSION = true;
 const ENABLE_LOGGING = process.env.NODE_ENV !== 'production' || process.env.LOG_SITEMAP === 'true';
 
@@ -206,7 +206,7 @@ ${u.lastmod ? `    <lastmod>${u.lastmod}</lastmod>\n` : ''}${u.changefreq ? `   
 };
 
 // ===================== SITEMAP INDEX =====================
-router.get('/sitemap-index.xml', async (_req, res) => {
+router.get('/', async (_req, res) => {
     try {
         const totalPosts = await Post.countDocuments({ in_stock: true });
         const totalUrls = staticUrls.length + totalPosts;
@@ -370,31 +370,37 @@ router.get('/sitemap-:page.xml', async (req, res) => {
 });
 
 // ===================== STATS & MONITORING =====================
-router.get('/sitemap-stats', (_req, res) => {
-    const totalPosts = Post.countDocuments({ in_stock: true });
-    const totalStatic = staticUrls.length;
-    
-    res.json({
-        cache: {
-            isCached: !!cachedXml,
-            cacheAge: getCacheAge(),
-            cacheTTL: CACHE_TTL / 1000 + 's',
-            stats: cacheStats,
-            size: cachedXml ? Math.round(cachedXml.length / 1024) + 'KB' : 'N/A'
-        },
-        urls: {
-            static: totalStatic,
-            maxPosts: MAX_URLS_PER_SITEMAP,
-            estimatedTotal: totalStatic + totalPosts
-        },
-        config: {
-            baseUrl: BASE_URL,
-            compression: ENABLE_COMPRESSION,
-            logging: ENABLE_LOGGING
-        },
-        pendingRequests: pendingRequests.length,
-        generationInProgress
-    });
+router.get('/sitemap-stats', async (_req, res) => {
+    try {
+        const totalPosts = await Post.countDocuments({ in_stock: true });
+        const totalStatic = staticUrls.length;
+        
+        res.json({
+            cache: {
+                isCached: !!cachedXml,
+                cacheAge: getCacheAge(),
+                cacheTTL: CACHE_TTL / 1000 + 's',
+                stats: cacheStats,
+                size: cachedXml ? Math.round(cachedXml.length / 1024) + 'KB' : 'N/A'
+            },
+            urls: {
+                static: totalStatic,
+                posts: totalPosts,
+                total: totalStatic + totalPosts,
+                maxPerSitemap: MAX_URLS_PER_SITEMAP
+            },
+            sitemapPages: Math.ceil((totalStatic + totalPosts) / MAX_URLS_PER_SITEMAP),
+            config: {
+                baseUrl: BASE_URL,
+                compression: ENABLE_COMPRESSION,
+                logging: ENABLE_LOGGING
+            },
+            pendingRequests: pendingRequests.length,
+            generationInProgress
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 });
 
 // ===================== PING SEARCH ENGINES =====================

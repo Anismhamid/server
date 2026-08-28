@@ -97,13 +97,44 @@ app.use('/api/messages', messages);
 app.use('/api/images', images);
 app.use('/api/ai', ai);
 
-app.use('/api', sitemapRouter);
+app.use('/api/sitemap', sitemapRouter);
 
-// =======================
-// ROOT HEALTH CHECK
-// =======================
+// sitemap redirect to ti right Router
+app.get('/sitemap.xml', (req, res) => {
+    res.redirect(301, '/api/sitemap/sitemap.xml');
+});
+
+app.get('/sitemap-index.xml', (req, res) => {
+    res.redirect(301, '/api/sitemap/');
+});
+
+// // =======================
+// // ROOT HEALTH CHECK
+// // =======================
 app.get('/api', (_req, res) => {
-    res.status(200).send('Safqa API is running');
+    res.status(200).json({
+        name: 'Safqa API',
+        version: '1.0.0',
+        status: 'online',
+        endpoints: {
+            posts: '/api/posts',
+            users: '/api/users',
+            discounts: '/api/discounts',
+            sitemap: '/api/sitemap/sitemap.xml',
+            'sitemap-stats': '/api/sitemap/sitemap-stats',
+        },
+        timestamp: new Date().toISOString(),
+    });
+});
+
+// Robots.txt
+app.get('/robots.txt', (req, res) => {
+    res.type('text/plain');
+    res.send(`
+User-agent: *
+Allow: /
+Sitemap: ${process.env.CLIENT_URL || 'https://client-qqq1.vercel.app'}/api/sitemap/sitemap.xml
+    `);
 });
 
 // =======================
