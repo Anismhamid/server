@@ -18,19 +18,17 @@ const images = require('./routes/deleteImage');
 const startFeaturedAdsCron = require('./utils/PaymentController/featuredAdsCron');
 const featuredAdWebhookController = require('./utils/PaymentController/controller');
 const sitemapRouter = require('./routes/sitemap');
+
 const app = express();
 app.set('trust proxy', 1);
 
+// =======================
+// CORS CONFIGURATION
+// =======================
 const corsOptions = {
     origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps, curl, etc.)
         if (!origin) return callback(null, true);
-
-        // Check against allowed origins
-        if (
-            allowedOrigins.includes(origin) ||
-            origin === 'http://localhost:5173'
-        ) {
+        if (allowedOrigins.includes(origin) || origin === 'http://localhost:5173') {
             callback(null, true);
         } else {
             console.log('Blocked by CORS:', origin);
@@ -42,12 +40,10 @@ const corsOptions = {
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 };
 
-// SECURITY & LOGGING
-// =======================
 app.use(cors(corsOptions));
 
 // =======================
-// WEBHOOK - IMPORTANT: Must be BEFORE express.json()
+// WEBHOOK - Must be BEFORE express.json()
 // =======================
 console.log('Registering webhook route at: /api/featured-ads/webhook');
 app.use(
@@ -56,7 +52,6 @@ app.use(
     featuredAdWebhookController,
 );
 
-// Test webhook endpoint
 app.post(
     '/api/featured-ads/test-webhook',
     express.raw({ type: 'application/json' }),
@@ -68,15 +63,13 @@ app.post(
 );
 
 // =======================
-// BODY PARSING & RATE LIMITING
+// BODY PARSING & SECURITY
 // =======================
 app.use(express.json({ limit: '5mb' }));
 app.use(helmet());
-app.use(logger);
-logToFile();
+app.use(morgan('dev')); // استخدام morgan فقط
+// logToFile(); // إذا كنت تستخدم winston، احتفظ بها
 app.use(limiter);
-
-app.use(morgan('dev'));
 
 // =======================
 // STARTUP JOBS
@@ -86,7 +79,6 @@ startFeaturedAdsCron();
 // =======================
 // ROUTES
 // =======================
-
 app.use('/api/posts', posts);
 app.use('/api/users', users);
 app.use('/api/business-info', businessInfo);
@@ -96,10 +88,11 @@ app.use('/api/cities', cities);
 app.use('/api/messages', messages);
 app.use('/api/images', images);
 app.use('/api/ai', ai);
-
 app.use('/api/sitemap', sitemapRouter);
 
-// sitemap redirect to ti right Router
+// =======================
+// REDIRECTS
+// =======================
 app.get('/sitemap.xml', (req, res) => {
     res.redirect(301, '/api/sitemap/sitemap.xml');
 });
@@ -108,9 +101,44 @@ app.get('/sitemap-index.xml', (req, res) => {
     res.redirect(301, '/api/sitemap/');
 });
 
-// // =======================
-// // ROOT HEALTH CHECK
-// // =======================
+// =======================
+// ROBOTS.TXT
+// =======================
+app.get('/robots.txt', (req, res) => {
+    const baseUrl = process.env.CLIENT_URL || 'https://server-32bo.onrender.com';
+    
+    res.type('text/plain');
+    res.send(`
+# robots.txt - Safqa Marketplace
+
+User-agent: *
+Allow: /
+
+Disallow: /profile/
+Disallow: /messages/
+Disallow: /admin-settings/
+Disallow: /users-management/
+Disallow: /cart/
+Disallow: /favorites/
+Disallow: /login/
+Disallow: /register/
+Disallow: /reset-password/
+Disallow: /forgot-password/
+Disallow: /api/
+Disallow: /admin/
+
+Disallow: /*.json$
+Disallow: /*.log$
+
+Crawl-delay: 1
+
+Sitemap: ${baseUrl}/api/sitemap/sitemap.xml
+    `);
+});
+
+// =======================
+// ROOT HEALTH CHECK
+// =======================
 app.get('/api', (_req, res) => {
     res.status(200).json({
         name: 'Safqa API',
@@ -127,16 +155,6 @@ app.get('/api', (_req, res) => {
     });
 });
 
-// Robots.txt
-app.get('/robots.txt', (req, res) => {
-    res.type('text/plain');
-    res.send(`
-User-agent: *
-Allow: /
-Sitemap: ${process.env.CLIENT_URL || 'https://client-qqq1.vercel.app'}/api/sitemap/sitemap.xml
-    `);
-});
-
 // =======================
 // 404 HANDLER
 // =======================
@@ -144,13 +162,6 @@ app.use((req, res) => {
     res.status(404).json({
         message: `Route ${req.method} ${req.path} not found`,
     });
-});
-
-app.use((req, res, next) => {
-    if (req.originalUrl === '/api/featured-ads/webhook') {
-        return next();
-    }
-    return logger(req, res, next);
 });
 
 // =======================
