@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const Message = require('../models/Message');
 const Posts = require('../models/post');
 const Jwt = require('jsonwebtoken');
 const { compareSync, genSaltSync, hashSync } = require('bcryptjs');
@@ -778,6 +779,7 @@ router.patch(
     },
 );
 
+// Delete full account
 router.delete(
     '/:userId',
     auth,
@@ -821,7 +823,7 @@ router.delete(
             // 3. حذف جميع Posts الخاصة بالمستخدم
             // ==========================================
 
-            const deletedPosts = await Post.deleteMany({
+            const deletedPosts = await Posts.deleteMany({
                 seller: userId,
             });
 
@@ -1154,4 +1156,5 @@ router.patch(
     setPermission('canAccessExistingData'),
     updateUserPermission,
 );
+
 module.exports = router;

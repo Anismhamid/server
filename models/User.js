@@ -60,10 +60,7 @@ const userSchema = new mongoose.Schema(
             unique: true,
             lowercase: true,
             trim: true,
-            match: [
-                /\S+@\S+\.\S+/,
-                'Please enter a valid email',
-            ],
+            match: [/\S+@\S+\.\S+/, 'Please enter a valid email'],
         },
 
         password: {
@@ -88,11 +85,7 @@ const userSchema = new mongoose.Schema(
 
         role: {
             type: String,
-            enum: [
-                'Admin',
-                'Moderator',
-                'Client',
-            ],
+            enum: ['Admin', 'Moderator', 'Client'],
             default: 'Client',
         },
 
@@ -156,10 +149,7 @@ const userSchema = new mongoose.Schema(
 
         accountStatus: {
             type: String,
-            enum: [
-                'active',
-                'disabled',
-            ],
+            enum: ['active', 'disabled'],
             default: 'active',
             index: true,
         },
@@ -203,6 +193,20 @@ const userSchema = new mongoose.Schema(
                 type: Boolean,
                 default: true,
             },
+
+            // ==========================================
+            // Message investigation
+            // ==========================================
+
+            canViewMessages: {
+                type: Boolean,
+                default: false,
+            },
+
+            canViewMessageAuditLogs: {
+                type: Boolean,
+                default: false,
+            },
         },
     },
 
@@ -211,9 +215,6 @@ const userSchema = new mongoose.Schema(
     },
 );
 
-const User = mongoose.model(
-    'Users',
-    userSchema,
-);
+const User = mongoose.model('Users', userSchema);
 
 module.exports = User;
