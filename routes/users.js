@@ -471,26 +471,45 @@ router.post('/google', async (req, res) => {
 // ----- משתמשים -----
 
 // get all users (Admin / moderators)
-router.get('/', auth, requirePermission('canUseAccount'), async (req, res) => {
-    try {
-        // check if user have permission to get the users
-        if (
-            req.payload.role !== roleType.Admin &&
-            req.payload.role !== roleType.Moderator &&
-            req.payload.role !== roleType.Client
-        )
-            return res.status(401).send({
-                error: 'You do not have permission to access this resource',
+router.get(
+    '/',
+    auth,
+    requirePermission('canUseAccount'),
+    async (req, res) => {
+        try {
+            if (
+                req.payload.role !== roleType.Admin &&
+                req.payload.role !== roleType.Moderator
+            ) {
+                return res.status(403).json({
+                    success: false,
+                    code: 'USERS_MANAGEMENT_ACCESS_DENIED',
+                    message: 'Only admins and moderators can access users',
+                });
+            }
+
+            const users = await User.find()
+                .select('-password')
+                .lean();
+
+            if (!users.length) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'No users found yet',
+                });
+            }
+
+            return res.status(200).json(users);
+        } catch (error) {
+            console.error('Get users error:', error);
+
+            return res.status(500).json({
+                success: false,
+                message: 'Internal server error',
             });
-
-        const users = await User.find().select('-password');
-        if (!users) return res.status(404).send('No users found yet');
-
-        res.status(200).send(users);
-    } catch (error) {
-        res.status(500).send('Internal server error');
-    }
-});
+        }
+    },
+);
 
 // Get single user (Admin or Moderator or oner user only)
 router.get(
@@ -506,8 +525,7 @@ router.get(
             if (
                 _id !== userId &&
                 role !== roleType.Admin &&
-                role !== roleType.Moderator &&
-                role !== roleType.Delivery
+                role !== roleType.Moderator
             )
                 return res.status(401).send({
                     error: 'You do not have permission to access this resource',
