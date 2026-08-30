@@ -362,11 +362,19 @@ router.post('/google', async (req, res) => {
         if (!credentialToken) return res.status(400).send('Missing token');
 
         const payload = await verifyGoogleToken(credentialToken);
-        if (!payload.email_verified)
-            return res.status(401).send('Email not verified');
 
         if (!payload || !payload.sub || !payload.email) {
-            return res.status(400).send('Invalid Google payload');
+            return res.status(400).json({
+                code: 'INVALID_GOOGLE_PAYLOAD',
+                message: 'Invalid Google payload',
+            });
+        }
+
+        if (payload.email_verified !== true) {
+            return res.status(401).json({
+                code: 'EMAIL_NOT_VERIFIED',
+                message: 'Google email is not verified',
+            });
         }
         // check if user exists
 
@@ -471,45 +479,38 @@ router.post('/google', async (req, res) => {
 // ----- משתמשים -----
 
 // get all users (Admin / moderators)
-router.get(
-    '/',
-    auth,
-    requirePermission('canUseAccount'),
-    async (req, res) => {
-        try {
-            if (
-                req.payload.role !== roleType.Admin &&
-                req.payload.role !== roleType.Moderator
-            ) {
-                return res.status(403).json({
-                    success: false,
-                    code: 'USERS_MANAGEMENT_ACCESS_DENIED',
-                    message: 'Only admins and moderators can access users',
-                });
-            }
-
-            const users = await User.find()
-                .select('-password')
-                .lean();
-
-            if (!users.length) {
-                return res.status(404).json({
-                    success: false,
-                    message: 'No users found yet',
-                });
-            }
-
-            return res.status(200).json(users);
-        } catch (error) {
-            console.error('Get users error:', error);
-
-            return res.status(500).json({
+router.get('/', auth, requirePermission('canUseAccount'), async (req, res) => {
+    try {
+        if (
+            req.payload.role !== roleType.Admin &&
+            req.payload.role !== roleType.Moderator
+        ) {
+            return res.status(403).json({
                 success: false,
-                message: 'Internal server error',
+                code: 'USERS_MANAGEMENT_ACCESS_DENIED',
+                message: 'Only admins and moderators can access users',
             });
         }
-    },
-);
+
+        const users = await User.find().select('-password').lean();
+
+        if (!users.length) {
+            return res.status(404).json({
+                success: false,
+                message: 'No users found yet',
+            });
+        }
+
+        return res.status(200).json(users);
+    } catch (error) {
+        console.error('Get users error:', error);
+
+        return res.status(500).json({
+            success: false,
+            message: 'Internal server error',
+        });
+    }
+});
 
 // Get single user (Admin or Moderator or oner user only)
 router.get(
