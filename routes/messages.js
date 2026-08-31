@@ -1073,29 +1073,61 @@ router.get(
 
     async (req, res) => {
         try {
-            const limit = Math.min(parseInt(req.query.limit) || 50, 100);
+            const limit = Math.min(
+                Math.max(parseInt(req.query.limit) || 50, 1),
+                100,
+            );
 
-            const skip = parseInt(req.query.skip) || 0;
+            const skip = Math.max(
+                parseInt(req.query.skip) || 0,
+                0,
+            );
 
-            const logs = await MessageAuditLog.find()
-                .sort({
-                    createdAt: -1,
-                })
-                .skip(skip)
-                .limit(limit)
-                .populate('admin', 'name email role image slug')
-                .populate('message', 'from to roomId createdAt')
-                .lean();
+            const [logs, total] = await Promise.all([
+                MessageAuditLog.find()
+                    .sort({
+                        createdAt: -1,
+                    })
+                    .skip(skip)
+                    .limit(limit)
+                    .populate(
+                        'admin',
+                        'name email role image slug',
+                    )
+                    .populate(
+                        'user1',
+                        'name email image slug',
+                    )
+                    .populate(
+                        'user2',
+                        'name email image slug',
+                    )
+                    .populate(
+                        'message',
+                        'from to roomId createdAt',
+                    )
+                    .lean(),
+
+                MessageAuditLog.countDocuments(),
+            ]);
 
             return res.status(200).json({
                 success: true,
 
                 logs,
 
-                hasMore: logs.length === limit,
+                pagination: {
+                    total,
+                    limit,
+                    skip,
+                    hasMore: skip + logs.length < total,
+                },
             });
         } catch (error) {
-            console.error('Audit logs error:', error);
+            console.error(
+                'Audit logs error:',
+                error,
+            );
 
             return res.status(500).json({
                 success: false,
