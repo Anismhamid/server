@@ -44,6 +44,10 @@ const updateUserPermission = async (req, res) => {
             'canSendOffers',
             'canUseAccount',
             'canAccessExistingData',
+            'canViewMessages',
+            'canViewMessageAuditLogs',
+            'canManageReports',
+            'canDeleteReports'
         ];
 
         if (!allowedPermissions.includes(permission)) {

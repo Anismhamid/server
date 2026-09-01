@@ -215,6 +215,20 @@ const userSchema = new mongoose.Schema(
                 type: Boolean,
                 default: false,
             },
+
+            canManageReports: {
+                type: Boolean,
+                default: false,
+            },
+
+            canDeleteReports: {
+                type: Boolean,
+                default: false,
+            },
+        },
+        warningCount: {
+            type: Number,
+            default: 0,
         },
     },
 

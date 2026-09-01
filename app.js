@@ -9,6 +9,8 @@ const morgan = require('morgan');
 const users = require('./routes/users');
 const posts = require('./routes/posts');
 const ai = require('./routes/ai');
+const block = require('./routes/block');
+const reports = require('./routes/reports');
 const businessInfo = require('./routes/businessInfo');
 const featuredAd = require('./routes/featuredRegister');
 const discounts = require('./routes/discountAndOffers');
@@ -28,7 +30,10 @@ app.set('trust proxy', 1);
 const corsOptions = {
     origin: function (origin, callback) {
         if (!origin) return callback(null, true);
-        if (allowedOrigins.includes(origin) || origin === 'http://localhost:5173') {
+        if (
+            allowedOrigins.includes(origin) ||
+            origin === 'http://localhost:5173'
+        ) {
             callback(null, true);
         } else {
             console.log('Blocked by CORS:', origin);
@@ -68,6 +73,8 @@ app.post(
 app.use(express.json({ limit: '5mb' }));
 app.use(helmet());
 app.use(morgan('dev')); // استخدام morgan فقط
+app.use(logger);
+logToFile(); // إذا كنت تستخدم winston، احتفظ بها
 // logToFile(); // إذا كنت تستخدم winston، احتفظ بها
 app.use(limiter);
 
@@ -89,13 +96,15 @@ app.use('/api/messages', messages);
 app.use('/api/images', images);
 app.use('/api/ai', ai);
 app.use('/sitemap', sitemapRouter);
+app.use('/api/blocks', block);
+app.use('/api/reports', reports);
 
 // =======================
 // ROBOTS.TXT - DYNAMIC ROUTE
 // =======================
 app.get('/robots.txt', (req, res) => {
     const baseUrl = process.env.CLIENT_URL || 'https://client-qqq1.vercel.app';
-    
+
     res.type('text/plain');
     res.send(`
 # robots.txt - Safqa Marketplace
@@ -135,7 +144,6 @@ app.get('/sitemap.xml', (req, res) => {
 app.get('/sitemap-index.xml', (req, res) => {
     res.redirect(301, '/sitemap/');
 });
-
 
 // =======================
 // ROOT HEALTH CHECK
