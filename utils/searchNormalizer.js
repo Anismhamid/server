@@ -16,145 +16,47 @@ const { TYPE_ALIASES } = require('./typeAliases');
  * Aliases belong to their own files.
  */
 const CATEGORY_TYPES = {
-    House: [
-        'kitchen',
-        'storage',
-        'decor',
-        'maintenance',
-    ],
+    House: ['kitchen', 'storage', 'decor', 'maintenance'],
 
-    Garden: [
-        'plants',
-        'watering',
-        'tools',
-        'outdoorDecor',
-    ],
+    Garden: ['plants', 'watering', 'tools', 'outdoorDecor'],
 
-    Cars: [
-        'private',
-        'electric',
-        'parts',
-    ],
+    Cars: ['private', 'electric', 'parts'],
 
-    Bikes: [
-        'kids',
-        'mountain',
-        'road',
-    ],
+    Bikes: ['kids', 'mountain', 'road'],
 
-    Trucks: [
-        'light',
-        'heavy',
-    ],
+    Trucks: ['light', 'heavy'],
 
-    ElectricVehicles: [
-        'cars',
-        'scooters',
-    ],
+    ElectricVehicles: ['cars', 'scooters'],
 
-    MenClothes: [
-        'casual',
-        'formal',
-        'shoes',
-    ],
+    MenClothes: ['casual', 'formal', 'shoes'],
 
-    WomenClothes: [
-        'casual',
-        'dresses',
-        'shoes',
-    ],
+    WomenClothes: ['casual', 'dresses', 'shoes'],
 
-    WomenBags: [
-        'handbags',
-        'toteBags',
-        'backpacks',
-        'clutches',
-    ],
+    WomenBags: ['handbags', 'toteBags', 'backpacks', 'clutches'],
 
-    Baby: [
-        'clothes',
-        'care',
-        'feeding',
-    ],
+    Baby: ['clothes', 'care', 'feeding'],
 
-    Kids: [
-        'educational',
-        'toys',
-        'outdoor',
-    ],
+    Kids: ['educational', 'toys', 'outdoor'],
 
-    Health: [
-        'personalCare',
-        'medical',
-        'fitness',
-    ],
+    Health: ['personalCare', 'medical', 'fitness'],
 
-    Beauty: [
-        'makeup',
-        'skincare',
-        'hair',
-    ],
+    Beauty: ['makeup', 'skincare', 'hair'],
 
-    Watches: [
-        'classic',
-        'smart',
-        'hand',
-    ],
+    Watches: ['classic', 'smart', 'hand'],
 
-    Cleaning: [
-        'detergents',
-        'tools',
-        'disinfection',
-    ],
+    Cleaning: ['detergents', 'tools', 'disinfection'],
 
-    Motorcycles: [
-        'street',
-        'sport',
-        'cruiser',
-        'offRoad',
-        'scooter',
-        'parts',
-    ],
+    Motorcycles: ['street', 'sport', 'cruiser', 'offRoad', 'scooter', 'parts'],
 
-    Electronics: [
-        'smartphones',
-        'laptops',
-        'tablets',
-        'accessories',
-        'audio',
-    ],
+    Electronics: ['smartphones', 'laptops', 'tablets', 'accessories', 'audio'],
 
-    Art: [
-        'paintings',
-        'sculptures',
-        'photography',
-        'crafts',
-        'collectibles',
-    ],
+    Art: ['paintings', 'sculptures', 'photography', 'crafts', 'collectibles'],
 
-    Gaming: [
-        'consoles',
-        'games',
-        'accessories',
-        'pc_gaming',
-    ],
+    Gaming: ['consoles', 'games', 'accessories', 'pc_gaming'],
 
-    RealEstate: [
-        'apartment',
-        'house',
-        'villa',
-        'commercial',
-        'land',
-    ],
+    RealEstate: ['apartment', 'house', 'villa', 'commercial', 'land'],
 
-    Pets: [
-        'dogs',
-        'cats',
-        'birds',
-        'fish',
-        'small_animals',
-        'supplies',
-    ],
+    Pets: ['dogs', 'cats', 'birds', 'fish', 'small_animals', 'supplies'],
 
     Furniture: [
         'living_room',
@@ -189,6 +91,7 @@ const EMPTY_FILTERS = {
 
 const ILS_ALIASES = new Set([
     'ils',
+    'ILS',
     'nis',
     '₪',
     'shekel',
@@ -237,24 +140,26 @@ function normalizeText(value) {
         return null;
     }
 
-    return text
-        .toLowerCase()
-        .normalize('NFKC')
+    return (
+        text
+            .toLowerCase()
+            .normalize('NFKC')
 
-        // Arabic letters
-        .replace(/[إأآٱ]/g, 'ا')
-        .replace(/ى/g, 'ي')
-        .replace(/ة/g, 'ه')
-        .replace(/ؤ/g, 'و')
-        .replace(/ئ/g, 'ي')
+            // Arabic letters
+            .replace(/[إأآٱ]/g, 'ا')
+            .replace(/ى/g, 'ي')
+            .replace(/ة/g, 'ه')
+            .replace(/ؤ/g, 'و')
+            .replace(/ئ/g, 'ي')
 
-        // Arabic tatweel
-        .replace(/ـ/g, '')
+            // Arabic tatweel
+            .replace(/ـ/g, '')
 
-        // Multiple spaces
-        .replace(/\s+/g, ' ')
+            // Multiple spaces
+            .replace(/\s+/g, ' ')
 
-        .trim();
+            .trim()
+    );
 }
 
 // ============================================================
@@ -285,45 +190,31 @@ function normalizeText(value) {
 function createAliasLookup(aliasesMap) {
     const lookup = new Map();
 
-    if (
-        !aliasesMap ||
-        typeof aliasesMap !== 'object'
-    ) {
+    if (!aliasesMap || typeof aliasesMap !== 'object') {
         return lookup;
     }
 
-    for (
-        const [canonical, aliases]
-        of Object.entries(aliasesMap)
-    ) {
+    for (const [canonical, aliases] of Object.entries(aliasesMap)) {
         if (!Array.isArray(aliases)) {
             continue;
         }
 
         // Canonical value itself
-        const normalizedCanonical =
-            normalizeText(canonical);
+        const normalizedCanonical = normalizeText(canonical);
 
         if (normalizedCanonical) {
-            lookup.set(
-                normalizedCanonical,
-                canonical,
-            );
+            lookup.set(normalizedCanonical, canonical);
         }
 
         // Aliases
         for (const alias of aliases) {
-            const normalizedAlias =
-                normalizeText(alias);
+            const normalizedAlias = normalizeText(alias);
 
             if (!normalizedAlias) {
                 continue;
             }
 
-            lookup.set(
-                normalizedAlias,
-                canonical,
-            );
+            lookup.set(normalizedAlias, canonical);
         }
     }
 
@@ -334,37 +225,26 @@ function createAliasLookup(aliasesMap) {
 // Pre-built Lookups
 // ============================================================
 
-const CATEGORY_LOOKUP =
-    createAliasLookup(CATEGORY_ALIASES);
+const CATEGORY_LOOKUP = createAliasLookup(CATEGORY_ALIASES);
 
-const CONDITION_LOOKUP =
-    createAliasLookup(CONDITION_ALIASES);
+const CONDITION_LOOKUP = createAliasLookup(CONDITION_ALIASES);
 
-const FUEL_LOOKUP =
-    createAliasLookup(FUEL_ALIASES);
+const FUEL_LOOKUP = createAliasLookup(FUEL_ALIASES);
 
-const TYPE_LOOKUP =
-    createAliasLookup(TYPE_ALIASES);
+const TYPE_LOOKUP = createAliasLookup(TYPE_ALIASES);
 
 // ============================================================
 // Canonical Lookup
 // ============================================================
 
-function findCanonicalValue(
-    value,
-    lookup,
-) {
-    const normalizedValue =
-        normalizeText(value);
+function findCanonicalValue(value, lookup) {
+    const normalizedValue = normalizeText(value);
 
     if (!normalizedValue) {
         return null;
     }
 
-    return (
-        lookup.get(normalizedValue) ||
-        null
-    );
+    return lookup.get(normalizedValue) || null;
 }
 
 // ============================================================
@@ -372,10 +252,7 @@ function findCanonicalValue(
 // ============================================================
 
 function normalizeCategory(value) {
-    return findCanonicalValue(
-        value,
-        CATEGORY_LOOKUP,
-    );
+    return findCanonicalValue(value, CATEGORY_LOOKUP);
 }
 
 // ============================================================
@@ -397,46 +274,31 @@ function getBrandCanonical(value) {
 // ============================================================
 
 function normalizeFuel(value) {
-    return findCanonicalValue(
-        value,
-        FUEL_LOOKUP,
-    );
+    return findCanonicalValue(value, FUEL_LOOKUP);
 }
 
 // ============================================================
 // Type
 // ============================================================
 
-function normalizeType(
-    value,
-    category,
-) {
+function normalizeType(value, category) {
     if (!value || !category) {
         return null;
     }
 
-    const canonicalType =
-        findCanonicalValue(
-            value,
-            TYPE_LOOKUP,
-        );
+    const canonicalType = findCanonicalValue(value, TYPE_LOOKUP);
 
     if (!canonicalType) {
         return null;
     }
 
-    const allowedTypes =
-        CATEGORY_TYPES[category];
+    const allowedTypes = CATEGORY_TYPES[category];
 
     if (!allowedTypes) {
         return null;
     }
 
-    return allowedTypes.includes(
-        canonicalType,
-    )
-        ? canonicalType
-        : null;
+    return allowedTypes.includes(canonicalType) ? canonicalType : null;
 }
 
 // ============================================================
@@ -459,10 +321,7 @@ function findCategoryByType(type) {
         return null;
     }
 
-    for (
-        const [category, types]
-        of Object.entries(CATEGORY_TYPES)
-    ) {
+    for (const [category, types] of Object.entries(CATEGORY_TYPES)) {
         if (types.includes(type)) {
             return category;
         }
@@ -476,10 +335,7 @@ function findCategoryByType(type) {
 // ============================================================
 
 function normalizeCondition(value) {
-    return findCanonicalValue(
-        value,
-        CONDITION_LOOKUP,
-    );
+    return findCanonicalValue(value, CONDITION_LOOKUP);
 }
 
 // ============================================================
@@ -487,11 +343,7 @@ function normalizeCondition(value) {
 // ============================================================
 
 function normalizeNumber(value) {
-    if (
-        value === null ||
-        value === undefined ||
-        value === ''
-    ) {
+    if (value === null || value === undefined || value === '') {
         return null;
     }
 
@@ -502,17 +354,11 @@ function normalizeNumber(value) {
      * "1,000"
      * "1000.50"
      */
-    const cleaned =
-        String(value)
-            .replace(/,/g, '')
-            .trim();
+    const cleaned = String(value).replace(/,/g, '').trim();
 
-    const number =
-        Number(cleaned);
+    const number = Number(cleaned);
 
-    return Number.isFinite(number)
-        ? number
-        : null;
+    return Number.isFinite(number) ? number : null;
 }
 
 // ============================================================
@@ -520,18 +366,13 @@ function normalizeNumber(value) {
 // ============================================================
 
 function normalizeCurrency(value) {
-    const normalized =
-        normalizeText(value);
+    const normalized = normalizeText(value);
 
     if (!normalized) {
         return null;
     }
 
-    return ILS_ALIASES.has(
-        normalized,
-    )
-        ? 'ILS'
-        : null;
+    return ILS_ALIASES.has(normalized) ? 'ILS' : null;
 }
 
 // ============================================================
@@ -539,9 +380,7 @@ function normalizeCurrency(value) {
 // ============================================================
 
 function normalizeBoolean(value) {
-    return typeof value === 'boolean'
-        ? value
-        : null;
+    return typeof value === 'boolean' ? value : null;
 }
 
 // ============================================================
@@ -549,8 +388,7 @@ function normalizeBoolean(value) {
 // ============================================================
 
 function normalizeStorage(value) {
-    const cleaned =
-        cleanValue(value);
+    const cleaned = cleanValue(value);
 
     if (!cleaned) {
         return null;
@@ -566,9 +404,7 @@ function normalizeStorage(value) {
      * 1TB
      * 128
      */
-    return cleaned
-        .replace(/\s+/g, '')
-        .toUpperCase();
+    return cleaned.replace(/\s+/g, '').toUpperCase();
 }
 
 // ============================================================
@@ -585,14 +421,8 @@ function createEmptyFilters() {
 // Normalize Filters
 // ============================================================
 
-function normalizeSearchFilters(
-    filters,
-) {
-    if (
-        !filters ||
-        typeof filters !== 'object' ||
-        Array.isArray(filters)
-    ) {
+function normalizeSearchFilters(filters) {
+    if (!filters || typeof filters !== 'object' || Array.isArray(filters)) {
         return createEmptyFilters();
     }
 
@@ -600,20 +430,13 @@ function normalizeSearchFilters(
     // Category
     // --------------------------------------------------------
 
-    let category =
-        normalizeCategory(
-            filters.category,
-        );
+    let category = normalizeCategory(filters.category);
 
     // --------------------------------------------------------
     // Type
     // --------------------------------------------------------
 
-    let type =
-        normalizeType(
-            filters.type,
-            category,
-        );
+    let type = normalizeType(filters.type, category);
 
     /*
      * If parser gave us a valid type but no category,
@@ -628,30 +451,15 @@ function normalizeSearchFilters(
      *
      * category = Art
      */
-    if (
-        !category &&
-        filters.type
-    ) {
-        const rawType =
-            findCanonicalValue(
-                filters.type,
-                TYPE_LOOKUP,
-            );
+    if (!category && filters.type) {
+        const rawType = findCanonicalValue(filters.type, TYPE_LOOKUP);
 
-        const inferredCategory =
-            findCategoryByType(
-                rawType,
-            );
+        const inferredCategory = findCategoryByType(rawType);
 
         if (inferredCategory) {
-            category =
-                inferredCategory;
+            category = inferredCategory;
 
-            type =
-                normalizeType(
-                    rawType,
-                    category,
-                );
+            type = normalizeType(rawType, category);
         }
     }
 
@@ -666,68 +474,33 @@ function normalizeSearchFilters(
          * normalizeText() is only used
          * internally for matching.
          */
-        query: cleanValue(
-            filters.query,
-        ),
+        query: cleanValue(filters.query),
 
-        brand:
-            getBrandCanonical(
-                filters.brand,
-            ),
+        brand: getBrandCanonical(filters.brand),
 
-        model:
-            cleanValue(
-                filters.model,
-            ),
+        model: cleanValue(filters.model),
 
         category,
 
         type,
 
-        subcategory:
-            cleanValue(
-                filters.subcategory,
-            ),
+        subcategory: cleanValue(filters.subcategory),
 
-        storage:
-            normalizeStorage(
-                filters.storage,
-            ),
+        storage: normalizeStorage(filters.storage),
 
-        condition:
-            normalizeCondition(
-                filters.condition,
-            ),
+        condition: normalizeCondition(filters.condition),
 
-        fuel:
-            normalizeFuel(
-                filters.fuel,
-            ),
+        fuel: normalizeFuel(filters.fuel),
 
-        maxPrice:
-            normalizeNumber(
-                filters.maxPrice,
-            ),
+        maxPrice: normalizeNumber(filters.maxPrice),
 
-        minPrice:
-            normalizeNumber(
-                filters.minPrice,
-            ),
+        minPrice: normalizeNumber(filters.minPrice),
 
-        currency:
-            normalizeCurrency(
-                filters.currency,
-            ),
+        currency: normalizeCurrency(filters.currency),
 
-        location:
-            cleanValue(
-                filters.location,
-            ),
+        location: cleanValue(filters.location),
 
-        nearMe:
-            normalizeBoolean(
-                filters.nearMe,
-            ),
+        nearMe: normalizeBoolean(filters.nearMe),
     };
 
     // ========================================================
@@ -737,16 +510,9 @@ function normalizeSearchFilters(
     if (
         result.minPrice !== null &&
         result.maxPrice !== null &&
-        result.minPrice >
-            result.maxPrice
+        result.minPrice > result.maxPrice
     ) {
-        [
-            result.minPrice,
-            result.maxPrice,
-        ] = [
-            result.maxPrice,
-            result.minPrice,
-        ];
+        [result.minPrice, result.maxPrice] = [result.maxPrice, result.minPrice];
     }
 
     return result;

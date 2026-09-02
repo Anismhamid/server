@@ -6,12 +6,15 @@ const FUEL_ALIASES = {
         'petrol',
         'petrol engine',
         'gasoline engine',
+        'petrol car',
+        'gas car',
 
         // Arabic
         'بنزين',
         'بترول',
         'محرك بنزين',
         'سيارة بنزين',
+        'بنزین',
 
         // Hebrew
         'בנזין',
@@ -23,6 +26,7 @@ const FUEL_ALIASES = {
         // English
         'diesel',
         'diesel engine',
+        'diesel car',
 
         // Arabic
         'ديزل',
@@ -44,6 +48,7 @@ const FUEL_ALIASES = {
 
         // Arabic
         'هايبرد',
+        'هايبرد سيارة',
         'هجين',
         'هجينة',
         'سيارة هايبرد',

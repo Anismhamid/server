@@ -6,9 +6,7 @@ const { CATEGORY_ALIASES } = require('../utils/categoryAliases');
 
 const { CONDITION_ALIASES } = require('../utils/conditionAliases');
 
-const { normalizeBrand } = require('../utils/brandAliases');
-
-const { BRAND_ALIASES } = require('../utils/brandAliases');
+const { normalizeBrand, BRAND_ALIASES } = require('../utils/brandAliases');
 
 const { FUEL_ALIASES } = require('../utils/fuelAliases');
 
@@ -40,21 +38,6 @@ function cleanValue(value) {
 // Find Alias In Query
 // ============================================================
 
-/**
- * Finds the best alias inside the user's query.
- *
- * Example:
- *
- * "بدي سيارة هيونداي بنزين"
- *
- * can detect:
- *
- * Hyundai
- * gasoline
- * Cars
- *
- * Longest alias wins.
- */
 function findAliasInQuery(query, aliasesMap) {
     const normalizedQuery = normalizeText(query);
 
@@ -62,23 +45,30 @@ function findAliasInQuery(query, aliasesMap) {
         return null;
     }
 
+    if (!aliasesMap || typeof aliasesMap !== 'object') {
+        return null;
+    }
+
     const matches = [];
 
-    for (const [canonical, aliases] of Object.entries(aliasesMap || {})) {
+    for (const [canonical, aliases] of Object.entries(aliasesMap)) {
         if (!Array.isArray(aliases)) {
             continue;
         }
 
-        for (const alias of aliases) {
+        const allAliases = [canonical, ...aliases];
+
+        for (const alias of allAliases) {
             const normalizedAlias = normalizeText(alias);
 
             if (!normalizedAlias) {
                 continue;
             }
 
-            /*
-             * Exact query
-             */
+            // ----------------------------------------------
+            // Exact query
+            // ----------------------------------------------
+
             if (normalizedQuery === normalizedAlias) {
                 matches.push({
                     canonical,
@@ -90,66 +80,46 @@ function findAliasInQuery(query, aliasesMap) {
                 continue;
             }
 
-            /*
-             * Search inside the sentence.
-             *
-             * We use spaces around the query
-             * to reduce partial-word matches.
-             */
-            const paddedQuery = ` ${normalizedQuery} `;
-            const paddedAlias = ` ${normalizedAlias} `;
+            // ----------------------------------------------
+            // Word-boundary matching
+            // ----------------------------------------------
 
-            if (paddedQuery.includes(paddedAlias)) {
+            const index = normalizedQuery.indexOf(normalizedAlias);
+
+            if (index === -1) {
+                continue;
+            }
+
+            const before = index === 0 ? '' : normalizedQuery[index - 1];
+
+            const afterIndex = index + normalizedAlias.length;
+
+            const after =
+                afterIndex >= normalizedQuery.length
+                    ? ''
+                    : normalizedQuery[afterIndex];
+
+            const boundaryRegex = /[\s\-_/.,!?؟،:;()[\]{}]/u;
+
+            const isBoundaryBefore = !before || boundaryRegex.test(before);
+
+            const isBoundaryAfter = !after || boundaryRegex.test(after);
+
+            if (isBoundaryBefore && isBoundaryAfter) {
                 matches.push({
                     canonical,
                     alias: normalizedAlias,
                     length: normalizedAlias.length,
                     exact: false,
                 });
-
-                continue;
-            }
-
-            /*
-             * For multi-word aliases and cases where
-             * punctuation exists.
-             */
-            const index = normalizedQuery.indexOf(normalizedAlias);
-
-            if (index !== -1) {
-                const before = index === 0 ? '' : normalizedQuery[index - 1];
-
-                const after =
-                    index + normalizedAlias.length >= normalizedQuery.length
-                        ? ''
-                        : normalizedQuery[index + normalizedAlias.length];
-
-                const isBoundaryBefore =
-                    !before || /[\s\-_/.,!?؟،:;()[\]{}]/u.test(before);
-
-                const isBoundaryAfter =
-                    !after || /[\s\-_/.,!?؟،:;()[\]{}]/u.test(after);
-
-                if (isBoundaryBefore && isBoundaryAfter) {
-                    matches.push({
-                        canonical,
-                        alias: normalizedAlias,
-                        length: normalizedAlias.length,
-                        exact: false,
-                    });
-                }
             }
         }
     }
 
-    if (matches.length === 0) {
+    if (!matches.length) {
         return null;
     }
 
-    /*
-     * Exact match first.
-     * Then longest alias.
-     */
     matches.sort((a, b) => {
         if (a.exact !== b.exact) {
             return a.exact ? -1 : 1;
@@ -194,7 +164,9 @@ function findAllAliasesInQuery(query, aliasesMap) {
                 continue;
             }
 
-            if (!normalizedQuery.includes(normalizedAlias)) {
+            const index = normalizedQuery.indexOf(normalizedAlias);
+
+            if (index === -1) {
                 continue;
             }
 
@@ -228,21 +200,13 @@ function findBrandInQuery(query) {
         return null;
     }
 
-    /*
-     * First use the aliases map.
-     */
     const aliasMatch = findAliasInQuery(normalizedQuery, BRAND_ALIASES);
 
     if (aliasMatch) {
         return normalizeBrand(aliasMatch) || null;
     }
 
-    /*
-     * Fallback:
-     *
-     * Check every canonical brand.
-     */
-    for (const canonical of Object.keys(BRAND_ALIASES)) {
+    for (const canonical of Object.keys(BRAND_ALIASES || {})) {
         const normalizedCanonical = normalizeText(canonical);
 
         if (
@@ -261,21 +225,10 @@ function findBrandInQuery(query) {
 // ============================================================
 
 function findCategoryAndType(query) {
-    /*
-     * Try explicit category first.
-     */
     const category = findAliasInQuery(query, CATEGORY_ALIASES);
 
-    /*
-     * Then try type.
-     */
     const type = findAliasInQuery(query, TYPE_ALIASES);
 
-    /*
-     * If category exists,
-     * validate the detected type later
-     * inside normalizeSearchFilters().
-     */
     if (category) {
         return {
             category,
@@ -283,22 +236,11 @@ function findCategoryAndType(query) {
         };
     }
 
-    /*
-     * If there is no category but
-     * we found a type, infer category.
-     *
-     * Example:
-     *
-     * "لوحه زيتيه"
-     *
-     * type = paintings
-     * category = Art
-     */
     if (type) {
         const inferredCategory = findCategoryByType(type);
 
         return {
-            category: inferredCategory,
+            category: inferredCategory || null,
             type,
         };
     }
@@ -336,15 +278,6 @@ function findStorageInQuery(query) {
         return null;
     }
 
-    /*
-     * Examples:
-     *
-     * 128GB
-     * 256GB
-     * 512 GB
-     * 1TB
-     * 2 TB
-     */
     const match = normalizedQuery.match(/\b(\d+(?:\.\d+)?)\s*(gb|tb)\b/i);
 
     if (!match) {
@@ -371,13 +304,17 @@ function findPriceInQuery(query) {
     let minPrice = null;
     let maxPrice = null;
 
-    /*
-     * 1000 - 5000
-     * 1000 to 5000
-     * 1000 עד 5000
-     */
+    // --------------------------------------------------------
+    // Range
+    //
+    // 1000 - 5000
+    // 1000 to 5000
+    // 1000 حتى 5000
+    // 1000 עד 5000
+    // --------------------------------------------------------
+
     const rangeMatch = normalizedQuery.match(
-        /(\d[\d,]*)\s*(?:-|to|حتى|الى|إلى|עד)\s*(\d[\d,]*)/,
+        /(\d[\d,]*)\s*(?:-|to|حتى|الى|إلى|עד)\s*(\d[\d,]*)/i,
     );
 
     if (rangeMatch) {
@@ -386,27 +323,30 @@ function findPriceInQuery(query) {
         maxPrice = Number(rangeMatch[2].replace(/,/g, ''));
 
         return {
-            minPrice,
-            maxPrice,
+            minPrice: Number.isFinite(minPrice) ? minPrice : null,
+
+            maxPrice: Number.isFinite(maxPrice) ? maxPrice : null,
         };
     }
 
-    /*
-     * max / up to / under
-     */
+    // --------------------------------------------------------
+    // Maximum
+    // --------------------------------------------------------
+
     const maxMatch = normalizedQuery.match(
-        /(?:under|below|up to|maximum|max|أقل من|اقل من|حد أقصى|حتى|עד)\s*(\d[\d,]*)/,
+        /(?:under|below|up to|maximum|max|أقل من|اقل من|حد أقصى|حتى|עד)\s*(\d[\d,]*)/i,
     );
 
     if (maxMatch) {
         maxPrice = Number(maxMatch[1].replace(/,/g, ''));
     }
 
-    /*
-     * min / above / from
-     */
+    // --------------------------------------------------------
+    // Minimum
+    // --------------------------------------------------------
+
     const minMatch = normalizedQuery.match(
-        /(?:over|above|minimum|min|أكثر من|اكثر من|من|ابتداء من|מעל|לפחות)\s*(\d[\d,]*)/,
+        /(?:over|above|minimum|min|أكثر من|اكثر من|من|ابتداء من|מעל|לפחות)\s*(\d[\d,]*)/i,
     );
 
     if (minMatch) {
@@ -435,9 +375,14 @@ function findCurrencyInQuery(query) {
         'ils',
         'nis',
         '₪',
+
+        'shekel',
+        'shekels',
+
         'شيكل',
         'شيكل اسرائيلي',
         'شيكل إسرائيلي',
+
         'שקל',
         'שקלים',
     ];
@@ -474,7 +419,6 @@ function findNearMeInQuery(query) {
 
         'بالقرب مني',
         'قريب مني',
-        'قريب مني',
         'بالمنطقة',
 
         'לידי',
@@ -493,55 +437,111 @@ function findNearMeInQuery(query) {
 // Model
 // ============================================================
 
+function escapeRegex(value) {
+    return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function buildModelQuery(model, brand) {
+    const aliases = getBrandModelAliases(brand, model) || [];
+
+    const values = [model, ...aliases];
+
+    const uniqueValues = [...new Set(values.filter(Boolean).map(String))];
+
+    return {
+        $in: uniqueValues.map(
+            (value) => new RegExp(`^${escapeRegex(value)}$`, 'i'),
+        ),
+    };
+}
+
 function findModelInQuery(query, brand = null) {
     const normalizedQuery = normalizeText(query);
 
-    if (!normalizedQuery) {
-        return null;
-    }
+    // إذا عرفنا البراند، ابحث داخله فقط
+    if (brand && MODEL_ALIASES[brand]) {
+        const models = MODEL_ALIASES[brand];
 
-    // --------------------------------------------------------
-    // If brand is known, search only inside that brand
-    // --------------------------------------------------------
+        const matches = [];
 
-    if (brand) {
-        const brandKey = Object.keys(MODEL_ALIASES || {}).find(
-            (key) => normalizeText(key) === normalizeText(brand),
-        );
+        for (const [canonicalModel, aliases] of Object.entries(models)) {
+            const allAliases = [
+                canonicalModel,
+                ...(Array.isArray(aliases) ? aliases : []),
+            ];
 
-        if (brandKey) {
-            return findAliasInQuery(normalizedQuery, MODEL_ALIASES[brandKey]);
+            for (const alias of allAliases) {
+                const normalizedAlias = normalizeText(alias);
+
+                if (!normalizedAlias) continue;
+
+                const regex = new RegExp(
+                    `(^|[\\s\\-_/.,!?؟،:;()[\\]{}])${escapeRegExp(normalizedAlias)}(?=$|[\\s\\-_/.,!?؟،:;()[\\]{}])`,
+                    'iu',
+                );
+
+                if (regex.test(normalizedQuery)) {
+                    matches.push({
+                        model: canonicalModel,
+                        alias: normalizedAlias,
+                        length: normalizedAlias.length,
+                    });
+
+                    break;
+                }
+            }
+        }
+
+        if (matches.length > 0) {
+            matches.sort((a, b) => b.length - a.length);
+            return matches[0].model;
         }
     }
 
-    // --------------------------------------------------------
-    // If brand is unknown, search across all brands
-    // --------------------------------------------------------
-
+    // إذا لم نعرف البراند، ابحث في جميع البراندات
     const matches = [];
 
-    for (const [brandName, models] of Object.entries(MODEL_ALIASES || {})) {
-        if (!models || typeof models !== 'object' || Array.isArray(models)) {
-            continue;
+    for (const [brandName, models] of Object.entries(MODEL_ALIASES)) {
+        for (const [canonicalModel, aliases] of Object.entries(models)) {
+            const allAliases = [
+                canonicalModel,
+                ...(Array.isArray(aliases) ? aliases : []),
+            ];
+
+            for (const alias of allAliases) {
+                const normalizedAlias = normalizeText(alias);
+
+                if (!normalizedAlias) continue;
+
+                const regex = new RegExp(
+                    `(^|[\\s\\-_/.,!?؟،:;()[\\]{}])${escapeRegExp(normalizedAlias)}(?=$|[\\s\\-_/.,!?؟،:;()[\\]{}])`,
+                    'iu',
+                );
+
+                if (regex.test(normalizedQuery)) {
+                    matches.push({
+                        brand: brandName,
+                        model: canonicalModel,
+                        alias: normalizedAlias,
+                        length: normalizedAlias.length,
+                    });
+
+                    break;
+                }
+            }
         }
-
-        const model = findAliasInQuery(normalizedQuery, models);
-
-        if (!model) {
-            continue;
-        }
-
-        matches.push({
-            brand: brandName,
-            model,
-            length: normalizeText(model).length,
-        });
     }
 
-    if (!matches.length) {
+    if (matches.length === 0) {
         return null;
     }
 
+    // الأطول أولاً حتى:
+    // iPhone 15 Pro Max
+    // يتغلب على:
+    // iPhone 15 Pro
+    // ويتغلب على:
+    // iPhone 15
     matches.sort((a, b) => b.length - a.length);
 
     return matches[0].model;
@@ -556,17 +556,9 @@ function findBrandByModel(model) {
         return null;
     }
 
-    const normalizedModel = normalizeText(model);
-
-    for (const [brand, models] of Object.entries(MODEL_ALIASES || {})) {
-        if (!models || typeof models !== 'object') {
-            continue;
-        }
-
-        for (const [canonicalModel] of Object.entries(models)) {
-            if (normalizeText(canonicalModel) === normalizedModel) {
-                return brand;
-            }
+    for (const [brand, models] of Object.entries(MODEL_ALIASES)) {
+        if (Object.prototype.hasOwnProperty.call(models, model)) {
+            return brand;
         }
     }
 
@@ -581,22 +573,7 @@ function parseSearchQuery(query) {
     const cleanQuery = cleanValue(query);
 
     if (!cleanQuery) {
-        return {
-            query: null,
-            brand: null,
-            model: null,
-            category: null,
-            type: null,
-            subcategory: null,
-            storage: null,
-            condition: null,
-            fuel: null,
-            maxPrice: null,
-            minPrice: null,
-            currency: null,
-            location: null,
-            nearMe: null,
-        };
+        return normalizeSearchFilters({});
     }
 
     // --------------------------------------------------------
@@ -662,25 +639,10 @@ function parseSearchQuery(query) {
     const nearMe = findNearMeInQuery(cleanQuery);
 
     // --------------------------------------------------------
-    // Result
+    // Raw filters
     // --------------------------------------------------------
-    console.log('🧪 Model Result:', model);
 
-    console.log('🧠 Parsed Search:', {
-        query: cleanQuery,
-        brand,
-        model,
-        category,
-        type,
-        condition,
-        fuel,
-        storage,
-        minPrice,
-        maxPrice,
-        currency,
-        nearMe,
-    });
-    return {
+    const rawFilters = {
         query: cleanQuery,
 
         brand,
@@ -694,6 +656,7 @@ function parseSearchQuery(query) {
         storage,
 
         condition,
+
         fuel,
 
         maxPrice,
@@ -705,76 +668,16 @@ function parseSearchQuery(query) {
 
         nearMe,
     };
-}
 
-// ============================================================
-// Model
-// ============================================================
+    // --------------------------------------------------------
+    // Final normalization
+    // --------------------------------------------------------
 
-function findModelInQuery(query, brand = null) {
-    const normalizedQuery = normalizeText(query);
+    const filters = normalizeSearchFilters(rawFilters);
 
-    if (!normalizedQuery) {
-        return null;
-    }
+    console.log('🧠 Parsed Search:', filters);
 
-    /*
-     * If brand is known, search only inside
-     * that brand's models.
-     */
-    if (brand && MODEL_ALIASES[brand]) {
-        return findAliasInQuery(normalizedQuery, MODEL_ALIASES[brand]);
-    }
-
-    /*
-     * If brand was not detected,
-     * search across all brands.
-     */
-    const matches = [];
-
-    for (const [brandName, models] of Object.entries(MODEL_ALIASES || {})) {
-        if (!models || typeof models !== 'object') {
-            continue;
-        }
-
-        const model = findAliasInQuery(normalizedQuery, models);
-
-        if (model) {
-            const aliases = models[model];
-
-            let longestAlias = normalizeText(model).length;
-
-            if (Array.isArray(aliases)) {
-                for (const alias of aliases) {
-                    const normalizedAlias = normalizeText(alias);
-
-                    if (
-                        normalizedAlias &&
-                        normalizedQuery.includes(normalizedAlias)
-                    ) {
-                        longestAlias = Math.max(
-                            longestAlias,
-                            normalizedAlias.length,
-                        );
-                    }
-                }
-            }
-
-            matches.push({
-                brand: brandName,
-                model,
-                length: longestAlias,
-            });
-        }
-    }
-
-    if (!matches.length) {
-        return null;
-    }
-
-    matches.sort((a, b) => b.length - a.length);
-
-    return matches[0].model;
+    return filters;
 }
 
 // ============================================================
@@ -783,18 +686,26 @@ function findModelInQuery(query, brand = null) {
 
 module.exports = {
     parseSearchQuery,
+
     findModelInQuery,
 
     findAliasInQuery,
+
     findAllAliasesInQuery,
 
     findBrandInQuery,
+
     findCategoryAndType,
+
     findFuelInQuery,
+
     findConditionInQuery,
 
     findStorageInQuery,
+
     findPriceInQuery,
+
     findCurrencyInQuery,
+
     findNearMeInQuery,
 };
