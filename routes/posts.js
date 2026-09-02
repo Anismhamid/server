@@ -388,9 +388,9 @@ router.get('/:category', async (req, res) => {
 // PATCH /api/posts/:postId/like
 router.patch(
     '/:postId/like',
+    auth,
     requirePermission('canUseAccount'),
     requirePermission('canCreatePosts'),
-    auth,
     async (req, res) => {
         try {
             const { postId } = req.params;
