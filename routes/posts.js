@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
                 select: 'name image slug _id',
             });
 
-        return res.status(200).json(posts);
+        return res.status(200).json(posts.reverse());
     } catch (error) {
         console.error('Error fetching posts:', error);
         return res.status(500).json({ error: error.message });

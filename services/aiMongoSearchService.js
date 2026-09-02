@@ -9,14 +9,34 @@ const {
 } = require('../utils/fuelAliases');
 
 function escapeRegex(value) {
-    if (!value || typeof value !== 'string') {
-        return '';
-    }
+    return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 
-    return value.replace(
-        /[.*+?^${}()|[\]\\]/g,
-        '\\$&'
-    );
+function buildModelQuery(model, brand) {
+    const aliases = getBrandModelAliases(brand, model) || [];
+
+    const values = [
+        model,
+        ...aliases,
+    ];
+
+    const uniqueValues = [
+        ...new Set(
+            values
+                .filter(Boolean)
+                .map(String)
+        ),
+    ];
+
+    return {
+        $in: uniqueValues.map(
+            value =>
+                new RegExp(
+                    `^${escapeRegex(value)}$`,
+                    'i'
+                )
+        ),
+    };
 }
 
 function aliasesToRegex(aliases) {

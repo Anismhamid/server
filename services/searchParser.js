@@ -3,15 +3,13 @@
 // ============================================================
 
 const { CATEGORY_ALIASES } = require('../utils/categoryAliases');
-
 const { CONDITION_ALIASES } = require('../utils/conditionAliases');
-
-const { normalizeBrand, BRAND_ALIASES } = require('../utils/brandAliases');
-
+const {
+    normalizeBrand,
+    BRAND_ALIASES,
+} = require('../utils/brandAliases');
 const { FUEL_ALIASES } = require('../utils/fuelAliases');
-
 const { TYPE_ALIASES } = require('../utils/typeAliases');
-
 const { MODEL_ALIASES } = require('../utils/modelAliases');
 
 const {
@@ -32,6 +30,35 @@ function cleanValue(value) {
     const cleaned = String(value).trim();
 
     return cleaned || null;
+}
+
+// Escape regex characters safely
+function escapeRegex(value) {
+    return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// ============================================================
+// Alias Boundary
+// ============================================================
+
+function isAliasBoundary(text, start, end) {
+    const before = start === 0 ? '' : text[start - 1];
+
+    const after =
+        end >= text.length
+            ? ''
+            : text[end];
+
+    const boundaryRegex =
+        /[\s\-_/.,!?؟،:;()[\]{}]/u;
+
+    const isBoundaryBefore =
+        !before || boundaryRegex.test(before);
+
+    const isBoundaryAfter =
+        !after || boundaryRegex.test(after);
+
+    return isBoundaryBefore && isBoundaryAfter;
 }
 
 // ============================================================
@@ -56,7 +83,10 @@ function findAliasInQuery(query, aliasesMap) {
             continue;
         }
 
-        const allAliases = [canonical, ...aliases];
+        const allAliases = [
+            canonical,
+            ...aliases,
+        ];
 
         for (const alias of allAliases) {
             const normalizedAlias = normalizeText(alias);
@@ -65,10 +95,7 @@ function findAliasInQuery(query, aliasesMap) {
                 continue;
             }
 
-            // ----------------------------------------------
             // Exact query
-            // ----------------------------------------------
-
             if (normalizedQuery === normalizedAlias) {
                 matches.push({
                     canonical,
@@ -80,38 +107,39 @@ function findAliasInQuery(query, aliasesMap) {
                 continue;
             }
 
-            // ----------------------------------------------
-            // Word-boundary matching
-            // ----------------------------------------------
+            let startIndex = 0;
 
-            const index = normalizedQuery.indexOf(normalizedAlias);
+            while (true) {
+                const index = normalizedQuery.indexOf(
+                    normalizedAlias,
+                    startIndex,
+                );
 
-            if (index === -1) {
-                continue;
-            }
+                if (index === -1) {
+                    break;
+                }
 
-            const before = index === 0 ? '' : normalizedQuery[index - 1];
+                const endIndex =
+                    index + normalizedAlias.length;
 
-            const afterIndex = index + normalizedAlias.length;
+                if (
+                    isAliasBoundary(
+                        normalizedQuery,
+                        index,
+                        endIndex,
+                    )
+                ) {
+                    matches.push({
+                        canonical,
+                        alias: normalizedAlias,
+                        length: normalizedAlias.length,
+                        exact: false,
+                    });
 
-            const after =
-                afterIndex >= normalizedQuery.length
-                    ? ''
-                    : normalizedQuery[afterIndex];
+                    break;
+                }
 
-            const boundaryRegex = /[\s\-_/.,!?؟،:;()[\]{}]/u;
-
-            const isBoundaryBefore = !before || boundaryRegex.test(before);
-
-            const isBoundaryAfter = !after || boundaryRegex.test(after);
-
-            if (isBoundaryBefore && isBoundaryAfter) {
-                matches.push({
-                    canonical,
-                    alias: normalizedAlias,
-                    length: normalizedAlias.length,
-                    exact: false,
-                });
+                startIndex = index + 1;
             }
         }
     }
@@ -153,7 +181,10 @@ function findAllAliasesInQuery(query, aliasesMap) {
             continue;
         }
 
-        const allAliases = [canonical, ...aliases];
+        const allAliases = [
+            canonical,
+            ...aliases,
+        ];
 
         let bestMatch = null;
 
@@ -164,14 +195,40 @@ function findAllAliasesInQuery(query, aliasesMap) {
                 continue;
             }
 
-            const index = normalizedQuery.indexOf(normalizedAlias);
+            let startIndex = 0;
 
-            if (index === -1) {
-                continue;
-            }
+            while (true) {
+                const index = normalizedQuery.indexOf(
+                    normalizedAlias,
+                    startIndex,
+                );
 
-            if (!bestMatch || normalizedAlias.length > bestMatch.length) {
-                bestMatch = normalizedAlias;
+                if (index === -1) {
+                    break;
+                }
+
+                const endIndex =
+                    index + normalizedAlias.length;
+
+                if (
+                    isAliasBoundary(
+                        normalizedQuery,
+                        index,
+                        endIndex,
+                    )
+                ) {
+                    if (
+                        !bestMatch ||
+                        normalizedAlias.length >
+                            bestMatch.length
+                    ) {
+                        bestMatch = normalizedAlias;
+                    }
+
+                    break;
+                }
+
+                startIndex = index + 1;
             }
         }
 
@@ -184,7 +241,9 @@ function findAllAliasesInQuery(query, aliasesMap) {
         }
     }
 
-    matches.sort((a, b) => b.length - a.length);
+    matches.sort(
+        (a, b) => b.length - a.length,
+    );
 
     return matches;
 }
@@ -200,24 +259,74 @@ function findBrandInQuery(query) {
         return null;
     }
 
-    const aliasMatch = findAliasInQuery(normalizedQuery, BRAND_ALIASES);
+    const aliasMatch = findAliasInQuery(
+        normalizedQuery,
+        BRAND_ALIASES,
+    );
 
     if (aliasMatch) {
         return normalizeBrand(aliasMatch) || null;
     }
 
-    for (const canonical of Object.keys(BRAND_ALIASES || {})) {
-        const normalizedCanonical = normalizeText(canonical);
+    return null;
+}
 
-        if (
-            normalizedCanonical &&
-            normalizedQuery.includes(normalizedCanonical)
-        ) {
-            return normalizeBrand(canonical) || null;
-        }
+// ============================================================
+// Get Brand Entry
+// ============================================================
+
+function getBrandModelMap(brand) {
+    if (!brand || !MODEL_ALIASES) {
+        return null;
     }
 
-    return null;
+    const normalizedBrand = normalizeText(brand);
+
+    const entry = Object.entries(
+        MODEL_ALIASES,
+    ).find(([brandName]) => {
+        return (
+            normalizeText(brandName) ===
+            normalizedBrand
+        );
+    });
+
+    return entry ? entry[1] : null;
+}
+
+// ============================================================
+// Get Model Aliases
+// ============================================================
+
+function getBrandModelAliases(brand, model) {
+    if (!brand || !model) {
+        return [];
+    }
+
+    const models = getBrandModelMap(brand);
+
+    if (!models) {
+        return [];
+    }
+
+    const normalizedModel = normalizeText(model);
+
+    const entry = Object.entries(models).find(
+        ([modelName]) => {
+            return (
+                normalizeText(modelName) ===
+                normalizedModel
+            );
+        },
+    );
+
+    if (!entry) {
+        return [];
+    }
+
+    return Array.isArray(entry[1])
+        ? entry[1]
+        : [];
 }
 
 // ============================================================
@@ -225,9 +334,15 @@ function findBrandInQuery(query) {
 // ============================================================
 
 function findCategoryAndType(query) {
-    const category = findAliasInQuery(query, CATEGORY_ALIASES);
+    const category = findAliasInQuery(
+        query,
+        CATEGORY_ALIASES,
+    );
 
-    const type = findAliasInQuery(query, TYPE_ALIASES);
+    const type = findAliasInQuery(
+        query,
+        TYPE_ALIASES,
+    );
 
     if (category) {
         return {
@@ -237,7 +352,8 @@ function findCategoryAndType(query) {
     }
 
     if (type) {
-        const inferredCategory = findCategoryByType(type);
+        const inferredCategory =
+            findCategoryByType(type);
 
         return {
             category: inferredCategory || null,
@@ -256,7 +372,10 @@ function findCategoryAndType(query) {
 // ============================================================
 
 function findFuelInQuery(query) {
-    return findAliasInQuery(query, FUEL_ALIASES);
+    return findAliasInQuery(
+        query,
+        FUEL_ALIASES,
+    );
 }
 
 // ============================================================
@@ -264,7 +383,10 @@ function findFuelInQuery(query) {
 // ============================================================
 
 function findConditionInQuery(query) {
-    return findAliasInQuery(query, CONDITION_ALIASES);
+    return findAliasInQuery(
+        query,
+        CONDITION_ALIASES,
+    );
 }
 
 // ============================================================
@@ -278,7 +400,9 @@ function findStorageInQuery(query) {
         return null;
     }
 
-    const match = normalizedQuery.match(/\b(\d+(?:\.\d+)?)\s*(gb|tb)\b/i);
+    const match = normalizedQuery.match(
+        /(?:^|[\s\-_/.,])(\d+(?:\.\d+)?)\s*(gb|tb)(?=$|[\s\-_/.,])/i,
+    );
 
     if (!match) {
         return null;
@@ -306,11 +430,6 @@ function findPriceInQuery(query) {
 
     // --------------------------------------------------------
     // Range
-    //
-    // 1000 - 5000
-    // 1000 to 5000
-    // 1000 حتى 5000
-    // 1000 עד 5000
     // --------------------------------------------------------
 
     const rangeMatch = normalizedQuery.match(
@@ -318,14 +437,22 @@ function findPriceInQuery(query) {
     );
 
     if (rangeMatch) {
-        minPrice = Number(rangeMatch[1].replace(/,/g, ''));
+        minPrice = Number(
+            rangeMatch[1].replace(/,/g, ''),
+        );
 
-        maxPrice = Number(rangeMatch[2].replace(/,/g, ''));
+        maxPrice = Number(
+            rangeMatch[2].replace(/,/g, ''),
+        );
 
         return {
-            minPrice: Number.isFinite(minPrice) ? minPrice : null,
+            minPrice: Number.isFinite(minPrice)
+                ? minPrice
+                : null,
 
-            maxPrice: Number.isFinite(maxPrice) ? maxPrice : null,
+            maxPrice: Number.isFinite(maxPrice)
+                ? maxPrice
+                : null,
         };
     }
 
@@ -338,7 +465,9 @@ function findPriceInQuery(query) {
     );
 
     if (maxMatch) {
-        maxPrice = Number(maxMatch[1].replace(/,/g, ''));
+        maxPrice = Number(
+            maxMatch[1].replace(/,/g, ''),
+        );
     }
 
     // --------------------------------------------------------
@@ -346,17 +475,23 @@ function findPriceInQuery(query) {
     // --------------------------------------------------------
 
     const minMatch = normalizedQuery.match(
-        /(?:over|above|minimum|min|أكثر من|اكثر من|من|ابتداء من|מעל|לפחות)\s*(\d[\d,]*)/i,
+        /(?:over|above|minimum|min|أكثر من|اكثر من|ابتداء من|مעל|לפחות)\s*(\d[\d,]*)/i,
     );
 
     if (minMatch) {
-        minPrice = Number(minMatch[1].replace(/,/g, ''));
+        minPrice = Number(
+            minMatch[1].replace(/,/g, ''),
+        );
     }
 
     return {
-        minPrice: Number.isFinite(minPrice) ? minPrice : null,
+        minPrice: Number.isFinite(minPrice)
+            ? minPrice
+            : null,
 
-        maxPrice: Number.isFinite(maxPrice) ? maxPrice : null,
+        maxPrice: Number.isFinite(maxPrice)
+            ? maxPrice
+            : null,
     };
 }
 
@@ -375,7 +510,6 @@ function findCurrencyInQuery(query) {
         'ils',
         'nis',
         '₪',
-
         'shekel',
         'shekels',
 
@@ -388,11 +522,14 @@ function findCurrencyInQuery(query) {
     ];
 
     for (const currency of currencies) {
-        const normalizedCurrency = normalizeText(currency);
+        const normalizedCurrency =
+            normalizeText(currency);
 
         if (
             normalizedCurrency &&
-            normalizedQuery.includes(normalizedCurrency)
+            normalizedQuery.includes(
+                normalizedCurrency,
+            )
         ) {
             return 'ILS';
         }
@@ -426,104 +563,149 @@ function findNearMeInQuery(query) {
         'באזור שלי',
     ];
 
-    return aliases.some((alias) =>
-        normalizedQuery.includes(normalizeText(alias)),
-    )
-        ? true
-        : null;
+    const found = aliases.some((alias) => {
+        return normalizedQuery.includes(
+            normalizeText(alias),
+        );
+    });
+
+    return found ? true : null;
 }
 
 // ============================================================
 // Model
 // ============================================================
 
-function escapeRegex(value) {
-    return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function buildModelQuery(model, brand) {
-    const aliases = getBrandModelAliases(brand, model) || [];
-
-    const values = [model, ...aliases];
-
-    const uniqueValues = [...new Set(values.filter(Boolean).map(String))];
-
-    return {
-        $in: uniqueValues.map(
-            (value) => new RegExp(`^${escapeRegex(value)}$`, 'i'),
-        ),
-    };
-}
-
 function findModelInQuery(query, brand = null) {
     const normalizedQuery = normalizeText(query);
 
-    // إذا عرفنا البراند، ابحث داخله فقط
-    if (brand && MODEL_ALIASES[brand]) {
-        const models = MODEL_ALIASES[brand];
+    if (!normalizedQuery) {
+        return null;
+    }
 
-        const matches = [];
+    const matches = [];
 
-        for (const [canonicalModel, aliases] of Object.entries(models)) {
-            const allAliases = [
+    // ========================================================
+    // Search within known brand
+    // ========================================================
+
+    if (brand) {
+        const models = getBrandModelMap(brand);
+
+        if (models) {
+            for (const [
                 canonicalModel,
-                ...(Array.isArray(aliases) ? aliases : []),
-            ];
+                aliases,
+            ] of Object.entries(models)) {
+                const allAliases = [
+                    canonicalModel,
+                    ...(Array.isArray(aliases)
+                        ? aliases
+                        : []),
+                ];
 
-            for (const alias of allAliases) {
-                const normalizedAlias = normalizeText(alias);
+                for (const alias of allAliases) {
+                    const normalizedAlias =
+                        normalizeText(alias);
 
-                if (!normalizedAlias) continue;
+                    if (!normalizedAlias) {
+                        continue;
+                    }
 
-                const regex = new RegExp(
-                    `(^|[\\s\\-_/.,!?؟،:;()[\\]{}])${escapeRegExp(normalizedAlias)}(?=$|[\\s\\-_/.,!?؟،:;()[\\]{}])`,
-                    'iu',
-                );
+                    const index =
+                        normalizedQuery.indexOf(
+                            normalizedAlias,
+                        );
 
-                if (regex.test(normalizedQuery)) {
+                    if (index === -1) {
+                        continue;
+                    }
+
+                    const endIndex =
+                        index +
+                        normalizedAlias.length;
+
+                    if (
+                        !isAliasBoundary(
+                            normalizedQuery,
+                            index,
+                            endIndex,
+                        )
+                    ) {
+                        continue;
+                    }
+
                     matches.push({
+                        brand,
                         model: canonicalModel,
                         alias: normalizedAlias,
-                        length: normalizedAlias.length,
+                        length:
+                            normalizedAlias.length,
                     });
 
                     break;
                 }
             }
         }
-
-        if (matches.length > 0) {
-            matches.sort((a, b) => b.length - a.length);
-            return matches[0].model;
-        }
     }
 
-    // إذا لم نعرف البراند، ابحث في جميع البراندات
-    const matches = [];
+    // ========================================================
+    // Search all brands if brand unknown
+    // ========================================================
 
-    for (const [brandName, models] of Object.entries(MODEL_ALIASES)) {
-        for (const [canonicalModel, aliases] of Object.entries(models)) {
-            const allAliases = [
+    if (!matches.length && !brand) {
+        for (const [
+            brandName,
+            models,
+        ] of Object.entries(MODEL_ALIASES || {})) {
+            for (const [
                 canonicalModel,
-                ...(Array.isArray(aliases) ? aliases : []),
-            ];
+                aliases,
+            ] of Object.entries(models || {})) {
+                const allAliases = [
+                    canonicalModel,
+                    ...(Array.isArray(aliases)
+                        ? aliases
+                        : []),
+                ];
 
-            for (const alias of allAliases) {
-                const normalizedAlias = normalizeText(alias);
+                for (const alias of allAliases) {
+                    const normalizedAlias =
+                        normalizeText(alias);
 
-                if (!normalizedAlias) continue;
+                    if (!normalizedAlias) {
+                        continue;
+                    }
 
-                const regex = new RegExp(
-                    `(^|[\\s\\-_/.,!?؟،:;()[\\]{}])${escapeRegExp(normalizedAlias)}(?=$|[\\s\\-_/.,!?؟،:;()[\\]{}])`,
-                    'iu',
-                );
+                    const index =
+                        normalizedQuery.indexOf(
+                            normalizedAlias,
+                        );
 
-                if (regex.test(normalizedQuery)) {
+                    if (index === -1) {
+                        continue;
+                    }
+
+                    const endIndex =
+                        index +
+                        normalizedAlias.length;
+
+                    if (
+                        !isAliasBoundary(
+                            normalizedQuery,
+                            index,
+                            endIndex,
+                        )
+                    ) {
+                        continue;
+                    }
+
                     matches.push({
                         brand: brandName,
                         model: canonicalModel,
                         alias: normalizedAlias,
-                        length: normalizedAlias.length,
+                        length:
+                            normalizedAlias.length,
                     });
 
                     break;
@@ -532,17 +714,14 @@ function findModelInQuery(query, brand = null) {
         }
     }
 
-    if (matches.length === 0) {
+    if (!matches.length) {
         return null;
     }
 
-    // الأطول أولاً حتى:
-    // iPhone 15 Pro Max
-    // يتغلب على:
-    // iPhone 15 Pro
-    // ويتغلب على:
-    // iPhone 15
-    matches.sort((a, b) => b.length - a.length);
+    // Longest model wins
+    matches.sort((a, b) => {
+        return b.length - a.length;
+    });
 
     return matches[0].model;
 }
@@ -556,13 +735,72 @@ function findBrandByModel(model) {
         return null;
     }
 
-    for (const [brand, models] of Object.entries(MODEL_ALIASES)) {
-        if (Object.prototype.hasOwnProperty.call(models, model)) {
-            return brand;
+    const normalizedModel =
+        normalizeText(model);
+
+    for (const [
+        brand,
+        models,
+    ] of Object.entries(MODEL_ALIASES || {})) {
+        for (const modelName of Object.keys(
+            models || {},
+        )) {
+            if (
+                normalizeText(modelName) ===
+                normalizedModel
+            ) {
+                return brand;
+            }
         }
     }
 
     return null;
+}
+
+// ============================================================
+// Build Model Query
+// ============================================================
+
+function buildModelQuery(model, brand) {
+    if (!model) {
+        return null;
+    }
+
+    const aliases =
+        getBrandModelAliases(
+            brand,
+            model,
+        );
+
+    const values = [
+        model,
+        ...aliases,
+    ];
+
+    const uniqueValues = [
+        ...new Set(
+            values
+                .filter(Boolean)
+                .map((value) =>
+                    String(value).trim(),
+                )
+                .filter(Boolean),
+        ),
+    ];
+
+    if (!uniqueValues.length) {
+        return null;
+    }
+
+    return {
+        $in: uniqueValues.map(
+            (value) =>
+                new RegExp(
+                    `^${escapeRegex(value)}$`,
+                    'i',
+                ),
+        ),
+    };
 }
 
 // ============================================================
@@ -580,102 +818,159 @@ function parseSearchQuery(query) {
     // Category + Type
     // --------------------------------------------------------
 
-    const { category, type } = findCategoryAndType(cleanQuery);
+    const {
+        category,
+        type,
+    } = findCategoryAndType(cleanQuery);
 
     // --------------------------------------------------------
     // Brand
     // --------------------------------------------------------
 
-    let brand = findBrandInQuery(cleanQuery);
+    let brand =
+        findBrandInQuery(cleanQuery);
 
     // --------------------------------------------------------
     // Model
     // --------------------------------------------------------
 
-    const model = findModelInQuery(cleanQuery, brand);
+    let model =
+        findModelInQuery(
+            cleanQuery,
+            brand,
+        );
 
     // --------------------------------------------------------
     // Infer brand from model
     // --------------------------------------------------------
 
     if (!brand && model) {
-        brand = findBrandByModel(model);
+        brand =
+            findBrandByModel(model);
+    }
+
+    // --------------------------------------------------------
+    // If brand was inferred, search model again
+    // --------------------------------------------------------
+
+    if (brand && !model) {
+        model =
+            findModelInQuery(
+                cleanQuery,
+                brand,
+            );
     }
 
     // --------------------------------------------------------
     // Condition
     // --------------------------------------------------------
 
-    const condition = findConditionInQuery(cleanQuery);
+    const condition =
+        findConditionInQuery(
+            cleanQuery,
+        );
 
     // --------------------------------------------------------
     // Fuel
     // --------------------------------------------------------
 
-    const fuel = findFuelInQuery(cleanQuery);
+    const fuel =
+        findFuelInQuery(cleanQuery);
 
     // --------------------------------------------------------
     // Storage
     // --------------------------------------------------------
 
-    const storage = findStorageInQuery(cleanQuery);
+    const storage =
+        findStorageInQuery(
+            cleanQuery,
+        );
 
     // --------------------------------------------------------
     // Price
     // --------------------------------------------------------
 
-    const { minPrice, maxPrice } = findPriceInQuery(cleanQuery);
+    const {
+        minPrice,
+        maxPrice,
+    } = findPriceInQuery(
+        cleanQuery,
+    );
 
     // --------------------------------------------------------
     // Currency
     // --------------------------------------------------------
 
-    const currency = findCurrencyInQuery(cleanQuery);
+    const currency =
+        findCurrencyInQuery(
+            cleanQuery,
+        );
 
     // --------------------------------------------------------
     // Near Me
     // --------------------------------------------------------
 
-    const nearMe = findNearMeInQuery(cleanQuery);
+    const nearMe =
+        findNearMeInQuery(
+            cleanQuery,
+        );
 
     // --------------------------------------------------------
-    // Raw filters
+    // Raw Filters
     // --------------------------------------------------------
 
     const rawFilters = {
         query: cleanQuery,
 
-        brand,
-        model,
+        brand: brand || null,
 
-        category,
-        type,
+        model: model || null,
+
+        category:
+            category || null,
+
+        type:
+            type || null,
 
         subcategory: null,
 
-        storage,
+        storage:
+            storage || null,
 
-        condition,
+        condition:
+            condition || null,
 
-        fuel,
+        fuel:
+            fuel || null,
 
-        maxPrice,
-        minPrice,
+        maxPrice:
+            maxPrice ?? null,
 
-        currency,
+        minPrice:
+            minPrice ?? null,
+
+        currency:
+            currency || null,
 
         location: null,
 
-        nearMe,
+        nearMe:
+            nearMe || null,
     };
 
     // --------------------------------------------------------
     // Final normalization
     // --------------------------------------------------------
 
-    const filters = normalizeSearchFilters(rawFilters);
+    const filters =
+        normalizeSearchFilters(
+            rawFilters,
+        );
 
-    console.log('🧠 Parsed Search:', filters);
+    console.log(
+        '🧠 Parsed Search:',
+        filters,
+    );
 
     return filters;
 }
@@ -708,4 +1003,12 @@ module.exports = {
     findCurrencyInQuery,
 
     findNearMeInQuery,
+
+    findBrandByModel,
+
+    getBrandModelAliases,
+
+    buildModelQuery,
+
+    escapeRegex,
 };
