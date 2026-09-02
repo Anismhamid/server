@@ -425,8 +425,9 @@ router.patch(
 // PATCH the reviews for a specific post
 router.patch(
     '/:postId/reviews',
-    requirePermission('canUseAccount'),
     auth,
+    requirePermission('canUseAccount'),
+    requirePermission('canCreatePosts'),
     async (req, res) => {
         try {
             const { postId } = req.params;
@@ -537,9 +538,9 @@ router.delete(
 // Update a specific review for a post
 router.patch(
     '/:postId/reviews/:reviewId',
+    auth,
     requirePermission('canUseAccount'),
     requirePermission('canCreatePosts'),
-    auth,
     async (req, res) => {
         try {
             const { postId, reviewId } = req.params;
