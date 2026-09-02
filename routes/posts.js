@@ -426,7 +426,6 @@ router.patch(
 router.patch(
     '/:postId/reviews',
     requirePermission('canUseAccount'),
-    requirePermission('canCreatePosts'),
     auth,
     async (req, res) => {
         try {
