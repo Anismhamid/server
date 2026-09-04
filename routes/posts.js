@@ -9,6 +9,39 @@ const auth = require('../middlewares/auth');
 const { getPostSchema } = require('../schema/postsSchema');
 const { requirePermission } = require('../middlewares/userPermissions');
 const { invalidateSitemapCache } = require('../routes/sitemap');
+const Block = require('../models/Block');
+
+// ============================================
+// Block check
+// ============================================
+
+const isBlockedBetweenUsers = async (userA, userB) => {
+    if (!userA || !userB) return false;
+
+    const block = await Block.exists({
+        $or: [
+            {
+                blockerId: userA,
+                blockedId: userB,
+            },
+            {
+                blockerId: userB,
+                blockedId: userA,
+            },
+        ],
+        $and: [
+            {
+                $or: [
+                    { isPermanent: true },
+                    { expiresAt: null },
+                    { expiresAt: { $gt: new Date() } },
+                ],
+            },
+        ],
+    });
+
+    return Boolean(block);
+};
 
 //==============All-posts==========
 // Get all posts for search in home page
@@ -386,6 +419,7 @@ router.get('/:category', async (req, res) => {
 
 // ----- Like / Unlike a post -----
 // PATCH /api/posts/:postId/like
+
 router.patch(
     '/:postId/like',
     auth,
@@ -397,27 +431,48 @@ router.patch(
             const userId = req.payload._id.toString();
 
             const post = await Posts.findById(postId);
-            if (!post)
-                return res.status(404).send({ message: 'Post not found' });
+
+            if (!post) {
+                return res.status(404).send({
+                    message: 'Post not found',
+                });
+            }
+
+            // ============================================
+            // Block protection
+            // ============================================
+
+            const isBlocked = await isBlockedBetweenUsers(userId, post.seller);
+
+            if (isBlocked) {
+                return res.status(403).json({
+                    success: false,
+                    code: 'USER_BLOCKED',
+                    message: 'You cannot interact with this user',
+                });
+            }
 
             const alreadyLiked = post.likes.includes(userId);
 
             if (alreadyLiked) {
-                post.likes.pull(userId); // ✅ Mongoose method بدل filter
+                post.likes.pull(userId);
             } else {
                 post.likes.push(userId);
             }
 
             await post.save();
 
-            res.status(200).send({
+            return res.status(200).send({
                 postId: post._id,
                 liked: !alreadyLiked,
                 totalLikes: post.likes.length,
             });
         } catch (error) {
             console.error('Like error:', error);
-            res.status(500).send({ message: 'Internal server error' });
+
+            return res.status(500).send({
+                message: 'Internal server error',
+            });
         }
     },
 );
@@ -456,6 +511,16 @@ router.patch(
             if (!post) {
                 return res.status(404).send({
                     message: 'Post not found',
+                });
+            }
+
+            const isBlocked = await isBlockedBetweenUsers(_id, post.seller);
+
+            if (isBlocked) {
+                return res.status(403).json({
+                    success: false,
+                    code: 'USER_BLOCKED',
+                    message: 'You cannot interact with this user',
                 });
             }
 
@@ -500,6 +565,16 @@ router.delete(
             if (!post) {
                 return res.status(404).send({
                     message: 'Post not found',
+                });
+            }
+
+            const isBlocked = await isBlockedBetweenUsers(userId, post.seller);
+
+            if (isBlocked) {
+                return res.status(403).json({
+                    success: false,
+                    code: 'USER_BLOCKED',
+                    message: 'You cannot interact with this user',
                 });
             }
 

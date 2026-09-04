@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const Message = require('../models/Message');
 const Posts = require('../models/post');
+const Block = require('../models/Block');
 const Jwt = require('jsonwebtoken');
 const { compareSync, genSaltSync, hashSync } = require('bcryptjs');
 const _ = require('lodash');
@@ -847,22 +848,27 @@ router.delete(
             });
 
             // ==========================================
-            // 4. حذف الحساب
+            // 4. حذف جميع Blocks الخاصة بالمستخدم
+            // ==========================================
+
+            const deletedBlocks = await Block.deleteMany({
+                $or: [{ blockerId: userId }, { blockedId: userId }],
+            });
+
+            // ==========================================
+            // 5. حذف الحساب
             // ==========================================
 
             await User.findByIdAndDelete(userId);
 
-            // ==========================================
-            // 5. Response
-            // ==========================================
-
             return res.status(200).json({
                 success: true,
                 message:
-                    'User account, messages and posts deleted successfully',
+                    'User account, messages, posts and blocks deleted successfully',
 
                 deletedMessages: deletedMessages.deletedCount,
                 deletedPosts: deletedPosts.deletedCount,
+                deletedBlocks: deletedBlocks.deletedCount,
             });
         } catch (error) {
             return res.status(500).json({
