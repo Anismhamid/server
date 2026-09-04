@@ -44,14 +44,10 @@ const blockSchema = new mongoose.Schema(
 // Prevent self block
 // =====================================================
 
-blockSchema.pre('validate', function (next) {
+blockSchema.pre('validate', function () {
     if (String(this.blockerId) === String(this.blockedId)) {
-        return next(
-            new Error('A user cannot block himself'),
-        );
+        throw new Error('A user cannot block himself');
     }
-
-    next();
 });
 
 // =====================================================

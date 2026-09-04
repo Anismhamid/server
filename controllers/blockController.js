@@ -22,9 +22,6 @@ const getUserId = (req) => {
 
 const blockUser = async (req, res) => {
     try {
-        // IMPORTANT:
-        // blockerId ALWAYS comes from authenticated user.
-        // Never trust blockerId from request body.
         const blockerId = getUserId(req);
 
         if (!blockerId) {
@@ -35,13 +32,20 @@ const blockUser = async (req, res) => {
             });
         }
 
-        const { userId, reason, expiresAt } = req.body || {};
+        const {
+            userId,
+            reason,
+            expiresAt,
+        } = req.body || {};
 
         // =====================================================
         // Validate target user ID
         // =====================================================
 
-        if (!userId || !isValidObjectId(userId)) {
+        if (
+            !userId ||
+            !isValidObjectId(userId)
+        ) {
             return res.status(400).json({
                 success: false,
                 code: 'INVALID_USER_ID',
@@ -53,11 +57,15 @@ const blockUser = async (req, res) => {
         // Prevent self block
         // =====================================================
 
-        if (String(blockerId) === String(userId)) {
+        if (
+            String(blockerId) ===
+            String(userId)
+        ) {
             return res.status(400).json({
                 success: false,
                 code: 'CANNOT_BLOCK_SELF',
-                message: 'You cannot block yourself',
+                message:
+                    'You cannot block yourself',
             });
         }
 
@@ -65,9 +73,12 @@ const blockUser = async (req, res) => {
         // Check target user
         // =====================================================
 
-        const targetUser = await User.findById(userId)
-            .select('_id name slug email image role accountStatus')
-            .lean();
+        const targetUser =
+            await User.findById(userId)
+                .select(
+                    '_id name slug email image role accountStatus',
+                )
+                .lean();
 
         if (!targetUser) {
             return res.status(404).json({
@@ -84,22 +95,33 @@ const blockUser = async (req, res) => {
         let expiration = null;
         let isPermanent = true;
 
-        if (expiresAt !== undefined && expiresAt !== null) {
+        if (
+            expiresAt !== undefined &&
+            expiresAt !== null
+        ) {
             const date = new Date(expiresAt);
 
-            if (Number.isNaN(date.getTime())) {
+            if (
+                Number.isNaN(
+                    date.getTime(),
+                )
+            ) {
                 return res.status(400).json({
                     success: false,
-                    code: 'INVALID_EXPIRATION_DATE',
-                    message: 'Invalid expiration date',
+                    code:
+                        'INVALID_EXPIRATION_DATE',
+                    message:
+                        'Invalid expiration date',
                 });
             }
 
             if (date <= new Date()) {
                 return res.status(400).json({
                     success: false,
-                    code: 'EXPIRATION_IN_PAST',
-                    message: 'Expiration date must be in the future',
+                    code:
+                        'EXPIRATION_IN_PAST',
+                    message:
+                        'Expiration date must be in the future',
                 });
             }
 
@@ -108,45 +130,74 @@ const blockUser = async (req, res) => {
         }
 
         // =====================================================
-        // Check existing block
+        // Remove expired existing block
         // =====================================================
 
-        const existing = await Block.findOne({
+        await Block.deleteOne({
             blockerId,
             blockedId: userId,
+            isPermanent: false,
+            expiresAt: {
+                $ne: null,
+                $lte: new Date(),
+            },
         });
 
-        if (existing) {
-            // -------------------------------------------------
-            // Existing block expired
-            // -------------------------------------------------
+        // =====================================================
+        // Check active existing block
+        // =====================================================
 
-            if (existing.expiresAt && existing.expiresAt <= new Date()) {
-                await Block.deleteOne({
-                    _id: existing._id,
-                });
-            } else {
-                return res.status(409).json({
-                    success: false,
-                    code: 'ALREADY_BLOCKED',
-                    message: 'User is already blocked',
-                    blocked: true,
-                });
-            }
+        const existing =
+            await Block.findOne({
+                blockerId,
+                blockedId: userId,
+
+                $or: [
+                    {
+                        isPermanent: true,
+                    },
+                    {
+                        expiresAt: null,
+                    },
+                    {
+                        expiresAt: {
+                            $gt: new Date(),
+                        },
+                    },
+                ],
+            });
+
+        if (existing) {
+            return res.status(409).json({
+                success: false,
+                code: 'ALREADY_BLOCKED',
+                message:
+                    'User is already blocked',
+                blocked: true,
+            });
         }
 
         // =====================================================
-        // Create personal block
+        // Create block
         // =====================================================
 
-        const block = await Block.create({
-            blockerId,
-            blockedId: userId,
-            reason:
-                typeof reason === 'string' ? reason.trim().slice(0, 500) : '',
-            expiresAt: expiration,
-            isPermanent,
-        });
+        const block =
+            await Block.create({
+                blockerId,
+                blockedId: userId,
+
+                reason:
+                    typeof reason ===
+                    'string'
+                        ? reason
+                              .trim()
+                              .slice(0, 500)
+                        : '',
+
+                expiresAt: expiration,
+
+                isPermanent,
+            });
 
         // =====================================================
         // Response
@@ -154,44 +205,73 @@ const blockUser = async (req, res) => {
 
         return res.status(201).json({
             success: true,
-            message: 'User blocked successfully',
+
+            message:
+                'User blocked successfully',
 
             block: {
                 _id: block._id,
-                blockerId: block.blockerId,
-                blockedId: block.blockedId,
+
+                blockerId:
+                    block.blockerId,
+
+                blockedId:
+                    block.blockedId,
+
                 reason: block.reason,
-                expiresAt: block.expiresAt,
-                isPermanent: block.isPermanent,
-                createdAt: block.createdAt,
+
+                expiresAt:
+                    block.expiresAt,
+
+                isPermanent:
+                    block.isPermanent,
+
+                createdAt:
+                    block.createdAt,
             },
 
             user: {
-                _id: targetUser._id,
-                name: targetUser.name,
-                slug: targetUser.slug,
-                email: targetUser.email,
-                image: targetUser.image,
-                role: targetUser.role,
+                _id:
+                    targetUser._id,
+
+                name:
+                    targetUser.name,
+
+                slug:
+                    targetUser.slug,
+
+                email:
+                    targetUser.email,
+
+                image:
+                    targetUser.image,
+
+                role:
+                    targetUser.role,
             },
         });
     } catch (error) {
-        // MongoDB duplicate key
+        // Mongo duplicate key
         if (error.code === 11000) {
             return res.status(409).json({
                 success: false,
                 code: 'ALREADY_BLOCKED',
-                message: 'User is already blocked',
+                message:
+                    'User is already blocked',
                 blocked: true,
             });
         }
 
-        console.error('Block User Error:', error);
+        console.error(
+            'Block User Error:',
+            error,
+        );
 
         return res.status(500).json({
             success: false,
             code: 'BLOCK_USER_ERROR',
-            message: 'Failed to block user',
+            message:
+                'Failed to block user',
         });
     }
 };
@@ -201,52 +281,72 @@ const blockUser = async (req, res) => {
 // Current user unblocks another user
 // =====================================================
 
-const unblockUser = async (req, res) => {
+const unblockUser = async (
+    req,
+    res,
+) => {
     try {
-        const blockerId = getUserId(req);
+        const blockerId =
+            getUserId(req);
 
         if (!blockerId) {
             return res.status(401).json({
                 success: false,
                 code: 'UNAUTHORIZED',
-                message: 'Authentication required',
+                message:
+                    'Authentication required',
             });
         }
 
-        const { userId } = req.params;
+        const {
+            userId,
+        } = req.params;
 
-        if (!isValidObjectId(userId)) {
+        if (
+            !isValidObjectId(
+                userId,
+            )
+        ) {
             return res.status(400).json({
                 success: false,
                 code: 'INVALID_USER_ID',
-                message: 'Invalid user ID',
+                message:
+                    'Invalid user ID',
             });
         }
 
-        const result = await Block.findOneAndDelete({
-            blockerId,
-            blockedId: userId,
-        });
+        const result =
+            await Block.findOneAndDelete({
+                blockerId,
+                blockedId: userId,
+            });
 
         if (!result) {
             return res.status(404).json({
                 success: false,
                 code: 'BLOCK_NOT_FOUND',
-                message: 'User is not blocked',
+                message:
+                    'User is not blocked',
             });
         }
 
         return res.json({
             success: true,
-            message: 'User unblocked successfully',
+            message:
+                'User unblocked successfully',
         });
     } catch (error) {
-        console.error('Unblock User Error:', error);
+        console.error(
+            'Unblock User Error:',
+            error,
+        );
 
         return res.status(500).json({
             success: false,
-            code: 'UNBLOCK_USER_ERROR',
-            message: 'Failed to unblock user',
+            code:
+                'UNBLOCK_USER_ERROR',
+            message:
+                'Failed to unblock user',
         });
     }
 };
@@ -256,26 +356,34 @@ const unblockUser = async (req, res) => {
 // Current user's blocked users
 // =====================================================
 
-const getBlockedUsers = async (req, res) => {
+const getBlockedUsers = async (
+    req,
+    res,
+) => {
     try {
-        const blockerId = getUserId(req);
+        const blockerId =
+            getUserId(req);
 
         if (!blockerId) {
             return res.status(401).json({
                 success: false,
                 code: 'UNAUTHORIZED',
-                message: 'Authentication required',
+                message:
+                    'Authentication required',
             });
         }
 
         const now = new Date();
 
         // =====================================================
-        // Remove expired blocks belonging to current user
+        // Delete expired blocks
         // =====================================================
 
         await Block.deleteMany({
             blockerId,
+
+            isPermanent: false,
+
             expiresAt: {
                 $ne: null,
                 $lte: now,
@@ -286,71 +394,92 @@ const getBlockedUsers = async (req, res) => {
         // Get active blocks
         // =====================================================
 
-        const blocks = await Block.find({
-            blockerId,
+        const blocks =
+            await Block.find({
+                blockerId,
 
-            $or: [
-                {
-                    isPermanent: true,
-                },
-                {
-                    expiresAt: null,
-                },
-                {
-                    expiresAt: {
-                        $gt: now,
+                $or: [
+                    {
+                        isPermanent: true,
                     },
-                },
-            ],
-        })
-            .populate({
-                path: 'blockedId',
-                select: 'name slug email image role',
+                    {
+                        expiresAt: null,
+                    },
+                    {
+                        expiresAt: {
+                            $gt: now,
+                        },
+                    },
+                ],
             })
-            .sort({
-                createdAt: -1,
-            })
-            .lean();
+                .populate({
+                    path: 'blockedId',
+                    select:
+                        'name slug email image role',
+                })
+                .sort({
+                    createdAt: -1,
+                })
+                .lean();
 
         // =====================================================
         // Format response
         // =====================================================
 
-        const result = blocks
-            .filter((block) => block.blockedId)
-            .map((block) => ({
-                _id: block.blockedId._id,
+        const result =
+            blocks
+                .filter(
+                    (block) =>
+                        block.blockedId,
+                )
+                .map((block) => ({
+                    _id:
+                        block.blockedId._id,
 
-                name: block.blockedId.name,
+                    name:
+                        block.blockedId.name,
 
-                slug: block.blockedId.slug,
+                    slug:
+                        block.blockedId.slug,
 
-                image: block.blockedId.image,
+                    image:
+                        block.blockedId.image,
 
-                email: block.blockedId.email,
+                    email:
+                        block.blockedId.email,
 
-                role: block.blockedId.role,
+                    role:
+                        block.blockedId.role,
 
-                blockedAt: block.createdAt,
+                    blockedAt:
+                        block.createdAt,
 
-                reason: block.reason,
+                    reason:
+                        block.reason,
 
-                expiresAt: block.expiresAt,
+                    expiresAt:
+                        block.expiresAt,
 
-                isPermanent: block.isPermanent,
-            }));
+                    isPermanent:
+                        block.isPermanent,
+                }));
 
         return res.json({
             success: true,
             blocks: result,
         });
     } catch (error) {
-        console.error('Get Blocked Users Error:', error);
+        console.error(
+            'Get Blocked Users Error:',
+            error,
+        );
 
         return res.status(500).json({
             success: false,
-            code: 'GET_BLOCKED_USERS_ERROR',
-            message: 'Failed to get blocked users',
+            code:
+                'GET_BLOCKED_USERS_ERROR',
+            message:
+                'Failed to get blocked users',
         });
     }
 };
@@ -360,60 +489,100 @@ const getBlockedUsers = async (req, res) => {
 // Has current user blocked target?
 // =====================================================
 
-const isUserBlocked = async (req, res) => {
+const isUserBlocked = async (
+    req,
+    res,
+) => {
     try {
-        const blockerId = getUserId(req);
+        const blockerId =
+            getUserId(req);
 
         if (!blockerId) {
             return res.status(401).json({
                 success: false,
                 code: 'UNAUTHORIZED',
-                message: 'Authentication required',
+                message:
+                    'Authentication required',
             });
         }
 
-        const { userId } = req.params;
+        const {
+            userId,
+        } = req.params;
 
-        if (!isValidObjectId(userId)) {
+        if (
+            !isValidObjectId(
+                userId,
+            )
+        ) {
             return res.status(400).json({
                 success: false,
-                code: 'INVALID_USER_ID',
-                message: 'Invalid user ID',
+                code:
+                    'INVALID_USER_ID',
+                message:
+                    'Invalid user ID',
             });
         }
 
         const now = new Date();
 
-        const block = await Block.findOne({
+        // =====================================================
+        // Clean expired block
+        // =====================================================
+
+        await Block.deleteOne({
             blockerId,
             blockedId: userId,
 
-            $or: [
-                {
-                    isPermanent: true,
-                },
-                {
-                    expiresAt: null,
-                },
-                {
-                    expiresAt: {
-                        $gt: now,
+            isPermanent: false,
+
+            expiresAt: {
+                $ne: null,
+                $lte: now,
+            },
+        });
+
+        // =====================================================
+        // Check active block
+        // =====================================================
+
+        const block =
+            await Block.findOne({
+                blockerId,
+                blockedId: userId,
+
+                $or: [
+                    {
+                        isPermanent: true,
                     },
-                },
-            ],
-        }).lean();
+                    {
+                        expiresAt: null,
+                    },
+                    {
+                        expiresAt: {
+                            $gt: now,
+                        },
+                    },
+                ],
+            }).lean();
 
         return res.json({
             success: true,
-            blocked: !!block,
+            blocked:
+                Boolean(block),
         });
     } catch (error) {
-        console.error('Check Block Error:', error);
+        console.error(
+            'Check Block Error:',
+            error,
+        );
 
         return res.status(500).json({
             success: false,
-            code: 'CHECK_BLOCK_ERROR',
-            message: 'Failed to check block status',
+            code:
+                'CHECK_BLOCK_ERROR',
+            message:
+                'Failed to check block status',
         });
     }
 };
@@ -424,84 +593,128 @@ const isUserBlocked = async (req, res) => {
 // Who blocked this user?
 // =====================================================
 
-const getBlockers = async (req, res) => {
+const getBlockers = async (
+    req,
+    res,
+) => {
     try {
-        const { userId } = req.params;
+        const {
+            userId,
+        } = req.params;
 
-        if (!isValidObjectId(userId)) {
+        if (
+            !isValidObjectId(
+                userId,
+            )
+        ) {
             return res.status(400).json({
                 success: false,
-                code: 'INVALID_USER_ID',
-                message: 'Invalid user ID',
+                code:
+                    'INVALID_USER_ID',
+                message:
+                    'Invalid user ID',
             });
         }
 
         const now = new Date();
 
-        const blocks = await Block.find({
-            blockedId: userId,
+        // =====================================================
+        // Get active blocks
+        // =====================================================
 
-            $or: [
-                {
-                    isPermanent: true,
-                },
-                {
-                    expiresAt: null,
-                },
-                {
-                    expiresAt: {
-                        $gt: now,
+        const blocks =
+            await Block.find({
+                blockedId: userId,
+
+                $or: [
+                    {
+                        isPermanent: true,
                     },
-                },
-            ],
-        })
-            .populate({
-                path: 'blockerId',
-                select: 'name slug email image role',
+                    {
+                        expiresAt: null,
+                    },
+                    {
+                        expiresAt: {
+                            $gt: now,
+                        },
+                    },
+                ],
             })
-            .sort({
-                createdAt: -1,
-            })
-            .lean();
+                .populate({
+                    path: 'blockerId',
+                    select:
+                        'name slug email image role',
+                })
+                .sort({
+                    createdAt: -1,
+                })
+                .lean();
 
-        const result = blocks
-            .filter((block) => block.blockerId)
-            .map((block) => ({
-                _id: block.blockerId._id,
+        // =====================================================
+        // Format response
+        // =====================================================
 
-                name: block.blockerId.name,
+        const result =
+            blocks
+                .filter(
+                    (block) =>
+                        block.blockerId,
+                )
+                .map((block) => ({
+                    _id:
+                        block.blockerId._id,
 
-                slug: block.blockerId.slug,
+                    name:
+                        block.blockerId.name,
 
-                image: block.blockerId.image,
+                    slug:
+                        block.blockerId.slug,
 
-                email: block.blockerId.email,
+                    image:
+                        block.blockerId.image,
 
-                role: block.blockerId.role,
+                    email:
+                        block.blockerId.email,
 
-                blockedAt: block.createdAt,
+                    role:
+                        block.blockerId.role,
 
-                reason: block.reason,
+                    blockedAt:
+                        block.createdAt,
 
-                expiresAt: block.expiresAt,
+                    reason:
+                        block.reason,
 
-                isPermanent: block.isPermanent,
-            }));
+                    expiresAt:
+                        block.expiresAt,
+
+                    isPermanent:
+                        block.isPermanent,
+                }));
 
         return res.json({
             success: true,
             blockers: result,
         });
     } catch (error) {
-        console.error('Get Blockers Error:', error);
+        console.error(
+            'Get Blockers Error:',
+            error,
+        );
 
         return res.status(500).json({
             success: false,
-            code: 'GET_BLOCKERS_ERROR',
-            message: 'Failed to get blockers',
+            code:
+                'GET_BLOCKERS_ERROR',
+            message:
+                'Failed to get blockers',
         });
     }
 };
+
+// =====================================================
+// Export
+// =====================================================
 
 module.exports = {
     blockUser,
