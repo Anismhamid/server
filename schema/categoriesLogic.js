@@ -62,23 +62,36 @@ const baseProductSchema = {
     seller: publicUserSchema,
 
     product_name: Joi.string().min(2).max(50).required().trim(),
+
     category: Joi.string()
         .valid(...Object.values(CATEGORIES))
         .required(),
-    subcategory: Joi.string().required(),
-    price: Joi.number().positive().max(1000000).required(),
+
+    subcategory: Joi.string().optional(),
+
+    price: Joi.number().min(0).optional(),
+
     description: Joi.string().max(500).allow(''),
+
     image: Joi.object({
         url: Joi.string().uri().allow(''),
         publicId: Joi.string().allow('').optional(),
     }),
+
     likes: Joi.array().items(Joi.string()).unique().default([]),
+
     sale: Joi.boolean().default(false),
+
     discount: Joi.number().min(0).max(100).optional(),
+
     location: Joi.string().empty('').default('israel'),
+
     ageGroup: Joi.string(),
+
     safeMaterial: Joi.boolean().default(false),
+
     in_stock: Joi.boolean().default(true),
+
     reviews: Joi.array()
         .items(
             Joi.object({
@@ -755,26 +768,29 @@ const servicesSchema = Joi.object({
 
     serviceTitle: Joi.string().required(),
 
-    providerName: Joi.string(),
+    providerName: Joi.string().allow('').optional(),
 
-    experienceYears: Joi.number().min(0),
+    experienceYears: Joi.number().min(0).optional(),
 
-    priceFrom: Joi.number().min(0),
-    priceTo: Joi.number().min(0),
+    priceFrom: Joi.number().min(0).optional(),
 
-    pricingType: Joi.string().valid(
-        'hourly',
-        'fixed',
-        'daily',
-        'monthly',
-        'negotiable',
-    ),
+    priceTo: Joi.number()
+        .min(0)
+        .when('priceFrom', {
+            is: Joi.number().min(0),
+            then: Joi.number().min(Joi.ref('priceFrom')),
+        })
+        .optional(),
 
-    availableDays: Joi.array().items(Joi.string()),
+    pricingType: Joi.string()
+        .valid('hourly', 'fixed', 'daily', 'monthly', 'negotiable')
+        .optional(),
 
-    availableHours: Joi.string(),
+    availableDays: Joi.array().items(Joi.string()).optional(),
 
-    serviceArea: Joi.string(),
+    availableHours: Joi.string().allow('').optional(),
+
+    serviceArea: Joi.string().allow('').optional(),
 
     emergencyService: Joi.boolean().default(false),
 }).options({ stripUnknown: true });
@@ -792,19 +808,11 @@ const jobsSchema = Joi.object({
         )
         .required(),
 
-    jobTitle: Joi.string()
-        .trim()
-        .min(2)
-        .max(150)
-        .required(),
+    jobTitle: Joi.string().trim().min(2).max(150).required(),
 
-    companyName: Joi.string()
-        .trim()
-        .max(150),
+    companyName: Joi.string().trim().max(150),
 
-    industry: Joi.string()
-        .trim()
-        .max(100),
+    industry: Joi.string().trim().max(100),
 
     experienceLevel: Joi.string().valid(
         'no_experience',
@@ -814,8 +822,7 @@ const jobsSchema = Joi.object({
         'manager',
     ),
 
-    salaryMin: Joi.number()
-        .min(0),
+    salaryMin: Joi.number().min(0),
 
     salaryMax: Joi.number()
         .min(0)
@@ -824,33 +831,15 @@ const jobsSchema = Joi.object({
             then: Joi.number().min(Joi.ref('salaryMin')),
         }),
 
-    salaryPeriod: Joi.string().valid(
-        'hourly',
-        'daily',
-        'monthly',
-        'yearly',
-    ),
+    salaryPeriod: Joi.string().valid('hourly', 'daily', 'monthly', 'yearly'),
 
-    location: Joi.string()
-        .trim()
-        .max(150),
+    location: Joi.string().trim().max(150),
 
-    remote: Joi.boolean()
-        .default(false),
+    remote: Joi.boolean().default(false),
 
-    requirements: Joi.array()
-        .items(
-            Joi.string()
-                .trim()
-                .max(300),
-        ),
+    requirements: Joi.array().items(Joi.string().trim().max(300)),
 
-    benefits: Joi.array()
-        .items(
-            Joi.string()
-                .trim()
-                .max(300),
-        ),
+    benefits: Joi.array().items(Joi.string().trim().max(300)),
 }).options({
     stripUnknown: true,
 });

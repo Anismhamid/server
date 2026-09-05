@@ -14,7 +14,7 @@ const basePostsSchema = new mongoose.Schema(
         price: {
             type: Number,
             required: true,
-            min: [1, 'Price must be positive'],
+            min: 0,
         },
         description: { type: String, maxlength: 500 },
         image: {
@@ -859,6 +859,5 @@ const furnitureSchema = new mongoose.Schema({
     includesAccessories: { type: Boolean, default: false },
 });
 Posts.discriminator('Furniture', furnitureSchema);
-
 
 module.exports = Posts;
