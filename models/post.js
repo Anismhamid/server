@@ -99,10 +99,15 @@ Posts.discriminator('House', houseSchema);
 const gardenSchema = new mongoose.Schema({
     type: {
         type: String,
-        enum: ['plants', 'watering', 'tools', 'outdoorDecor'],
+        enum: ['plants', 'trees', 'watering', 'tools', 'outdoorDecor'],
         required: true,
     },
     brand: { type: String },
+    treeType: { type: String },
+    height: { type: Number },
+    ageYears: { type: Number },
+    fruitBearing: { type: Boolean },
+    fruitType: { type: String },
     plantType: { type: String },
     season: { type: String },
     sunExposure: { type: String },
@@ -359,6 +364,339 @@ const electronicsSchema = new mongoose.Schema({
     warranty: { type: String },
 });
 Posts.discriminator('Electronics', electronicsSchema);
+/* ================== Cameras ================== */
+const camerasSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        enum: ['cameras', 'lenses', 'video', 'accessories'],
+        required: true,
+    },
+
+    brand: { type: String },
+    model: { type: String },
+
+    cameraType: {
+        type: String,
+        enum: [
+            'dslr',
+            'mirrorless',
+            'compact',
+            'action',
+            'security',
+            'professional_video',
+        ],
+    },
+
+    sensorType: { type: String },
+    megapixels: { type: Number },
+    resolution: { type: String },
+    videoResolution: { type: String },
+
+    lensMount: { type: String },
+    focalLength: { type: String },
+
+    condition: {
+        type: String,
+        enum: ['new', 'like_new', 'excellent', 'good', 'fair'],
+        default: 'good',
+    },
+
+    warranty: { type: String },
+    includedAccessories: [String],
+});
+
+Posts.discriminator('Cameras', camerasSchema);
+
+/* ================== Books ================== */
+const booksSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        enum: [
+            'school',
+            'university',
+            'novels',
+            'children',
+            'religious',
+            'language',
+            'business',
+            'other',
+        ],
+        required: true,
+    },
+
+    title: { type: String },
+    author: { type: String },
+    publisher: { type: String },
+    edition: { type: String },
+    publicationYear: { type: Number },
+    language: { type: String },
+
+    isbn: { type: String },
+
+    condition: {
+        type: String,
+        enum: ['new', 'like_new', 'good', 'fair'],
+        default: 'good',
+    },
+});
+
+Posts.discriminator('Books', booksSchema);
+
+/* ================== Musical Instruments ================== */
+const musicalInstrumentsSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        enum: [
+            'guitars',
+            'pianos',
+            'keyboards',
+            'drums',
+            'violins',
+            'wind',
+            'percussion',
+            'other',
+        ],
+        required: true,
+    },
+
+    brand: { type: String },
+    model: { type: String },
+
+    material: { type: String },
+    color: { type: String },
+    size: { type: String },
+
+    electric: { type: Boolean, default: false },
+
+    condition: {
+        type: String,
+        enum: ['new', 'like_new', 'excellent', 'good', 'fair'],
+        default: 'good',
+    },
+
+    accessories: [String],
+});
+
+Posts.discriminator('MusicalInstruments', musicalInstrumentsSchema);
+
+/* ================== Construction Equipment ================== */
+const constructionEquipmentSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        enum: [
+            'excavators',
+            'loaders',
+            'cranes',
+            'concrete_equipment',
+            'scaffolding',
+            'cutting_equipment',
+            'compaction_equipment',
+            'other',
+        ],
+        required: true,
+    },
+
+    brand: { type: String },
+    model: { type: String },
+
+    year: { type: Number },
+
+    operatingHours: {
+        type: Number,
+        min: 0,
+    },
+
+    enginePower: { type: Number },
+    fuelType: {
+        type: String,
+        enum: ['diesel', 'gasoline', 'electric', 'hybrid'],
+    },
+
+    weight: { type: Number },
+
+    condition: {
+        type: String,
+        enum: ['new', 'like_new', 'excellent', 'good', 'fair'],
+        default: 'good',
+    },
+
+    warranty: { type: String },
+});
+
+Posts.discriminator('ConstructionEquipment', constructionEquipmentSchema);
+
+/* ================== Industrial Equipment ================== */
+const industrialEquipmentSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        enum: [
+            'industrial_machines',
+            'compressors',
+            'generators',
+            'production_equipment',
+            'packaging_equipment',
+            'material_handling',
+            'other',
+        ],
+        required: true,
+    },
+
+    brand: { type: String },
+    model: { type: String },
+
+    year: { type: Number },
+
+    power: { type: Number },
+    voltage: { type: Number },
+
+    capacity: { type: Number },
+    operatingHours: { type: Number },
+
+    condition: {
+        type: String,
+        enum: ['new', 'like_new', 'excellent', 'good', 'fair'],
+        default: 'good',
+    },
+
+    warranty: { type: String },
+});
+
+Posts.discriminator('IndustrialEquipment', industrialEquipmentSchema);
+
+/* ================== Welding Equipment ================== */
+const weldingEquipmentSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        enum: [
+            'welding_machines',
+            'plasma_cutters',
+            'welding_accessories',
+            'protective_equipment',
+            'other',
+        ],
+        required: true,
+    },
+
+    brand: { type: String },
+    model: { type: String },
+
+    weldingType: {
+        type: String,
+        enum: ['mig', 'mag', 'tig', 'arc', 'plasma', 'spot'],
+    },
+
+    power: { type: Number },
+    voltage: { type: Number },
+    amperage: { type: Number },
+
+    condition: {
+        type: String,
+        enum: ['new', 'like_new', 'excellent', 'good', 'fair'],
+        default: 'good',
+    },
+
+    accessories: [String],
+});
+
+Posts.discriminator('WeldingEquipment', weldingEquipmentSchema);
+
+/* ================== Office Equipment ================== */
+const officeEquipmentSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        enum: [
+            'printers',
+            'scanners',
+            'copiers',
+            'projectors',
+            'shredders',
+            'laminators',
+            'other',
+        ],
+        required: true,
+    },
+
+    brand: { type: String },
+    model: { type: String },
+
+    connectivity: {
+        type: String,
+    },
+
+    printTechnology: {
+        type: String,
+        enum: ['laser', 'inkjet', 'thermal', 'other'],
+    },
+
+    colorPrinting: { type: Boolean },
+
+    condition: {
+        type: String,
+        enum: ['new', 'like_new', 'excellent', 'good', 'fair'],
+        default: 'good',
+    },
+
+    warranty: { type: String },
+});
+
+Posts.discriminator('OfficeEquipment', officeEquipmentSchema);
+
+/* ================== Services ================== */
+const servicesSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        enum: [
+            'maintenance',
+            'electrical',
+            'plumbing',
+            'cleaning',
+            'transportation',
+            'moving',
+            'automotive',
+            'programming',
+            'design',
+            'photography',
+            'marketing',
+            'education',
+            'beauty',
+            'other',
+        ],
+        required: true,
+    },
+
+    serviceTitle: {
+        type: String,
+        required: true,
+    },
+
+    providerName: { type: String },
+
+    experienceYears: {
+        type: Number,
+        min: 0,
+    },
+
+    priceFrom: { type: Number },
+    priceTo: { type: Number },
+
+    pricingType: {
+        type: String,
+        enum: ['hourly', 'fixed', 'daily', 'monthly', 'negotiable'],
+    },
+
+    availableDays: [String],
+
+    availableHours: { type: String },
+
+    serviceArea: { type: String },
+
+    emergencyService: {
+        type: Boolean,
+        default: false,
+    },
+});
+
+Posts.discriminator('Services', servicesSchema);
 
 const artSchema = new mongoose.Schema({
     type: {
@@ -400,12 +738,13 @@ const gamingSchema = new mongoose.Schema({
     language: { type: String },
     releaseYear: { type: Number },
 });
+
 Posts.discriminator('Gaming', gamingSchema);
 
 const realEstateSchema = new mongoose.Schema({
     type: {
         type: String,
-        enum: ['apartment', 'house', 'villa', 'commercial', 'land'],
+        enum: ['apartment', 'house', 'villa', 'commercial', 'land', 'room'],
         required: true,
     },
     area: { type: Number, required: true }, // بالمتر المربع
@@ -415,6 +754,24 @@ const realEstateSchema = new mongoose.Schema({
     hasParking: { type: Boolean, default: false },
     hasElevator: { type: Boolean, default: false },
     furnished: { type: Boolean, default: false },
+    roomType: {
+        type: String,
+        enum: ['private_room', 'shared_room', 'master_room'],
+    },
+
+    monthlyRent: { type: Number },
+
+    availableFrom: { type: Date },
+
+    genderPreference: {
+        type: String,
+        enum: ['male', 'female', 'any'],
+    },
+
+    utilitiesIncluded: {
+        type: Boolean,
+        default: false,
+    },
     rentalType: {
         type: String,
         enum: ['sale', 'rent', 'daily'],
@@ -452,6 +809,7 @@ const petsSchema = new mongoose.Schema({
         type: String,
         enum: ['male', 'female'],
     },
+    birdType: { type: String },
     vaccinated: { type: Boolean, default: false },
     neutered: { type: Boolean, default: false },
     microchipped: { type: Boolean, default: false },
@@ -495,5 +853,6 @@ const furnitureSchema = new mongoose.Schema({
     includesAccessories: { type: Boolean, default: false },
 });
 Posts.discriminator('Furniture', furnitureSchema);
+
 
 module.exports = Posts;

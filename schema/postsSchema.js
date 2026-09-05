@@ -21,6 +21,16 @@ const {
     petsSchema,
     furnitureSchema,
     electronicsSchema,
+
+    camerasSchema,
+    booksSchema,
+    musicalInstrumentsSchema,
+    constructionEquipmentSchema,
+    industrialEquipmentSchema,
+    weldingEquipmentSchema,
+    officeEquipmentSchema,
+    jobsSchema,
+    servicesSchema,
 } = require('./categoriesLogic');
 
 const schemas = {
@@ -45,7 +55,16 @@ const schemas = {
     RealEstate: realEstateSchema,
     Pets: petsSchema,
     Furniture: furnitureSchema,
-    Electronics:electronicsSchema,
+    Electronics: electronicsSchema,
+    Cameras: camerasSchema,
+    Books: booksSchema,
+    MusicalInstruments: musicalInstrumentsSchema,
+    ConstructionEquipment: constructionEquipmentSchema,
+    IndustrialEquipment: industrialEquipmentSchema,
+    WeldingEquipment: weldingEquipmentSchema,
+    OfficeEquipment: officeEquipmentSchema,
+    Jobs: jobsSchema,
+    Services: servicesSchema,
 };
 
 /**

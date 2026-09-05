@@ -15,26 +15,46 @@ const publicUserSchema = Joi.object({
 const CATEGORIES = {
     House: 'House',
     Garden: 'Garden',
+
     Electronics: 'Electronics',
+    Cameras: 'Cameras',
+
     Cars: 'Cars',
     Motorcycles: 'Motorcycles',
     Bikes: 'Bikes',
     Trucks: 'Trucks',
     ElectricVehicles: 'ElectricVehicles',
+
     MenClothes: 'MenClothes',
     WomenClothes: 'WomenClothes',
     WomenBags: 'WomenBags',
+
     Baby: 'Baby',
     Kids: 'Kids',
+
     Health: 'Health',
     Beauty: 'Beauty',
+
     Watches: 'Watches',
     Cleaning: 'Cleaning',
+
     Art: 'Art',
     Gaming: 'Gaming',
+
+    Books: 'Books',
+    MusicalInstruments: 'MusicalInstruments',
+
+    ConstructionEquipment: 'ConstructionEquipment',
+    IndustrialEquipment: 'IndustrialEquipment',
+    WeldingEquipment: 'WeldingEquipment',
+    OfficeEquipment: 'OfficeEquipment',
+
     RealEstate: 'RealEstate',
     Pets: 'Pets',
     Furniture: 'Furniture',
+
+    Services: 'Services',
+    Jobs: 'Jobs',
 };
 
 /* ================== Base Schema لجميع المنتجات ================== */
@@ -95,16 +115,32 @@ const houseSchema = Joi.object({
 /* ================== Garden ================== */
 const gardenSchema = Joi.object({
     ...baseProductSchema,
+
     type: Joi.string()
-        .valid('plants', 'watering', 'tools', 'outdoorDecor')
+        .valid('plants', 'trees', 'watering', 'tools', 'outdoorDecor')
         .required(),
+
     brand: Joi.string(),
+
+    // Trees
+    treeType: Joi.string(),
+    height: Joi.number().min(0),
+    ageYears: Joi.number().min(0),
+    fruitBearing: Joi.boolean(),
+    fruitType: Joi.string(),
+
+    // Plants
     plantType: Joi.string(),
     season: Joi.string(),
     sunExposure: Joi.string(),
-    hoseLength: Joi.number(),
+
+    // Watering
+    hoseLength: Joi.number().min(0),
     automatic: Joi.boolean(),
+
+    // Tools
     toolType: Joi.string(),
+
     weatherResistant: Joi.boolean(),
 }).options({ stripUnknown: true });
 
@@ -369,14 +405,18 @@ const realEstateSchema = Joi.object({
     ...baseProductSchema,
 
     type: Joi.string()
-        .valid('apartment', 'house', 'villa', 'commercial', 'land')
+        .valid('apartment', 'house', 'villa', 'commercial', 'land', 'room')
         .required(),
 
     area: Joi.number().required(),
     rooms: Joi.number(),
     bathrooms: Joi.number(),
     floors: Joi.number(),
-
+    roomType: Joi.string().valid('private_room', 'shared_room', 'master_room'),
+    monthlyRent: Joi.number(),
+    availableFrom: Joi.date(),
+    genderPreference: Joi.string().valid('male', 'female', 'any'),
+    utilitiesIncluded: Joi.boolean(),
     hasParking: Joi.boolean().default(false),
     hasElevator: Joi.boolean().default(false),
     furnished: Joi.boolean().default(false),
@@ -402,8 +442,8 @@ const petsSchema = Joi.object({
 
     breed: Joi.string(),
     age: Joi.number().min(0),
-
     gender: Joi.string().valid('male', 'female'),
+    birdType: Joi.string(),
 
     vaccinated: Joi.boolean().default(false),
     neutered: Joi.boolean().default(false),
@@ -450,6 +490,371 @@ const furnitureSchema = Joi.object({
     includesAccessories: Joi.boolean().default(false),
 }).options({ stripUnknown: true });
 
+/* ================== Cameras ================== */
+const camerasSchema = Joi.object({
+    ...baseProductSchema,
+
+    type: Joi.string()
+        .valid('cameras', 'lenses', 'video', 'accessories')
+        .required(),
+
+    brand: Joi.string(),
+    model: Joi.string(),
+
+    cameraType: Joi.string().valid(
+        'dslr',
+        'mirrorless',
+        'compact',
+        'action',
+        'security',
+        'professional_video',
+    ),
+
+    sensorType: Joi.string(),
+    megapixels: Joi.number(),
+    resolution: Joi.string(),
+    videoResolution: Joi.string(),
+
+    lensMount: Joi.string(),
+    focalLength: Joi.string(),
+
+    condition: Joi.string()
+        .valid('new', 'like_new', 'excellent', 'good', 'fair')
+        .default('good'),
+
+    warranty: Joi.string(),
+    includedAccessories: Joi.array().items(Joi.string()),
+}).options({ stripUnknown: true });
+
+/* ================== Books ================== */
+const booksSchema = Joi.object({
+    ...baseProductSchema,
+
+    type: Joi.string()
+        .valid(
+            'school',
+            'university',
+            'novels',
+            'children',
+            'religious',
+            'language',
+            'business',
+            'other',
+        )
+        .required(),
+
+    title: Joi.string(),
+    author: Joi.string(),
+    publisher: Joi.string(),
+    edition: Joi.string(),
+    publicationYear: Joi.number(),
+    language: Joi.string(),
+
+    isbn: Joi.string(),
+
+    condition: Joi.string()
+        .valid('new', 'like_new', 'good', 'fair')
+        .default('good'),
+}).options({ stripUnknown: true });
+
+/* ================== Musical Instruments ================== */
+const musicalInstrumentsSchema = Joi.object({
+    ...baseProductSchema,
+
+    type: Joi.string()
+        .valid(
+            'guitars',
+            'pianos',
+            'keyboards',
+            'drums',
+            'violins',
+            'wind',
+            'percussion',
+            'other',
+        )
+        .required(),
+
+    brand: Joi.string(),
+    model: Joi.string(),
+
+    material: Joi.string(),
+    color: Joi.string(),
+    size: Joi.string(),
+
+    electric: Joi.boolean().default(false),
+
+    condition: Joi.string()
+        .valid('new', 'like_new', 'excellent', 'good', 'fair')
+        .default('good'),
+
+    accessories: Joi.array().items(Joi.string()),
+}).options({ stripUnknown: true });
+
+/* ================== Construction Equipment ================== */
+const constructionEquipmentSchema = Joi.object({
+    ...baseProductSchema,
+
+    type: Joi.string()
+        .valid(
+            'excavators',
+            'loaders',
+            'cranes',
+            'concrete_equipment',
+            'scaffolding',
+            'cutting_equipment',
+            'compaction_equipment',
+            'other',
+        )
+        .required(),
+
+    brand: Joi.string(),
+    model: Joi.string(),
+
+    year: Joi.number(),
+
+    operatingHours: Joi.number().min(0),
+
+    enginePower: Joi.number(),
+
+    fuelType: Joi.string().valid('diesel', 'gasoline', 'electric', 'hybrid'),
+
+    weight: Joi.number(),
+
+    condition: Joi.string()
+        .valid('new', 'like_new', 'excellent', 'good', 'fair')
+        .default('good'),
+
+    warranty: Joi.string(),
+}).options({ stripUnknown: true });
+
+/* ================== Industrial Equipment ================== */
+const industrialEquipmentSchema = Joi.object({
+    ...baseProductSchema,
+
+    type: Joi.string()
+        .valid(
+            'industrial_machines',
+            'compressors',
+            'generators',
+            'production_equipment',
+            'packaging_equipment',
+            'material_handling',
+            'other',
+        )
+        .required(),
+
+    brand: Joi.string(),
+    model: Joi.string(),
+
+    year: Joi.number(),
+
+    power: Joi.number(),
+    voltage: Joi.number(),
+
+    capacity: Joi.number(),
+    operatingHours: Joi.number().min(0),
+
+    condition: Joi.string()
+        .valid('new', 'like_new', 'excellent', 'good', 'fair')
+        .default('good'),
+
+    warranty: Joi.string(),
+}).options({ stripUnknown: true });
+
+/* ================== Welding Equipment ================== */
+const weldingEquipmentSchema = Joi.object({
+    ...baseProductSchema,
+
+    type: Joi.string()
+        .valid(
+            'welding_machines',
+            'plasma_cutters',
+            'welding_accessories',
+            'protective_equipment',
+            'other',
+        )
+        .required(),
+
+    brand: Joi.string(),
+    model: Joi.string(),
+
+    weldingType: Joi.string().valid(
+        'mig',
+        'mag',
+        'tig',
+        'arc',
+        'plasma',
+        'spot',
+    ),
+
+    power: Joi.number(),
+    voltage: Joi.number(),
+    amperage: Joi.number(),
+
+    condition: Joi.string()
+        .valid('new', 'like_new', 'excellent', 'good', 'fair')
+        .default('good'),
+
+    accessories: Joi.array().items(Joi.string()),
+}).options({ stripUnknown: true });
+
+/* ================== Office Equipment ================== */
+const officeEquipmentSchema = Joi.object({
+    ...baseProductSchema,
+
+    type: Joi.string()
+        .valid(
+            'printers',
+            'scanners',
+            'copiers',
+            'projectors',
+            'shredders',
+            'laminators',
+            'other',
+        )
+        .required(),
+
+    brand: Joi.string(),
+    model: Joi.string(),
+
+    connectivity: Joi.string(),
+
+    printTechnology: Joi.string().valid('laser', 'inkjet', 'thermal', 'other'),
+
+    colorPrinting: Joi.boolean(),
+
+    condition: Joi.string()
+        .valid('new', 'like_new', 'excellent', 'good', 'fair')
+        .default('good'),
+
+    warranty: Joi.string(),
+}).options({ stripUnknown: true });
+
+/* ================== Services ================== */
+const servicesSchema = Joi.object({
+    ...baseProductSchema,
+
+    type: Joi.string()
+        .valid(
+            'maintenance',
+            'electrical',
+            'plumbing',
+            'cleaning',
+            'transportation',
+            'moving',
+            'automotive',
+            'programming',
+            'design',
+            'photography',
+            'marketing',
+            'education',
+            'beauty',
+            'other',
+        )
+        .required(),
+
+    serviceTitle: Joi.string().required(),
+
+    providerName: Joi.string(),
+
+    experienceYears: Joi.number().min(0),
+
+    priceFrom: Joi.number().min(0),
+    priceTo: Joi.number().min(0),
+
+    pricingType: Joi.string().valid(
+        'hourly',
+        'fixed',
+        'daily',
+        'monthly',
+        'negotiable',
+    ),
+
+    availableDays: Joi.array().items(Joi.string()),
+
+    availableHours: Joi.string(),
+
+    serviceArea: Joi.string(),
+
+    emergencyService: Joi.boolean().default(false),
+}).options({ stripUnknown: true });
+
+/* ================== Jobs ================== */
+const jobsSchema = Joi.object({
+    type: Joi.string()
+        .valid(
+            'full_time',
+            'part_time',
+            'temporary',
+            'remote',
+            'daily',
+            'internship',
+        )
+        .required(),
+
+    jobTitle: Joi.string()
+        .trim()
+        .min(2)
+        .max(150)
+        .required(),
+
+    companyName: Joi.string()
+        .trim()
+        .max(150),
+
+    industry: Joi.string()
+        .trim()
+        .max(100),
+
+    experienceLevel: Joi.string().valid(
+        'no_experience',
+        'entry',
+        'mid',
+        'senior',
+        'manager',
+    ),
+
+    salaryMin: Joi.number()
+        .min(0),
+
+    salaryMax: Joi.number()
+        .min(0)
+        .when('salaryMin', {
+            is: Joi.number().min(0),
+            then: Joi.number().min(Joi.ref('salaryMin')),
+        }),
+
+    salaryPeriod: Joi.string().valid(
+        'hourly',
+        'daily',
+        'monthly',
+        'yearly',
+    ),
+
+    location: Joi.string()
+        .trim()
+        .max(150),
+
+    remote: Joi.boolean()
+        .default(false),
+
+    requirements: Joi.array()
+        .items(
+            Joi.string()
+                .trim()
+                .max(300),
+        ),
+
+    benefits: Joi.array()
+        .items(
+            Joi.string()
+                .trim()
+                .max(300),
+        ),
+}).options({
+    stripUnknown: true,
+});
+
 /* ================== Export ================== */
 module.exports = {
     carsSchema,
@@ -473,9 +878,21 @@ module.exports = {
     gardenSchema,
     motorcyclesSchema,
 
+    camerasSchema,
+    booksSchema,
+    musicalInstrumentsSchema,
+
+    constructionEquipmentSchema,
+    industrialEquipmentSchema,
+    weldingEquipmentSchema,
+    officeEquipmentSchema,
+
     artSchema,
     gamingSchema,
     realEstateSchema,
     petsSchema,
     furnitureSchema,
+
+    servicesSchema,
+    jobsSchema,
 };

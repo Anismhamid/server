@@ -16,6 +16,7 @@ const featuredAd = require('./routes/featuredRegister');
 const discounts = require('./routes/discountAndOffers');
 const cities = require('./routes/cities');
 const messages = require('./routes/messages');
+const jobs = require('./routes/jobs');
 const images = require('./routes/deleteImage');
 const startFeaturedAdsCron = require('./utils/PaymentController/featuredAdsCron');
 const featuredAdWebhookController = require('./utils/PaymentController/controller');
@@ -72,10 +73,9 @@ app.post(
 // =======================
 app.use(express.json({ limit: '5mb' }));
 app.use(helmet());
-app.use(morgan('dev')); // استخدام morgan فقط
+app.use(morgan('dev'));
 app.use(logger);
-logToFile(); // إذا كنت تستخدم winston، احتفظ بها
-// logToFile(); // إذا كنت تستخدم winston، احتفظ بها
+logToFile();
 app.use(limiter);
 
 // =======================
@@ -93,6 +93,7 @@ app.use('/api/featured-ads', featuredAd);
 app.use('/api/discounts', discounts);
 app.use('/api/cities', cities);
 app.use('/api/messages', messages);
+app.use('/api/jobs', jobs);
 app.use('/api/images', images);
 app.use('/api/ai', ai);
 app.use('/sitemap', sitemapRouter);
