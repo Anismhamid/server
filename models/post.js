@@ -364,6 +364,7 @@ const electronicsSchema = new mongoose.Schema({
     warranty: { type: String },
 });
 Posts.discriminator('Electronics', electronicsSchema);
+
 /* ================== Cameras ================== */
 const camerasSchema = new mongoose.Schema({
     type: {
@@ -698,6 +699,7 @@ const servicesSchema = new mongoose.Schema({
 
 Posts.discriminator('Services', servicesSchema);
 
+/* ================== Art ================== */
 const artSchema = new mongoose.Schema({
     type: {
         type: String,
@@ -721,6 +723,7 @@ const artSchema = new mongoose.Schema({
 });
 Posts.discriminator('Art', artSchema);
 
+/* ================== Gaming ================== */
 const gamingSchema = new mongoose.Schema({
     type: {
         type: String,
@@ -741,6 +744,7 @@ const gamingSchema = new mongoose.Schema({
 
 Posts.discriminator('Gaming', gamingSchema);
 
+/* ================== Real Estate ================== */
 const realEstateSchema = new mongoose.Schema({
     type: {
         type: String,
@@ -797,6 +801,7 @@ realEstateSchema.index({
 
 Posts.discriminator('RealEstate', realEstateSchema);
 
+/* ================== Pets ================== */
 const petsSchema = new mongoose.Schema({
     type: {
         type: String,
@@ -822,6 +827,7 @@ const petsSchema = new mongoose.Schema({
     size: { type: String },
     material: { type: String },
 });
+
 Posts.discriminator('Pets', petsSchema);
 
 /* ================== Furniture ================== */
