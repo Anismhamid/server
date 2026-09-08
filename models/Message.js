@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose');
 const messageSchema = new mongoose.Schema(
     {
         from: {
@@ -16,7 +16,18 @@ const messageSchema = new mongoose.Schema(
             maxlength: 1000,
             default: '',
         },
+        edited: {
+            type: Boolean,
+            default: false,
+        },
+
+        editedAt: {
+            type: Date,
+            default: null,
+        },
+
         warning: { type: Boolean, default: false },
+
         isImportant: { type: Boolean, default: false },
 
         replyTo: {
