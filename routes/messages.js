@@ -755,9 +755,7 @@ router.patch(
             ).forEach((id) => {
                 io.to(id).emit(
                     'message:seen',
-                    {
-                        from: seenData,
-                    },
+                    seenData,
                 );
             });
 
