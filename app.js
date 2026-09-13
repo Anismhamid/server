@@ -21,6 +21,7 @@ const images = require('./routes/deleteImage');
 const startFeaturedAdsCron = require('./utils/PaymentController/featuredAdsCron');
 const featuredAdWebhookController = require('./utils/PaymentController/controller');
 const sitemapRouter = require('./routes/sitemap');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 app.set('trust proxy', 1);
@@ -72,6 +73,7 @@ app.post(
 // BODY PARSING & SECURITY
 // =======================
 app.use(express.json({ limit: '5mb' }));
+app.use(cookieParser());
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(logger);

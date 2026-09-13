@@ -14,6 +14,7 @@ const completeUserSchema = require('../schema/completeUserSchema');
 const editUserProfileSchema = require('../schema/editUserProfile');
 const chalk = require('chalk');
 const rateLimit = require('express-rate-limit');
+const { setAuthCookie, clearAuthCookie } = require('../utils/authCookie');
 
 const {
     requirePermission,
@@ -29,6 +30,18 @@ const {
     resetPassword,
 } = require('../controllers/authController');
 
+// ============================================================
+// ERROR HELPERS — توحيد شكل الأخطاء
+// ============================================================
+
+const sendError = (res, status, code, message) => {
+    return res.status(status).json({
+        success: false,
+        code,
+        message,
+    });
+};
+
 // users role
 const roleType = {
     Admin: 'Admin',
@@ -36,7 +49,10 @@ const roleType = {
     Client: 'Client',
 };
 
-// for generating token
+// ============================================================
+// TOKEN
+// ============================================================
+
 const generateToken = (user) => {
     return Jwt.sign(
         {
@@ -61,7 +77,7 @@ const generateToken = (user) => {
                 houseNumber: user.address?.houseNumber,
             },
 
-            // Online / Offline فقط
+            // Online / Offline
             status: user.status,
 
             // حالة الحساب
@@ -70,15 +86,10 @@ const generateToken = (user) => {
             // صلاحيات الحساب
             permissions: {
                 canLogin: user.permissions?.canLogin ?? true,
-
                 canCreatePosts: user.permissions?.canCreatePosts ?? true,
-
                 canSendMessages: user.permissions?.canSendMessages ?? true,
-
                 canSendOffers: user.permissions?.canSendOffers ?? true,
-
                 canUseAccount: user.permissions?.canUseAccount ?? true,
-
                 canAccessExistingData:
                     user.permissions?.canAccessExistingData ?? true,
             },
@@ -91,38 +102,66 @@ const generateToken = (user) => {
     );
 };
 
+// ============================================================
+// RATE LIMITERS
+// ============================================================
+
 const forgotPasswordLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 5, // 5 محاولات كل 15 دقيقة لكل IP
-    message: { message: 'Too many requests, try again later' },
+    max: 5,
+    message: {
+        success: false,
+        code: 'RATE_LIMITED',
+        message: 'Too many requests, try again later',
+    },
 });
+
+const loginLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 20,
+    message: {
+        success: false,
+        code: 'RATE_LIMITED',
+        message: 'Too many login attempts, try again later',
+    },
+});
+
+// ============================================================
+// PASSWORD RESET
+// ============================================================
 
 router.post('/forgot-password', forgotPasswordLimiter, forgotPassword);
 router.post('/reset-password/:token', resetPassword);
+
+// ============================================================
+// PUSH TOKENS
+// ============================================================
 
 // Save FCM push token
 router.patch('/push-token', auth, async (req, res) => {
     try {
         const { pushToken } = req.body;
 
-        // Validate input
         if (
             !pushToken ||
             typeof pushToken !== 'string' ||
             pushToken.trim().length === 0
         ) {
-            return res.status(400).json({
-                success: false,
-                message: 'Valid push token is required',
-            });
+            return sendError(
+                res,
+                400,
+                'INVALID_PUSH_TOKEN',
+                'Valid push token is required',
+            );
         }
 
-        // Optional: Validate token format
         if (pushToken.length < 20) {
-            return res.status(400).json({
-                success: false,
-                message: 'Invalid push token format',
-            });
+            return sendError(
+                res,
+                400,
+                'INVALID_PUSH_TOKEN',
+                'Invalid push token format',
+            );
         }
 
         const user = await User.findByIdAndUpdate(
@@ -134,20 +173,16 @@ router.patch('/push-token', auth, async (req, res) => {
         );
 
         if (!user) {
-            return res.status(404).json({
-                success: false,
-                message: 'User not found',
-            });
+            return sendError(res, 404, 'USER_NOT_FOUND', 'User not found');
         }
 
-        // Log without exposing sensitive data
         console.info('Push token updated:', {
             userId: req.payload._id,
             email: user.email,
             totalTokens: user.pushTokens.length,
         });
 
-        res.json({
+        return res.json({
             success: true,
             message: 'Push token saved successfully',
         });
@@ -158,16 +193,15 @@ router.patch('/push-token', auth, async (req, res) => {
         });
 
         if (error.name === 'CastError') {
-            return res.status(400).json({
-                success: false,
-                message: 'Invalid user ID',
-            });
+            return sendError(res, 400, 'INVALID_USER_ID', 'Invalid user ID');
         }
 
-        res.status(500).json({
-            success: false,
-            message: 'Failed to save push token',
-        });
+        return sendError(
+            res,
+            500,
+            'PUSH_TOKEN_SAVE_ERROR',
+            'Failed to save push token',
+        );
     }
 });
 
@@ -176,9 +210,7 @@ router.delete('/push-token', auth, async (req, res) => {
         const user = await User.findById(req.payload._id).select('-password');
 
         if (!user) {
-            return res.status(404).json({
-                message: 'User not found',
-            });
+            return sendError(res, 404, 'USER_NOT_FOUND', 'User not found');
         }
 
         user.pushTokens = [];
@@ -186,20 +218,25 @@ router.delete('/push-token', auth, async (req, res) => {
         await user.save();
 
         return res.json({
+            success: true,
             message: 'Push token removed',
         });
     } catch (error) {
         console.error('Remove push token error:', error);
 
-        return res.status(500).json({
-            message: error.message,
-        });
+        return sendError(
+            res,
+            500,
+            'PUSH_TOKEN_REMOVE_ERROR',
+            'Failed to remove push token',
+        );
     }
 });
 
-// ----- רישום משתמש -----
+// ============================================================
+// REGISTER
+// ============================================================
 
-// Register new user
 router.post('/', async (req, res) => {
     try {
         // validate the body
@@ -207,22 +244,43 @@ router.post('/', async (req, res) => {
             abortEarly: false,
             stripUnknown: false,
         });
+
         if (error) {
             return res.status(400).json({
+                success: false,
                 code: 'VALIDATION_ERROR',
                 message: error.details.map((d) => d.message).join(', '),
             });
         }
 
-        // check if user exists
+        // check email
         let user = await User.findOne({ email: req.body.email }).select(
             '-password',
         );
-        if (user)
-            return res.status(409).json({
-                code: 'EMAIL_EXISTS',
-                message: 'Email already exists',
-            });
+        if (user) {
+            return sendError(
+                res,
+                409,
+                'EMAIL_EXISTS',
+                'Email already exists',
+            );
+        }
+
+        // check slug (منع race condition)
+        if (req.body.slug) {
+            const existingSlug = await User.findOne({
+                slug: req.body.slug,
+            }).select('_id');
+
+            if (existingSlug) {
+                return sendError(
+                    res,
+                    409,
+                    'SLUG_EXISTS',
+                    'Username already taken',
+                );
+            }
+        }
 
         user = new User({
             ...req.body,
@@ -248,32 +306,75 @@ router.post('/', async (req, res) => {
 
         await user.save();
 
+        // socket
         const io = req.app.get('io');
-        io.emit('user:registered', {
-            userId: user._id,
-            name: user.name,
-            email: user.email,
-            role: user.role,
-        });
+        if (io) {
+            io.emit('user:registered', {
+                userId: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+            });
+        }
 
-        // creatre token
+        // create token
         const token = generateToken(user);
+        setAuthCookie(res, token);
 
-        // return the token
-        res.status(200).send(token);
+        return res.status(201).json({
+            success: true,
+            message: 'Account created successfully',
+        });
     } catch (error) {
-        res.status(500).send(error);
+        console.error('Register error:', error);
+
+        // منع race condition على unique slug
+        if (error.code === 11000) {
+            const field = Object.keys(error.keyPattern || {})[0];
+
+            if (field === 'slug') {
+                return sendError(
+                    res,
+                    409,
+                    'SLUG_EXISTS',
+                    'Username already taken',
+                );
+            }
+
+            if (field === 'email') {
+                return sendError(
+                    res,
+                    409,
+                    'EMAIL_EXISTS',
+                    'Email already exists',
+                );
+            }
+        }
+
+        return sendError(
+            res,
+            500,
+            'REGISTER_ERROR',
+            'Internal server error',
+        );
     }
 });
 
-// ----- התחברות -----
+// ============================================================
+// LOGIN
+// ============================================================
 
-router.post('/login', async (req, res) => {
+router.post('/login', loginLimiter, async (req, res) => {
     try {
         const { error } = loginSchema.validate(req.body);
 
         if (error) {
-            return res.status(400).send(error.details[0].message);
+            return sendError(
+                res,
+                400,
+                'VALIDATION_ERROR',
+                error.details[0].message,
+            );
         }
 
         const user = await User.findOne({
@@ -281,27 +382,44 @@ router.post('/login', async (req, res) => {
         });
 
         if (!user) {
-            return res.status(400).send('invalid email or password');
+            return sendError(
+                res,
+                400,
+                'INVALID_CREDENTIALS',
+                'Invalid email or password',
+            );
         }
 
         if (
             user.accountStatus === 'disabled' ||
             user.permissions?.canLogin === false
         ) {
-            return res.status(403).json({
-                code: 'LOGIN_DISABLED',
-                message: 'Login is disabled for this account',
-            });
+            return sendError(
+                res,
+                403,
+                'LOGIN_DISABLED',
+                'Login is disabled for this account',
+            );
         }
 
         if (!user.password) {
-            return res.status(400).send('This account has no password');
+            return sendError(
+                res,
+                400,
+                'NO_PASSWORD',
+                'This account has no password',
+            );
         }
 
         const isValid = compareSync(req.body.password, user.password);
 
         if (!isValid) {
-            return res.status(400).send('invalid email or password');
+            return sendError(
+                res,
+                400,
+                'INVALID_CREDENTIALS',
+                'Invalid email or password',
+            );
         }
 
         // حماية activity
@@ -310,75 +428,102 @@ router.post('/login', async (req, res) => {
         }
 
         user.activity.push(new Date().toLocaleString());
-
         user.status = true;
 
         await user.save();
 
-        // حماية io
+        // io
         const io = req.app.get('io');
+        if (io) {
+            io.emit('user:newUserLoggedIn', {
+                userId: user._id,
+                email: user.email,
+                role: user.role,
+                status: user.status,
+            });
 
-        io.emit('user:newUserLoggedIn', {
-            userId: user._id,
-            email: user.email,
-            role: user.role,
-            status: user.status,
-        });
-
-        io.emit('user:statusChanged', {
-            userId: user._id.toString(),
-            status: user.status,
-        });
+            io.emit('user:statusChanged', {
+                userId: user._id.toString(),
+                status: user.status,
+            });
+        }
 
         const token = generateToken(user);
+        setAuthCookie(res, token);
 
-        res.status(200).send(token);
+        return res.status(200).json({
+            success: true,
+            message: 'Login successful',
+        });
     } catch (error) {
-        console.error('LOGIN ERROR:');
-        console.error(error);
+        console.error('Login error:', error);
 
-        res.status(500).send(error.message);
+        return sendError(
+            res,
+            500,
+            'LOGIN_ERROR',
+            'Internal server error',
+        );
     }
 });
 
-// ----- Google OAuth -----
+// ============================================================
+// GOOGLE OAUTH
+// ============================================================
 
-// check if google user exists returns true - false
 router.get('/google/verify/:id', async (req, res) => {
-    const user = await User.findOne({ googleId: req.params.id });
-    if (user) return res.send({ exists: true });
-    res.send({ exists: false });
+    try {
+        const user = await User.findOne({ googleId: req.params.id }).select(
+            '_id',
+        );
+        return res.send({ exists: Boolean(user) });
+    } catch (error) {
+        console.error('Google verify error:', error);
+        return res.send({ exists: false });
+    }
 });
 
 function generateSlug(first, last) {
-    return `${first.toLowerCase()}-${last.toLowerCase()}-${Date.now()}`;
+    const safeFirst = (first || 'user').toLowerCase();
+    const safeLast = (last || '').toLowerCase();
+    return `${safeFirst}-${safeLast}-${Date.now()}`.replace(/-+/g, '-');
 }
 
-// register or login the new google user into database or login
 router.post('/google', async (req, res) => {
     try {
         const io = req.app.get('io');
 
         const { credentialToken } = req.body;
-        if (!credentialToken) return res.status(400).send('Missing token');
+        if (!credentialToken) {
+            return sendError(
+                res,
+                400,
+                'MISSING_GOOGLE_TOKEN',
+                'Missing token',
+            );
+        }
 
         const payload = await verifyGoogleToken(credentialToken);
 
         if (!payload || !payload.sub || !payload.email) {
-            return res.status(400).json({
-                code: 'INVALID_GOOGLE_PAYLOAD',
-                message: 'Invalid Google payload',
-            });
+            return sendError(
+                res,
+                400,
+                'INVALID_GOOGLE_PAYLOAD',
+                'Invalid Google payload',
+            );
         }
 
         if (payload.email_verified !== true) {
-            return res.status(401).json({
-                code: 'EMAIL_NOT_VERIFIED',
-                message: 'Google email is not verified',
-            });
+            return sendError(
+                res,
+                401,
+                'EMAIL_NOT_VERIFIED',
+                'Google email is not verified',
+            );
         }
-        // check if user exists
 
+        // check if user exists
         let user = await User.findOne({ email: payload.email });
 
         if (user) {
@@ -386,10 +531,16 @@ router.post('/google', async (req, res) => {
                 user.accountStatus === 'disabled' ||
                 user.permissions?.canLogin === false
             ) {
-                return res.status(403).json({
-                    code: 'LOGIN_DISABLED',
-                    message: 'Login is disabled for this account',
-                });
+                return sendError(
+                    res,
+                    403,
+                    'LOGIN_DISABLED',
+                    'Login is disabled for this account',
+                );
+            }
+
+            if (!Array.isArray(user.activity)) {
+                user.activity = [];
             }
 
             user.activity.push(new Date().toLocaleString('he-IL'));
@@ -399,46 +550,78 @@ router.post('/google', async (req, res) => {
 
             const token = generateToken(user);
 
-            io.emit('user:newUserLoggedIn', {
-                userId: user._id,
-                email: user.email,
-                role: user.role,
-                slug: user.slug,
-                status: user.status,
-            });
+            if (io) {
+                io.emit('user:newUserLoggedIn', {
+                    userId: user._id,
+                    email: user.email,
+                    role: user.role,
+                    slug: user.slug,
+                    status: user.status,
+                });
 
-            io.emit('user:statusChanged', {
-                userId: user._id.toString(),
-                status: user.status,
-            });
+                io.emit('user:statusChanged', {
+                    userId: user._id.toString(),
+                    status: user.status,
+                });
+            }
 
-            return res.status(200).send(token);
+            setAuthCookie(res, token);
+
+            return res.status(200).json({
+                success: true,
+                message: 'Login successful',
+            });
         }
 
-        // if user not exist create a new one from payload and save the new user
+        // --- null-safe access ---
+        const phoneFromClient = req.body.phone || {};
+        const addressFromClient = req.body.address || {};
+
+        // slug: نستخدم slug من العميل إذا أُرسل، وإلا نولّد واحداً
+        const requestedSlug =
+            typeof addressFromClient.slug === 'string' &&
+            addressFromClient.slug.trim().length >= 3
+                ? addressFromClient.slug.trim().toLowerCase()
+                : null;
+
+        let finalSlug = requestedSlug;
+
+        if (finalSlug) {
+            const slugTaken = await User.findOne({ slug: finalSlug }).select(
+                '_id',
+            );
+            if (slugTaken) finalSlug = null;
+        }
+
+        if (!finalSlug) {
+            finalSlug = generateSlug(payload.given_name, payload.family_name);
+        }
+
         user = new User({
             name: {
                 first: payload.given_name || 'Google',
                 last: payload.family_name || 'User',
             },
             phone: {
-                phone_1: req.body.phone.phone_1 || '',
-                phone_2: req.body.phone.phone_2 || '',
+                phone_1: phoneFromClient.phone_1 || '',
+                phone_2: phoneFromClient.phone_2 || '',
             },
             address: {
-                city: req.body.address.city || '',
-                street: req.body.address.street || '',
-                houseNumber: req.body.address.houseNumber || '',
+                city: addressFromClient.city || '',
+                street: addressFromClient.street || '',
+                houseNumber: addressFromClient.houseNumber || '',
             },
             email: payload.email,
             password: hashSync(payload.sub, 10),
             image: {
-                url: payload.picture,
-                alt: `${payload.given_name} ${payload.family_name}`,
+                url: payload.picture || '',
+                alt: `${payload.given_name || ''} ${
+                    payload.family_name || ''
+                }`.trim(),
             },
             role: 'Client',
             activity: [new Date().toLocaleString('he-IL')],
-            registeredAt: new Date().toLocaleString('he-IL'),
+            registeredAt: new Date(),
             googleId: payload.sub,
             status: true,
 
@@ -452,109 +635,151 @@ router.post('/google', async (req, res) => {
                 canUseAccount: true,
                 canAccessExistingData: true,
             },
-            slug: generateSlug(payload.given_name, payload.family_name),
+            slug: finalSlug,
         });
 
         await user.save();
 
-        io.emit('user:registered', {
-            id: user._id,
-            name: user.name,
-            email: user.email,
-            role: user.role,
-            slug: user.slug,
-        });
+        if (io) {
+            io.emit('user:registered', {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                slug: user.slug,
+            });
+        }
 
         const token = generateToken(user);
+        setAuthCookie(res, token);
 
-        res.status(201).send(token);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            error: error.message,
-            // error:"Internal server error"
+        return res.status(201).json({
+            success: true,
+            message: 'Account created successfully',
         });
+    } catch (error) {
+        console.error('Google auth error:', error);
+
+        if (error.code === 11000) {
+            return sendError(
+                res,
+                409,
+                'SLUG_EXISTS',
+                'Username already taken',
+            );
+        }
+
+        return sendError(
+            res,
+            500,
+            'GOOGLE_AUTH_ERROR',
+            'Internal server error',
+        );
     }
 });
 
-// ----- משתמשים -----
+// ============================================================
+// GET CURRENT USER
+// ⚠️ يجب أن يكون قبل /:userId
+// ============================================================
 
-// get all users (Admin / moderators)
+router.get('/me', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.payload._id)
+            .select('-password')
+            .lean();
+
+        if (!user) {
+            return sendError(res, 404, 'USER_NOT_FOUND', 'User not found');
+        }
+
+        if (
+            user.accountStatus === 'disabled' ||
+            user.permissions?.canLogin === false
+        ) {
+            return sendError(
+                res,
+                403,
+                'ACCOUNT_DISABLED',
+                'Account is disabled',
+            );
+        }
+
+        return res.status(200).json({
+            success: true,
+            user,
+        });
+    } catch (error) {
+        console.error('Get current user error:', error);
+
+        return sendError(
+            res,
+            500,
+            'CURRENT_USER_ERROR',
+            'Internal server error',
+        );
+    }
+});
+
+// ============================================================
+// GET ALL USERS (Admin / Moderator)
+// ============================================================
+
 router.get('/', auth, requirePermission('canUseAccount'), async (req, res) => {
     try {
         if (
             req.payload.role !== roleType.Admin &&
             req.payload.role !== roleType.Moderator
         ) {
-            return res.status(403).json({
-                success: false,
-                code: 'USERS_MANAGEMENT_ACCESS_DENIED',
-                message: 'Only admins and moderators can access users',
-            });
+            return sendError(
+                res,
+                403,
+                'USERS_MANAGEMENT_ACCESS_DENIED',
+                'Only admins and moderators can access users',
+            );
         }
 
         const users = await User.find().select('-password').lean();
 
         if (!users.length) {
-            return res.status(404).json({
-                success: false,
-                message: 'No users found yet',
-            });
+            return sendError(res, 404, 'NO_USERS', 'No users found yet');
         }
 
         return res.status(200).json(users);
     } catch (error) {
         console.error('Get users error:', error);
 
-        return res.status(500).json({
-            success: false,
-            message: 'Internal server error',
-        });
+        return sendError(
+            res,
+            500,
+            'GET_USERS_ERROR',
+            'Internal server error',
+        );
     }
 });
 
-// Get single user (Admin or Moderator or oner user only)
-router.get(
-    '/:userId',
-    auth,
-    requirePermission('canUseAccount'),
-    async (req, res) => {
-        try {
-            const { role, _id } = req.payload;
-            const { userId } = req.params;
-
-            //	check if user have permission to get the user by id
-            if (
-                _id !== userId &&
-                role !== roleType.Admin &&
-                role !== roleType.Moderator
-            )
-                return res.status(401).send({
-                    error: 'You do not have permission to access this resource',
-                });
-
-            const user = await User.findById(userId).select('-password');
-            if (!user)
-                return res.status(404).send({ message: 'user Not Found' });
-
-            res.status(200).send(user);
-        } catch (error) {
-            res.status(500).send('Internal server error');
-        }
-    },
-);
+// ============================================================
+// PUBLIC CUSTOMER ROUTES
+// ============================================================
 
 router.get('/customer/:slug', async (req, res) => {
     try {
         const { slug } = req.params;
-        console.log('SLUG PARAM:', slug);
 
         const user = await User.findOne({ slug }).select('-password');
-        if (!user) return res.status(404).send({ message: 'user Not Found' });
+        if (!user) {
+            return sendError(res, 404, 'USER_NOT_FOUND', 'User not found');
+        }
 
-        res.status(200).send(user);
+        return res.status(200).send(user);
     } catch (error) {
-        res.status(500).send('Internal server error');
+        console.error('Customer profile error:', error);
+        return sendError(
+            res,
+            500,
+            'CUSTOMER_PROFILE_ERROR',
+            'Internal server error',
+        );
     }
 });
 
@@ -562,24 +787,15 @@ router.get('/customer/:slug/posts', async (req, res) => {
     try {
         const { slug } = req.params;
 
-        console.log('🔎 CUSTOMER POSTS SLUG:', slug);
-
         const user = await User.findOne({ slug }).select('_id');
 
         if (!user) {
-            return res.status(404).json({
-                success: false,
-                message: 'User not found',
-            });
+            return sendError(res, 404, 'USER_NOT_FOUND', 'User not found');
         }
-
-        console.log('👤 USER ID:', user._id);
 
         const posts = await Posts.find({
             seller: user._id,
         }).sort({ createdAt: -1 });
-
-        console.log('📦 POSTS FOUND:', posts.length);
 
         return res.status(200).json({
             success: true,
@@ -587,340 +803,25 @@ router.get('/customer/:slug/posts', async (req, res) => {
             posts,
         });
     } catch (error) {
-        console.error('❌ CUSTOMER POSTS ERROR:', error);
+        console.error('Customer posts error:', error);
 
-        return res.status(500).json({
-            success: false,
-            message:
-                error instanceof Error
-                    ? error.message
-                    : 'Internal server error',
-        });
+        return sendError(
+            res,
+            500,
+            'CUSTOMER_POSTS_ERROR',
+            'Internal server error',
+        );
     }
 });
 
-// Update user role (Admin only)
-router.patch(
-    '/role/:userEmail',
-    auth,
-    requirePermission('canUseAccount'),
-    async (req, res) => {
-        try {
-            // Check permission
-            if (req.payload.role !== roleType.Admin)
-                return res
-                    .status(401)
-                    .send({ error: 'Access denied. Admins only' });
-
-            const user = await User.findOneAndUpdate(
-                { email: req.params.userEmail },
-                { role: req.body.role },
-                { new: true },
-            );
-
-            // Check if user exists
-            if (!user) {
-                return res.status(404).send({ message: 'User not found' });
-            }
-
-            res.status(200).send(user);
-        } catch (error) {
-            res.status(500).send(error.message);
-        }
-    },
-);
-
-// compleate user data
-router.patch(
-    '/compleate/:userId',
-    auth,
-    requirePermission('canUseAccount'),
-    async (req, res) => {
-        try {
-            // validate body
-            const { error } = completeUserSchema.validate(req.body);
-            if (error) return res.status(400).send(error.details[0].message);
-
-            const isAdmin = req.payload.role === roleType.Admin;
-            const isSelf = req.params.userId === req.payload._id;
-
-            // Check permission
-            if (!isAdmin && !isSelf) return res.status(401).send('Forbidden');
-
-            const updateData = {
-                phone: {
-                    phone_1: req.body.phone.phone_1,
-                    phone_2: req.body.phone.phone_2,
-                },
-                image: {
-                    url: req.body.image.url,
-                },
-
-                address: {
-                    city: req.body.address.city,
-                    street: req.body.address.street,
-                    houseNumber: req.body.address.houseNumber,
-                },
-                gender: req.body.gender,
-            };
-            const user = await User.findByIdAndUpdate(
-                req.params.userId,
-                updateData,
-                {
-                    new: true,
-                },
-            )
-                .select('-password,-_v')
-                .lean();
-
-            // Check if user exists
-            if (!user) {
-                return res.status(404).send('User not found');
-            }
-
-            res.status(200).send(user);
-        } catch (error) {
-            res.status(500).send(error.message);
-        }
-    },
-);
-
-// Edit user profile
-router.patch(
-    '/edit-user/:userId',
-    auth,
-    requirePermission('canUseAccount'),
-    async (req, res) => {
-        try {
-            // Check if IDs match
-            const isSelf = req.params.userId === req.payload._id.toString();
-            const isAdmin = req.payload.role === roleType.Admin;
-
-            // validate body
-            const { error } = editUserProfileSchema.validate(req.body);
-            if (error) return res.status(400).send(error.details[0].message);
-
-            // Check permission
-            if (!isAdmin && !isSelf) {
-                return res.status(403).send('Forbidden');
-            }
-
-            // Check if user exists
-            const userExists = await User.findById(req.params.userId);
-
-            if (!userExists) {
-                return res.status(404).send('User not found');
-            }
-
-            const updateData = {
-                name: {
-                    first: req.body.name.first,
-                    last: req.body.name.last,
-                },
-                phone: {
-                    phone_1: req.body.phone.phone_1,
-                    phone_2: req.body.phone.phone_2,
-                },
-                image: {
-                    url: req.body.image.url,
-                    alt: req.body.image.alt,
-                },
-                address: {
-                    city: req.body.address.city,
-                    street: req.body.address.street,
-                    houseNumber: req.body.address.houseNumber,
-                },
-                gender: req.body.gender || '',
-            };
-
-            const user = await User.findByIdAndUpdate(
-                req.params.userId,
-                updateData,
-                {
-                    new: true,
-                },
-            )
-                .select('-password -__v')
-                .lean();
-
-            // Check if user exists
-            if (!user) {
-                res.status(500).json({
-                    message: error.message,
-                    stack:
-                        process.env.NODE_ENV === 'development'
-                            ? error.stack
-                            : undefined,
-                });
-            }
-
-            res.status(200).send(user);
-        } catch (error) {
-            res.status(500).send(error.message);
-        }
-    },
-);
-
-// change password
-router.patch(
-    '/password/:userId',
-    auth,
-    requirePermission('canUseAccount'),
-    async (req, res) => {
-        try {
-            const { userId } = req.params;
-            const { newPassword } = req.body;
-            const isAdmin = req.payload.role === roleType.Admin;
-            const isSelf = req.payload._id === userId;
-
-            if (!newPassword || newPassword.length < 6) {
-                return res.status(400).send({
-                    message: 'Password must contain at least 6 characters',
-                });
-            }
-
-            const user = await User.findById(userId);
-            if (!user)
-                return res.status(404).send({ message: 'User not found' });
-
-            if (!isAdmin && !isSelf) {
-                return res
-                    .status(403)
-                    .send({ error: 'No permission to change password' });
-            }
-
-            user.password = hashSync(newPassword, 10);
-            await user.save();
-
-            res.status(200).send({ success: 'Password updated successfully' });
-        } catch (err) {
-            res.status(500).send({ error: 'Internal server error' });
-        }
-    },
-);
-
-// Delete full account
-router.delete(
-    '/:userId',
-    auth,
-    requirePermission('canUseAccount'),
-    async (req, res) => {
-        try {
-            const isAdmin = req.payload.role === roleType.Admin;
-            const isSelf = req.payload._id === req.params.userId;
-
-            if (!isAdmin && !isSelf) {
-                return res.status(401).json({
-                    success: false,
-                    message: 'Unauthorized, Cannot make this change',
-                });
-            }
-
-            const userId = req.params.userId;
-
-            // ==========================================
-            // 1. التأكد أن المستخدم موجود
-            // ==========================================
-
-            const user = await User.findById(userId);
-
-            if (!user) {
-                return res.status(404).json({
-                    success: false,
-                    message: 'User not found',
-                });
-            }
-
-            // ==========================================
-            // 2. حذف جميع الرسائل
-            // ==========================================
-
-            const deletedMessages = await Message.deleteMany({
-                $or: [{ from: userId }, { to: userId }],
-            });
-
-            // ==========================================
-            // 3. حذف جميع Posts الخاصة بالمستخدم
-            // ==========================================
-
-            const deletedPosts = await Posts.deleteMany({
-                seller: userId,
-            });
-
-            // ==========================================
-            // 4. حذف جميع Blocks الخاصة بالمستخدم
-            // ==========================================
-
-            const deletedBlocks = await Block.deleteMany({
-                $or: [{ blockerId: userId }, { blockedId: userId }],
-            });
-
-            // ==========================================
-            // 5. حذف الحساب
-            // ==========================================
-
-            await User.findByIdAndDelete(userId);
-
-            return res.status(200).json({
-                success: true,
-                message:
-                    'User account, messages, posts and blocks deleted successfully',
-
-                deletedMessages: deletedMessages.deletedCount,
-                deletedPosts: deletedPosts.deletedCount,
-                deletedBlocks: deletedBlocks.deletedCount,
-            });
-        } catch (error) {
-            return res.status(500).json({
-                success: false,
-                message: 'Internal server error',
-            });
-        }
-    },
-);
-
-// update user status online | ofline
-router.patch(
-    '/status/:userId',
-    auth,
-    requirePermission('canUseAccount'),
-    async (req, res) => {
-        try {
-            const io = req.app.get('io');
-
-            const updatedUser = await User.findByIdAndUpdate(
-                req.params.userId,
-                { status: req.body.status },
-                { new: true },
-            );
-            console.log(
-                chalk.red(
-                    `user-${updatedUser.name.first} to-${updatedUser.status}`,
-                ),
-            );
-
-            if (!updatedUser) {
-                return res.status(404).send('User not found');
-            }
-
-            io.emit('user:statusChanged', {
-                userId: updatedUser._id,
-                status: updatedUser.status,
-            });
-
-            res.status(200).send(updatedUser);
-        } catch (error) {
-            console.error('Status update error:', error);
-            res.status(500).send('Internal server error');
-        }
-    },
-);
+// ============================================================
+// CHECK SLUG AVAILABILITY
+// ============================================================
 
 router.get('/check-slug/:slug', async (req, res) => {
     try {
         const { slug } = req.params;
 
-        // التحقق من الصيغة
         if (!/^[a-z0-9-]+$/.test(slug)) {
             return res.status(400).json({
                 available: false,
@@ -935,60 +836,572 @@ router.get('/check-slug/:slug', async (req, res) => {
             });
         }
 
-        // التحقق من وجود slug في قاعدة البيانات
-        const existingUser = await User.findOne({ slug });
+        const existingUser = await User.findOne({ slug }).select('_id');
 
         return res.status(200).json({
             available: !existingUser,
-            message: existingUser ? 'اسم المستخدم محجوز' : 'اسم المستخدم متاح',
+            message: existingUser
+                ? 'اسم المستخدم محجوز'
+                : 'اسم المستخدم متاح',
         });
     } catch (error) {
         console.error('Error checking slug:', error);
-        res.status(500).json({
+
+        return res.status(500).json({
             available: false,
             message: 'حدث خطأ أثناء التحقق من اسم المستخدم',
         });
     }
 });
 
+// ============================================================
+// GET SINGLE USER
+// ============================================================
+
+router.get(
+    '/:userId',
+    auth,
+    requirePermission('canUseAccount'),
+    async (req, res) => {
+        try {
+            const { role, _id } = req.payload;
+            const { userId } = req.params;
+
+            if (
+                _id !== userId &&
+                role !== roleType.Admin &&
+                role !== roleType.Moderator
+            ) {
+                return sendError(
+                    res,
+                    401,
+                    'ACCESS_DENIED',
+                    'You do not have permission to access this resource',
+                );
+            }
+
+            const user = await User.findById(userId).select('-password');
+            if (!user) {
+                return sendError(
+                    res,
+                    404,
+                    'USER_NOT_FOUND',
+                    'User not found',
+                );
+            }
+
+            return res.status(200).send(user);
+        } catch (error) {
+            console.error('Get user error:', error);
+
+            return sendError(
+                res,
+                500,
+                'GET_USER_ERROR',
+                'Internal server error',
+            );
+        }
+    },
+);
+
+// ============================================================
+// UPDATE USER ROLE (Admin only)
+// ⚠️ الآن يعتمد على userId بدلاً من userEmail
+// ============================================================
+
+router.patch(
+    '/role/:userId',
+    auth,
+    requirePermission('canUseAccount'),
+    async (req, res) => {
+        try {
+            if (req.payload.role !== roleType.Admin) {
+                return sendError(
+                    res,
+                    403,
+                    'ADMIN_ONLY',
+                    'Access denied. Admins only',
+                );
+            }
+
+            const { userId } = req.params;
+            const { role } = req.body;
+
+            if (![roleType.Admin, roleType.Moderator, roleType.Client].includes(role)) {
+                return sendError(
+                    res,
+                    400,
+                    'INVALID_ROLE',
+                    'Invalid role value',
+                );
+            }
+
+            const user = await User.findByIdAndUpdate(
+                userId,
+                { role },
+                { new: true, runValidators: true },
+            )
+                .select('-password')
+                .lean();
+
+            if (!user) {
+                return sendError(
+                    res,
+                    404,
+                    'USER_NOT_FOUND',
+                    'User not found',
+                );
+            }
+
+            const io = req.app.get('io');
+            if (io) {
+                io.emit('user:roleChanged', {
+                    userId: user._id.toString(),
+                    role: user.role,
+                });
+            }
+
+            return res.status(200).send(user);
+        } catch (error) {
+            console.error('Role update error:', error);
+
+            return sendError(
+                res,
+                500,
+                'ROLE_UPDATE_ERROR',
+                'Internal server error',
+            );
+        }
+    },
+);
+
+// ============================================================
+// COMPLETE USER DATA
+// ============================================================
+
+router.patch(
+    '/compleate/:userId',
+    auth,
+    requirePermission('canUseAccount'),
+    async (req, res) => {
+        try {
+            const { error } = completeUserSchema.validate(req.body);
+            if (error) {
+                return sendError(
+                    res,
+                    400,
+                    'VALIDATION_ERROR',
+                    error.details[0].message,
+                );
+            }
+
+            const isAdmin = req.payload.role === roleType.Admin;
+            const isSelf = req.params.userId === req.payload._id;
+
+            if (!isAdmin && !isSelf) {
+                return sendError(
+                    res,
+                    403,
+                    'FORBIDDEN',
+                    'Forbidden',
+                );
+            }
+
+            const updateData = {
+                phone: {
+                    phone_1: req.body.phone?.phone_1 || '',
+                    phone_2: req.body.phone?.phone_2 || '',
+                },
+                image: {
+                    url: req.body.image?.url || '',
+                },
+                address: {
+                    city: req.body.address?.city || '',
+                    street: req.body.address?.street || '',
+                    houseNumber: req.body.address?.houseNumber || '',
+                },
+                gender: req.body.gender || '',
+            };
+
+            const user = await User.findByIdAndUpdate(
+                req.params.userId,
+                updateData,
+                { new: true },
+            )
+                .select('-password -__v')
+                .lean();
+
+            if (!user) {
+                return sendError(
+                    res,
+                    404,
+                    'USER_NOT_FOUND',
+                    'User not found',
+                );
+            }
+
+            return res.status(200).send(user);
+        } catch (error) {
+            console.error('Complete profile error:', error);
+
+            return sendError(
+                res,
+                500,
+                'COMPLETE_PROFILE_ERROR',
+                'Internal server error',
+            );
+        }
+    },
+);
+
+// ============================================================
+// EDIT USER PROFILE
+// ============================================================
+
+router.patch(
+    '/edit-user/:userId',
+    auth,
+    requirePermission('canUseAccount'),
+    async (req, res) => {
+        try {
+            const isSelf = req.params.userId === req.payload._id.toString();
+            const isAdmin = req.payload.role === roleType.Admin;
+
+            const { error } = editUserProfileSchema.validate(req.body);
+            if (error) {
+                return sendError(
+                    res,
+                    400,
+                    'VALIDATION_ERROR',
+                    error.details[0].message,
+                );
+            }
+
+            if (!isAdmin && !isSelf) {
+                return sendError(res, 403, 'FORBIDDEN', 'Forbidden');
+            }
+
+            const userExists = await User.findById(req.params.userId);
+            if (!userExists) {
+                return sendError(
+                    res,
+                    404,
+                    'USER_NOT_FOUND',
+                    'User not found',
+                );
+            }
+
+            const updateData = {
+                name: {
+                    first: req.body.name?.first || '',
+                    last: req.body.name?.last || '',
+                },
+                phone: {
+                    phone_1: req.body.phone?.phone_1 || '',
+                    phone_2: req.body.phone?.phone_2 || '',
+                },
+                image: {
+                    url: req.body.image?.url || '',
+                    alt: req.body.image?.alt || '',
+                },
+                address: {
+                    city: req.body.address?.city || '',
+                    street: req.body.address?.street || '',
+                    houseNumber: req.body.address?.houseNumber || '',
+                },
+                gender: req.body.gender || '',
+            };
+
+            const user = await User.findByIdAndUpdate(
+                req.params.userId,
+                updateData,
+                { new: true },
+            )
+                .select('-password -__v')
+                .lean();
+
+            // ✅ إصلاح: return قبل 500
+            if (!user) {
+                return sendError(
+                    res,
+                    500,
+                    'EDIT_PROFILE_ERROR',
+                    'Failed to update profile',
+                );
+            }
+
+            return res.status(200).send(user);
+        } catch (error) {
+            console.error('Edit profile error:', error);
+
+            return sendError(
+                res,
+                500,
+                'EDIT_PROFILE_ERROR',
+                'Internal server error',
+            );
+        }
+    },
+);
+
+// ============================================================
+// CHANGE PASSWORD
+// ============================================================
+
+router.patch(
+    '/password/:userId',
+    auth,
+    requirePermission('canUseAccount'),
+    async (req, res) => {
+        try {
+            const { userId } = req.params;
+            const { newPassword } = req.body;
+            const isAdmin = req.payload.role === roleType.Admin;
+            const isSelf = req.payload._id === userId;
+
+            if (!newPassword || newPassword.length < 6) {
+                return sendError(
+                    res,
+                    400,
+                    'WEAK_PASSWORD',
+                    'Password must contain at least 6 characters',
+                );
+            }
+
+            const user = await User.findById(userId);
+            if (!user) {
+                return sendError(
+                    res,
+                    404,
+                    'USER_NOT_FOUND',
+                    'User not found',
+                );
+            }
+
+            if (!isAdmin && !isSelf) {
+                return sendError(
+                    res,
+                    403,
+                    'FORBIDDEN',
+                    'No permission to change password',
+                );
+            }
+
+            user.password = hashSync(newPassword, 10);
+            await user.save();
+
+            return res.status(200).json({
+                success: true,
+                message: 'Password updated successfully',
+            });
+        } catch (err) {
+            console.error('Change password error:', err);
+
+            return sendError(
+                res,
+                500,
+                'PASSWORD_UPDATE_ERROR',
+                'Internal server error',
+            );
+        }
+    },
+);
+
+// ============================================================
+// DELETE FULL ACCOUNT
+// ============================================================
+
+router.delete(
+    '/:userId',
+    auth,
+    requirePermission('canUseAccount'),
+    async (req, res) => {
+        try {
+            const isAdmin = req.payload.role === roleType.Admin;
+            const isSelf = req.payload._id === req.params.userId;
+
+            if (!isAdmin && !isSelf) {
+                return sendError(
+                    res,
+                    401,
+                    'UNAUTHORIZED',
+                    'Unauthorized, Cannot make this change',
+                );
+            }
+
+            const userId = req.params.userId;
+
+            const user = await User.findById(userId);
+            if (!user) {
+                return sendError(
+                    res,
+                    404,
+                    'USER_NOT_FOUND',
+                    'User not found',
+                );
+            }
+
+            // 1. messages
+            const deletedMessages = await Message.deleteMany({
+                $or: [{ from: userId }, { to: userId }],
+            });
+
+            // 2. posts
+            const deletedPosts = await Posts.deleteMany({
+                seller: userId,
+            });
+
+            // 3. blocks
+            const deletedBlocks = await Block.deleteMany({
+                $or: [{ blockerId: userId }, { blockedId: userId }],
+            });
+
+            // 4. user
+            await User.findByIdAndDelete(userId);
+
+            // logout cookie if self
+            if (isSelf) {
+                clearAuthCookie(res);
+            }
+
+            return res.status(200).json({
+                success: true,
+                message:
+                    'User account, messages, posts and blocks deleted successfully',
+                deletedMessages: deletedMessages.deletedCount,
+                deletedPosts: deletedPosts.deletedCount,
+                deletedBlocks: deletedBlocks.deletedCount,
+            });
+        } catch (error) {
+            console.error('Delete account error:', error);
+
+            return sendError(
+                res,
+                500,
+                'DELETE_ACCOUNT_ERROR',
+                'Internal server error',
+            );
+        }
+    },
+);
+
+// ============================================================
+// UPDATE STATUS (online / offline)
+// ============================================================
+
+router.patch(
+    '/status/:userId',
+    auth,
+    requirePermission('canUseAccount'),
+    async (req, res) => {
+        try {
+            const io = req.app.get('io');
+            const { userId } = req.params;
+            const { status } = req.body;
+
+            // authorization: self or admin
+            const isSelf = req.payload._id === userId;
+            const isAdmin = req.payload.role === roleType.Admin;
+
+            if (!isSelf && !isAdmin) {
+                return sendError(
+                    res,
+                    403,
+                    'FORBIDDEN',
+                    'You cannot change this user status',
+                );
+            }
+
+            if (typeof status !== 'boolean') {
+                return sendError(
+                    res,
+                    400,
+                    'INVALID_STATUS',
+                    'Status must be boolean',
+                );
+            }
+
+            const updatedUser = await User.findByIdAndUpdate(
+                userId,
+                { status },
+                { new: true },
+            )
+                .select('-password')
+                .lean();
+
+            // ✅ إصلاح: null check قبل الوصول إلى name
+            if (!updatedUser) {
+                return sendError(
+                    res,
+                    404,
+                    'USER_NOT_FOUND',
+                    'User not found',
+                );
+            }
+
+            console.log(
+                chalk.red(
+                    `user-${updatedUser.name?.first} to-${updatedUser.status}`,
+                ),
+            );
+
+            if (io) {
+                io.emit('user:statusChanged', {
+                    userId: updatedUser._id.toString(),
+                    status: updatedUser.status,
+                });
+            }
+
+            return res.status(200).send(updatedUser);
+        } catch (error) {
+            console.error('Status update error:', error);
+
+            return sendError(
+                res,
+                500,
+                'STATUS_UPDATE_ERROR',
+                'Internal server error',
+            );
+        }
+    },
+);
+
+// ============================================================
+// ACCOUNT STATUS (Admin only)
+// ============================================================
+
 router.patch('/account-status/:userId', auth, async (req, res) => {
     try {
         if (req.payload.role !== roleType.Admin) {
-            return res.status(403).json({
-                success: false,
-                code: 'ADMIN_ONLY',
-                message: 'Admins only',
-            });
+            return sendError(res, 403, 'ADMIN_ONLY', 'Admins only');
         }
 
         const { userId } = req.params;
         const { accountStatus } = req.body;
 
         if (!['active', 'disabled'].includes(accountStatus)) {
-            return res.status(400).json({
-                success: false,
-                code: 'INVALID_ACCOUNT_STATUS',
-                message: 'Invalid account status',
-            });
+            return sendError(
+                res,
+                400,
+                'INVALID_ACCOUNT_STATUS',
+                'Invalid account status',
+            );
         }
 
-        /*
-         * لا تسمح للـ Admin بتعطيل نفسه
-         */
+        // لا تسمح للـ Admin بتعطيل نفسه
         if (userId === req.payload._id.toString()) {
-            return res.status(400).json({
-                success: false,
-                code: 'CANNOT_DISABLE_SELF',
-                message: 'You cannot disable your own account',
-            });
+            return sendError(
+                res,
+                400,
+                'CANNOT_DISABLE_SELF',
+                'You cannot disable your own account',
+            );
         }
 
         const user = await User.findByIdAndUpdate(
             userId,
             {
-                $set: {
-                    accountStatus,
-                },
+                $set: { accountStatus },
             },
             {
                 new: true,
@@ -999,35 +1412,35 @@ router.patch('/account-status/:userId', auth, async (req, res) => {
             .lean();
 
         if (!user) {
-            return res.status(404).json({
-                success: false,
-                code: 'USER_NOT_FOUND',
-                message: 'User not found',
-            });
+            return sendError(
+                res,
+                404,
+                'USER_NOT_FOUND',
+                'User not found',
+            );
         }
 
         const io = req.app.get('io');
 
-        io.emit('user:accountStatusChanged', {
-            userId: user._id.toString(),
-            accountStatus: user.accountStatus,
-        });
+        if (io) {
+            io.emit('user:accountStatusChanged', {
+                userId: user._id.toString(),
+                accountStatus: user.accountStatus,
+            });
+        }
 
-        /*
-         * إذا تم تعطيل الحساب:
-         * نقطع حالة Online أيضًا.
-         */
+        // إذا تم التعطيل → اجعله offline
         if (accountStatus === 'disabled') {
             await User.findByIdAndUpdate(userId, {
-                $set: {
-                    status: false,
-                },
+                $set: { status: false },
             });
 
-            io.emit('user:statusChanged', {
-                userId: user._id.toString(),
-                status: false,
-            });
+            if (io) {
+                io.emit('user:statusChanged', {
+                    userId: user._id.toString(),
+                    status: false,
+                });
+            }
         }
 
         return res.status(200).json({
@@ -1041,104 +1454,18 @@ router.patch('/account-status/:userId', auth, async (req, res) => {
     } catch (error) {
         console.error('Account status update error:', error);
 
-        return res.status(500).json({
-            success: false,
-            code: 'ACCOUNT_STATUS_UPDATE_ERROR',
-            message: 'Internal server error',
-        });
+        return sendError(
+            res,
+            500,
+            'ACCOUNT_STATUS_UPDATE_ERROR',
+            'Internal server error',
+        );
     }
 });
 
-// router.patch('/permissions/:userId', auth, async (req, res) => {
-//     try {
-//         if (req.payload.role !== roleType.Admin) {
-//             return res.status(403).json({
-//                 success: false,
-//                 code: 'ADMIN_ONLY',
-//                 message: 'Admins only',
-//             });
-//         }
-
-//         const { userId } = req.params;
-
-//         if (userId === req.payload._id.toString()) {
-//             return res.status(400).json({
-//                 success: false,
-//                 code: 'CANNOT_CHANGE_SELF_PERMISSIONS',
-//                 message: 'You cannot change your own permissions',
-//             });
-//         }
-
-//         const allowedPermissions = [
-//             'canLogin',
-//             'canCreatePosts',
-//             'canSendMessages',
-//             'canSendOffers',
-//             'canUseAccount',
-//             'canAccessExistingData',
-//         ];
-
-//         const updates = {};
-
-//         for (const permission of allowedPermissions) {
-//             if (typeof req.body[permission] === 'boolean') {
-//                 updates[`permissions.${permission}`] = req.body[permission];
-//             }
-//         }
-
-//         if (Object.keys(updates).length === 0) {
-//             return res.status(400).json({
-//                 success: false,
-//                 code: 'NO_VALID_PERMISSIONS',
-//                 message: 'No valid permissions provided',
-//             });
-//         }
-
-//         const user = await User.findByIdAndUpdate(
-//             userId,
-//             {
-//                 $set: updates,
-//             },
-//             {
-//                 new: true,
-//                 runValidators: true,
-//             },
-//         )
-//             .select('-password')
-//             .lean();
-
-//         if (!user) {
-//             return res.status(404).json({
-//                 success: false,
-//                 code: 'USER_NOT_FOUND',
-//                 message: 'User not found',
-//             });
-//         }
-
-//         const io = req.app.get('io');
-
-//         io.emit('user:permissionsChanged', {
-//             userId: user._id.toString(),
-//             permissions: user.permissions,
-//         });
-
-//         return res.status(200).json({
-//             success: true,
-//             message: 'Permissions updated successfully',
-//             user,
-//         });
-//     } catch (error) {
-//         console.error('Permission update error:', error);
-
-//         return res.status(500).json({
-//             success: false,
-//             code: 'PERMISSION_UPDATE_ERROR',
-//             message: 'Internal server error',
-//         });
-//     }
-// });
-
-// router.patch('/permissions/:userId', auth, updateUserPermission);
+// ============================================================
+// PERMISSIONS (Admin only, one route per permission)
+// ============================================================
 
 router.patch(
     '/permissions/:userId/login',
@@ -1181,5 +1508,64 @@ router.patch(
     setPermission('canAccessExistingData'),
     updateUserPermission,
 );
+
+// ============================================================
+// LOGOUT
+// ✅ الآن يحوّل المستخدم offline إن كان التوكن صالحاً
+// ============================================================
+
+router.post('/logout', async (req, res) => {
+    try {
+        /**
+         * نحاول قراءة التوكن إن وُجد،
+         * لكن لا نمنع الـ logout إذا فشل التحقق.
+         */
+        const token = req.cookies?.token;
+
+        if (token && process.env.JWT_SECRET) {
+            try {
+                const decoded = Jwt.verify(token, process.env.JWT_SECRET);
+                const io = req.app.get('io');
+
+                const user = await User.findByIdAndUpdate(
+                    decoded._id,
+                    { status: false },
+                    { new: true },
+                )
+                    .select('-password')
+                    .lean();
+
+                if (user && io) {
+                    io.emit('user:statusChanged', {
+                        userId: user._id.toString(),
+                        status: false,
+                    });
+                }
+            } catch (verifyError) {
+                // التوكن منتهي أو غير صالح → نتجاهل ونكمل الـ logout
+                console.warn(
+                    'Logout: token invalid, clearing cookie anyway',
+                );
+            }
+        }
+
+        clearAuthCookie(res);
+
+        return res.status(200).json({
+            success: true,
+            message: 'Logged out successfully',
+        });
+    } catch (error) {
+        console.error('Logout error:', error);
+
+        // حتى لو فشل شيء، نمسح الكوكي
+        clearAuthCookie(res);
+
+        return res.status(200).json({
+            success: true,
+            message: 'Logged out successfully',
+        });
+    }
+});
 
 module.exports = router;
