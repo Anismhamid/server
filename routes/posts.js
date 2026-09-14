@@ -407,7 +407,15 @@ router.get('/:category', async (req, res) => {
         const category = req.params.category;
         const post = await Posts.find({
             category: category.charAt(0).toUpperCase() + category.slice(1),
-        });
+        })
+            .populate({
+                path: 'seller',
+                select: 'name image slug _id',
+            })
+            .populate({
+                path: 'reviews.user',
+                select: 'name image slug _id',
+            });
 
         if (!post.length) return res.status(404).send(`${category} not found`);
 
