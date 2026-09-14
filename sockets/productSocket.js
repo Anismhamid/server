@@ -1,17 +1,17 @@
-const Products = require("../models//Product");
+const Post = require("../models/post");
 
 module.exports = (io, socket) => {
-	socket.on("product:read", async (productId) => {
+	socket.on("post:read", async (postId) => {
 		try {
-			if (!productId) {
-				socket.emit("product:error", "product ID is required");
+			if (!postId) {
+				socket.emit("product:error", "post ID is required");
 				return;
 			}
-			const product = await Products.findById(productId);
-			if (!product) {
-				socket.emit("product:error", "product not found");
+			const post = await Post.findById(postId);
+			if (!post) {
+				socket.emit("post:error", "post not found");
 			} else {
-				socket.emit("product:details", product);
+				socket.emit("post:details", post);
 			}
 		} catch (error) {
 			socket.emit("order:error", error.message);

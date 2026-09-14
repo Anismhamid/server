@@ -146,7 +146,6 @@ router.post(
             } = req.body;
 
             const fromUserId = req.payload._id;
-            const fromRole = req.payload.role;
 
             // ==================================================
             // 1. Cannot message yourself
@@ -166,9 +165,18 @@ router.post(
 
             const fromUser = await Users.findById(fromUserId)
                 .select(
-                    'role accountStatus permissions pushTokens name email image status slug',
+                    '_id role accountStatus permissions pushTokens name firstName lastName',
                 )
                 .lean();
+
+            if (!fromUser) {
+                return res.status(401).json({
+                    success: false,
+                    message: 'User not found',
+                });
+            }
+
+            const fromRole = fromUser.role;
 
             if (!fromUser) {
                 return res.status(401).json({
@@ -550,12 +558,14 @@ router.get(
             // Chronological order
             // ==================================================
 
-            const chronologicalMessages = messages.reverse();
+            const hasMore = messages.length === limit;
+
+            const chronologicalMessages = [...messages].reverse();
 
             return res.json({
                 success: true,
                 messages: chronologicalMessages,
-                hasMore: messages.length === limit,
+                hasMore: hasMore,
                 unreadCount,
             });
         } catch (err) {

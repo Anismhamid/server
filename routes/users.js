@@ -258,12 +258,7 @@ router.post('/', async (req, res) => {
             '-password',
         );
         if (user) {
-            return sendError(
-                res,
-                409,
-                'EMAIL_EXISTS',
-                'Email already exists',
-            );
+            return sendError(res, 409, 'EMAIL_EXISTS', 'Email already exists');
         }
 
         // check slug (منع race condition)
@@ -351,12 +346,7 @@ router.post('/', async (req, res) => {
             }
         }
 
-        return sendError(
-            res,
-            500,
-            'REGISTER_ERROR',
-            'Internal server error',
-        );
+        return sendError(res, 500, 'REGISTER_ERROR', 'Internal server error');
     }
 });
 
@@ -458,12 +448,7 @@ router.post('/login', loginLimiter, async (req, res) => {
     } catch (error) {
         console.error('Login error:', error);
 
-        return sendError(
-            res,
-            500,
-            'LOGIN_ERROR',
-            'Internal server error',
-        );
+        return sendError(res, 500, 'LOGIN_ERROR', 'Internal server error');
     }
 });
 
@@ -495,12 +480,7 @@ router.post('/google', async (req, res) => {
 
         const { credentialToken } = req.body;
         if (!credentialToken) {
-            return sendError(
-                res,
-                400,
-                'MISSING_GOOGLE_TOKEN',
-                'Missing token',
-            );
+            return sendError(res, 400, 'MISSING_GOOGLE_TOKEN', 'Missing token');
         }
 
         const payload = await verifyGoogleToken(credentialToken);
@@ -539,11 +519,16 @@ router.post('/google', async (req, res) => {
                 );
             }
 
+            if (!user.googleId) {
+                user.googleId = payload.sub;
+            }
+
             if (!Array.isArray(user.activity)) {
                 user.activity = [];
             }
 
             user.activity.push(new Date().toLocaleString('he-IL'));
+
             user.status = true;
 
             await user.save();
@@ -661,12 +646,7 @@ router.post('/google', async (req, res) => {
         console.error('Google auth error:', error);
 
         if (error.code === 11000) {
-            return sendError(
-                res,
-                409,
-                'SLUG_EXISTS',
-                'Username already taken',
-            );
+            return sendError(res, 409, 'SLUG_EXISTS', 'Username already taken');
         }
 
         return sendError(
@@ -749,12 +729,7 @@ router.get('/', auth, requirePermission('canUseAccount'), async (req, res) => {
     } catch (error) {
         console.error('Get users error:', error);
 
-        return sendError(
-            res,
-            500,
-            'GET_USERS_ERROR',
-            'Internal server error',
-        );
+        return sendError(res, 500, 'GET_USERS_ERROR', 'Internal server error');
     }
 });
 
@@ -840,9 +815,7 @@ router.get('/check-slug/:slug', async (req, res) => {
 
         return res.status(200).json({
             available: !existingUser,
-            message: existingUser
-                ? 'اسم المستخدم محجوز'
-                : 'اسم المستخدم متاح',
+            message: existingUser ? 'اسم المستخدم محجوز' : 'اسم المستخدم متاح',
         });
     } catch (error) {
         console.error('Error checking slug:', error);
@@ -882,12 +855,7 @@ router.get(
 
             const user = await User.findById(userId).select('-password');
             if (!user) {
-                return sendError(
-                    res,
-                    404,
-                    'USER_NOT_FOUND',
-                    'User not found',
-                );
+                return sendError(res, 404, 'USER_NOT_FOUND', 'User not found');
             }
 
             return res.status(200).send(user);
@@ -927,7 +895,11 @@ router.patch(
             const { userId } = req.params;
             const { role } = req.body;
 
-            if (![roleType.Admin, roleType.Moderator, roleType.Client].includes(role)) {
+            if (
+                ![roleType.Admin, roleType.Moderator, roleType.Client].includes(
+                    role,
+                )
+            ) {
                 return sendError(
                     res,
                     400,
@@ -945,12 +917,7 @@ router.patch(
                 .lean();
 
             if (!user) {
-                return sendError(
-                    res,
-                    404,
-                    'USER_NOT_FOUND',
-                    'User not found',
-                );
+                return sendError(res, 404, 'USER_NOT_FOUND', 'User not found');
             }
 
             const io = req.app.get('io');
@@ -999,12 +966,7 @@ router.patch(
             const isSelf = req.params.userId === req.payload._id;
 
             if (!isAdmin && !isSelf) {
-                return sendError(
-                    res,
-                    403,
-                    'FORBIDDEN',
-                    'Forbidden',
-                );
+                return sendError(res, 403, 'FORBIDDEN', 'Forbidden');
             }
 
             const updateData = {
@@ -1032,12 +994,7 @@ router.patch(
                 .lean();
 
             if (!user) {
-                return sendError(
-                    res,
-                    404,
-                    'USER_NOT_FOUND',
-                    'User not found',
-                );
+                return sendError(res, 404, 'USER_NOT_FOUND', 'User not found');
             }
 
             return res.status(200).send(user);
@@ -1083,12 +1040,7 @@ router.patch(
 
             const userExists = await User.findById(req.params.userId);
             if (!userExists) {
-                return sendError(
-                    res,
-                    404,
-                    'USER_NOT_FOUND',
-                    'User not found',
-                );
+                return sendError(res, 404, 'USER_NOT_FOUND', 'User not found');
             }
 
             const updateData = {
@@ -1170,12 +1122,7 @@ router.patch(
 
             const user = await User.findById(userId);
             if (!user) {
-                return sendError(
-                    res,
-                    404,
-                    'USER_NOT_FOUND',
-                    'User not found',
-                );
+                return sendError(res, 404, 'USER_NOT_FOUND', 'User not found');
             }
 
             if (!isAdmin && !isSelf) {
@@ -1233,12 +1180,7 @@ router.delete(
 
             const user = await User.findById(userId);
             if (!user) {
-                return sendError(
-                    res,
-                    404,
-                    'USER_NOT_FOUND',
-                    'User not found',
-                );
+                return sendError(res, 404, 'USER_NOT_FOUND', 'User not found');
             }
 
             // 1. messages
@@ -1331,12 +1273,7 @@ router.patch(
 
             // ✅ إصلاح: null check قبل الوصول إلى name
             if (!updatedUser) {
-                return sendError(
-                    res,
-                    404,
-                    'USER_NOT_FOUND',
-                    'User not found',
-                );
+                return sendError(res, 404, 'USER_NOT_FOUND', 'User not found');
             }
 
             console.log(
@@ -1412,12 +1349,7 @@ router.patch('/account-status/:userId', auth, async (req, res) => {
             .lean();
 
         if (!user) {
-            return sendError(
-                res,
-                404,
-                'USER_NOT_FOUND',
-                'User not found',
-            );
+            return sendError(res, 404, 'USER_NOT_FOUND', 'User not found');
         }
 
         const io = req.app.get('io');
@@ -1516,15 +1448,12 @@ router.patch(
 
 router.post('/logout', async (req, res) => {
     try {
-        /**
-         * نحاول قراءة التوكن إن وُجد،
-         * لكن لا نمنع الـ logout إذا فشل التحقق.
-         */
-        const token = req.cookies?.token;
+        const token = req.cookies?.safqa_token;
 
         if (token && process.env.JWT_SECRET) {
             try {
                 const decoded = Jwt.verify(token, process.env.JWT_SECRET);
+
                 const io = req.app.get('io');
 
                 const user = await User.findByIdAndUpdate(
@@ -1542,10 +1471,7 @@ router.post('/logout', async (req, res) => {
                     });
                 }
             } catch (verifyError) {
-                // التوكن منتهي أو غير صالح → نتجاهل ونكمل الـ logout
-                console.warn(
-                    'Logout: token invalid, clearing cookie anyway',
-                );
+                console.warn('Logout: token invalid, clearing cookie anyway');
             }
         }
 
@@ -1558,7 +1484,6 @@ router.post('/logout', async (req, res) => {
     } catch (error) {
         console.error('Logout error:', error);
 
-        // حتى لو فشل شيء، نمسح الكوكي
         clearAuthCookie(res);
 
         return res.status(200).json({
