@@ -63,7 +63,7 @@ const basePostsSchema = new mongoose.Schema(
         in_stock: { type: Boolean, default: true },
         status: {
             type: String,
-            enum: ['pending', 'sold', 'accepted'],
+            enum: ['pending', 'accepted', 'rejected', 'sold'],
             default: 'pending',
         },
     },

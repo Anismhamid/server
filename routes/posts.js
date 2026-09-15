@@ -7,7 +7,10 @@ const router = express.Router();
 const Posts = require('../models/post');
 const auth = require('../middlewares/auth');
 const { getPostSchema } = require('../schema/postsSchema');
-const { requirePermission } = require('../middlewares/userPermissions');
+const {
+    requirePermission,
+    requireRole,
+} = require('../middlewares/userPermissions');
 const { invalidateSitemapCache } = require('../routes/sitemap');
 const Block = require('../models/Block');
 
@@ -47,7 +50,7 @@ const isBlockedBetweenUsers = async (userA, userB) => {
 // Get all posts for search in home page
 router.get('/', async (req, res) => {
     try {
-        const posts = await Posts.find()
+        const posts = await Posts.find({ status: 'accepted' })
             .populate({
                 path: 'seller',
                 select: 'name image slug _id',
@@ -55,7 +58,8 @@ router.get('/', async (req, res) => {
             .populate({
                 path: 'reviews.user',
                 select: 'name image slug _id',
-            });
+            })
+            .select();
 
         return res.status(200).json(posts.reverse());
     } catch (error) {
@@ -240,6 +244,35 @@ router.post(
         } catch (error) {
             console.error('Error creating post:', error);
             res.status(500).send(error.message);
+        }
+    },
+);
+
+router.get(
+    '/pending',
+    auth,
+    // requirePermission('canReviewPosts'),
+    requireRole('Admin', 'Moderator'),
+    async (req, res) => {
+        try {
+            const pending = await Posts.find({
+                status: 'pending',
+            })
+                .populate({
+                    path: 'seller',
+                    select: 'name image slug _id',
+                })
+                .sort({ createdAt: -1 })
+                .lean();
+
+            return res.status(200).send(pending);
+        } catch (error) {
+            console.error('Failed to fetch pending posts:', error);
+
+            return res.status(500).json({
+                success: false,
+                message: 'Failed to fetch pending posts',
+            });
         }
     },
 );
@@ -731,5 +764,83 @@ router.patch('/:postId/increment-views', async (req, res) => {
         });
     }
 });
+
+router.patch(
+    '/:postId/approve',
+    auth,
+    requireRole('Admin', 'Moderator'),
+    async (req, res) => {
+        try {
+            const post = await Posts.findByIdAndUpdate(
+                req.params.postId,
+                {
+                    $set: {
+                        status: 'accepted',
+                    },
+                },
+                {
+                    new: true,
+                    runValidators: true,
+                },
+            ).lean();
+
+            if (!post) {
+                return res.status(404).json({
+                    message: 'Post not found',
+                });
+            }
+
+            return res.status(200).json({
+                message: 'Post approved successfully',
+                post,
+            });
+        } catch (error) {
+            console.error('Approve post error:', error);
+
+            return res.status(500).json({
+                message: 'Failed to approve post',
+            });
+        }
+    },
+);
+
+router.patch(
+    '/:postId/reject',
+    auth,
+    requireRole('Admin', 'Moderator'),
+    async (req, res) => {
+        try {
+            const post = await Posts.findByIdAndUpdate(
+                req.params.postId,
+                {
+                    $set: {
+                        status: 'rejected',
+                    },
+                },
+                {
+                    new: true,
+                    runValidators: true,
+                },
+            ).lean();
+
+            if (!post) {
+                return res.status(404).json({
+                    message: 'Post not found',
+                });
+            }
+
+            return res.status(200).json({
+                message: 'Post rejected successfully',
+                post,
+            });
+        } catch (error) {
+            console.error('Reject post error:', error);
+
+            return res.status(500).json({
+                message: 'Failed to reject post',
+            });
+        }
+    },
+);
 
 module.exports = router;
