@@ -1052,6 +1052,7 @@ router.patch(
                     phone_1: req.body.phone?.phone_1 || '',
                     phone_2: req.body.phone?.phone_2 || '',
                 },
+                personalEmail: req.body.personalEmail || '',
                 image: {
                     url: req.body.image?.url || '',
                     alt: req.body.image?.alt || '',
@@ -1067,7 +1068,10 @@ router.patch(
             const user = await User.findByIdAndUpdate(
                 req.params.userId,
                 updateData,
-                { new: true },
+                {
+                    returnDocument: 'after',
+                    runValidators: true,
+                },
             )
                 .select('-password -__v')
                 .lean();
