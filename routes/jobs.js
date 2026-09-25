@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const Jobs = require('../models/Jobs');
-const auth = require('../middlewares/auth')
+const auth = require('../middlewares/auth');
 const router = express.Router();
 
 // =====================================================
@@ -11,7 +11,7 @@ const router = express.Router();
 
 const populateSeller = {
     path: 'seller',
-    select: 'name image slug _id',
+    select: 'name image slug _id phone personalEmail',
 };
 
 // =====================================================
@@ -96,49 +96,35 @@ router.get('/search', async (req, res) => {
         const maxSalary = Number(salaryMax);
 
         // الوظائف التي يتقاطع راتبها مع الحد الأدنى المطلوب
-        if (
-            salaryMin !== undefined &&
-            Number.isFinite(minSalary)
-        ) {
+        if (salaryMin !== undefined && Number.isFinite(minSalary)) {
             filter.salaryMax = {
                 $gte: minSalary,
             };
         }
 
         // الوظائف التي يبدأ راتبها ضمن الحد الأعلى المطلوب
-        if (
-            salaryMax !== undefined &&
-            Number.isFinite(maxSalary)
-        ) {
+        if (salaryMax !== undefined && Number.isFinite(maxSalary)) {
             filter.salaryMin = {
                 ...(filter.salaryMin || {}),
                 $lte: maxSalary,
             };
         }
 
-        const pageNumber = Math.max(
-            Number(page) || 1,
-            1,
-        );
+        const pageNumber = Math.max(Number(page) || 1, 1);
 
-        const limitNumber = Math.min(
-            Math.max(Number(limit) || 20, 1),
-            100,
-        );
+        const limitNumber = Math.min(Math.max(Number(limit) || 20, 1), 100);
 
-        const skip =
-            (pageNumber - 1) * limitNumber;
+        const skip = (pageNumber - 1) * limitNumber;
 
-        const [jobs, total] =
-            await Promise.all([
-                Jobs.find(filter)
-                    .populate(populateSeller)
-                    .sort({ createdAt: -1 })
-                    .skip(skip)
-                    .limit(limitNumber),
+        const [jobs, total] = await Promise.all([
+            Jobs.find(filter)
+                .populate(populateSeller)
+                .sort({ createdAt: -1 })
+                .skip(skip)
+                .limit(limitNumber),
 
-                Jobs.countDocuments(filter),
-            ]);
+            Jobs.countDocuments(filter),
+        ]);
 
         return res.status(200).json({
             success: true,
@@ -147,16 +133,11 @@ router.get('/search', async (req, res) => {
                 total,
                 page: pageNumber,
                 limit: limitNumber,
-                pages: Math.ceil(
-                    total / limitNumber,
-                ),
+                pages: Math.ceil(total / limitNumber),
             },
         });
     } catch (error) {
-        console.error(
-            'Search jobs error:',
-            error,
-        );
+        console.error('Search jobs error:', error);
 
         return res.status(500).json({
             success: false,
@@ -183,10 +164,7 @@ router.get('/type/:type', async (req, res) => {
             jobs,
         });
     } catch (error) {
-        console.error(
-            'Get jobs by type error:',
-            error,
-        );
+        console.error('Get jobs by type error:', error);
 
         return res.status(500).json({
             success: false,
@@ -204,17 +182,14 @@ router.get('/:jobId', async (req, res) => {
     try {
         const { jobId } = req.params;
 
-        if (
-            !mongoose.Types.ObjectId.isValid(jobId)
-        ) {
+        if (!mongoose.Types.ObjectId.isValid(jobId)) {
             return res.status(400).json({
                 success: false,
                 message: 'Invalid job ID',
             });
         }
 
-        const job = await Jobs.findById(jobId)
-            .populate(populateSeller);
+        const job = await Jobs.findById(jobId).populate(populateSeller);
 
         if (!job) {
             return res.status(404).json({
@@ -228,10 +203,7 @@ router.get('/:jobId', async (req, res) => {
             job,
         });
     } catch (error) {
-        console.error(
-            'Get job details error:',
-            error,
-        );
+        console.error('Get job details error:', error);
 
         return res.status(500).json({
             success: false,
@@ -245,7 +217,7 @@ router.get('/:jobId', async (req, res) => {
 // Create job
 // =====================================================
 
-router.post('/',auth, async (req, res) => {
+router.post('/', auth, async (req, res) => {
     try {
         /*
          * مهم:
@@ -270,9 +242,9 @@ router.post('/',auth, async (req, res) => {
             seller: sellerId,
         });
 
-        const populatedJob =
-            await Jobs.findById(job._id)
-                .populate(populateSeller);
+        const populatedJob = await Jobs.findById(job._id).populate(
+            populateSeller,
+        );
 
         return res.status(201).json({
             success: true,
@@ -280,10 +252,7 @@ router.post('/',auth, async (req, res) => {
             job: populatedJob,
         });
     } catch (error) {
-        console.error(
-            'Create job error:',
-            error,
-        );
+        console.error('Create job error:', error);
 
         return res.status(500).json({
             success: false,
@@ -297,7 +266,7 @@ router.post('/',auth, async (req, res) => {
 // Update job
 // =====================================================
 
-router.patch('/:jobId',auth, async (req, res) => {
+router.patch('/:jobId', auth, async (req, res) => {
     try {
         const { jobId } = req.params;
         const sellerId = req.payload._id;
@@ -309,16 +278,14 @@ router.patch('/:jobId',auth, async (req, res) => {
             });
         }
 
-        if (
-            !mongoose.Types.ObjectId.isValid(jobId)
-        ) {
+        if (!mongoose.Types.ObjectId.isValid(jobId)) {
             return res.status(400).json({
                 success: false,
                 message: 'Invalid job ID',
             });
         }
 
-        const job = await Jobs.findById(jobId);
+        const job = await Jobs.findById(jobId).populate(populateSeller);
 
         if (!job) {
             return res.status(404).json({
@@ -328,35 +295,25 @@ router.patch('/:jobId',auth, async (req, res) => {
         }
 
         // فقط صاحب الوظيفة يستطيع تعديلها
-        if (
-            job.seller.toString() !==
-            sellerId.toString()
-        ) {
+        if (job.seller.toString() !== sellerId.toString()) {
             return res.status(403).json({
                 success: false,
-                message:
-                    'You are not allowed to update this job',
+                message: 'You are not allowed to update this job',
             });
         }
 
         /*
          * لا نسمح بتغيير seller من req.body
          */
-        const {
-            seller,
-            _id,
-            createdAt,
-            updatedAt,
-            ...updateData
-        } = req.body;
+        const { seller, _id, createdAt, updatedAt, ...updateData } = req.body;
 
         Object.assign(job, updateData);
 
         await job.save();
 
-        const updatedJob =
-            await Jobs.findById(job._id)
-                .populate(populateSeller);
+        const updatedJob = await Jobs.findById(job._id).populate(
+            populateSeller,
+        );
 
         return res.status(200).json({
             success: true,
@@ -364,10 +321,7 @@ router.patch('/:jobId',auth, async (req, res) => {
             job: updatedJob,
         });
     } catch (error) {
-        console.error(
-            'Update job error:',
-            error,
-        );
+        console.error('Update job error:', error);
 
         return res.status(500).json({
             success: false,
@@ -381,7 +335,7 @@ router.patch('/:jobId',auth, async (req, res) => {
 // Delete job
 // =====================================================
 
-router.delete('/:jobId',auth, async (req, res) => {
+router.delete('/:jobId', auth, async (req, res) => {
     try {
         const { jobId } = req.params;
         const sellerId = req.payload?._id;
@@ -393,9 +347,7 @@ router.delete('/:jobId',auth, async (req, res) => {
             });
         }
 
-        if (
-            !mongoose.Types.ObjectId.isValid(jobId)
-        ) {
+        if (!mongoose.Types.ObjectId.isValid(jobId)) {
             return res.status(400).json({
                 success: false,
                 message: 'Invalid job ID',
@@ -412,14 +364,10 @@ router.delete('/:jobId',auth, async (req, res) => {
         }
 
         // فقط صاحب الوظيفة يستطيع حذفها
-        if (
-            job.seller.toString() !==
-            sellerId.toString()
-        ) {
+        if (job.seller.toString() !== sellerId.toString()) {
             return res.status(403).json({
                 success: false,
-                message:
-                    'You are not allowed to delete this job',
+                message: 'You are not allowed to delete this job',
             });
         }
 
@@ -430,14 +378,48 @@ router.delete('/:jobId',auth, async (req, res) => {
             message: 'Job deleted successfully',
         });
     } catch (error) {
-        console.error(
-            'Delete job error:',
-            error,
-        );
+        console.error('Delete job error:', error);
 
         return res.status(500).json({
             success: false,
             message: 'Failed to delete job',
+        });
+    }
+});
+
+// =====================================================
+// GET /api/jobs/user/:userId
+// Get jobs by slug
+// =====================================================
+
+router.get('/user/:userId', async (req, res) => {
+    try {
+        const { userId } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid user ID',
+            });
+        }
+
+        const jobs = await Jobs.find({
+            seller: userId,
+        })
+            .populate(populateSeller)
+            .sort({ createdAt: -1 });
+
+        return res.status(200).json({
+            success: true,
+            count: jobs.length,
+            jobs,
+        });
+    } catch (error) {
+        console.error('Get jobs by user error:', error);
+
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to fetch jobs by user',
         });
     }
 });
