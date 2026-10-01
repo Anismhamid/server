@@ -1,4 +1,4 @@
-const cloudinary = require('../utils/cloudinary');
+const cloudinary = require('../config/cloudinary');
 const mongoose = require('mongoose');
 
 const express = require('express');
