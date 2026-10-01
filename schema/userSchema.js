@@ -30,7 +30,9 @@ const userSchema = Joi.object({
         houseNumber: Joi.string().allow(''),
     }),
     email: Joi.string().email().required(),
-
+    personalEmail: Joi.string().email().required(),
+    password: Joi.string().min(6).required(),
+    gender: Joi.string().required(),
     password: Joi.string().min(6).required(),
     gender: Joi.string().required(),
     image: Joi.object({

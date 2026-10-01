@@ -19,7 +19,7 @@ cloudinary.config({
  */
 router.post('/sign', auth, (req, res) => {
     try {
-        const userId = String(req.user.id || req.user._id);
+        const userId = req.payload._id;
         const isProfile = req.body.type === 'profile';
         const adId =
             typeof req.body.adId === 'string' &&
@@ -65,20 +65,24 @@ router.post('/sign', auth, (req, res) => {
     }
 });
 
-
 router.patch('/me/image', auth, async (req, res) => {
     try {
-        const userId = String(req.payload.id || req.payload._id);
+        const userId = req.payload._id;
         const { url, alt } = req.body;
 
         if (typeof url !== 'string') {
-            return res.status(400).json({ success: false, error: 'Invalid url' });
+            return res
+                .status(400)
+                .json({ success: false, error: 'Invalid url' });
         }
 
         // لازم الرابط يكون من حساب Cloudinary تبعك ولمجلد هالمستخدم
         const allowedPrefix = `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/`;
 
-        if (!url.startsWith(allowedPrefix) || !url.includes(`/users/${userId}/`)) {
+        if (
+            !url.startsWith(allowedPrefix) ||
+            !url.includes(`/users/${userId}/`)
+        ) {
             return res.status(403).json({ success: false, error: 'Forbidden' });
         }
 
@@ -94,13 +98,17 @@ router.patch('/me/image', auth, async (req, res) => {
         );
 
         if (!user) {
-            return res.status(404).json({ success: false, error: 'User not found' });
+            return res
+                .status(404)
+                .json({ success: false, error: 'User not found' });
         }
 
         return res.json({ success: true, image: user.image });
     } catch (err) {
         console.error('Update image error:', err);
-        return res.status(500).json({ success: false, error: 'Failed to update image' });
+        return res
+            .status(500)
+            .json({ success: false, error: 'Failed to update image' });
     }
 });
 
@@ -110,7 +118,7 @@ router.patch('/me/image', auth, async (req, res) => {
  */
 router.post('/delete', auth, async (req, res) => {
     const { publicId } = req.body;
-    const userId = String(req.payload.id || req.payload._id);
+    const userId = req.payload._id;
 
     if (!publicId || typeof publicId !== 'string') {
         return res.status(400).json({
