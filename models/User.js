@@ -65,9 +65,11 @@ const userSchema = new mongoose.Schema(
 
         personalEmail: {
             type: String,
-            required: true,
             lowercase: true,
             trim: true,
+            required: function () {
+                return !this.googleId ;
+            },
             match: [/\S+@\S+\.\S+/, 'Please enter a valid email'],
         },
 
@@ -100,10 +102,6 @@ const userSchema = new mongoose.Schema(
         activity: {
             type: Array,
             default: [],
-        },
-
-        registrAt: {
-            type: String,
         },
 
         messageStatus: {

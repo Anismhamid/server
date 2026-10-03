@@ -597,6 +597,7 @@ router.post('/google', async (req, res) => {
                 houseNumber: addressFromClient.houseNumber || '',
             },
             email: payload.email,
+            personalEmail: payload.email,
             password: hashSync(payload.sub, 10),
             image: {
                 url: payload.picture || '',
