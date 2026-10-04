@@ -33,7 +33,13 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, {
     cors: {
         origin: allowedOrigins,
-        methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+        methods: [
+            'GET',
+            'POST',
+            'PUT',
+            'PATCH',
+            'DELETE',
+        ],
         credentials: true,
     },
 
@@ -42,10 +48,6 @@ const io = new Server(httpServer, {
 
     connectionStateRecovery: {
         maxDisconnectionDuration: 2 * 60 * 1000,
-
-        // IMPORTANT:
-        // Do not allow a recovered socket to skip
-        // authentication middleware.
         skipMiddlewares: false,
     },
 });
@@ -54,7 +56,8 @@ const io = new Server(httpServer, {
 // SOCKET AUTHENTICATION
 // ======================================================
 
-const AUTH_COOKIE_NAME = process.env.AUTH_COOKIE_NAME || 'safqa_token';
+const AUTH_COOKIE_NAME =
+    process.env.AUTH_COOKIE_NAME || 'safqa_token';
 
 function getCookieValue(cookieHeader, cookieName) {
     if (!cookieHeader) return null;
@@ -64,49 +67,95 @@ function getCookieValue(cookieHeader, cookieName) {
     for (const cookie of cookies) {
         const separatorIndex = cookie.indexOf('=');
 
-        if (separatorIndex === -1) continue;
+        if (separatorIndex === -1) {
+            continue;
+        }
 
-        const name = cookie.slice(0, separatorIndex).trim();
+        const name = cookie
+            .slice(0, separatorIndex)
+            .trim();
 
-        if (name !== cookieName) continue;
+        if (name !== cookieName) {
+            continue;
+        }
 
-        return decodeURIComponent(cookie.slice(separatorIndex + 1).trim());
+        return decodeURIComponent(
+            cookie
+                .slice(separatorIndex + 1)
+                .trim(),
+        );
     }
 
     return null;
 }
 
-// Authenticate every Socket.IO connection
 io.use(async (socket, next) => {
     try {
-        const cookieHeader = socket.handshake.headers.cookie;
+        const cookieHeader =
+            socket.handshake.headers.cookie;
 
-        const token = getCookieValue(cookieHeader, AUTH_COOKIE_NAME);
+        console.log(
+            '🍪 Socket cookie received:',
+            Boolean(cookieHeader),
+        );
+
+        const token = getCookieValue(
+            cookieHeader,
+            AUTH_COOKIE_NAME,
+        );
+
+        console.log(
+            '🔐 Socket token received:',
+            Boolean(token),
+        );
 
         if (!token) {
-            return next(new Error('Authentication required'));
+            return next(
+                new Error('Authentication required'),
+            );
         }
 
-        const payload = Jwt.verify(token, process.env.JWT_SECRET);
+        const payload = Jwt.verify(
+            token,
+            process.env.JWT_SECRET,
+        );
 
         if (!payload?._id) {
-            return next(new Error('Invalid authentication payload'));
+            return next(
+                new Error(
+                    'Invalid authentication payload',
+                ),
+            );
         }
 
-        const user = await Users.findById(payload._id)
-            .select('_id role accountStatus permissions')
+        const user = await Users.findById(
+            payload._id,
+        )
+            .select(
+                '_id role accountStatus permissions',
+            )
             .lean();
 
         if (!user) {
-            return next(new Error('User not found'));
+            return next(
+                new Error('User not found'),
+            );
         }
 
         if (user.accountStatus === 'disabled') {
-            return next(new Error('Account disabled'));
+            return next(
+                new Error('Account disabled'),
+            );
         }
 
-        if (user.permissions?.canUseAccount === false) {
-            return next(new Error('Account access disabled'));
+        if (
+            user.permissions?.canUseAccount === false
+        ) {
+            return next(
+                new Error(
+                    'Account access disabled',
+                ),
+            );
         }
 
         socket.user = {
@@ -116,23 +165,36 @@ io.use(async (socket, next) => {
             permissions: user.permissions,
         };
 
+        console.log(
+            `✅ Socket authenticated: ${user._id}`,
+        );
+
         next();
     } catch (error) {
-        console.error('❌ Socket authentication error:', error.message);
+        console.error(
+            '❌ Socket authentication error:',
+            error.message,
+        );
 
-        return next(new Error('Authentication required'));
+        return next(
+            new Error(
+                'Authentication required',
+            ),
+        );
     }
 });
 
 // ======================================================
 // CONNECTED USERS
-// userId -> [socketIds]
 // ======================================================
 
 const connectedUsers = new Map();
 
 app.set('io', io);
-app.set('connectedUsers', connectedUsers);
+app.set(
+    'connectedUsers',
+    connectedUsers,
+);
 
 // ======================================================
 // SOCKET CONNECTION
@@ -142,23 +204,40 @@ io.on('connection', (socket) => {
     const userId = socket.user._id;
     const role = socket.user.role;
 
-    console.log(`🔌 Socket connected: ${userId} (${role})`);
+    console.log(
+        `🔌 Socket connected: ${userId} (${role})`,
+    );
 
     // ------------------------------------------
-    // Add socket to connected user
+    // User-specific room
+    // ------------------------------------------
+
+    socket.join(userId);
+
+    console.log(
+        `🏠 User room joined: ${userId}`,
+    );
+
+    // ------------------------------------------
+    // Connected users
     // ------------------------------------------
 
     if (!connectedUsers.has(userId)) {
         connectedUsers.set(userId, []);
     }
 
-    connectedUsers.get(userId).push(socket.id);
+    connectedUsers
+        .get(userId)
+        .push(socket.id);
 
-    // User-specific room
-    socket.join(userId);
-
+    // ------------------------------------------
     // Admin / Moderator room
-    if (role === 'Admin' || role === 'Moderator') {
+    // ------------------------------------------
+
+    if (
+        role === 'Admin' ||
+        role === 'Moderator'
+    ) {
         socket.join('admins');
     }
 
@@ -166,55 +245,78 @@ io.on('connection', (socket) => {
     // Typing
     // ------------------------------------------
 
-    socket.on('user:typing', ({ to }) => {
-        if (!to) return;
+    socket.on(
+        'user:typing',
+        ({ to }) => {
+            if (!to) return;
 
-        const toSockets = connectedUsers.get(to) || [];
+            const toSockets =
+                connectedUsers.get(to) || [];
 
-        toSockets.forEach((id) => {
-            io.to(id).emit('user:typing', {
-                // IMPORTANT:
-                // Do not trust "from" from frontend.
-                from: userId,
+            toSockets.forEach((id) => {
+                io.to(id).emit(
+                    'user:typing',
+                    {
+                        from: userId,
+                    },
+                );
             });
-        });
-    });
+        },
+    );
 
     // ------------------------------------------
     // Stop typing
     // ------------------------------------------
 
-    socket.on('user:stopTyping', ({ to }) => {
-        if (!to) return;
+    socket.on(
+        'user:stopTyping',
+        ({ to }) => {
+            if (!to) return;
 
-        const toSockets = connectedUsers.get(to) || [];
+            const toSockets =
+                connectedUsers.get(to) || [];
 
-        toSockets.forEach((id) => {
-            io.to(id).emit('user:stopTyping', {
-                // IMPORTANT:
-                // Use authenticated socket user.
-                from: userId,
+            toSockets.forEach((id) => {
+                io.to(id).emit(
+                    'user:stopTyping',
+                    {
+                        from: userId,
+                    },
+                );
             });
-        });
-    });
+        },
+    );
 
     // ------------------------------------------
     // Disconnect
     // ------------------------------------------
 
-    socket.on('disconnect', (reason) => {
-        console.log(`🔌 Socket disconnected: ${userId} - ${reason}`);
+    socket.on(
+        'disconnect',
+        (reason) => {
+            console.log(
+                `🔌 Socket disconnected: ${userId} - ${reason}`,
+            );
 
-        const ids = connectedUsers.get(userId) || [];
+            const ids =
+                connectedUsers.get(userId) || [];
 
-        const newIds = ids.filter((id) => id !== socket.id);
+            const newIds = ids.filter(
+                (id) => id !== socket.id,
+            );
 
-        if (newIds.length > 0) {
-            connectedUsers.set(userId, newIds);
-        } else {
-            connectedUsers.delete(userId);
-        }
-    });
+            if (newIds.length > 0) {
+                connectedUsers.set(
+                    userId,
+                    newIds,
+                );
+            } else {
+                connectedUsers.delete(
+                    userId,
+                );
+            }
+        },
+    );
 });
 
 // ======================================================

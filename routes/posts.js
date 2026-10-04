@@ -13,6 +13,7 @@ const {
 } = require('../middlewares/userPermissions');
 const { invalidateSitemapCache } = require('../routes/sitemap');
 const Block = require('../models/Block');
+const { notifyUser } = require('../services/notify');
 
 // ============================================
 // Block check
@@ -765,37 +766,160 @@ router.patch('/:postId/increment-views', async (req, res) => {
     }
 });
 
+// ============================================================================
+// APPROVE POST
+// PATCH /:postId/approve
+// ============================================================================
+
 router.patch(
     '/:postId/approve',
+
     auth,
+
     requireRole('Admin', 'Moderator'),
+
     async (req, res) => {
         try {
-            const post = await Posts.findByIdAndUpdate(
-                req.params.postId,
+            const { postId } = req.params;
+
+            // ----------------------------------------------------------------
+            // Update post and return BEFORE version
+            // ----------------------------------------------------------------
+
+            const before = await Posts.findByIdAndUpdate(
+                postId,
+
                 {
                     $set: {
                         status: 'accepted',
+
+                        rejectionReason: '',
+
+                        reviewedBy: req.payload._id,
+
+                        reviewedAt: new Date(),
                     },
                 },
+
                 {
-                    new: true,
+                    returnDocument: 'before',
+
                     runValidators: true,
                 },
             ).lean();
 
-            if (!post) {
+            // ----------------------------------------------------------------
+            // Post doesn't exist
+            // ----------------------------------------------------------------
+
+            if (!before) {
                 return res.status(404).json({
                     message: 'Post not found',
                 });
             }
 
+            // ----------------------------------------------------------------
+            // Build updated object for Socket.IO response
+            // ----------------------------------------------------------------
+
+            const post = {
+                ...before,
+
+                status: 'accepted',
+
+                rejectionReason: '',
+
+                reviewedBy: req.payload._id,
+
+                reviewedAt: new Date(),
+            };
+
+            // ----------------------------------------------------------------
+            // Don't send duplicate notification
+            // ----------------------------------------------------------------
+
+            const wasAlreadyAccepted =
+                before.status === 'accepted';
+
+            if (!wasAlreadyAccepted) {
+                // ------------------------------------------------------------
+                // Sitemap
+                // ------------------------------------------------------------
+
+                try {
+                    invalidateSitemapCache();
+                } catch (error) {
+                    console.error(
+                        '[approve] sitemap invalidation failed:',
+                        error,
+                    );
+                }
+
+                // ------------------------------------------------------------
+                // Socket.IO
+                // ------------------------------------------------------------
+
+                const io = req.app.get('io');
+
+                // ------------------------------------------------------------
+                // Notification to seller
+                // ------------------------------------------------------------
+
+                if (post.seller) {
+                    notifyUser(
+                        io,
+                        post.seller,
+                        {
+                            type: 'post_approved',
+
+                            title: 'تم قبول إعلانك ✅',
+
+                            body: `إعلان "${post.product_name}" صار ظاهرًا للجميع.`,
+
+                            postId: post._id,
+                        },
+                    ).catch((error) => {
+                        console.error(
+                            '[approve] notify failed:',
+                            error,
+                        );
+                    });
+                } else {
+                    console.warn(
+                        `[approve] Post ${post._id} has no seller`,
+                    );
+                }
+
+                // ------------------------------------------------------------
+                // IMPORTANT
+                //
+                // Frontend currently listens to:
+                // product:new
+                //
+                // So only emit after approval.
+                // ------------------------------------------------------------
+
+                if (io) {
+                    io.emit('product:new', post);
+                }
+            }
+
+            // ----------------------------------------------------------------
+            // Response
+            // ----------------------------------------------------------------
+
             return res.status(200).json({
-                message: 'Post approved successfully',
+                message: wasAlreadyAccepted
+                    ? 'Post was already approved'
+                    : 'Post approved successfully',
+
                 post,
             });
         } catch (error) {
-            console.error('Approve post error:', error);
+            console.error(
+                'Approve post error:',
+                error,
+            );
 
             return res.status(500).json({
                 message: 'Failed to approve post',
@@ -804,37 +928,158 @@ router.patch(
     },
 );
 
+// ============================================================================
+// REJECT POST
+// PATCH /:postId/reject
+//
+// Body:
+// {
+//     "reason": "السبب"
+// }
+// ============================================================================
+
 router.patch(
     '/:postId/reject',
+
     auth,
+
     requireRole('Admin', 'Moderator'),
+
     async (req, res) => {
         try {
-            const post = await Posts.findByIdAndUpdate(
-                req.params.postId,
+            const { postId } = req.params;
+
+            const reason = String(
+                req.body?.reason || '',
+            ).trim();
+
+            // ----------------------------------------------------------------
+            // Update post and return BEFORE version
+            // ----------------------------------------------------------------
+
+            const before = await Posts.findByIdAndUpdate(
+                postId,
+
                 {
                     $set: {
                         status: 'rejected',
+
+                        rejectionReason: reason,
+
+                        reviewedBy: req.payload._id,
+
+                        reviewedAt: new Date(),
                     },
                 },
+
                 {
-                    new: true,
+                    returnDocument: 'before',
+
                     runValidators: true,
                 },
             ).lean();
 
-            if (!post) {
+            // ----------------------------------------------------------------
+            // Post doesn't exist
+            // ----------------------------------------------------------------
+
+            if (!before) {
                 return res.status(404).json({
                     message: 'Post not found',
                 });
             }
 
+            // ----------------------------------------------------------------
+            // Updated object
+            // ----------------------------------------------------------------
+
+            const post = {
+                ...before,
+
+                status: 'rejected',
+
+                rejectionReason: reason,
+
+                reviewedBy: req.payload._id,
+
+                reviewedAt: new Date(),
+            };
+
+            // ----------------------------------------------------------------
+            // Don't notify if it was already rejected
+            // ----------------------------------------------------------------
+
+            const wasAlreadyRejected =
+                before.status === 'rejected';
+
+            if (!wasAlreadyRejected) {
+                // ------------------------------------------------------------
+                // Sitemap
+                // ------------------------------------------------------------
+
+                try {
+                    invalidateSitemapCache();
+                } catch (error) {
+                    console.error(
+                        '[reject] sitemap invalidation failed:',
+                        error,
+                    );
+                }
+
+                // ------------------------------------------------------------
+                // Socket.IO
+                // ------------------------------------------------------------
+
+                const io = req.app.get('io');
+
+                // ------------------------------------------------------------
+                // Notification
+                // ------------------------------------------------------------
+
+                if (post.seller) {
+                    notifyUser(
+                        io,
+                        post.seller,
+                        {
+                            type: 'post_rejected',
+
+                            title: 'تم رفض إعلانك',
+
+                            body: reason
+                                ? `إعلان "${post.product_name}" ما انقبل. السبب: ${reason}`
+                                : `إعلان "${post.product_name}" ما انقبل. تواصل مع الدعم لمعرفة السبب.`,
+
+                            postId: post._id,
+                        },
+                    ).catch((error) => {
+                        console.error(
+                            '[reject] notify failed:',
+                            error,
+                        );
+                    });
+                } else {
+                    console.warn(
+                        `[reject] Post ${post._id} has no seller`,
+                    );
+                }
+            }
+
+            // ----------------------------------------------------------------
+            // Response
+            // ----------------------------------------------------------------
+
             return res.status(200).json({
-                message: 'Post rejected successfully',
+                message: wasAlreadyRejected
+                    ? 'Post was already rejected'
+                    : 'Post rejected successfully',
+
                 post,
             });
         } catch (error) {
-            console.error('Reject post error:', error);
+            console.error(
+                'Reject post error:',
+                error,
+            );
 
             return res.status(500).json({
                 message: 'Failed to reject post',
