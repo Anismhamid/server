@@ -1,86 +1,119 @@
-// controllers/postReview.js
-const Post = require('../models/post.model'); // ⚠️ عدّل المسار/الاسم
-const { notifyUser } = require('../services/notify');
+// routes/posts.review.js
+// ⚠️ مش ملف جديد تركّبه: انسخ الـ handlers الاثنين وبدّل بيهم /:postId/approve و /:postId/reject
+// داخل ملف الـ routes الحالي. وأضف فوق الملف:
+//     const { notifyUser } = require('../services/notify');
+//
+// القيم عندك: pending | accepted | rejected  (مو approved).
 
-/**
- * PATCH /posts/:id/review
- * body: { action: 'approve' | 'reject', reason?: string }
- * Route:
- *   router.patch('/:id/review', auth, requireRole('Admin', 'Moderator'), reviewPost);
- */
-exports.reviewPost = async (req, res) => {
-    try {
-        const { action } = req.body;
-        const reason = String(req.body.reason || '').trim();
-
-        if (!['approve', 'reject'].includes(action)) {
-            return res.status(400).json({ message: 'action must be approve or reject' });
-        }
-        if (action === 'reject' && reason.length < 3) {
-            return res.status(400).json({ message: 'سبب الرفض مطلوب' });
-        }
-
-        const isApprove = action === 'approve';
-
-        // شرط status:'pending' = العملية atomic. لو مشرفين ضغطوا بنفس اللحظة،
-        // واحد بس بينجح، فالمستخدم بيوصله إشعار واحد.
-        const post = await Post.findOneAndUpdate(
-            { _id: req.params.id, status: 'pending' },
-            {
-                $set: {
-                    status: isApprove ? 'approved' : 'rejected',
-                    rejectionReason: isApprove ? '' : reason,
-                    reviewedBy: req.user._id, // ⚠️ حسب شكل req.user عندك
-                    reviewedAt: new Date(),
+// ─── APPROVE ────────────────────────────────────────────────────────────────
+router.patch(
+    '/:postId/approve',
+    auth,
+    requireRole('Admin', 'Moderator'),
+    async (req, res) => {
+        try {
+            // 'before' عشان نعرف الحالة السابقة: لو كان accepted أصلًا ما نبعت إشعار مكرر
+            const before = await Posts.findByIdAndUpdate(
+                req.params.postId,
+                {
+                    $set: {
+                        status: 'accepted',
+                        rejectionReason: '',
+                        reviewedBy: req.payload._id,
+                        reviewedAt: new Date(),
+                    },
                 },
-            },
-            { new: true },
-        );
+                { returnDocument: 'before', runValidators: true },
+            ).lean();
 
-        if (!post) {
-            return res
-                .status(409)
-                .json({ message: 'الإعلان غير موجود أو تمت مراجعته مسبقًا' });
+            if (!before) {
+                return res.status(404).json({ message: 'Post not found' });
+            }
+
+            const post = { ...before, status: 'accepted' };
+
+            if (before.status !== 'accepted') {
+                invalidateSitemapCache();
+
+                const io = req.app.get('io');
+
+                // إشعار لصاحب الإعلان (seller هون ObjectId لأنه lean)
+                notifyUser(io, post.seller, {
+                    type: 'post_approved',
+                    title: 'تم قبول إعلانك ✅',
+                    body: `إعلان "${post.product_name}" صار ظاهر للجميع.`,
+                    postId: post._id,
+                }).catch((err) =>
+                    console.error('[approve] notify failed:', err),
+                );
+
+                // الكلاينت (useSocketEvents) بيسمع على 'product:new' مو 'post:new'.
+                // هلأ بنبعته بعد القبول بس، مو عند الإنشاء.
+                io?.emit('product:new', post);
+            }
+
+            return res.status(200).json({
+                message: 'Post approved successfully',
+                post,
+            });
+        } catch (error) {
+            console.error('Approve post error:', error);
+            return res.status(500).json({ message: 'Failed to approve post' });
         }
+    },
+);
 
-        // ما نستنى الإشعار عشان نرد على المشرف
-        const authorId = post.user_id; // ⚠️ اسم حقل صاحب الإعلان عندك
-        notifyUser(authorId, {
-            type: isApprove ? 'post_approved' : 'post_rejected',
-            title: isApprove ? 'تم قبول إعلانك ✅' : 'تم رفض إعلانك',
-            body: isApprove
-                ? `إعلان "${post.product_name}" صار ظاهر للجميع.`
-                : `إعلان "${post.product_name}" ما انقبل. السبب: ${reason}`,
-            postId: post._id,
-        }).catch((err) => console.error('[reviewPost] notify failed:', err));
+// ─── REJECT ─────────────────────────────────────────────────────────────────
+// body (اختياري): { reason: string }
+router.patch(
+    '/:postId/reject',
+    auth,
+    requireRole('Admin', 'Moderator'),
+    async (req, res) => {
+        try {
+            const reason = String(req.body?.reason || '').trim();
 
-        return res.json(post);
-    } catch (err) {
-        console.error('[reviewPost]', err);
-        return res.status(500).json({ message: 'Server error' });
-    }
-};
+            const before = await Posts.findByIdAndUpdate(
+                req.params.postId,
+                {
+                    $set: {
+                        status: 'rejected',
+                        rejectionReason: reason,
+                        reviewedBy: req.payload._id,
+                        reviewedAt: new Date(),
+                    },
+                },
+                { returnDocument: 'before', runValidators: true },
+            ).lean();
 
-/* ────────────────────────────────────────────────────────────────────────────
-   باقي التعديلات المطلوبة بالسيرفر (مش بهالملف):
+            if (!before) {
+                return res.status(404).json({ message: 'Post not found' });
+            }
 
-   1) Post schema:
-      status:          { type: String, enum: ['pending','approved','rejected'], default: 'pending', index: true },
-      rejectionReason: { type: String, default: '' },
-      reviewedBy:      { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-      reviewedAt:      Date,
+            const post = { ...before, status: 'rejected' };
 
-   2) عند إنشاء الإعلان (POST /posts): المشرف/المدير ينشر مباشرة
-      const isStaff = ['Admin', 'Moderator'].includes(req.user.role);
-      status: isStaff ? 'approved' : 'pending'
+            if (before.status !== 'rejected') {
+                invalidateSitemapCache();
 
-   3) ⚠️ الأهم: كل قوائم الإعلانات العامة (الهوم، الفئات، البحث، sitemap، الإعلانات المميزة)
-      لازم تفلتر status: 'approved'. وصفحة "إعلاناتي" بتعرض كل الحالات لصاحبها.
+                notifyUser(req.app.get('io'), post.seller, {
+                    type: 'post_rejected',
+                    title: 'تم رفض إعلانك',
+                    body: reason
+                        ? `إعلان "${post.product_name}" ما انقبل. السبب: ${reason}`
+                        : `إعلان "${post.product_name}" ما انقبل. تواصل مع الدعم لمعرفة السبب.`,
+                    postId: post._id,
+                }).catch((err) =>
+                    console.error('[reject] notify failed:', err),
+                );
+            }
 
-   4) Migration لمرة وحدة، للإعلانات الموجودة، وإلا بتختفي كلها:
-      db.posts.updateMany({ status: { $exists: false } }, { $set: { status: 'approved' } })
-
-   5) (اختياري) إشعار للمشرفين بإعلان جديد بانتظار المراجعة:
-      const staff = await User.find({ role: { $in: ['Admin','Moderator'] } }).select('_id');
-      staff.forEach(s => notifyUser(s._id, { type: 'post_pending_review', title: 'إعلان جديد بانتظار المراجعة', body: post.product_name, postId: post._id }));
-   ──────────────────────────────────────────────────────────────────────────── */
+            return res.status(200).json({
+                message: 'Post rejected successfully',
+                post,
+            });
+        } catch (error) {
+            console.error('Reject post error:', error);
+            return res.status(500).json({ message: 'Failed to reject post' });
+        }
+    },
+);
