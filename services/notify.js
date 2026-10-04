@@ -24,7 +24,12 @@ async function notifyUser(userId, { type, title, body = '', postId }) {
     });
 
     try {
-        getIO().to(userRoom(userId)).emit('notification:new', doc);
+        const io = getIO();
+        const room = userRoom(userId);
+        // تشخيص: لو العدد 0 يعني المستخدم مش منضم للـ room (أو الـ socket مش متصل)
+        const sockets = await io.in(room).fetchSockets();
+        console.log(`[notify] ${type} → user ${userId} | room "${room}" | sockets: ${sockets.length}`);
+        io.to(room).emit('notification:new', doc);
     } catch (err) {
         console.error('[notify] socket emit failed:', err.message);
     }
