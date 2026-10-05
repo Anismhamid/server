@@ -1,5 +1,4 @@
 const express = require('express');
-
 const router = express.Router();
 
 const auth = require('../middlewares/auth');
@@ -29,7 +28,10 @@ const messagePermissions = {
 };
 
 function canSendMessage(fromRole, toRole) {
-    return messagePermissions[fromRole]?.includes(toRole) || false;
+    return (
+        messagePermissions[fromRole]?.includes(toRole) ||
+        false
+    );
 }
 
 // ======================================================
@@ -47,7 +49,48 @@ function getClientIp(req) {
 }
 
 function getRoomId(userA, userB) {
-    return [userA.toString(), userB.toString()].sort().join('_');
+    return [
+        userA.toString(),
+        userB.toString(),
+    ]
+        .sort()
+        .join('_');
+}
+
+/**
+ * Safely emit to a user's Socket.IO room.
+ *
+ * IMPORTANT:
+ * The socket server must execute:
+ *
+ * socket.join(userId)
+ *
+ * when the user connects.
+ */
+function emitToUser(io, userId, event, data) {
+    if (!io) {
+        console.error(
+            `❌ Cannot emit ${event}: Socket.IO instance unavailable`
+        );
+        return false;
+    }
+
+    if (!userId) {
+        console.error(
+            `❌ Cannot emit ${event}: userId missing`
+        );
+        return false;
+    }
+
+    const room = userId.toString();
+
+    io.to(room).emit(event, data);
+
+    console.log(
+        `📡 Socket event "${event}" → room=${room}`
+    );
+
+    return true;
 }
 
 // ======================================================
@@ -101,6 +144,7 @@ router.post(
     auth,
     requirePermission('canUseAccount'),
     requirePermission('canSendMessages'),
+
     [
         body('toUserId')
             .notEmpty()
@@ -114,14 +158,23 @@ router.post(
                 min: 1,
                 max: 1000,
             })
-            .withMessage('Message must be between 1-1000 characters'),
+            .withMessage(
+                'Message must be between 1-1000 characters'
+            ),
 
-        body('warning').optional().isBoolean(),
+        body('warning')
+            .optional()
+            .isBoolean(),
 
-        body('isImportant').optional().isBoolean(),
+        body('isImportant')
+            .optional()
+            .isBoolean(),
 
-        body('replyTo').optional().isString(),
+        body('replyTo')
+            .optional()
+            .isString(),
     ],
+
     async (req, res) => {
         try {
             // ==================================================
@@ -148,10 +201,13 @@ router.post(
             const fromUserId = req.payload._id;
 
             // ==================================================
-            // 1. Cannot message yourself
+            // Cannot message yourself
             // ==================================================
 
-            if (fromUserId.toString() === toUserId.toString()) {
+            if (
+                fromUserId.toString() ===
+                toUserId.toString()
+            ) {
                 return res.status(400).json({
                     success: false,
                     code: 'CANNOT_MESSAGE_SELF',
@@ -160,23 +216,16 @@ router.post(
             }
 
             // ==================================================
-            // 2. Get sender
+            // Get sender
             // ==================================================
 
-            const fromUser = await Users.findById(fromUserId)
+            const fromUser = await Users.findById(
+                fromUserId
+            )
                 .select(
-                    '_id role accountStatus permissions pushTokens name firstName lastName',
+                    '_id role accountStatus permissions pushTokens name firstName lastName'
                 )
                 .lean();
-
-            if (!fromUser) {
-                return res.status(401).json({
-                    success: false,
-                    message: 'User not found',
-                });
-            }
-
-            const fromRole = fromUser.role;
 
             if (!fromUser) {
                 return res.status(401).json({
@@ -186,49 +235,65 @@ router.post(
                 });
             }
 
+            const fromRole = fromUser.role;
+
             // ==================================================
-            // 3. Sender account status
+            // Sender account status
             // ==================================================
 
-            if (fromUser.accountStatus === 'disabled') {
+            if (
+                fromUser.accountStatus ===
+                'disabled'
+            ) {
                 return res.status(403).json({
                     success: false,
                     code: 'ACCOUNT_DISABLED',
-                    message: 'Your account is disabled',
+                    message:
+                        'Your account is disabled',
                 });
             }
 
             // ==================================================
-            // 4. Sender can use account
+            // Sender can use account
             // ==================================================
 
-            if (fromUser.permissions?.canUseAccount === false) {
+            if (
+                fromUser.permissions
+                    ?.canUseAccount === false
+            ) {
                 return res.status(403).json({
                     success: false,
                     code: 'ACCOUNT_USAGE_DISABLED',
-                    message: 'You cannot use your account',
+                    message:
+                        'You cannot use your account',
                 });
             }
 
             // ==================================================
-            // 5. Sender can send messages
+            // Sender can send messages
             // ==================================================
 
-            if (fromUser.permissions?.canSendMessages === false) {
+            if (
+                fromUser.permissions
+                    ?.canSendMessages === false
+            ) {
                 return res.status(403).json({
                     success: false,
                     code: 'MESSAGES_DISABLED',
-                    message: 'You cannot send messages',
+                    message:
+                        'You cannot send messages',
                 });
             }
 
             // ==================================================
-            // 6. Get recipient
+            // Get recipient
             // ==================================================
 
-            const toUser = await Users.findById(toUserId)
+            const toUser = await Users.findById(
+                toUserId
+            )
                 .select(
-                    'role accountStatus permissions pushTokens name email image status slug',
+                    'role accountStatus permissions pushTokens name email image status slug'
                 )
                 .lean();
 
@@ -241,75 +306,105 @@ router.post(
             }
 
             // ==================================================
-            // 7. Recipient account status
+            // Recipient account status
             // ==================================================
 
-            if (toUser.accountStatus === 'disabled') {
+            if (
+                toUser.accountStatus ===
+                'disabled'
+            ) {
                 return res.status(403).json({
                     success: false,
-                    code: 'RECIPIENT_ACCOUNT_DISABLED',
-                    message: 'Recipient account is disabled',
+                    code:
+                        'RECIPIENT_ACCOUNT_DISABLED',
+                    message:
+                        'Recipient account is disabled',
                 });
             }
 
             // ==================================================
-            // 8. Recipient can use account
+            // Recipient can use account
             // ==================================================
 
-            if (toUser.permissions?.canUseAccount === false) {
+            if (
+                toUser.permissions
+                    ?.canUseAccount === false
+            ) {
                 return res.status(403).json({
                     success: false,
-                    code: 'RECIPIENT_ACCOUNT_USAGE_DISABLED',
-                    message: 'Recipient cannot use the account',
+                    code:
+                        'RECIPIENT_ACCOUNT_USAGE_DISABLED',
+                    message:
+                        'Recipient cannot use the account',
                 });
             }
 
             // ==================================================
-            // 9. Recipient can receive messages
+            // Recipient messaging permission
             // ==================================================
 
-            if (toUser.permissions?.canSendMessages === false) {
+            if (
+                toUser.permissions
+                    ?.canSendMessages === false
+            ) {
                 return res.status(403).json({
                     success: false,
-                    code: 'RECIPIENT_MESSAGES_DISABLED',
-                    message: 'Recipient cannot receive messages',
+                    code:
+                        'RECIPIENT_MESSAGES_DISABLED',
+                    message:
+                        'Recipient messaging access is disabled',
                 });
             }
 
             // ==================================================
-            // 10. Block check
+            // Block check
             // ==================================================
 
-            const blocked = await isBlockedBetweenUsers(fromUserId, toUserId);
+            const blocked =
+                await isBlockedBetweenUsers(
+                    fromUserId,
+                    toUserId
+                );
 
             if (blocked) {
                 return res.status(403).json({
                     success: false,
                     code: 'USER_BLOCKED',
-                    message: 'You cannot send messages to this user',
+                    message:
+                        'You cannot send messages to this user',
                 });
             }
 
             // ==================================================
-            // 11. Role permission
+            // Role permission
             // ==================================================
 
-            if (!canSendMessage(fromRole, toUser.role)) {
+            if (
+                !canSendMessage(
+                    fromRole,
+                    toUser.role
+                )
+            ) {
                 return res.status(403).json({
                     success: false,
-                    code: 'ROLE_MESSAGE_NOT_ALLOWED',
-                    message: `Not allowed to send messages to ${toUser.role}`,
+                    code:
+                        'ROLE_MESSAGE_NOT_ALLOWED',
+                    message:
+                        `Not allowed to send messages to ${toUser.role}`,
                 });
             }
 
             // ==================================================
-            // 12. Room ID
+            // Room ID
             // ==================================================
 
-            const roomId = getRoomId(fromUserId, toUserId);
+            const roomId = getRoomId(
+                fromUserId,
+                toUserId
+            );
 
             // ==================================================
-            // 13. Create message
+            // Create message
             // ==================================================
 
             const newMessage = new Message({
@@ -320,153 +415,237 @@ router.post(
                 isImportant,
                 replyTo: replyTo || null,
                 roomId,
+
+                // Message exists on server and is
+                // delivered to the recipient transport.
                 status: 'delivered',
             });
 
             await newMessage.save();
 
             // ==================================================
-            // 14. Populate message
+            // Populate message
             // ==================================================
 
-            const populatedMessage = await Message.findById(newMessage._id)
-                .populate(
-                    'from',
-                    'name email role image status slug accountStatus',
+            const populatedMessage =
+                await Message.findById(
+                    newMessage._id
                 )
-                .populate(
-                    'to',
-                    'name email role image status slug accountStatus',
-                )
-                .populate('replyTo', 'message from to');
-
-            // ==================================================
-            // 15. Firebase Push Notification
-            // ==================================================
-
-            if (toUser.pushTokens?.length > 0) {
-                try {
-                    const response =
-                        await firebase.messaging.sendEachForMulticast({
-                            tokens: toUser.pushTokens,
-
-                            notification: {
-                                title: `رسالة من ${fromUser.name.first}`,
-                                body: message,
-                            },
-
-                            data: {
-                                type: 'chat',
-                                messageId: String(newMessage._id),
-                                senderId: String(fromUserId),
-                            },
-
-                            android: {
-                                priority: 'high',
-
-                                notification: {
-                                    channelId: 'chat',
-                                    sound: 'notification',
-                                },
-                            },
-                        });
-
-                    console.log(
-                        'FCM sent:',
-                        response.successCount,
-                        '/',
-                        toUser.pushTokens.length,
+                    .populate(
+                        'from',
+                        'name email role image status slug accountStatus'
+                    )
+                    .populate(
+                        'to',
+                        'name email role image status slug accountStatus'
+                    )
+                    .populate(
+                        'replyTo',
+                        'message from to'
                     );
 
-                    // ==========================================
+            if (!populatedMessage) {
+                return res.status(500).json({
+                    success: false,
+                    code:
+                        'MESSAGE_POPULATION_FAILED',
+                    message:
+                        'Failed to prepare message',
+                });
+            }
+
+            // ==================================================
+            // Firebase Push Notification
+            // ==================================================
+
+            if (
+                toUser.pushTokens?.length > 0
+            ) {
+                try {
+                    const senderName =
+                        fromUser?.name?.first ||
+                        fromUser?.firstName ||
+                        fromUser?.name ||
+                        'مستخدم صفقة';
+
+                    const response =
+                        await firebase.messaging
+                            .sendEachForMulticast({
+                                tokens:
+                                    toUser.pushTokens,
+
+                                notification: {
+                                    title:
+                                        `رسالة من ${senderName}`,
+                                    body: message,
+                                },
+
+                                data: {
+                                    type: 'chat',
+                                    messageId:
+                                        String(
+                                            newMessage._id
+                                        ),
+                                    senderId:
+                                        String(
+                                            fromUserId
+                                        ),
+                                },
+
+                                android: {
+                                    priority:
+                                        'high',
+
+                                    notification: {
+                                        channelId:
+                                            'chat',
+                                        sound:
+                                            'notification',
+                                    },
+                                },
+                            });
+
+                    console.log(
+                        '📱 FCM sent:',
+                        response.successCount,
+                        '/',
+                        toUser.pushTokens.length
+                    );
+
+                    // ==================================================
                     // Remove invalid tokens
-                    // ==========================================
+                    // ==================================================
 
                     const invalidTokens = [];
 
-                    response.responses.forEach((result, index) => {
-                        if (!result.success) {
-                            const errorCode = result.error?.code;
-
+                    response.responses.forEach(
+                        (result, index) => {
                             if (
-                                errorCode ===
-                                    'messaging/registration-token-not-registered' ||
-                                errorCode ===
-                                    'messaging/invalid-registration-token'
+                                !result.success
                             ) {
-                                invalidTokens.push(toUser.pushTokens[index]);
+                                const errorCode =
+                                    result.error
+                                        ?.code;
+
+                                if (
+                                    errorCode ===
+                                        'messaging/registration-token-not-registered' ||
+                                    errorCode ===
+                                        'messaging/invalid-registration-token'
+                                ) {
+                                    invalidTokens.push(
+                                        toUser
+                                            .pushTokens[
+                                            index
+                                        ]
+                                    );
+                                }
                             }
                         }
-                    });
+                    );
 
-                    if (invalidTokens.length > 0) {
-                        await Users.findByIdAndUpdate(toUserId, {
-                            $pull: {
-                                pushTokens: {
-                                    $in: invalidTokens,
+                    if (
+                        invalidTokens.length > 0
+                    ) {
+                        await Users.findByIdAndUpdate(
+                            toUserId,
+                            {
+                                $pull: {
+                                    pushTokens: {
+                                        $in:
+                                            invalidTokens,
+                                    },
                                 },
-                            },
-                        });
+                            }
+                        );
 
                         console.log(
-                            'Removed invalid tokens:',
-                            invalidTokens.length,
+                            '🧹 Removed invalid FCM tokens:',
+                            invalidTokens.length
                         );
                     }
                 } catch (error) {
-                    console.error('FCM send error:', error.message);
+                    console.error(
+                        '❌ FCM send error:',
+                        error.message
+                    );
                 }
             }
 
             // ==================================================
-            // 16. Socket.IO
+            // Socket.IO
             // ==================================================
 
             const io = req.app.get('io');
-            const connectedUsers = req.app.get('connectedUsers');
 
-            // ==================================================
-            // Recipient sockets
-            // ==================================================
+            if (!io) {
+                console.error(
+                    '❌ Socket.IO instance unavailable'
+                );
+            } else {
+                // ==================================================
+                // Recipient
+                // ==================================================
 
-            (connectedUsers.get(toUserId.toString()) || []).forEach(
-                (socketId) => {
-                    io.to(socketId).emit('message:received', populatedMessage);
-                },
-            );
+                emitToUser(
+                    io,
+                    toUserId,
+                    'message:received',
+                    populatedMessage
+                );
 
-            // ==================================================
-            // Sender sockets
-            // ==================================================
+                console.log(
+                    `📨 message:received → ${toUserId} | message=${newMessage._id}`
+                );
 
-            (connectedUsers.get(fromUserId.toString()) || []).forEach(
-                (socketId) => {
-                    io.to(socketId).emit('message:sent', populatedMessage);
-                },
-            );
+                // ==================================================
+                // Sender / Other sender devices
+                // ==================================================
 
-            // ==================================================
-            // 17. Unread count
-            // ==================================================
+                emitToUser(
+                    io,
+                    fromUserId,
+                    'message:sent',
+                    populatedMessage
+                );
 
-            const unreadCount = await Message.countDocuments({
-                to: toUserId,
-                status: {
-                    $ne: 'seen',
-                },
-            });
+                console.log(
+                    `📤 message:sent → ${fromUserId} | message=${newMessage._id}`
+                );
 
-            (connectedUsers.get(toUserId.toString()) || []).forEach(
-                (socketId) => {
-                    io.to(socketId).emit('message:unreadCount', {
-                        userId: fromUserId.toString(),
+                // ==================================================
+                // Conversation unread count
+                // ==================================================
+
+                const unreadCount =
+                    await Message.countDocuments(
+                        {
+                            to: toUserId,
+                            from: fromUserId,
+                            status: {
+                                $ne: 'seen',
+                            },
+                        }
+                    );
+
+                emitToUser(
+                    io,
+                    toUserId,
+                    'message:unreadCount',
+                    {
+                        userId:
+                            fromUserId.toString(),
                         count: unreadCount,
-                    });
-                },
-            );
+                    }
+                );
+
+                console.log(
+                    `🔔 unreadCount → user=${toUserId} from=${fromUserId} count=${unreadCount}`
+                );
+            }
 
             // ==================================================
-            // 18. Response
+            // Response
             // ==================================================
 
             return res.status(201).json({
@@ -474,15 +653,20 @@ router.post(
                 message: populatedMessage,
             });
         } catch (err) {
-            console.error('Send message error:', err);
+            console.error(
+                '❌ Send message error:',
+                err
+            );
 
             return res.status(500).json({
                 success: false,
-                code: 'INTERNAL_SERVER_ERROR',
-                message: 'Failed to send message',
+                code:
+                    'INTERNAL_SERVER_ERROR',
+                message:
+                    'Failed to send message',
             });
         }
-    },
+    }
 );
 
 // ======================================================
@@ -494,22 +678,31 @@ router.get(
     auth,
     requirePermission('canUseAccount'),
     requirePermission('canSendMessages'),
+
     async (req, res) => {
         try {
-            const userId = req.payload._id;
-            const otherUserId = req.params.otherUserId;
+            const userId =
+                req.payload._id;
+
+            const otherUserId =
+                req.params.otherUserId;
 
             // ==================================================
             // Block check
             // ==================================================
 
-            const blocked = await isBlockedBetweenUsers(userId, otherUserId);
+            const blocked =
+                await isBlockedBetweenUsers(
+                    userId,
+                    otherUserId
+                );
 
             if (blocked) {
                 return res.status(403).json({
                     success: false,
                     code: 'USER_BLOCKED',
-                    message: 'This conversation is blocked',
+                    message:
+                        'This conversation is blocked',
                 });
             }
 
@@ -518,66 +711,92 @@ router.get(
             // ==================================================
 
             const limit = Math.min(
-                Math.max(parseInt(req.query.limit) || 20, 1),
-                100,
+                Math.max(
+                    parseInt(req.query.limit) ||
+                        20,
+                    1
+                ),
+                100
             );
 
-            const skip = Math.max(parseInt(req.query.skip) || 0, 0);
+            const skip = Math.max(
+                parseInt(req.query.skip) || 0,
+                0
+            );
 
-            const roomId = getRoomId(userId, otherUserId);
+            const roomId = getRoomId(
+                userId,
+                otherUserId
+            );
 
             // ==================================================
             // Get messages
             // ==================================================
 
-            const messages = await Message.find({
-                roomId,
-            })
-                .sort({
-                    createdAt: -1,
+            const messages =
+                await Message.find({
+                    roomId,
                 })
-                .skip(skip)
-                .limit(limit)
-                .populate('from', 'name image slug')
-                .populate('to', 'name image slug')
-                .lean();
+                    .sort({
+                        createdAt: -1,
+                    })
+                    .skip(skip)
+                    .limit(limit)
+                    .populate(
+                        'from',
+                        'name image slug'
+                    )
+                    .populate(
+                        'to',
+                        'name image slug'
+                    )
+                    .lean();
 
             // ==================================================
-            // Unread count for this conversation
+            // Unread count
             // ==================================================
 
-            const unreadCount = await Message.countDocuments({
-                to: userId,
-                from: otherUserId,
-                status: {
-                    $ne: 'seen',
-                },
-            });
+            const unreadCount =
+                await Message.countDocuments({
+                    to: userId,
+                    from: otherUserId,
+                    status: {
+                        $ne: 'seen',
+                    },
+                });
 
             // ==================================================
             // Chronological order
             // ==================================================
 
-            const hasMore = messages.length === limit;
+            const hasMore =
+                messages.length === limit;
 
-            const chronologicalMessages = [...messages].reverse();
+            const chronologicalMessages =
+                [...messages].reverse();
 
             return res.json({
                 success: true,
-                messages: chronologicalMessages,
-                hasMore: hasMore,
+                messages:
+                    chronologicalMessages,
+                hasMore,
                 unreadCount,
             });
         } catch (err) {
-            console.error('Get conversation error:', err);
+            console.error(
+                'Get conversation error:',
+                err
+            );
 
             return res.status(500).json({
                 success: false,
-                code: 'INTERNAL_SERVER_ERROR',
-                message: 'Failed to get conversation',
+                code:
+                    'INTERNAL_SERVER_ERROR',
+                message:
+                    'Failed to get conversation',
             });
         }
-    },
+    }
 );
 
 // ======================================================
@@ -589,22 +808,31 @@ router.patch(
     auth,
     requirePermission('canUseAccount'),
     requirePermission('canSendMessages'),
+
     async (req, res) => {
         try {
-            const toUserId = req.payload._id;
-            const fromUserId = req.params.fromUserId;
+            const toUserId =
+                req.payload._id;
+
+            const fromUserId =
+                req.params.fromUserId;
 
             // ==================================================
             // Block check
             // ==================================================
 
-            const blocked = await isBlockedBetweenUsers(toUserId, fromUserId);
+            const blocked =
+                await isBlockedBetweenUsers(
+                    toUserId,
+                    fromUserId
+                );
 
             if (blocked) {
                 return res.status(403).json({
                     success: false,
                     code: 'USER_BLOCKED',
-                    message: 'This conversation is blocked',
+                    message:
+                        'This conversation is blocked',
                 });
             }
 
@@ -612,19 +840,24 @@ router.patch(
             // Mark messages as seen
             // ==================================================
 
-            await Message.updateMany(
-                {
-                    to: toUserId,
-                    from: fromUserId,
-                    status: {
-                        $ne: 'seen',
+            const updateResult =
+                await Message.updateMany(
+                    {
+                        to: toUserId,
+                        from: fromUserId,
+                        status: {
+                            $ne: 'seen',
+                        },
                     },
-                },
-                {
-                    $set: {
-                        status: 'seen',
-                    },
-                },
+                    {
+                        $set: {
+                            status: 'seen',
+                        },
+                    }
+                );
+
+            console.log(
+                `👁️ Messages marked as seen: ${updateResult.modifiedCount}`
             );
 
             // ==================================================
@@ -633,40 +866,53 @@ router.patch(
 
             const io = req.app.get('io');
 
-            const connectedUsers = req.app.get('connectedUsers');
-
             const seenData = {
-                from: toUserId,
-                to: fromUserId,
+                from: toUserId.toString(),
+                to: fromUserId.toString(),
             };
 
-            // ==================================================
-            // Notify sender
-            // ==================================================
+            if (io) {
+                // Notify sender
+                emitToUser(
+                    io,
+                    fromUserId,
+                    'message:seen',
+                    seenData
+                );
 
-            (connectedUsers.get(fromUserId.toString()) || []).forEach((id) => {
-                io.to(id).emit('message:seen', seenData);
+                // Notify current user's other devices
+                emitToUser(
+                    io,
+                    toUserId,
+                    'message:seen',
+                    seenData
+                );
+            } else {
+                console.error(
+                    '❌ Socket.IO instance unavailable in mark-as-seen'
+                );
+            }
+
+            return res.status(200).json({
+                success: true,
+                modifiedCount:
+                    updateResult.modifiedCount,
             });
-
-            // ==================================================
-            // Notify current user
-            // ==================================================
-
-            (connectedUsers.get(toUserId.toString()) || []).forEach((id) => {
-                io.to(id).emit('message:seen', seenData);
-            });
-
-            return res.sendStatus(200);
         } catch (err) {
-            console.error('Mark as seen error:', err);
+            console.error(
+                '❌ Mark as seen error:',
+                err
+            );
 
             return res.status(500).json({
                 success: false,
-                code: 'INTERNAL_SERVER_ERROR',
-                message: 'Error updating status',
+                code:
+                    'INTERNAL_SERVER_ERROR',
+                message:
+                    'Error updating status',
             });
         }
-    },
+    }
 );
 
 // ======================================================
@@ -678,9 +924,13 @@ router.get(
     auth,
     requirePermission('canUseAccount'),
     requirePermission('canSendMessages'),
+
     async (req, res) => {
         try {
-            if (!req.payload || !req.payload._id) {
+            if (
+                !req.payload ||
+                !req.payload._id
+            ) {
                 return res.status(401).json({
                     success: false,
                     code: 'UNAUTHORIZED',
@@ -688,10 +938,11 @@ router.get(
                 });
             }
 
-            const userId = req.payload._id.toString();
+            const userId =
+                req.payload._id.toString();
 
             // ==================================================
-            // 1. Get ACTIVE blocks
+            // Active blocks
             // ==================================================
 
             const now = new Date();
@@ -701,20 +952,24 @@ router.get(
                     {
                         $or: [
                             {
-                                blockerId: userId,
+                                blockerId:
+                                    userId,
                             },
                             {
-                                blockedId: userId,
+                                blockedId:
+                                    userId,
                             },
                         ],
                     },
                     {
                         $or: [
                             {
-                                isPermanent: true,
+                                isPermanent:
+                                    true,
                             },
                             {
-                                expiresAt: null,
+                                expiresAt:
+                                    null,
                             },
                             {
                                 expiresAt: {
@@ -727,41 +982,54 @@ router.get(
             }).lean();
 
             // ==================================================
-            // 2. Get blocked user IDs
+            // Blocked user IDs
             // ==================================================
 
-            const blockedUserIds = new Set(
-                blocks.map((block) => {
-                    const blockerId = block.blockerId.toString();
+            const blockedUserIds =
+                new Set(
+                    blocks.map((block) => {
+                        const blockerId =
+                            block.blockerId.toString();
 
-                    const blockedId = block.blockedId.toString();
+                        const blockedId =
+                            block.blockedId.toString();
 
-                    return blockerId === userId ? blockedId : blockerId;
-                }),
-            );
+                        return blockerId ===
+                            userId
+                            ? blockedId
+                            : blockerId;
+                    })
+                );
 
             // ==================================================
-            // 3. Get messages
+            // Get messages
             // ==================================================
 
-            const messages = await Message.find({
-                $or: [
-                    {
-                        from: userId,
-                    },
-                    {
-                        to: userId,
-                    },
-                ],
-            })
-                .sort({
-                    createdAt: -1,
+            const messages =
+                await Message.find({
+                    $or: [
+                        {
+                            from: userId,
+                        },
+                        {
+                            to: userId,
+                        },
+                    ],
                 })
-                .populate('from', 'name email role image status slug')
-                .populate('to', 'name email role image status slug');
+                    .sort({
+                        createdAt: -1,
+                    })
+                    .populate(
+                        'from',
+                        'name email role image status slug'
+                    )
+                    .populate(
+                        'to',
+                        'name email role image status slug'
+                    );
 
             // ==================================================
-            // 4. Build conversations
+            // Build conversations
             // ==================================================
 
             const conversationsMap = {};
@@ -772,15 +1040,23 @@ router.get(
                 }
 
                 const otherUser =
-                    msg.from._id.toString() === userId ? msg.to : msg.from;
+                    msg.from._id.toString() ===
+                    userId
+                        ? msg.to
+                        : msg.from;
 
-                const otherId = otherUser._id.toString();
+                const otherId =
+                    otherUser._id.toString();
 
                 // ==================================================
                 // Hide blocked conversations
                 // ==================================================
 
-                if (blockedUserIds.has(otherId)) {
+                if (
+                    blockedUserIds.has(
+                        otherId
+                    )
+                ) {
                     return;
                 }
 
@@ -788,13 +1064,21 @@ router.get(
                 // Create conversation
                 // ==================================================
 
-                if (!conversationsMap[otherId]) {
-                    conversationsMap[otherId] = {
+                if (
+                    !conversationsMap[
+                        otherId
+                    ]
+                ) {
+                    conversationsMap[
+                        otherId
+                    ] = {
                         user: otherUser,
                         lastMessage: msg,
                         unreadCount:
-                            msg.to._id.toString() === userId &&
-                            msg.status !== 'seen'
+                            msg.to._id.toString() ===
+                                userId &&
+                            msg.status !==
+                                'seen'
                                 ? 1
                                 : 0,
                     };
@@ -805,9 +1089,14 @@ router.get(
 
                     if (
                         msg.createdAt >
-                        conversationsMap[otherId].lastMessage.createdAt
+                        conversationsMap[
+                            otherId
+                        ].lastMessage
+                            .createdAt
                     ) {
-                        conversationsMap[otherId].lastMessage = msg;
+                        conversationsMap[
+                            otherId
+                        ].lastMessage = msg;
                     }
 
                     // ==================================================
@@ -815,50 +1104,43 @@ router.get(
                     // ==================================================
 
                     if (
-                        msg.to._id.toString() === userId &&
+                        msg.to._id.toString() ===
+                            userId &&
                         msg.status !== 'seen'
                     ) {
-                        conversationsMap[otherId].unreadCount += 1;
+                        conversationsMap[
+                            otherId
+                        ].unreadCount += 1;
                     }
                 }
             });
 
             return res.json({
                 success: true,
-                conversations: Object.values(conversationsMap),
+                conversations:
+                    Object.values(
+                        conversationsMap
+                    ),
             });
         } catch (err) {
-            console.error('Conversations error:', err);
+            console.error(
+                'Conversations error:',
+                err
+            );
 
             return res.status(500).json({
                 success: false,
-                code: 'INTERNAL_SERVER_ERROR',
-                message: 'Failed to get conversations',
+                code:
+                    'INTERNAL_SERVER_ERROR',
+                message:
+                    'Failed to get conversations',
             });
         }
-    },
+    }
 );
 
 // ======================================================
 // ADMIN - VIEW ANY CONVERSATION
-// ======================================================
-//
-// POST
-// /api/messages/admin/conversation
-//
-// Body:
-//
-// {
-//     "user1Id": "...",
-//     "user2Id": "...",
-//     "reason": "Investigation of reported fraud"
-// }
-//
-// Requires:
-//
-// canUseAccount
-// canViewMessages
-//
 // ======================================================
 
 router.post(
@@ -867,16 +1149,21 @@ router.post(
     requirePermission('canUseAccount'),
     requirePermission('canViewMessages'),
     requireRole('Admin', 'Moderator'),
+
     [
         body('user1Id')
             .notEmpty()
             .isString()
-            .withMessage('First user ID is required'),
+            .withMessage(
+                'First user ID is required'
+            ),
 
         body('user2Id')
             .notEmpty()
             .isString()
-            .withMessage('Second user ID is required'),
+            .withMessage(
+                'Second user ID is required'
+            ),
 
         body('reason')
             .trim()
@@ -886,15 +1173,15 @@ router.post(
                 min: 5,
                 max: 1000,
             })
-            .withMessage('A valid reason is required'),
+            .withMessage(
+                'A valid reason is required'
+            ),
     ],
+
     async (req, res) => {
         try {
-            // ==================================================
-            // Validation
-            // ==================================================
-
-            const errors = validationResult(req);
+            const errors =
+                validationResult(req);
 
             if (!errors.isEmpty()) {
                 return res.status(400).json({
@@ -903,19 +1190,28 @@ router.post(
                 });
             }
 
-            const { user1Id, user2Id, reason } = req.body;
+            const {
+                user1Id,
+                user2Id,
+                reason,
+            } = req.body;
 
-            const adminId = req.payload._id;
+            const adminId =
+                req.payload._id;
 
             // ==================================================
             // Cannot use same user
             // ==================================================
 
-            if (user1Id.toString() === user2Id.toString()) {
+            if (
+                user1Id.toString() ===
+                user2Id.toString()
+            ) {
                 return res.status(400).json({
                     success: false,
                     code: 'SAME_USERS',
-                    message: 'Users must be different',
+                    message:
+                        'Users must be different',
                 });
             }
 
@@ -924,12 +1220,15 @@ router.post(
             // ==================================================
 
             if (
-                adminId.toString() === user1Id.toString() ||
-                adminId.toString() === user2Id.toString()
+                adminId.toString() ===
+                    user1Id.toString() ||
+                adminId.toString() ===
+                    user2Id.toString()
             ) {
                 return res.status(400).json({
                     success: false,
-                    code: 'INVALID_INVESTIGATION',
+                    code:
+                        'INVALID_INVESTIGATION',
                     message:
                         'You cannot use this endpoint for your own conversation',
                 });
@@ -941,17 +1240,23 @@ router.post(
 
             const users = await Users.find({
                 _id: {
-                    $in: [user1Id, user2Id],
+                    $in: [
+                        user1Id,
+                        user2Id,
+                    ],
                 },
             })
-                .select('_id name email role image status slug accountStatus')
+                .select(
+                    '_id name email role image status slug accountStatus'
+                )
                 .lean();
 
             if (users.length !== 2) {
                 return res.status(404).json({
                     success: false,
                     code: 'USERS_NOT_FOUND',
-                    message: 'One or more users were not found',
+                    message:
+                        'One or more users were not found',
                 });
             }
 
@@ -959,72 +1264,78 @@ router.post(
             // Room ID
             // ==================================================
 
-            const roomId = getRoomId(user1Id, user2Id);
+            const roomId = getRoomId(
+                user1Id,
+                user2Id
+            );
 
             // ==================================================
             // Get conversation
             // ==================================================
 
-            const messages = await Message.find({
-                roomId,
-            })
-                .sort({
-                    createdAt: 1,
+            const messages =
+                await Message.find({
+                    roomId,
                 })
-                .populate(
-                    'from',
-                    'name email role image status slug accountStatus',
-                )
-                .populate(
-                    'to',
-                    'name email role image status slug accountStatus',
-                )
-                .populate('replyTo', 'message from to createdAt')
-                .lean();
+                    .sort({
+                        createdAt: 1,
+                    })
+                    .populate(
+                        'from',
+                        'name email role image status slug accountStatus'
+                    )
+                    .populate(
+                        'to',
+                        'name email role image status slug accountStatus'
+                    )
+                    .populate(
+                        'replyTo',
+                        'message from to createdAt'
+                    )
+                    .lean();
 
             // ==================================================
-            // Audit Log
+            // Audit log
             // ==================================================
 
             await MessageAuditLog.create({
                 admin: adminId,
-
                 user1: user1Id,
-
                 user2: user2Id,
-
                 message: null,
-
-                action: 'VIEW_CONVERSATION',
-
+                action:
+                    'VIEW_CONVERSATION',
                 reason,
-
                 ip: getClientIp(req),
-
-                userAgent: req.headers['user-agent'] || null,
+                userAgent:
+                    req.headers[
+                        'user-agent'
+                    ] || null,
             });
-
-            // ==================================================
-            // Response
-            // ==================================================
 
             return res.status(200).json({
                 success: true,
                 roomId,
                 users,
                 messages,
-                totalMessages: messages.length,
+                totalMessages:
+                    messages.length,
             });
         } catch (error) {
-            console.error('Admin view any conversation error:', error);
+            console.error(
+                'Admin view any conversation error:',
+                error
+            );
 
             return res.status(500).json({
                 success: false,
-                code: 'INTERNAL_SERVER_ERROR',
-                message: 'Failed to retrieve conversation',
+                code:
+                    'INTERNAL_SERVER_ERROR',
+                message:
+                    'Failed to retrieve conversation',
             });
         }
-    },
+    }
 );
 
 // ======================================================
@@ -1039,18 +1350,26 @@ router.delete(
 
     async (req, res) => {
         try {
-            const userId = req.payload._id;
-            const otherUserId = req.params.otherUserId;
+            const userId =
+                req.payload._id;
+
+            const otherUserId =
+                req.params.otherUserId;
 
             // ==================================================
-            // Cannot delete conversation with yourself
+            // Cannot delete own conversation
             // ==================================================
 
-            if (userId.toString() === otherUserId.toString()) {
+            if (
+                userId.toString() ===
+                otherUserId.toString()
+            ) {
                 return res.status(400).json({
                     success: false,
-                    code: 'INVALID_CONVERSATION',
-                    message: 'Invalid conversation',
+                    code:
+                        'INVALID_CONVERSATION',
+                    message:
+                        'Invalid conversation',
                 });
             }
 
@@ -1058,15 +1377,19 @@ router.delete(
             // Verify other user
             // ==================================================
 
-            const otherUser = await Users.findById(otherUserId)
-                .select('_id')
-                .lean();
+            const otherUser =
+                await Users.findById(
+                    otherUserId
+                )
+                    .select('_id')
+                    .lean();
 
             if (!otherUser) {
                 return res.status(404).json({
                     success: false,
                     code: 'USER_NOT_FOUND',
-                    message: 'User not found',
+                    message:
+                        'User not found',
                 });
             }
 
@@ -1074,77 +1397,86 @@ router.delete(
             // Room ID
             // ==================================================
 
-            const roomId = getRoomId(userId, otherUserId);
+            const roomId = getRoomId(
+                userId,
+                otherUserId
+            );
 
             // ==================================================
-            // Delete all messages
+            // Delete messages
             // ==================================================
 
-            const result = await Message.deleteMany({
-                roomId,
-            });
+            const result =
+                await Message.deleteMany({
+                    roomId,
+                });
 
             // ==================================================
             // Socket.IO
             // ==================================================
 
-            const io = req.app.get('io');
-            const connectedUsers = req.app.get('connectedUsers');
+            const io =
+                req.app.get('io');
 
             const socketData = {
-                conversationUserId: userId.toString(),
+                conversationUserId:
+                    userId.toString(),
 
-                otherUserId: otherUserId.toString(),
+                otherUserId:
+                    otherUserId.toString(),
 
                 roomId,
 
-                deletedCount: result.deletedCount,
+                deletedCount:
+                    result.deletedCount,
             };
 
-            // ==================================================
-            // Notify current user
-            // ==================================================
+            if (io) {
+                // Current user
+                emitToUser(
+                    io,
+                    userId,
+                    'conversation:deleted',
+                    socketData
+                );
 
-            (connectedUsers.get(userId.toString()) || []).forEach(
-                (socketId) => {
-                    io.to(socketId).emit('conversation:deleted', socketData);
-                },
-            );
-
-            // ==================================================
-            // Notify other user
-            // ==================================================
-
-            (connectedUsers.get(otherUserId.toString()) || []).forEach(
-                (socketId) => {
-                    io.to(socketId).emit('conversation:deleted', {
+                // Other user
+                emitToUser(
+                    io,
+                    otherUserId,
+                    'conversation:deleted',
+                    {
                         ...socketData,
-                        conversationUserId: otherUserId.toString(),
-
-                        otherUserId: userId.toString(),
-                    });
-                },
-            );
-
-            // ==================================================
-            // Response
-            // ==================================================
+                        conversationUserId:
+                            otherUserId.toString(),
+                        otherUserId:
+                            userId.toString(),
+                    }
+                );
+            }
 
             return res.status(200).json({
                 success: true,
-                deletedCount: result.deletedCount,
-                message: 'Conversation deleted successfully',
+                deletedCount:
+                    result.deletedCount,
+                message:
+                    'Conversation deleted successfully',
             });
         } catch (error) {
-            console.error('Delete conversation error:', error);
+            console.error(
+                'Delete conversation error:',
+                error
+            );
 
             return res.status(500).json({
                 success: false,
-                code: 'INTERNAL_SERVER_ERROR',
-                message: 'Failed to delete conversation',
+                code:
+                    'INTERNAL_SERVER_ERROR',
+                message:
+                    'Failed to delete conversation',
             });
         }
-    },
+    }
 );
 
 // ======================================================
@@ -1166,16 +1498,15 @@ router.patch(
                 min: 1,
                 max: 1000,
             })
-            .withMessage('Message must be between 1-1000 characters'),
+            .withMessage(
+                'Message must be between 1-1000 characters'
+            ),
     ],
 
     async (req, res) => {
         try {
-            // ==================================================
-            // Validation
-            // ==================================================
-
-            const errors = validationResult(req);
+            const errors =
+                validationResult(req);
 
             if (!errors.isEmpty()) {
                 return res.status(400).json({
@@ -1184,38 +1515,50 @@ router.patch(
                 });
             }
 
-            const { messageId } = req.params;
-            const { message } = req.body;
+            const {
+                messageId,
+            } = req.params;
 
-            const userId = req.payload._id;
+            const {
+                message,
+            } = req.body;
+
+            const userId =
+                req.payload._id;
 
             // ==================================================
             // Find message
-            // Only the sender can edit his own message
             // ==================================================
 
-            const existingMessage = await Message.findOne({
-                _id: messageId,
-                from: userId,
-            });
+            const existingMessage =
+                await Message.findOne({
+                    _id: messageId,
+                    from: userId,
+                });
 
             if (!existingMessage) {
                 return res.status(404).json({
                     success: false,
-                    code: 'MESSAGE_NOT_FOUND',
-                    message: 'Message not found or access denied',
+                    code:
+                        'MESSAGE_NOT_FOUND',
+                    message:
+                        'Message not found or access denied',
                 });
             }
 
             // ==================================================
-            // Prevent editing file messages
+            // Prevent editing files
             // ==================================================
 
-            if (existingMessage.fileUrl) {
+            if (
+                existingMessage.fileUrl
+            ) {
                 return res.status(400).json({
                     success: false,
-                    code: 'FILE_MESSAGE_CANNOT_BE_EDITED',
-                    message: 'File messages cannot be edited',
+                    code:
+                        'FILE_MESSAGE_CANNOT_BE_EDITED',
+                    message:
+                        'File messages cannot be edited',
                 });
             }
 
@@ -1223,9 +1566,13 @@ router.patch(
             // Update
             // ==================================================
 
-            existingMessage.message = message;
+            existingMessage.message =
+                message;
+
             existingMessage.edited = true;
-            existingMessage.editedAt = new Date();
+
+            existingMessage.editedAt =
+                new Date();
 
             await existingMessage.save();
 
@@ -1233,83 +1580,105 @@ router.patch(
             // Populate
             // ==================================================
 
-            const updatedMessage = await Message.findById(existingMessage._id)
-                .populate(
-                    'from',
-                    'name email role image status slug accountStatus',
+            const updatedMessage =
+                await Message.findById(
+                    existingMessage._id
                 )
-                .populate(
-                    'to',
-                    'name email role image status slug accountStatus',
-                )
-                .populate('replyTo', 'message from to');
+                    .populate(
+                        'from',
+                        'name email role image status slug accountStatus'
+                    )
+                    .populate(
+                        'to',
+                        'name email role image status slug accountStatus'
+                    )
+                    .populate(
+                        'replyTo',
+                        'message from to'
+                    );
+
+            if (!updatedMessage) {
+                return res.status(500).json({
+                    success: false,
+                    code:
+                        'MESSAGE_UPDATE_FAILED',
+                    message:
+                        'Failed to update message',
+                });
+            }
 
             // ==================================================
             // Socket.IO
             // ==================================================
 
-            const io = req.app.get('io');
-            const connectedUsers = req.app.get('connectedUsers');
+            const io =
+                req.app.get('io');
 
-            const recipientId = existingMessage.to.toString();
+            const recipientId =
+                existingMessage.to.toString();
 
-            const senderId = existingMessage.from.toString();
+            const senderId =
+                existingMessage.from.toString();
 
             const socketData = {
-                messageId: existingMessage._id.toString(),
+                messageId:
+                    existingMessage._id.toString(),
 
                 from: senderId,
 
                 to: recipientId,
 
-                message: updatedMessage.message,
+                message:
+                    updatedMessage.message,
 
                 edited: true,
 
-                editedAt: updatedMessage.editedAt,
+                editedAt:
+                    updatedMessage.editedAt,
 
-                roomId: existingMessage.roomId,
+                roomId:
+                    existingMessage.roomId,
             };
 
-            // ==================================================
-            // Notify recipient
-            // ==================================================
+            if (io) {
+                // Recipient
+                emitToUser(
+                    io,
+                    recipientId,
+                    'message:edited',
+                    socketData
+                );
 
-            (connectedUsers.get(recipientId) || []).forEach((socketId) => {
-                io.to(socketId).emit('message:edited', socketData);
-            });
-
-            // ==================================================
-            // Notify sender's other devices
-            // ==================================================
-
-            (connectedUsers.get(senderId) || []).forEach((socketId) => {
-                io.to(socketId).emit('message:edited', socketData);
-            });
-
-            // ==================================================
-            // Response
-            // ==================================================
+                // Sender's other devices
+                emitToUser(
+                    io,
+                    senderId,
+                    'message:edited',
+                    socketData
+                );
+            }
 
             return res.status(200).json({
                 success: true,
-                message: updatedMessage,
+                message:
+                    updatedMessage,
             });
         } catch (error) {
-            console.error('Edit message error:', error);
+            console.error(
+                'Edit message error:',
+                error
+            );
 
             return res.status(500).json({
                 success: false,
-                code: 'INTERNAL_SERVER_ERROR',
-                message: 'Failed to edit message',
+                code:
+                    'INTERNAL_SERVER_ERROR',
+                message:
+                    'Failed to edit message',
             });
         }
-    },
+    }
 );
-
-// ======================================================
-// Delete Message
-// ======================================================
 
 // ======================================================
 // Delete Message
@@ -1323,24 +1692,31 @@ router.delete(
 
     async (req, res) => {
         try {
-            const { messageId } = req.params;
+            const {
+                messageId,
+            } = req.params;
 
-            const { _id: userId } = req.payload;
+            const {
+                _id: userId,
+            } = req.payload;
 
             // ==================================================
-            // Find message first
+            // Find message
             // ==================================================
 
-            const message = await Message.findOne({
-                _id: messageId,
-                from: userId,
-            });
+            const message =
+                await Message.findOne({
+                    _id: messageId,
+                    from: userId,
+                });
 
             if (!message) {
                 return res.status(404).json({
                     success: false,
-                    code: 'MESSAGE_NOT_FOUND',
-                    message: 'Message not found or access denied',
+                    code:
+                        'MESSAGE_NOT_FOUND',
+                    message:
+                        'Message not found or access denied',
                 });
             }
 
@@ -1348,11 +1724,14 @@ router.delete(
             // Save data before deletion
             // ==================================================
 
-            const recipientId = message.to.toString();
+            const recipientId =
+                message.to.toString();
 
-            const senderId = message.from.toString();
+            const senderId =
+                message.from.toString();
 
-            const roomId = message.roomId;
+            const roomId =
+                message.roomId;
 
             // ==================================================
             // Delete
@@ -1367,12 +1746,12 @@ router.delete(
             // Socket.IO
             // ==================================================
 
-            const io = req.app.get('io');
-
-            const connectedUsers = req.app.get('connectedUsers');
+            const io =
+                req.app.get('io');
 
             const socketData = {
-                messageId: messageId.toString(),
+                messageId:
+                    messageId.toString(),
 
                 from: senderId,
 
@@ -1381,60 +1760,48 @@ router.delete(
                 roomId,
             };
 
-            // ==================================================
-            // Notify recipient
-            // ==================================================
+            if (io) {
+                // Recipient
+                emitToUser(
+                    io,
+                    recipientId,
+                    'message:deleted',
+                    socketData
+                );
 
-            (connectedUsers.get(recipientId) || []).forEach((socketId) => {
-                io.to(socketId).emit('message:deleted', socketData);
-            });
-
-            // ==================================================
-            // Notify sender's other devices
-            // ==================================================
-
-            (connectedUsers.get(senderId) || []).forEach((socketId) => {
-                io.to(socketId).emit('message:deleted', socketData);
-            });
-
-            // ==================================================
-            // Response
-            // ==================================================
+                // Sender's other devices
+                emitToUser(
+                    io,
+                    senderId,
+                    'message:deleted',
+                    socketData
+                );
+            }
 
             return res.status(200).json({
                 success: true,
-                message: 'Message deleted successfully',
+                message:
+                    'Message deleted successfully',
             });
         } catch (error) {
-            console.error('Delete message error:', error);
+            console.error(
+                'Delete message error:',
+                error
+            );
 
             return res.status(500).json({
                 success: false,
-                code: 'INTERNAL_SERVER_ERROR',
-                message: 'Internal server error',
+                code:
+                    'INTERNAL_SERVER_ERROR',
+                message:
+                    'Internal server error',
             });
         }
-    },
+    }
 );
 
 // ======================================================
 // ADMIN - VIEW ONE MESSAGE
-// ======================================================
-//
-// POST
-// /api/messages/admin/view/:messageId
-//
-// Body:
-//
-// {
-//     "reason": "User reported fraudulent activity"
-// }
-//
-// Requires:
-//
-// canUseAccount
-// canViewMessages
-//
 // ======================================================
 
 router.post(
@@ -1443,6 +1810,7 @@ router.post(
     requirePermission('canUseAccount'),
     requirePermission('canViewMessages'),
     requireRole('Admin', 'Moderator'),
+
     [
         body('reason')
             .trim()
@@ -1452,15 +1820,15 @@ router.post(
                 min: 5,
                 max: 1000,
             })
-            .withMessage('A valid reason is required'),
+            .withMessage(
+                'A valid reason is required'
+            ),
     ],
+
     async (req, res) => {
         try {
-            // ==================================================
-            // Validation
-            // ==================================================
-
-            const errors = validationResult(req);
+            const errors =
+                validationResult(req);
 
             if (!errors.isEmpty()) {
                 return res.status(400).json({
@@ -1469,74 +1837,89 @@ router.post(
                 });
             }
 
-            const { messageId } = req.params;
+            const {
+                messageId,
+            } = req.params;
 
-            const { reason } = req.body;
+            const {
+                reason,
+            } = req.body;
 
-            // ==================================================
-            // Get message
-            // ==================================================
-
-            const message = await Message.findById(messageId)
-                .populate(
-                    'from',
-                    'name email role image status slug accountStatus',
+            const message =
+                await Message.findById(
+                    messageId
                 )
-                .populate(
-                    'to',
-                    'name email role image status slug accountStatus',
-                )
-                .populate('replyTo', 'message from to createdAt')
-                .lean();
+                    .populate(
+                        'from',
+                        'name email role image status slug accountStatus'
+                    )
+                    .populate(
+                        'to',
+                        'name email role image status slug accountStatus'
+                    )
+                    .populate(
+                        'replyTo',
+                        'message from to createdAt'
+                    )
+                    .lean();
 
             if (!message) {
                 return res.status(404).json({
                     success: false,
-                    code: 'MESSAGE_NOT_FOUND',
-                    message: 'Message not found',
+                    code:
+                        'MESSAGE_NOT_FOUND',
+                    message:
+                        'Message not found',
                 });
             }
 
-            // ==================================================
-            // Audit Log
-            // ==================================================
-
             await MessageAuditLog.create({
-                admin: req.payload._id,
+                admin:
+                    req.payload._id,
 
-                user1: message.from?._id || message.from,
+                user1:
+                    message.from?._id ||
+                    message.from,
 
-                user2: message.to?._id || message.to,
+                user2:
+                    message.to?._id ||
+                    message.to,
 
-                message: message._id,
+                message:
+                    message._id,
 
-                action: 'VIEW_MESSAGE',
+                action:
+                    'VIEW_MESSAGE',
 
                 reason,
 
                 ip: getClientIp(req),
 
-                userAgent: req.headers['user-agent'] || null,
+                userAgent:
+                    req.headers[
+                        'user-agent'
+                    ] || null,
             });
-
-            // ==================================================
-            // Return message
-            // ==================================================
 
             return res.status(200).json({
                 success: true,
                 message,
             });
         } catch (error) {
-            console.error('Admin view message error:', error);
+            console.error(
+                'Admin view message error:',
+                error
+            );
 
             return res.status(500).json({
                 success: false,
-                code: 'INTERNAL_SERVER_ERROR',
-                message: 'Failed to retrieve message',
+                code:
+                    'INTERNAL_SERVER_ERROR',
+                message:
+                    'Failed to retrieve message',
             });
         }
-    },
+    }
 );
 
 // ======================================================
@@ -1549,9 +1932,12 @@ router.get(
     requirePermission('canUseAccount'),
     requirePermission('canViewMessages'),
     requireRole('Admin', 'Moderator'),
+
     async (req, res) => {
         try {
-            const search = String(req.query.search || '').trim();
+            const search = String(
+                req.query.search || ''
+            ).trim();
 
             if (search.length < 2) {
                 return res.json({
@@ -1564,48 +1950,66 @@ router.get(
             // Escape regex safely
             // ==================================================
 
-            const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const escapedSearch =
+                search.replace(
+                    /[.*+?^${}()|[\]\\]/g,
+                    '\\$&'
+                );
 
-            const regex = new RegExp(escapedSearch, 'i');
+            const regex =
+                new RegExp(
+                    escapedSearch,
+                    'i'
+                );
 
             // ==================================================
             // Search users
             // ==================================================
 
-            const users = await Users.find({
-                $or: [
-                    {
-                        email: regex,
-                    },
-                    {
-                        'name.first': regex,
-                    },
-                    {
-                        'name.last': regex,
-                    },
-                    {
-                        slug: regex,
-                    },
-                ],
-            })
-                .select('_id name email role image status slug accountStatus')
-                .limit(20)
-                .lean();
+            const users =
+                await Users.find({
+                    $or: [
+                        {
+                            email: regex,
+                        },
+                        {
+                            'name.first':
+                                regex,
+                        },
+                        {
+                            'name.last':
+                                regex,
+                        },
+                        {
+                            slug: regex,
+                        },
+                    ],
+                })
+                    .select(
+                        '_id name email role image status slug accountStatus'
+                    )
+                    .limit(20)
+                    .lean();
 
             return res.status(200).json({
                 success: true,
                 users,
             });
         } catch (error) {
-            console.error('Admin user search error:', error);
+            console.error(
+                'Admin user search error:',
+                error
+            );
 
             return res.status(500).json({
                 success: false,
-                code: 'USER_SEARCH_ERROR',
-                message: 'Failed to search users',
+                code:
+                    'USER_SEARCH_ERROR',
+                message:
+                    'Failed to search users',
             });
         }
-    },
+    }
 );
 
 // ======================================================
@@ -1616,28 +2020,56 @@ router.get(
     '/admin/audit-logs',
     auth,
     requirePermission('canUseAccount'),
-    requirePermission('canViewMessageAuditLogs'),
+    requirePermission(
+        'canViewMessageAuditLogs'
+    ),
     requireRole('Admin'),
+
     async (req, res) => {
         try {
             const limit = Math.min(
-                Math.max(parseInt(req.query.limit) || 50, 1),
-                100,
+                Math.max(
+                    parseInt(
+                        req.query.limit
+                    ) || 50,
+                    1
+                ),
+                100
             );
 
-            const skip = Math.max(parseInt(req.query.skip) || 0, 0);
+            const skip = Math.max(
+                parseInt(
+                    req.query.skip
+                ) || 0,
+                0
+            );
 
-            const [logs, total] = await Promise.all([
+            const [
+                logs,
+                total,
+            ] = await Promise.all([
                 MessageAuditLog.find()
                     .sort({
                         createdAt: -1,
                     })
                     .skip(skip)
                     .limit(limit)
-                    .populate('admin', 'name email role image slug')
-                    .populate('user1', 'name email image slug')
-                    .populate('user2', 'name email image slug')
-                    .populate('message', 'from to roomId createdAt')
+                    .populate(
+                        'admin',
+                        'name email role image slug'
+                    )
+                    .populate(
+                        'user1',
+                        'name email image slug'
+                    )
+                    .populate(
+                        'user2',
+                        'name email image slug'
+                    )
+                    .populate(
+                        'message',
+                        'from to roomId createdAt'
+                    )
                     .lean(),
 
                 MessageAuditLog.countDocuments(),
@@ -1652,19 +2084,27 @@ router.get(
                     total,
                     limit,
                     skip,
-                    hasMore: skip + logs.length < total,
+                    hasMore:
+                        skip +
+                            logs.length <
+                        total,
                 },
             });
         } catch (error) {
-            console.error('Audit logs error:', error);
+            console.error(
+                'Audit logs error:',
+                error
+            );
 
             return res.status(500).json({
                 success: false,
-                code: 'INTERNAL_SERVER_ERROR',
-                message: 'Failed to retrieve audit logs',
+                code:
+                    'INTERNAL_SERVER_ERROR',
+                message:
+                    'Failed to retrieve audit logs',
             });
         }
-    },
+    }
 );
 
 // ======================================================

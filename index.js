@@ -33,13 +33,7 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, {
     cors: {
         origin: allowedOrigins,
-        methods: [
-            'GET',
-            'POST',
-            'PUT',
-            'PATCH',
-            'DELETE',
-        ],
+        methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
         credentials: true,
     },
 
@@ -56,8 +50,7 @@ const io = new Server(httpServer, {
 // SOCKET AUTHENTICATION
 // ======================================================
 
-const AUTH_COOKIE_NAME =
-    process.env.AUTH_COOKIE_NAME || 'safqa_token';
+const AUTH_COOKIE_NAME = process.env.AUTH_COOKIE_NAME || 'safqa_token';
 
 function getCookieValue(cookieHeader, cookieName) {
     if (!cookieHeader) return null;
@@ -71,19 +64,13 @@ function getCookieValue(cookieHeader, cookieName) {
             continue;
         }
 
-        const name = cookie
-            .slice(0, separatorIndex)
-            .trim();
+        const name = cookie.slice(0, separatorIndex).trim();
 
         if (name !== cookieName) {
             continue;
         }
 
-        return decodeURIComponent(
-            cookie
-                .slice(separatorIndex + 1)
-                .trim(),
-        );
+        return decodeURIComponent(cookie.slice(separatorIndex + 1).trim());
     }
 
     return null;
@@ -91,71 +78,38 @@ function getCookieValue(cookieHeader, cookieName) {
 
 io.use(async (socket, next) => {
     try {
-        const cookieHeader =
-            socket.handshake.headers.cookie;
+        const cookieHeader = socket.handshake.headers.cookie;
 
-        console.log(
-            '🍪 Socket cookie received:',
-            Boolean(cookieHeader),
-        );
+        console.log('🍪 Socket cookie received:', Boolean(cookieHeader));
 
-        const token = getCookieValue(
-            cookieHeader,
-            AUTH_COOKIE_NAME,
-        );
+        const token = getCookieValue(cookieHeader, AUTH_COOKIE_NAME);
 
-        console.log(
-            '🔐 Socket token received:',
-            Boolean(token),
-        );
+        console.log('🔐 Socket token received:', Boolean(token));
 
         if (!token) {
-            return next(
-                new Error('Authentication required'),
-            );
+            return next(new Error('Authentication required'));
         }
 
-        const payload = Jwt.verify(
-            token,
-            process.env.JWT_SECRET,
-        );
+        const payload = Jwt.verify(token, process.env.JWT_SECRET);
 
         if (!payload?._id) {
-            return next(
-                new Error(
-                    'Invalid authentication payload',
-                ),
-            );
+            return next(new Error('Invalid authentication payload'));
         }
 
-        const user = await Users.findById(
-            payload._id,
-        )
-            .select(
-                '_id role accountStatus permissions',
-            )
+        const user = await Users.findById(payload._id)
+            .select('_id role accountStatus permissions')
             .lean();
 
         if (!user) {
-            return next(
-                new Error('User not found'),
-            );
+            return next(new Error('User not found'));
         }
 
         if (user.accountStatus === 'disabled') {
-            return next(
-                new Error('Account disabled'),
-            );
+            return next(new Error('Account disabled'));
         }
 
-        if (
-            user.permissions?.canUseAccount === false
-        ) {
-            return next(
-                new Error(
-                    'Account access disabled',
-                ),
-            );
+        if (user.permissions?.canUseAccount === false) {
+            return next(new Error('Account access disabled'));
         }
 
         socket.user = {
@@ -165,22 +119,13 @@ io.use(async (socket, next) => {
             permissions: user.permissions,
         };
 
-        console.log(
-            `✅ Socket authenticated: ${user._id}`,
-        );
+        console.log(`✅ Socket authenticated: ${user._id}`);
 
         next();
     } catch (error) {
-        console.error(
-            '❌ Socket authentication error:',
-            error.message,
-        );
+        console.error('❌ Socket authentication error:', error.message);
 
-        return next(
-            new Error(
-                'Authentication required',
-            ),
-        );
+        return next(new Error('Authentication required'));
     }
 });
 
@@ -191,132 +136,100 @@ io.use(async (socket, next) => {
 const connectedUsers = new Map();
 
 app.set('io', io);
-app.set(
-    'connectedUsers',
-    connectedUsers,
-);
+app.set('connectedUsers', connectedUsers);
 
 // ======================================================
 // SOCKET CONNECTION
 // ======================================================
 
 io.on('connection', (socket) => {
-    const userId = socket.user._id;
+    const userId = socket.user._id.toString();
     const role = socket.user.role;
 
-    console.log(
-        `🔌 Socket connected: ${userId} (${role})`,
-    );
+    console.log(`🔌 Socket connected: ${userId} (${role})`);
 
-    // ------------------------------------------
-    // User-specific room
-    // ------------------------------------------
+    // ==================================================
+    // User room
+    // ==================================================
 
     socket.join(userId);
 
-    console.log(
-        `🏠 User room joined: ${userId}`,
-    );
+    console.log(`🏠 User room joined: ${userId}`);
 
-    // ------------------------------------------
+    // ==================================================
     // Connected users
-    // ------------------------------------------
+    // Keep this only for presence / online status
+    // ==================================================
 
-    if (!connectedUsers.has(userId)) {
-        connectedUsers.set(userId, []);
+    const sockets = connectedUsers.get(userId) || [];
+
+    if (!sockets.includes(socket.id)) {
+        sockets.push(socket.id);
     }
 
-    connectedUsers
-        .get(userId)
-        .push(socket.id);
+    connectedUsers.set(userId, sockets);
 
-    // ------------------------------------------
-    // Admin / Moderator room
-    // ------------------------------------------
+    console.log(`👤 User ${userId} sockets:`, sockets);
 
-    if (
-        role === 'Admin' ||
-        role === 'Moderator'
-    ) {
+    // ==================================================
+    // Admin / Moderator
+    // ==================================================
+
+    if (role === 'Admin' || role === 'Moderator') {
         socket.join('admins');
     }
 
-    // ------------------------------------------
+    // ==================================================
     // Typing
-    // ------------------------------------------
+    // ==================================================
 
-    socket.on(
-        'user:typing',
-        ({ to }) => {
-            if (!to) return;
+    socket.on('user:typing', ({ to }) => {
+        if (!to) return;
 
-            const toSockets =
-                connectedUsers.get(to) || [];
+        io.to(to.toString()).emit('user:typing', {
+            from: userId,
+        });
+    });
 
-            toSockets.forEach((id) => {
-                io.to(id).emit(
-                    'user:typing',
-                    {
-                        from: userId,
-                    },
-                );
-            });
-        },
-    );
-
-    // ------------------------------------------
+    // ==================================================
     // Stop typing
-    // ------------------------------------------
+    // ==================================================
 
-    socket.on(
-        'user:stopTyping',
-        ({ to }) => {
-            if (!to) return;
+    socket.on('user:stopTyping', ({ to }) => {
+        if (!to) return;
 
-            const toSockets =
-                connectedUsers.get(to) || [];
+        io.to(to.toString()).emit('user:stopTyping', {
+            from: userId,
+        });
+    });
 
-            toSockets.forEach((id) => {
-                io.to(id).emit(
-                    'user:stopTyping',
-                    {
-                        from: userId,
-                    },
-                );
-            });
-        },
-    );
+    // ==================================================
+    // IMPORTANT:
+    // Do NOT handle message:seen here.
+    //
+    // REST PATCH /mark-as-seen/:fromUserId
+    // is responsible for DB + Socket notification.
+    // ==================================================
 
-    // ------------------------------------------
+    // ==================================================
     // Disconnect
-    // ------------------------------------------
+    // ==================================================
 
-    socket.on(
-        'disconnect',
-        (reason) => {
-            console.log(
-                `🔌 Socket disconnected: ${userId} - ${reason}`,
-            );
+    socket.on('disconnect', (reason) => {
+        console.log(`🔌 Socket disconnected: ${userId} - ${reason}`);
 
-            const ids =
-                connectedUsers.get(userId) || [];
+        const ids = connectedUsers.get(userId) || [];
 
-            const newIds = ids.filter(
-                (id) => id !== socket.id,
-            );
+        const remainingIds = ids.filter((id) => id !== socket.id);
 
-            if (newIds.length > 0) {
-                connectedUsers.set(
-                    userId,
-                    newIds,
-                );
-            } else {
-                connectedUsers.delete(
-                    userId,
-                );
-            }
-        },
-    );
+        if (remainingIds.length > 0) {
+            connectedUsers.set(userId, remainingIds);
+        } else {
+            connectedUsers.delete(userId);
+        }
+
+        console.log(`👤 User ${userId} remaining sockets:`, remainingIds);
+    });
 });
 
 // ======================================================

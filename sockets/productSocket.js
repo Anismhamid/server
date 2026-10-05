@@ -1,7 +1,7 @@
 const Post = require("../models/post");
 
 module.exports = (io, socket) => {
-	socket.on("post:read", async (postId) => {
+	socket.on("product:read", async (postId) => {
 		try {
 			if (!postId) {
 				socket.emit("product:error", "post ID is required");
@@ -9,12 +9,12 @@ module.exports = (io, socket) => {
 			}
 			const post = await Post.findById(postId);
 			if (!post) {
-				socket.emit("post:error", "post not found");
+				socket.emit("product:error", "product not found");
 			} else {
-				socket.emit("post:details", post);
+				socket.emit("product:details", post);
 			}
 		} catch (error) {
-			socket.emit("order:error", error.message);
+			socket.emit("product:error", error.message);
 		}
 	});
 };
