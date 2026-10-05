@@ -7,6 +7,7 @@ const { allowedOrigins } = require('./config/allowOrigins');
 const morgan = require('morgan');
 
 const users = require('./routes/users');
+const appVersionRoutes = require('./routes/appVersionRoutes');
 const posts = require('./routes/posts');
 const ai = require('./routes/ai');
 const block = require('./routes/block');
@@ -90,6 +91,7 @@ startFeaturedAdsCron();
 // =======================
 app.use('/api/posts', posts);
 app.use('/api/users', users);
+app.use('/api/app-version', appVersionRoutes);
 app.use('/api/business-info', businessInfo);
 app.use('/api/featured-ads', featuredAd);
 app.use('/api/discounts', discounts);
