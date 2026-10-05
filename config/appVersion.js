@@ -1,9 +1,9 @@
 module.exports = {
     android: {
-        latestVersionCode: 31,
+        latestVersionCode: 32,
 
         // أقل إصدار يستطيع استخدام التطبيق
-        minimumSupportedVersionCode: 30,
+        minimumSupportedVersionCode: 31,
 
         // اختياري: معلومات تظهر للمستخدم
         latestVersionName: '4.1.0',
