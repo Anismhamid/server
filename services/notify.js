@@ -1,39 +1,21 @@
-// services/notify.js
-
 const Notification = require('../models/notification.model');
-
-// -----------------------------------------------------------------------------
-// FCM
-// -----------------------------------------------------------------------------
 
 let sendPushToUser = async () => {};
 
 try {
     ({ sendPushToUser } = require('./push'));
 
-    console.log('[notify] FCM push service loaded');
+    console.log(
+        '[notify] FCM push service loaded',
+    );
 } catch (error) {
     console.warn(
         '[notify] ./push not found — push notifications disabled',
     );
 }
 
-// -----------------------------------------------------------------------------
-// Socket.IO user room
-// -----------------------------------------------------------------------------
-
-const userRoom = (userId) => String(userId);
-
-// -----------------------------------------------------------------------------
-// notifyUser
-//
-// Sends notification through:
-// 1. MongoDB
-// 2. Socket.IO
-// 3. FCM
-//
-// Failure of Socket or FCM does NOT break the HTTP request.
-// -----------------------------------------------------------------------------
+const userRoom = (userId) =>
+    String(userId);
 
 async function notifyUser(
     io,
@@ -43,67 +25,118 @@ async function notifyUser(
         title,
         body = '',
         postId = null,
+        data = {},
     },
 ) {
     if (!userId) {
-        console.error('[notify] Cannot notify without userId');
+        console.error(
+            '[notify] Cannot notify without userId',
+        );
+
         return null;
     }
 
     if (!type) {
-        console.error('[notify] Cannot notify without type');
+        console.error(
+            '[notify] Cannot notify without type',
+        );
+
         return null;
     }
 
     if (!title) {
-        console.error('[notify] Cannot notify without title');
+        console.error(
+            '[notify] Cannot notify without title',
+        );
+
         return null;
     }
 
-    // -------------------------------------------------------------------------
-    // 1. Save notification in MongoDB
-    // -------------------------------------------------------------------------
+    /**
+     * =====================================================
+     * DATA
+     * =====================================================
+     */
+    const notificationData = {
+        postId: postId
+            ? String(postId)
+            : null,
+
+        ...data,
+    };
 
     let notification;
 
+    /**
+     * =====================================================
+     * CREATE DATABASE NOTIFICATION
+     * =====================================================
+     */
     try {
-        notification = await Notification.create({
-            user: userId,
-            type,
-            title,
-            body,
-            data: {
-                postId: postId || null,
-            },
-        });
+        notification =
+            await Notification.create({
+                user: userId,
+
+                type,
+
+                title,
+
+                body,
+
+                data: notificationData,
+            });
 
         console.log(
             `[notify] DB notification created: ${notification._id}`,
         );
     } catch (error) {
+        /**
+         * MongoDB duplicate key
+         */
+        if (error?.code === 11000) {
+            console.log(
+                '[notify] Duplicate notification ignored:',
+                {
+                    userId: String(
+                        userId,
+                    ),
+                    type,
+                    postId: postId
+                        ? String(postId)
+                        : null,
+                },
+            );
+
+            return null;
+        }
+
         console.error(
             '[notify] DB notification failed:',
             error,
         );
 
-        // إذا فشل DB لا نكمل لأن الإشعار الأساسي لم يُحفظ
         return null;
     }
 
-    // -------------------------------------------------------------------------
-    // 2. Socket.IO
-    // -------------------------------------------------------------------------
-
+    /**
+     * =====================================================
+     * SOCKET.IO
+     * =====================================================
+     */
     try {
         if (!io) {
             throw new Error(
-                'io is undefined (req.app.get("io"))',
+                'io is undefined',
             );
         }
 
-        const room = userRoom(userId);
+        const room =
+            userRoom(userId);
 
-        const sockets = await io.in(room).fetchSockets();
+        const sockets =
+            await io
+                .in(room)
+                .fetchSockets();
 
         console.log(
             `[notify] ${type} → user ${room} | sockets: ${sockets.length}`,
@@ -120,23 +153,44 @@ async function notifyUser(
         );
     }
 
-    // -------------------------------------------------------------------------
-    // 3. Firebase Cloud Messaging
-    // -------------------------------------------------------------------------
-
+    /**
+     * =====================================================
+     * FCM
+     * =====================================================
+     */
     try {
-        await sendPushToUser(userId, {
-            title,
-            body,
+        const pushData = {
+            type: String(type),
 
-            data: {
-                type,
-                notificationId: String(notification._id),
-                postId: postId
-                    ? String(postId)
-                    : '',
+            notificationId:
+                String(
+                    notification._id,
+                ),
+
+            postId: postId
+                ? String(postId)
+                : '',
+
+            ...Object.fromEntries(
+                Object.entries(data).map(
+                    ([key, value]) => [
+                        key,
+                        value == null
+                            ? ''
+                            : String(value),
+                    ],
+                ),
+            ),
+        };
+
+        await sendPushToUser(
+            userId,
+            {
+                title,
+                body,
+                data: pushData,
             },
-        });
+        );
 
         console.log(
             `[notify] FCM sent → user ${userId}`,

@@ -6,7 +6,7 @@ const notificationSchema = new mongoose.Schema(
     {
         user: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'User',
+            ref: 'Users',
             required: true,
             index: true,
         },
@@ -36,8 +36,33 @@ const notificationSchema = new mongoose.Schema(
         data: {
             postId: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'Post',
+                ref: 'Posts',
                 default: null,
+            },
+
+            category: {
+                type: String,
+                default: '',
+            },
+
+            subcategory: {
+                type: String,
+                default: '',
+            },
+
+            brand: {
+                type: String,
+                default: '',
+            },
+
+            productName: {
+                type: String,
+                default: '',
+            },
+
+            rejectionReason: {
+                type: String,
+                default: '',
             },
         },
 
@@ -46,17 +71,45 @@ const notificationSchema = new mongoose.Schema(
             default: null,
         },
     },
+
     {
         timestamps: true,
     },
 );
 
-// للاستعلام عن إشعارات المستخدم بسرعة
+/**
+ * البحث السريع عن إشعارات المستخدم
+ */
 notificationSchema.index({
     user: 1,
     readAt: 1,
     createdAt: -1,
 });
+
+/**
+ * منع إنشاء نفس إشعار الإعلان مرتين
+ *
+ * نفس:
+ * user + type + postId
+ *
+ * لا يمكن أن يتكرر.
+ */
+notificationSchema.index(
+    {
+        user: 1,
+        type: 1,
+        'data.postId': 1,
+    },
+    {
+        unique: true,
+        partialFilterExpression: {
+            'data.postId': {
+                $exists: true,
+                $ne: null,
+            },
+        },
+    },
+);
 
 module.exports =
     mongoose.models.Notification ||

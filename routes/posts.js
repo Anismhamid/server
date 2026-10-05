@@ -14,6 +14,7 @@ const {
 const { invalidateSitemapCache } = require('../routes/sitemap');
 const Block = require('../models/Block');
 const { notifyUser } = require('../services/notify');
+const { notifyAdminsAndModerators } = require('../services/adminNotification');
 
 // ============================================
 // Block check
@@ -195,7 +196,7 @@ router.get('/related-posts/:category', async (req, res) => {
     }
 });
 
-// Post new post
+// Create new post
 router.post(
     '/',
     auth,
@@ -205,10 +206,14 @@ router.post(
         try {
             const { category, type, ...postData } = req.body;
 
-            // get category and subcategory schema
+            // ============================================
+            // Get category/subcategory schema
+            // ============================================
             const schema = getPostSchema(category, type);
 
-            // Add type and category to the data
+            // ============================================
+            // Data to validate
+            // ============================================
             const dataToValidate = {
                 ...postData,
                 category,
@@ -216,35 +221,72 @@ router.post(
             };
 
             console.log('Data to validate:', dataToValidate);
+
             console.log('Payload:', req.payload);
 
-            // validate schema
+            // ============================================
+            // Validate
+            // ============================================
             const { error } = await schema.validate(dataToValidate);
 
-            // if error return the error
             if (error) {
                 console.error('Validation error:', error.details[0]);
+
                 return res.status(400).send(error.details[0].message);
             }
 
-            // Create a new post using the data from the request body
+            // ============================================
+            // Create post
+            // ============================================
             const post = new Posts({
                 ...dataToValidate,
+
                 seller: req.payload._id,
+
+                // مهم جدًا
+                status: 'pending',
             });
 
-            // Save the new post to the database
+            // ============================================
+            // Save
+            // ============================================
             await post.save();
+
+            // ============================================
+            // Sitemap
+            // ============================================
             invalidateSitemapCache();
 
+            // ============================================
+            // Socket.IO
+            // ============================================
             const io = req.app.get('io');
-            io.emit('post:new', post);
 
-            // Send the created post back in the response
-            res.status(201).send(post);
+            // ============================================
+            // Notify Admin + Moderator
+            // ============================================
+            notifyAdminsAndModerators(io, post).catch((error) => {
+                console.error(
+                    '[create-post] Admin/Moderator notification failed:',
+                    error,
+                );
+            });
+
+            // ============================================
+            // Realtime post event
+            // ============================================
+            if (io) {
+                io.emit('product:new', post);
+            }
+
+            // ============================================
+            // Response
+            // ============================================
+            return res.status(201).send(post);
         } catch (error) {
             console.error('Error creating post:', error);
-            res.status(500).send(error.message);
+
+            return res.status(500).send(error.message);
         }
     },
 );
@@ -838,8 +880,7 @@ router.patch(
             // Don't send duplicate notification
             // ----------------------------------------------------------------
 
-            const wasAlreadyAccepted =
-                before.status === 'accepted';
+            const wasAlreadyAccepted = before.status === 'accepted';
 
             if (!wasAlreadyAccepted) {
                 // ------------------------------------------------------------
@@ -866,28 +907,19 @@ router.patch(
                 // ------------------------------------------------------------
 
                 if (post.seller) {
-                    notifyUser(
-                        io,
-                        post.seller,
-                        {
-                            type: 'post_approved',
+                    notifyUser(io, post.seller, {
+                        type: 'post_approved',
 
-                            title: 'تم قبول إعلانك ✅',
+                        title: 'تم قبول إعلانك ✅',
 
-                            body: `إعلان "${post.product_name}" صار ظاهرًا للجميع.`,
+                        body: `إعلان "${post.product_name}" صار ظاهرًا للجميع.`,
 
-                            postId: post._id,
-                        },
-                    ).catch((error) => {
-                        console.error(
-                            '[approve] notify failed:',
-                            error,
-                        );
+                        postId: post._id,
+                    }).catch((error) => {
+                        console.error('[approve] notify failed:', error);
                     });
                 } else {
-                    console.warn(
-                        `[approve] Post ${post._id} has no seller`,
-                    );
+                    console.warn(`[approve] Post ${post._id} has no seller`);
                 }
 
                 // ------------------------------------------------------------
@@ -916,10 +948,7 @@ router.patch(
                 post,
             });
         } catch (error) {
-            console.error(
-                'Approve post error:',
-                error,
-            );
+            console.error('Approve post error:', error);
 
             return res.status(500).json({
                 message: 'Failed to approve post',
@@ -949,9 +978,7 @@ router.patch(
         try {
             const { postId } = req.params;
 
-            const reason = String(
-                req.body?.reason || '',
-            ).trim();
+            const reason = String(req.body?.reason || '').trim();
 
             // ----------------------------------------------------------------
             // Update post and return BEFORE version
@@ -1009,8 +1036,7 @@ router.patch(
             // Don't notify if it was already rejected
             // ----------------------------------------------------------------
 
-            const wasAlreadyRejected =
-                before.status === 'rejected';
+            const wasAlreadyRejected = before.status === 'rejected';
 
             if (!wasAlreadyRejected) {
                 // ------------------------------------------------------------
@@ -1036,31 +1062,34 @@ router.patch(
                 // Notification
                 // ------------------------------------------------------------
 
-                if (post.seller) {
-                    notifyUser(
-                        io,
-                        post.seller,
-                        {
-                            type: 'post_rejected',
+                const sellerId = post.seller?._id || post.seller;
 
-                            title: 'تم رفض إعلانك',
+                if (sellerId) {
+                    notifyUser(io, sellerId, {
+                        type: 'post_rejected',
 
-                            body: reason
-                                ? `إعلان "${post.product_name}" ما انقبل. السبب: ${reason}`
-                                : `إعلان "${post.product_name}" ما انقبل. تواصل مع الدعم لمعرفة السبب.`,
+                        title: 'تم رفض إعلانك',
 
-                            postId: post._id,
+                        body: reason
+                            ? `إعلان "${post.product_name}" ما انقبل. السبب: ${reason}`
+                            : `إعلان "${post.product_name}" ما انقبل. تواصل مع الدعم لمعرفة السبب.`,
+
+                        postId: post._id,
+
+                        data: {
+                            category: post.category || '',
+
+                            subcategory: post.subcategory || '',
+
+                            brand: post.brand || '',
+
+                            productName: post.product_name || '',
+
+                            rejectionReason: reason || '',
                         },
-                    ).catch((error) => {
-                        console.error(
-                            '[reject] notify failed:',
-                            error,
-                        );
+                    }).catch((error) => {
+                        console.error('[reject] notify failed:', error);
                     });
-                } else {
-                    console.warn(
-                        `[reject] Post ${post._id} has no seller`,
-                    );
                 }
             }
 
@@ -1076,10 +1105,7 @@ router.patch(
                 post,
             });
         } catch (error) {
-            console.error(
-                'Reject post error:',
-                error,
-            );
+            console.error('Reject post error:', error);
 
             return res.status(500).json({
                 message: 'Failed to reject post',

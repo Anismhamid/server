@@ -66,6 +66,22 @@ const basePostsSchema = new mongoose.Schema(
             enum: ['pending', 'accepted', 'rejected', 'sold'],
             default: 'pending',
         },
+        rejectionReason: {
+            type: String,
+            default: '',
+            trim: true,
+        },
+
+        reviewedBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Users',
+            default: null,
+        },
+
+        reviewedAt: {
+            type: Date,
+            default: null,
+        },
     },
     { timestamps: true, discriminatorKey: 'category' },
 );
