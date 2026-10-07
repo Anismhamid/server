@@ -4,6 +4,9 @@ const mongoose = require('mongoose');
 
 const notificationSchema = new mongoose.Schema(
     {
+        // =========================================================
+        // RECIPIENT
+        // =========================================================
         user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Users',
@@ -11,64 +14,74 @@ const notificationSchema = new mongoose.Schema(
             index: true,
         },
 
+        // =========================================================
+        // SENDER
+        //
+        // null = system notification
+        // ObjectId = admin/moderator generated notification
+        // =========================================================
+        sentBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Users',
+            default: null,
+            index: true,
+        },
+
+        // =========================================================
+        // TYPE
+        // =========================================================
         type: {
             type: String,
+
             enum: [
                 'post_approved',
                 'post_rejected',
                 'post_pending_review',
+
+                // Admin Center
+                'admin',
             ],
+
             required: true,
+
+            index: true,
         },
 
+        // =========================================================
+        // CONTENT
+        // =========================================================
         title: {
             type: String,
             required: true,
             trim: true,
+            maxlength: 200,
         },
 
         body: {
             type: String,
             default: '',
             trim: true,
+            maxlength: 2000,
         },
 
+        // =========================================================
+        // EXTRA DATA
+        //
+        // Mixed allows future notification types:
+        // postId, jobId, screen, action, etc.
+        // =========================================================
         data: {
-            postId: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Posts',
-                default: null,
-            },
-
-            category: {
-                type: String,
-                default: '',
-            },
-
-            subcategory: {
-                type: String,
-                default: '',
-            },
-
-            brand: {
-                type: String,
-                default: '',
-            },
-
-            productName: {
-                type: String,
-                default: '',
-            },
-
-            rejectionReason: {
-                type: String,
-                default: '',
-            },
+            type: mongoose.Schema.Types.Mixed,
+            default: {},
         },
 
+        // =========================================================
+        // READ STATUS
+        // =========================================================
         readAt: {
             type: Date,
             default: null,
+            index: true,
         },
     },
 
@@ -77,23 +90,36 @@ const notificationSchema = new mongoose.Schema(
     },
 );
 
-/**
- * البحث السريع عن إشعارات المستخدم
- */
+// =============================================================
+// USER NOTIFICATIONS
+//
+// Fast:
+// GET /api/notifications
+// GET /api/notifications/unread-count
+// =============================================================
 notificationSchema.index({
     user: 1,
     readAt: 1,
     createdAt: -1,
 });
 
-/**
- * منع إنشاء نفس إشعار الإعلان مرتين
- *
- * نفس:
- * user + type + postId
- *
- * لا يمكن أن يتكرر.
- */
+// =============================================================
+// SENT NOTIFICATIONS
+// =============================================================
+notificationSchema.index({
+    sentBy: 1,
+    createdAt: -1,
+});
+
+// =============================================================
+// PREVENT DUPLICATE POST NOTIFICATIONS
+//
+// Same:
+// user + type + data.postId
+//
+// Only applies when postId exists.
+// Admin notifications without postId are NOT affected.
+// =============================================================
 notificationSchema.index(
     {
         user: 1,
@@ -102,6 +128,7 @@ notificationSchema.index(
     },
     {
         unique: true,
+
         partialFilterExpression: {
             'data.postId': {
                 $exists: true,

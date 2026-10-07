@@ -4,6 +4,10 @@ const mongoose = require('mongoose');
 const Jobs = require('../models/Jobs');
 const auth = require('../middlewares/auth');
 const router = express.Router();
+const {
+    requirePermission,
+    requireRole,
+} = require('../middlewares/userPermissions');
 
 // =====================================================
 // Helpers
@@ -172,6 +176,217 @@ router.get('/type/:type', async (req, res) => {
         });
     }
 });
+
+
+// =====================================================
+// GET /api/jobs/admin
+// Admin / Moderator - paginated jobs
+// =====================================================
+
+router.get(
+    '/admin',
+    auth,
+    requirePermission('canManageJobs'),
+    requireRole('Admin', 'Moderator'),
+    async (req, res) => {
+        try {
+            const {
+                search = '',
+                type,
+                experienceLevel,
+                salaryPeriod,
+                remote,
+                location,
+                industry,
+                page = 1,
+                limit = 20,
+            } = req.query;
+
+            const filter = {};
+
+            if (type) {
+                filter.type = type;
+            }
+
+            if (experienceLevel) {
+                filter.experienceLevel = experienceLevel;
+            }
+
+            if (salaryPeriod) {
+                filter.salaryPeriod = salaryPeriod;
+            }
+
+            if (remote !== undefined && remote !== '') {
+                filter.remote = remote === 'true';
+            }
+
+            if (location) {
+                filter.location = {
+                    $regex: String(location),
+                    $options: 'i',
+                };
+            }
+
+            if (industry) {
+                filter.industry = {
+                    $regex: String(industry),
+                    $options: 'i',
+                };
+            }
+
+            if (search) {
+                const searchRegex = {
+                    $regex: String(search),
+                    $options: 'i',
+                };
+
+                filter.$or = [
+                    { jobTitle: searchRegex },
+                    { companyName: searchRegex },
+                    { industry: searchRegex },
+                    { location: searchRegex },
+                ];
+            }
+
+            const pageNumber = Math.max(Number(page) || 1, 1);
+            const limitNumber = Math.min(Math.max(Number(limit) || 20, 1), 100);
+
+            const skip = (pageNumber - 1) * limitNumber;
+
+            const [jobs, total] = await Promise.all([
+                Jobs.find(filter)
+                    .populate(populateSeller)
+                    .sort({ createdAt: -1 })
+                    .skip(skip)
+                    .limit(limitNumber),
+
+                Jobs.countDocuments(filter),
+            ]);
+
+            return res.status(200).json({
+                success: true,
+                jobs,
+                pagination: {
+                    total,
+                    page: pageNumber,
+                    limit: limitNumber,
+                    pages: Math.ceil(total / limitNumber),
+                },
+            });
+        } catch (error) {
+            console.error('Admin get jobs error:', error);
+
+            return res.status(500).json({
+                success: false,
+                message: 'Failed to fetch admin jobs',
+            });
+        }
+    },
+);
+
+// =====================================================
+// DELETE /api/jobs/admin/:jobId
+// Admin / Moderator - delete any job
+// =====================================================
+
+router.delete(
+    '/admin/:jobId',
+    auth,
+    requirePermission('canManageJobs'),
+    requireRole('Admin', 'Moderator'),
+    async (req, res) => {
+        try {
+            const { jobId } = req.params;
+
+            if (!mongoose.Types.ObjectId.isValid(jobId)) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Invalid job ID',
+                });
+            }
+
+            const job = await Jobs.findById(jobId);
+
+            if (!job) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Job not found',
+                });
+            }
+
+            await Jobs.findByIdAndDelete(jobId);
+
+            return res.status(200).json({
+                success: true,
+                message: 'Job deleted successfully',
+            });
+        } catch (error) {
+            console.error('Admin delete job error:', error);
+
+            return res.status(500).json({
+                success: false,
+                message: 'Failed to delete job',
+            });
+        }
+    },
+);
+
+// =====================================================
+// PATCH /api/jobs/admin/:jobId
+// Admin / Moderator - update any job
+// =====================================================
+
+router.patch(
+    '/admin/:jobId',
+    auth,
+    requirePermission('canManageJobs'),
+    requireRole('Admin', 'Moderator'),
+    async (req, res) => {
+        try {
+            const { jobId } = req.params;
+
+            if (!mongoose.Types.ObjectId.isValid(jobId)) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Invalid job ID',
+                });
+            }
+
+            const job = await Jobs.findById(jobId);
+
+            if (!job) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Job not found',
+                });
+            }
+
+            const { seller, _id, createdAt, updatedAt, ...updateData } =
+                req.body;
+
+            Object.assign(job, updateData);
+
+            await job.save();
+
+            const updatedJob = await Jobs.findById(job._id).populate(
+                populateSeller,
+            );
+
+            return res.status(200).json({
+                success: true,
+                message: 'Job updated successfully',
+                job: updatedJob,
+            });
+        } catch (error) {
+            console.error('Admin update job error:', error);
+
+            return res.status(500).json({
+                success: false,
+                message: 'Failed to update job',
+            });
+        }
+    },
+);
 
 // =====================================================
 // GET /api/jobs/:jobId
@@ -423,5 +638,8 @@ router.get('/user/:userId', async (req, res) => {
         });
     }
 });
+
+
+
 
 module.exports = router;

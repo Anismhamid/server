@@ -5,17 +5,14 @@ let sendPushToUser = async () => {};
 try {
     ({ sendPushToUser } = require('./push'));
 
-    console.log(
-        '[notify] FCM push service loaded',
-    );
+    console.log('[notify] FCM push service loaded');
 } catch (error) {
     console.warn(
         '[notify] ./push not found — push notifications disabled',
     );
 }
 
-const userRoom = (userId) =>
-    String(userId);
+const userRoom = (userId) => String(userId);
 
 async function notifyUser(
     io,
@@ -26,8 +23,13 @@ async function notifyUser(
         body = '',
         postId = null,
         data = {},
+        sentBy = null,
     },
 ) {
+    // =========================================================
+    // VALIDATION
+    // =========================================================
+
     if (!userId) {
         console.error(
             '[notify] Cannot notify without userId',
@@ -52,11 +54,10 @@ async function notifyUser(
         return null;
     }
 
-    /**
-     * =====================================================
-     * DATA
-     * =====================================================
-     */
+    // =========================================================
+    // DATA
+    // =========================================================
+
     const notificationData = {
         postId: postId
             ? String(postId)
@@ -67,40 +68,41 @@ async function notifyUser(
 
     let notification;
 
-    /**
-     * =====================================================
-     * CREATE DATABASE NOTIFICATION
-     * =====================================================
-     */
+    // =========================================================
+    // CREATE DATABASE NOTIFICATION
+    // =========================================================
+
     try {
-        notification =
-            await Notification.create({
-                user: userId,
+        notification = await Notification.create({
+            user: userId,
 
-                type,
+            sentBy: sentBy || null,
 
-                title,
+            type,
 
-                body,
+            title,
 
-                data: notificationData,
-            });
+            body,
+
+            data: notificationData,
+        });
 
         console.log(
             `[notify] DB notification created: ${notification._id}`,
         );
     } catch (error) {
-        /**
-         * MongoDB duplicate key
-         */
+        // -----------------------------------------------------
+        // MongoDB duplicate key
+        // -----------------------------------------------------
+
         if (error?.code === 11000) {
             console.log(
                 '[notify] Duplicate notification ignored:',
                 {
-                    userId: String(
-                        userId,
-                    ),
+                    userId: String(userId),
+
                     type,
+
                     postId: postId
                         ? String(postId)
                         : null,
@@ -118,25 +120,20 @@ async function notifyUser(
         return null;
     }
 
-    /**
-     * =====================================================
-     * SOCKET.IO
-     * =====================================================
-     */
+    // =========================================================
+    // SOCKET.IO
+    // =========================================================
+
     try {
         if (!io) {
-            throw new Error(
-                'io is undefined',
-            );
+            throw new Error('io is undefined');
         }
 
-        const room =
-            userRoom(userId);
+        const room = userRoom(userId);
 
-        const sockets =
-            await io
-                .in(room)
-                .fetchSockets();
+        const sockets = await io
+            .in(room)
+            .fetchSockets();
 
         console.log(
             `[notify] ${type} → user ${room} | sockets: ${sockets.length}`,
@@ -153,19 +150,17 @@ async function notifyUser(
         );
     }
 
-    /**
-     * =====================================================
-     * FCM
-     * =====================================================
-     */
+    // =========================================================
+    // FCM
+    // =========================================================
+
     try {
         const pushData = {
             type: String(type),
 
-            notificationId:
-                String(
-                    notification._id,
-                ),
+            notificationId: String(
+                notification._id,
+            ),
 
             postId: postId
                 ? String(postId)
