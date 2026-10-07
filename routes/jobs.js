@@ -186,7 +186,6 @@ router.get('/type/:type', async (req, res) => {
 router.get(
     '/admin',
     auth,
-    requirePermission('canManageJobs'),
     requireRole('Admin', 'Moderator'),
     async (req, res) => {
         try {
@@ -292,7 +291,6 @@ router.get(
 router.delete(
     '/admin/:jobId',
     auth,
-    requirePermission('canManageJobs'),
     requireRole('Admin', 'Moderator'),
     async (req, res) => {
         try {
@@ -339,7 +337,6 @@ router.delete(
 router.patch(
     '/admin/:jobId',
     auth,
-    requirePermission('canManageJobs'),
     requireRole('Admin', 'Moderator'),
     async (req, res) => {
         try {
