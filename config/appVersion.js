@@ -1,10 +1,10 @@
 module.exports = {
     android: {
         // آخر إصدار متوفر على Google Play
-        latestVersionCode: 38,
+        latestVersionCode: 39,
 
         // أقل إصدار يستطيع استخدام التطبيق
-        minimumSupportedVersionCode: 37,
+        minimumSupportedVersionCode: 39,
 
         // اسم الإصدار الظاهر للمستخدم
         latestVersionName: '5.0.0',
