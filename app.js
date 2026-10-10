@@ -26,6 +26,8 @@ const sitemapRouter = require('./routes/sitemap');
 const cookieParser = require('cookie-parser');
 const notifications = require('./routes/notifications');
 const adminNotifications = require('./routes/adminNotifications');
+const savedSearchesRouter = require('./routes/savedSearches');
+
 
 const app = express();
 app.set('trust proxy', 1);
@@ -98,6 +100,7 @@ app.use('/api/users', users);
 app.use('/api/notifications', notifications);
 app.use('/api/admin/notifications', adminNotifications);
 
+app.use('/api/saved-searches', savedSearchesRouter);
 app.use('/api/app-version', appVersionRoutes);
 app.use('/api/business-info', businessInfo);
 app.use('/api/featured-ads', featuredAd);
@@ -110,7 +113,6 @@ app.use('/api/ai', ai);
 app.use('/sitemap', sitemapRouter);
 app.use('/api/blocks', block);
 app.use('/api/reports', reports);
-
 
 // =======================
 // ROBOTS.TXT - DYNAMIC ROUTE

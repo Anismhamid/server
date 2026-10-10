@@ -15,6 +15,7 @@ const { invalidateSitemapCache } = require('../routes/sitemap');
 const Block = require('../models/Block');
 const { notifyUser } = require('../services/notify');
 const { notifyAdminsAndModerators } = require('../services/adminNotification');
+const { matchSavedSearches } = require('../services/matchSavedSearches');
 
 // ============================================
 // Block check
@@ -815,44 +816,27 @@ router.patch('/:postId/increment-views', async (req, res) => {
 
 router.patch(
     '/:postId/approve',
-
     auth,
-
     requireRole('Admin', 'Moderator'),
-
     async (req, res) => {
         try {
             const { postId } = req.params;
 
-            // ----------------------------------------------------------------
-            // Update post and return BEFORE version
-            // ----------------------------------------------------------------
-
             const before = await Posts.findByIdAndUpdate(
                 postId,
-
                 {
                     $set: {
                         status: 'accepted',
-
                         rejectionReason: '',
-
                         reviewedBy: req.payload._id,
-
                         reviewedAt: new Date(),
                     },
                 },
-
                 {
                     returnDocument: 'before',
-
                     runValidators: true,
                 },
             ).lean();
-
-            // ----------------------------------------------------------------
-            // Post doesn't exist
-            // ----------------------------------------------------------------
 
             if (!before) {
                 return res.status(404).json({
@@ -860,75 +844,79 @@ router.patch(
                 });
             }
 
-            // ----------------------------------------------------------------
-            // Build updated object for Socket.IO response
-            // ----------------------------------------------------------------
-
-            const post = {
-                ...before,
-
-                status: 'accepted',
-
-                rejectionReason: '',
-
-                reviewedBy: req.payload._id,
-
-                reviewedAt: new Date(),
-            };
-
-            // ----------------------------------------------------------------
-            // Don't send duplicate notification
-            // ----------------------------------------------------------------
-
             const wasAlreadyAccepted = before.status === 'accepted';
+
+            // Fetch the actual updated post from MongoDB.
+            const updatedPost = await Posts.findById(postId).lean();
+
+            if (!updatedPost) {
+                return res.status(404).json({
+                    message: 'Post not found after approval',
+                });
+            }
+
+            const post = updatedPost;
+            const io = req.app.get('io');
 
             if (!wasAlreadyAccepted) {
                 // ------------------------------------------------------------
-                // Sitemap
+                // Sitemap cache
                 // ------------------------------------------------------------
 
                 try {
                     invalidateSitemapCache();
                 } catch (error) {
                     console.error(
-                        '[approve] sitemap invalidation failed:',
-                        error,
+                        '[approve] Sitemap invalidation failed:',
+                        error.message,
                     );
                 }
 
                 // ------------------------------------------------------------
-                // Socket.IO
-                // ------------------------------------------------------------
-
-                const io = req.app.get('io');
-
-                // ------------------------------------------------------------
-                // Notification to seller
+                // Notify the seller
                 // ------------------------------------------------------------
 
                 if (post.seller) {
                     notifyUser(io, post.seller, {
                         type: 'post_approved',
-
                         title: 'تم قبول إعلانك ✅',
-
                         body: `إعلان "${post.product_name}" صار ظاهرًا للجميع.`,
-
                         postId: post._id,
                     }).catch((error) => {
-                        console.error('[approve] notify failed:', error);
+                        console.error(
+                            '[approve] Seller notification failed:',
+                            error.message,
+                        );
                     });
                 } else {
-                    console.warn(`[approve] Post ${post._id} has no seller`);
+                    console.warn(
+                        `[approve] Post ${post._id} has no seller`,
+                    );
                 }
 
                 // ------------------------------------------------------------
-                // IMPORTANT
-                //
-                // Frontend currently listens to:
-                // product:new
-                //
-                // So only emit after approval.
+                // Match saved searches
+                // ------------------------------------------------------------
+
+                matchSavedSearches(io, post)
+                    .then((result) => {
+                        console.log(
+                            '[approve] Saved search matching result:',
+                            {
+                                postId: String(post._id),
+                                ...result,
+                            },
+                        );
+                    })
+                    .catch((error) => {
+                        console.error(
+                            '[approve] Saved search matching failed:',
+                            error.message,
+                        );
+                    });
+
+                // ------------------------------------------------------------
+                // Notify frontend
                 // ------------------------------------------------------------
 
                 if (io) {
@@ -936,19 +924,14 @@ router.patch(
                 }
             }
 
-            // ----------------------------------------------------------------
-            // Response
-            // ----------------------------------------------------------------
-
             return res.status(200).json({
                 message: wasAlreadyAccepted
                     ? 'Post was already approved'
                     : 'Post approved successfully',
-
                 post,
             });
         } catch (error) {
-            console.error('Approve post error:', error);
+            console.error('[approve] Post approval failed:', error);
 
             return res.status(500).json({
                 message: 'Failed to approve post',

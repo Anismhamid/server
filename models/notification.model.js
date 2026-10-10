@@ -37,7 +37,7 @@ const notificationSchema = new mongoose.Schema(
                 'post_approved',
                 'post_rejected',
                 'post_pending_review',
-
+                'saved_search_match',
                 // Admin Center
                 'admin',
             ],

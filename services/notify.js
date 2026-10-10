@@ -7,9 +7,7 @@ try {
 
     console.log('[notify] FCM push service loaded');
 } catch (error) {
-    console.warn(
-        '[notify] ./push not found — push notifications disabled',
-    );
+    console.warn('[notify] ./push not found — push notifications disabled');
 }
 
 const userRoom = (userId) => String(userId);
@@ -17,39 +15,26 @@ const userRoom = (userId) => String(userId);
 async function notifyUser(
     io,
     userId,
-    {
-        type,
-        title,
-        body = '',
-        postId = null,
-        data = {},
-        sentBy = null,
-    },
+    { type, title, body = '', postId = null, data = {}, sentBy = null },
 ) {
     // =========================================================
     // VALIDATION
     // =========================================================
 
     if (!userId) {
-        console.error(
-            '[notify] Cannot notify without userId',
-        );
+        console.error('[notify] Cannot notify without userId');
 
         return null;
     }
 
     if (!type) {
-        console.error(
-            '[notify] Cannot notify without type',
-        );
+        console.error('[notify] Cannot notify without type');
 
         return null;
     }
 
     if (!title) {
-        console.error(
-            '[notify] Cannot notify without title',
-        );
+        console.error('[notify] Cannot notify without title');
 
         return null;
     }
@@ -59,9 +44,7 @@ async function notifyUser(
     // =========================================================
 
     const notificationData = {
-        postId: postId
-            ? String(postId)
-            : null,
+        postId: postId ? String(postId) : null,
 
         ...data,
     };
@@ -87,35 +70,44 @@ async function notifyUser(
             data: notificationData,
         });
 
-        console.log(
-            `[notify] DB notification created: ${notification._id}`,
-        );
+        console.log(`[notify] DB notification created: ${notification._id}`);
     } catch (error) {
         // -----------------------------------------------------
         // MongoDB duplicate key
         // -----------------------------------------------------
 
         if (error?.code === 11000) {
-            console.log(
-                '[notify] Duplicate notification ignored:',
-                {
-                    userId: String(userId),
+            console.log('[notify] Duplicate notification ignored:', {
+                userId: String(userId),
+                type,
+                postId: postId ? String(postId) : null,
+            });
 
-                    type,
+            // Return the existing notification so callers can distinguish
+            // a duplicate from an actual database failure.
+            if (postId) {
+                try {
+                    const existingNotification = await Notification.findOne({
+                        user: userId,
+                        type,
+                        'data.postId': String(postId),
+                    });
 
-                    postId: postId
-                        ? String(postId)
-                        : null,
-                },
-            );
+                    if (existingNotification) {
+                        return existingNotification;
+                    }
+                } catch (lookupError) {
+                    console.error(
+                        '[notify] Failed to retrieve duplicate notification:',
+                        lookupError.message,
+                    );
+                }
+            }
 
             return null;
         }
 
-        console.error(
-            '[notify] DB notification failed:',
-            error,
-        );
+        console.error('[notify] DB notification failed:', error);
 
         return null;
     }
@@ -131,23 +123,15 @@ async function notifyUser(
 
         const room = userRoom(userId);
 
-        const sockets = await io
-            .in(room)
-            .fetchSockets();
+        const sockets = await io.in(room).fetchSockets();
 
         console.log(
             `[notify] ${type} → user ${room} | sockets: ${sockets.length}`,
         );
 
-        io.to(room).emit(
-            'notification:new',
-            notification.toObject(),
-        );
+        io.to(room).emit('notification:new', notification.toObject());
     } catch (error) {
-        console.error(
-            '[notify] socket emit failed:',
-            error.message,
-        );
+        console.error('[notify] socket emit failed:', error.message);
     }
 
     // =========================================================
@@ -158,43 +142,27 @@ async function notifyUser(
         const pushData = {
             type: String(type),
 
-            notificationId: String(
-                notification._id,
-            ),
+            notificationId: String(notification._id),
 
-            postId: postId
-                ? String(postId)
-                : '',
+            postId: postId ? String(postId) : '',
 
             ...Object.fromEntries(
-                Object.entries(data).map(
-                    ([key, value]) => [
-                        key,
-                        value == null
-                            ? ''
-                            : String(value),
-                    ],
-                ),
+                Object.entries(data).map(([key, value]) => [
+                    key,
+                    value == null ? '' : String(value),
+                ]),
             ),
         };
 
-        await sendPushToUser(
-            userId,
-            {
-                title,
-                body,
-                data: pushData,
-            },
-        );
+        await sendPushToUser(userId, {
+            title,
+            body,
+            data: pushData,
+        });
 
-        console.log(
-            `[notify] FCM sent → user ${userId}`,
-        );
+        console.log(`[notify] FCM sent → user ${userId}`);
     } catch (error) {
-        console.error(
-            '[notify] push failed:',
-            error.message,
-        );
+        console.error('[notify] push failed:', error.message);
     }
 
     return notification;
