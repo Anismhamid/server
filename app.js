@@ -28,7 +28,6 @@ const notifications = require('./routes/notifications');
 const adminNotifications = require('./routes/adminNotifications');
 const savedSearchesRouter = require('./routes/savedSearches');
 
-
 const app = express();
 app.set('trust proxy', 1);
 

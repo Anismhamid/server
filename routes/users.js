@@ -15,6 +15,7 @@ const editUserProfileSchema = require('../schema/editUserProfile');
 const chalk = require('chalk');
 const rateLimit = require('express-rate-limit');
 const { setAuthCookie, clearAuthCookie } = require('../utils/authCookie');
+const optionalAuth = require('../middlewares/optionalAuth');
 
 const {
     requirePermission,
@@ -661,29 +662,33 @@ router.post('/google', async (req, res) => {
 
 // ============================================================
 // GET CURRENT USER
-// ⚠️ يجب أن يكون قبل /:userId
 // ============================================================
 
-router.get('/me', auth, async (req, res) => {
+router.get('/me', optionalAuth, async (req, res) => {
+    // زائر أو لا توجد جلسة صالحة
+    if (!req.payload?._id) {
+        return res.status(200).json({
+            success: true,
+            user: null,
+        });
+    }
+
     try {
         const user = await User.findById(req.payload._id)
             .select('-password')
             .lean();
 
-        if (!user) {
-            return sendError(res, 404, 'USER_NOT_FOUND', 'User not found');
-        }
+        if (!user) return;
 
         if (
             user.accountStatus === 'disabled' ||
             user.permissions?.canLogin === false
         ) {
-            return sendError(
-                res,
-                403,
-                'ACCOUNT_DISABLED',
-                'Account is disabled',
-            );
+            return res.status(403).json({
+                success: false,
+                code: 'ACCOUNT_DISABLED',
+                message: 'Account is disabled',
+            });
         }
 
         return res.status(200).json({
@@ -693,12 +698,11 @@ router.get('/me', auth, async (req, res) => {
     } catch (error) {
         console.error('Get current user error:', error);
 
-        return sendError(
-            res,
-            500,
-            'CURRENT_USER_ERROR',
-            'Internal server error',
-        );
+        return res.status(500).json({
+            success: false,
+            code: 'CURRENT_USER_ERROR',
+            message: 'Internal server error',
+        });
     }
 });
 
