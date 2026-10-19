@@ -1,12 +1,24 @@
-const cron = require("node-cron");
-const FeaturedAd = require("../models/FeaturedAd");
-
-// كل يوم الساعة 00:00
-cron.schedule("0 0 * * *", async () => {
-	const now = new Date();
-	const result = await FeaturedAd.updateMany(
-		{endDate: {$lt: now}, isActive: true},
-		{$set: {isActive: false}},
-	);
-	console.log(`Deactivated ${result.modifiedCount} expired featured ads`);
+// ── Cron Job: تعطيل الإعلانات المنتهية تلقائياً ──────────
+// يعمل كل ساعة ليتحقق من الإعلانات المنتهية
+cron.schedule('0 * * * *', async () => {
+    try {
+        const now = new Date();
+        const result = await FeaturedAd.updateMany(
+            { 
+                isActive: true, 
+                endDate: { $lt: now } 
+            },
+            { 
+                $set: { isActive: false } 
+            }
+        );
+        
+        if (result.modifiedCount > 0) {
+            console.log(`🕒 [CRON] تم تعطيل ${result.modifiedCount} إعلان منتهي الصلاحية.`);
+        }
+    } catch (err) {
+        console.error('❌ [CRON] خطأ في تعطيل الإعلانات المنتهية:', err);
+    }
 });
+
+module.exports = router;
