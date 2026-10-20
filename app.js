@@ -10,9 +10,9 @@ const morgan = require('morgan');
 const users = require('./routes/users');
 const appVersionRoutes = require('./routes/appVersionRoutes');
 const posts = require('./routes/posts');
-const ai = require('./routes/ai');
 const block = require('./routes/block');
 const reports = require('./routes/reports');
+const blog = require('./routes/blog');
 const businessInfo = require('./routes/businessInfo');
 const featuredAd = require('./routes/featuredRegister');
 const discounts = require('./routes/discountAndOffers');
@@ -108,49 +108,19 @@ app.use('/api/cities', cities);
 app.use('/api/messages', messages);
 app.use('/api/jobs', jobs);
 app.use('/api/images', images);
-app.use('/api/ai', ai);
-app.use('/sitemap', sitemapRouter);
+
+
 app.use('/api/blocks', block);
 app.use('/api/reports', reports);
+app.use('/api/blog', blog);
 
 // =======================
-// ROBOTS.TXT - DYNAMIC ROUTE
+// SITEMAPS
+// blog.xml must be registered BEFORE the sitemap router
 // =======================
-app.get('/robots.txt', (req, res) => {
-    const baseUrl = process.env.CLIENT_URL || 'https://client-qqq1.vercel.app';
+app.get('/sitemap/blog.xml', blog.blogSitemap);
+app.use('/sitemap', sitemapRouter);
 
-    res.type('text/plain');
-    res.send(`
-# robots.txt - Safqa Marketplace
-
-User-agent: *
-Allow: /
-
-Disallow: /profile/
-Disallow: /messages/
-Disallow: /admin-settings/
-Disallow: /users-management/
-Disallow: /cart/
-Disallow: /favorites/
-Disallow: /login/
-Disallow: /register/
-Disallow: /reset-password/
-Disallow: /forgot-password/
-Disallow: /api/
-Disallow: /admin/
-
-Disallow: /*.json$
-Disallow: /*.log$
-
-Crawl-delay: 1
-
-Sitemap: ${baseUrl}/sitemap/sitemap.xml
-    `);
-});
-
-// =======================
-// SITEMAP REDIRECTS
-// =======================
 app.get('/sitemap.xml', (req, res) => {
     res.redirect(301, '/sitemap/sitemap.xml');
 });
@@ -158,6 +128,8 @@ app.get('/sitemap.xml', (req, res) => {
 app.get('/sitemap-index.xml', (req, res) => {
     res.redirect(301, '/sitemap/');
 });
+
+// robots.txt is served from the client (public/robots.txt)
 
 // =======================
 // ROOT HEALTH CHECK
@@ -171,7 +143,9 @@ app.get('/api', (_req, res) => {
             posts: '/api/posts',
             users: '/api/users',
             discounts: '/api/discounts',
+            blog: '/api/blog',
             sitemap: '/sitemap/sitemap.xml',
+            'blog-sitemap': '/sitemap/blog.xml',
             'sitemap-stats': '/sitemap/sitemap-stats',
         },
         timestamp: new Date().toISOString(),
