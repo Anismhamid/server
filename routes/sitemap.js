@@ -1,29 +1,28 @@
-// server/routes/sitemap.js
 const express = require('express');
-const Post = require('../models/post');
+const crypto = require('crypto');
 const compression = require('compression');
+const Post = require('../models/post');
+const { BASE_URL, escapeXml, buildPostUrl } = require('../utils/postUrl');
 
 const router = express.Router();
 
-// ===================== CONFIGURATION =====================
-const BASE_URL = process.env.CLIENT_URL || 'https://client-qqq1.vercel.app';
-const MAX_URLS_PER_SITEMAP = 50000; // Google's limit
+// ===================== CONFIG =====================
+const MAX_URLS_PER_SITEMAP = 50000;
 const CACHE_TTL = 1000 * 60 * 15;
-const ENABLE_COMPRESSION = true;
 const ENABLE_LOGGING =
     process.env.NODE_ENV !== 'production' || process.env.LOG_SITEMAP === 'true';
 
-// ===================== STATIC URLS =====================
+const publicPostFilter = { in_stock: true, status: 'accepted' };
+
 const staticUrls = [
-    // Main pages
     { loc: '/', priority: '1.0', changefreq: 'daily' },
     { loc: '/about', priority: '0.7', changefreq: 'monthly' },
     { loc: '/contact', priority: '0.7', changefreq: 'monthly' },
     { loc: '/categories', priority: '0.8', changefreq: 'weekly' },
     { loc: '/discounts-and-offers', priority: '0.8', changefreq: 'daily' },
     { loc: '/blog', priority: '0.6', changefreq: 'weekly' },
+    { loc: '/jobs', priority: '0.8', changefreq: 'weekly' },
 
-    // Category pages
     { loc: '/category/Cars', priority: '0.9', changefreq: 'daily' },
     { loc: '/category/Motorcycles', priority: '0.9', changefreq: 'daily' },
     { loc: '/category/Bikes', priority: '0.9', changefreq: 'daily' },
@@ -45,426 +44,235 @@ const staticUrls = [
     { loc: '/category/Gaming', priority: '0.8', changefreq: 'weekly' },
     { loc: '/category/RealEstate', priority: '0.9', changefreq: 'daily' },
     { loc: '/category/Pets', priority: '0.8', changefreq: 'weekly' },
-    { loc: '/category/Furniture', priority: '0.8', changefreq: 'weekly' },
+    { loc: '/category/cameras', priority: '0.8', changefreq: 'weekly' },
+    { loc: '/category/books', priority: '0.8', changefreq: 'weekly' },
+    { loc: '/category/musicalInstruments', priority: '0.8', changefreq: 'weekly' },
+    { loc: '/category/constructionEquipment', priority: '0.8', changefreq: 'weekly' },
+    { loc: '/category/industrialEquipment', priority: '0.8', changefreq: 'weekly' },
+    { loc: '/category/weldingEquipment', priority: '0.8', changefreq: 'weekly' },
+    { loc: '/category/officeEquipment', priority: '0.8', changefreq: 'weekly' },
+    { loc: '/category/Services', priority: '0.8', changefreq: 'weekly' },
 
-    // Help pages
     { loc: '/help/selling', priority: '0.6', changefreq: 'monthly' },
     { loc: '/help/safety', priority: '0.6', changefreq: 'monthly' },
     { loc: '/help/disputes', priority: '0.6', changefreq: 'monthly' },
 
-    // Legal pages
     { loc: '/privacy-and-policy', priority: '0.3', changefreq: 'yearly' },
     { loc: '/term-of-use', priority: '0.3', changefreq: 'yearly' },
 ];
 
-// ===================== CACHE STATE =====================
-let cachedXml = null;
-let cachedAt = 0;
-let cacheStats = { hits: 0, misses: 0, stale: 0 };
-let generationInProgress = false;
-let pendingRequests = [];
+// ===================== STATE =====================
+const cache = new Map(); // page -> { xml, at, count, totalPages }
+const inflight = new Map(); // page -> Promise
+const stats = { hits: 0, misses: 0, stale: 0 };
 
-// ===================== MIDDLEWARE =====================
-if (ENABLE_COMPRESSION) {
-    router.use(
-        compression({
-            threshold: 1024, // Compress responses > 1KB
-            level: 6, // Balanced compression
-        }),
+const log = (...args) => ENABLE_LOGGING && console.log('[Sitemap]', ...args);
+
+router.use(compression({ threshold: 1024, level: 6 }));
+
+// ===================== GENERATION =====================
+const getLayout = async () => {
+    const totalPosts = await Post.countDocuments(publicPostFilter);
+    const firstPageCapacity = MAX_URLS_PER_SITEMAP - staticUrls.length;
+    const remaining = Math.max(0, totalPosts - firstPageCapacity);
+    const totalPages =
+        totalPosts <= firstPageCapacity
+            ? 1
+            : 1 + Math.ceil(remaining / MAX_URLS_PER_SITEMAP);
+    return { totalPosts, firstPageCapacity, totalPages };
+};
+
+const generateSitemapXml = async (page) => {
+    const startedAt = Date.now();
+    const { totalPosts, firstPageCapacity, totalPages } = await getLayout();
+
+    if (!Number.isInteger(page) || page < 1 || page > totalPages) {
+        const err = new Error(`Invalid sitemap page: ${page}`);
+        err.status = 404;
+        throw err;
+    }
+
+    const limit = page === 1 ? firstPageCapacity : MAX_URLS_PER_SITEMAP;
+    const skip =
+        page === 1 ? 0 : firstPageCapacity + (page - 2) * MAX_URLS_PER_SITEMAP;
+
+    const posts = await Post.find(publicPostFilter)
+        .select('_id category product_name seller updatedAt')
+        .populate({ path: 'seller', select: 'slug' })
+        .sort({ updatedAt: -1, _id: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean()
+        .maxTimeMS(10000);
+
+    const postUrls = posts.map((post) => ({
+        loc: buildPostUrl(post),
+        lastmod: post.updatedAt
+            ? new Date(post.updatedAt).toISOString().split('T')[0]
+            : undefined,
+        priority: '0.9',
+        changefreq: 'weekly',
+    }));
+
+    const allUrls =
+        page === 1
+            ? [
+                  ...staticUrls.map((u) => ({
+                      ...u,
+                      loc: `${BASE_URL}${u.loc}`,
+                  })),
+                  ...postUrls,
+              ]
+            : postUrls;
+
+    const body = allUrls
+        .map(
+            (u) =>
+                `  <url>\n    <loc>${escapeXml(u.loc)}</loc>\n` +
+                (u.lastmod ? `    <lastmod>${u.lastmod}</lastmod>\n` : '') +
+                `    <changefreq>${u.changefreq}</changefreq>\n` +
+                `    <priority>${u.priority}</priority>\n  </url>`,
+        )
+        .join('\n');
+
+    const xml =
+        `<?xml version="1.0" encoding="UTF-8"?>\n` +
+        `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>`;
+
+    log(
+        `page ${page}/${totalPages}: ${allUrls.length} URLs in ${Date.now() - startedAt}ms`,
     );
-}
 
-// ===================== HELPER FUNCTIONS =====================
-const generateETag = (content) => {
-    const crypto = require('crypto');
-    return crypto.createHash('md5').update(content).digest('hex');
+    return { xml, count: allUrls.length, totalPages, totalPosts };
 };
 
-const isValidUrl = (url) => {
-    try {
-        new URL(url);
-        return true;
-    } catch {
-        return false;
+// cache + dedupe: أكتر من request على نفس الصفحة بيشاركوا نفس الـ promise
+const getSitemap = async (page) => {
+    const hit = cache.get(page);
+    if (hit && Date.now() - hit.at < CACHE_TTL) {
+        stats.hits++;
+        return { ...hit, cacheStatus: 'HIT' };
     }
+
+    if (inflight.has(page)) return inflight.get(page);
+
+    stats.misses++;
+    const promise = generateSitemapXml(page)
+        .then((result) => {
+            const entry = { ...result, at: Date.now() };
+            cache.set(page, entry);
+            return { ...entry, cacheStatus: 'MISS' };
+        })
+        .catch((err) => {
+            // لو في نسخة قديمة، قدّمها بدل ما تفشل (إلا لو الصفحة غير موجودة)
+            if (hit && err.status !== 404) {
+                stats.stale++;
+                return { ...hit, cacheStatus: 'STALE' };
+            }
+            throw err;
+        })
+        .finally(() => inflight.delete(page));
+
+    inflight.set(page, promise);
+    return promise;
 };
 
-const getCacheAge = () => {
-    if (!cachedAt) return 'N/A';
-    const age = Math.floor((Date.now() - cachedAt) / 1000);
-    if (age < 60) return `${age}s`;
-    if (age < 3600) return `${Math.floor(age / 60)}m`;
-    return `${Math.floor(age / 3600)}h`;
-};
-
-const log = (...args) => {
-    if (ENABLE_LOGGING) {
-        console.log(`[Sitemap]`, ...args);
-    }
-};
-
-// ===================== CACHE INVALIDATION =====================
-const invalidateSitemapCache = () => {
-    cachedXml = null;
-    cachedAt = 0;
-    log('🗑️ Cache invalidated');
-};
-
-// ===================== GENERATE SITEMAP XML =====================
-const generateSitemapXml = async (page = 1) => {
-    const startTime = Date.now();
-
+const sendSitemap = async (res, page) => {
     try {
-        // Get total count for pagination
-        const totalPosts = await Post.countDocuments({ in_stock: true });
-        const totalPages = Math.ceil(totalPosts / MAX_URLS_PER_SITEMAP);
+        const r = await getSitemap(page);
+        const etag = `"${crypto.createHash('md5').update(r.xml).digest('hex')}"`;
 
-        if (page > totalPages && totalPages > 0) {
-            throw new Error(`Page ${page} exceeds total pages (${totalPages})`);
-        }
-
-        // Fetch posts with pagination
-        const skip = (page - 1) * MAX_URLS_PER_SITEMAP;
-        const posts = await Post.find({ in_stock: true })
-            .select('_id category brand updatedAt')
-            .sort({ updatedAt: -1 }) // Most recent first
-            .skip(skip)
-            .limit(MAX_URLS_PER_SITEMAP)
-            .lean()
-            .maxTimeMS(5000); // Timeout after 5 seconds
-
-        log(
-            `📄 Generating page ${page}/${totalPages} with ${posts.length} posts`,
+        res.type('application/xml; charset=utf-8');
+        res.set(
+            'Cache-Control',
+            `public, max-age=${r.cacheStatus === 'STALE' ? 60 : 900}`,
         );
-
-        // Generate post URLs
-        const postUrls = posts
-            .map((post) => {
-                try {
-                    const loc =
-                        post.category && post.brand
-                            ? `${BASE_URL}/posts/${encodeURIComponent(post.category)}/${encodeURIComponent(post.brand)}/${post._id}`
-                            : `${BASE_URL}/posts/${post._id}`;
-
-                    if (!isValidUrl(loc)) {
-                        console.warn(`⚠️ Invalid URL for post ${post._id}`);
-                        return null;
-                    }
-
-                    const lastmod = post.updatedAt
-                        ? new Date(post.updatedAt).toISOString().split('T')[0]
-                        : new Date().toISOString().split('T')[0];
-
-                    return {
-                        loc,
-                        lastmod,
-                        priority: '0.9',
-                        changefreq: 'weekly',
-                    };
-                } catch (error) {
-                    console.error(
-                        `❌ Error processing post ${post._id}:`,
-                        error,
-                    );
-                    return null;
-                }
-            })
-            .filter(Boolean);
-
-        // Combine static and post URLs
-        const staticUrlsWithBase = staticUrls.map((u) => ({
-            ...u,
-            loc: `${BASE_URL}${u.loc}`,
-            lastmod: new Date().toISOString().split('T')[0],
-        }));
-
-        // For page 1, include static URLs; for other pages, only posts
-        const allUrls =
-            page === 1 ? [...staticUrlsWithBase, ...postUrls] : postUrls;
-
-        // Build XML
-        const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-${allUrls
-    .map(
-        (u) => `  <url>
-    <loc>${u.loc}</loc>
-${u.lastmod ? `    <lastmod>${u.lastmod}</lastmod>\n` : ''}${u.changefreq ? `    <changefreq>${u.changefreq}</changefreq>\n` : ''}    <priority>${u.priority}</priority>
-  </url>`,
-    )
-    .join('\n')}
-</urlset>`;
-
-        const duration = Date.now() - startTime;
-        log(`✅ Generated ${allUrls.length} URLs in ${duration}ms`);
-
-        return {
-            xml,
-            count: allUrls.length,
-            totalPosts,
-            totalPages,
-            currentPage: page,
-            duration,
-        };
+        res.set('Last-Modified', new Date(r.at).toUTCString());
+        res.set('ETag', etag);
+        res.set('X-Cache', r.cacheStatus);
+        res.set('X-Sitemap-Count', String(r.count));
+        res.set('X-Sitemap-Total-Pages', String(r.totalPages));
+        return res.send(r.xml);
     } catch (error) {
-        console.error('❌ Sitemap generation failed:', error);
-        throw error;
+        if (error.status === 404)
+            return res.status(404).send('Sitemap not found');
+        console.error('Sitemap generation failed:', error);
+        return res.status(500).send('Failed to generate sitemap');
     }
 };
 
-// ===================== SITEMAP INDEX =====================
-router.get('/', async (_req, res) => {
+// ===================== ROUTES =====================
+router.get('/sitemap.xml', (_req, res) => sendSitemap(res, 1));
+
+router.get('/sitemap-:page.xml', (req, res) => {
+    const page = Number.parseInt(req.params.page, 10);
+    if (!Number.isInteger(page) || page < 2) {
+        return res.status(400).send('Invalid sitemap page');
+    }
+    return sendSitemap(res, page);
+});
+
+router.get('/sitemap-index.xml', async (_req, res) => {
     try {
-        const totalPosts = await Post.countDocuments({ in_stock: true });
-        const totalUrls = staticUrls.length + totalPosts;
-        const totalSitemaps = Math.ceil(totalUrls / MAX_URLS_PER_SITEMAP);
+        const { totalPages } = await getLayout();
+        const lastmod = new Date().toISOString();
 
-        let xml = `<?xml version="1.0" encoding="UTF-8"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
-
-        for (let i = 1; i <= totalSitemaps; i++) {
+        const items = Array.from({ length: totalPages }, (_, i) => {
+            const page = i + 1;
             const loc =
-                i === 1
+                page === 1
                     ? `${BASE_URL}/sitemap.xml`
-                    : `${BASE_URL}/sitemap/sitemap-${i}.xml`;
+                    : `${BASE_URL}/sitemap-${page}.xml`;
+            return `  <sitemap>\n    <loc>${escapeXml(loc)}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </sitemap>`;
+        }).join('\n');
 
-            xml += `
-  <sitemap>
-    <loc>${loc}</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-  </sitemap>`;
-        }
-
-        xml += `
-</sitemapindex>`;
-
-        res.header('Content-Type', 'application/xml');
-        res.header('Cache-Control', 'public, max-age=3600'); // 1 hour
-        res.send(xml);
+        res.type('application/xml; charset=utf-8');
+        res.set('Cache-Control', 'public, max-age=900');
+        res.send(
+            `<?xml version="1.0" encoding="UTF-8"?>\n` +
+                `<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${items}\n</sitemapindex>`,
+        );
     } catch (error) {
-        console.error('Sitemap index generation failed:', error);
+        console.error('Sitemap index failed:', error);
         res.status(500).send('Failed to generate sitemap index');
     }
 });
 
-// ===================== MAIN SITEMAP ENDPOINT =====================
-router.get('/sitemap.xml', async (req, res) => {
-    try {
-        const now = Date.now();
-        const page = parseInt(req.query.page) || 1;
-
-        // Check if we have a cached version and it's still valid
-        if (cachedXml && now - cachedAt < CACHE_TTL && page === 1) {
-            cacheStats.hits++;
-
-            // Set response headers
-            res.header('Content-Type', 'application/xml');
-            res.header('Cache-Control', 'public, max-age=900'); // 15 minutes
-            res.header('Last-Modified', new Date(cachedAt).toUTCString());
-            res.header('ETag', `"${generateETag(cachedXml)}"`);
-            res.header('X-Cache', 'HIT');
-            res.header(
-                'X-Cache-Stats',
-                `Hits: ${cacheStats.hits}, Misses: ${cacheStats.misses}, Stale: ${cacheStats.stale}`,
-            );
-            res.header('X-Cache-Age', getCacheAge());
-
-            log(`📦 Cache HIT (age: ${getCacheAge()})`);
-            return res.send(cachedXml);
-        }
-
-        // Prevent multiple concurrent generations
-        if (generationInProgress) {
-            log('⏳ Generation in progress, waiting...');
-
-            return new Promise((resolve, reject) => {
-                pendingRequests.push({ res, resolve, reject });
-                setTimeout(() => {
-                    // Timeout after 10 seconds
-                    const index = pendingRequests.findIndex(
-                        (r) => r.res === res,
-                    );
-                    if (index !== -1) {
-                        pendingRequests.splice(index, 1);
-                        res.status(503).send(
-                            'Sitemap generation in progress, please try again',
-                        );
-                        resolve();
-                    }
-                }, 10000);
-            });
-        }
-
-        // Generate fresh sitemap
-        generationInProgress = true;
-        cacheStats.misses++;
-        log('🔄 Generating fresh sitemap...');
-
-        const result = await generateSitemapXml(page);
-
-        // Cache only page 1 (with static URLs)
-        if (page === 1) {
-            cachedXml = result.xml;
-            cachedAt = now;
-        }
-
-        // Set response headers
-        res.header('Content-Type', 'application/xml');
-        res.header('Cache-Control', 'public, max-age=900');
-        res.header('Last-Modified', new Date().toUTCString());
-        res.header('ETag', `"${generateETag(result.xml)}"`);
-        res.header('X-Cache', 'MISS');
-        res.header(
-            'X-Cache-Stats',
-            `Hits: ${cacheStats.hits}, Misses: ${cacheStats.misses}, Stale: ${cacheStats.stale}`,
-        );
-        res.header('X-Sitemap-Count', result.count.toString());
-        res.header('X-Sitemap-Total-Posts', result.totalPosts.toString());
-        res.header('X-Sitemap-Generation-Ms', result.duration.toString());
-
-        res.send(result.xml);
-
-        // Process pending requests with the new cache
-        const pending = [...pendingRequests];
-        pendingRequests = [];
-        pending.forEach(({ resolve, res: pendingRes }) => {
-            try {
-                pendingRes.header('Content-Type', 'application/xml');
-                pendingRes.header('Cache-Control', 'public, max-age=900');
-                pendingRes.header('X-Cache', 'PENDING');
-                pendingRes.send(cachedXml || result.xml);
-                resolve();
-            } catch (error) {
-                console.error('Failed to serve pending request:', error);
-            }
-        });
-    } catch (error) {
-        console.error('❌ Sitemap generation failed:', error);
-
-        // Serve stale cache if available
-        if (cachedXml) {
-            cacheStats.stale++;
-            log('⚠️ Serving stale cache due to error');
-
-            res.header('Content-Type', 'application/xml');
-            res.header('Cache-Control', 'public, max-age=60'); // 1 minute only
-            res.header('X-Cache', 'STALE');
-            res.header(
-                'X-Cache-Stats',
-                `Hits: ${cacheStats.hits}, Misses: ${cacheStats.misses}, Stale: ${cacheStats.stale}`,
-            );
-            return res.send(cachedXml);
-        }
-
-        res.status(500).json({
-            error: 'Failed to generate sitemap',
-            message: error.message,
-        });
-    } finally {
-        generationInProgress = false;
+// محمي بـ token (ضيف SITEMAP_STATS_TOKEN بالـ env)
+router.get('/sitemap-stats', async (req, res) => {
+    const token = process.env.SITEMAP_STATS_TOKEN;
+    if (!token || req.get('x-admin-token') !== token) {
+        return res.status(404).end();
     }
-});
-
-// ===================== PAGINATED SITEMAP ENDPOINTS =====================
-router.get('/sitemap-:page.xml', async (req, res) => {
     try {
-        const page = parseInt(req.params.page);
-        if (isNaN(page) || page < 2) {
-            return res.redirect('/sitemap.xml');
-        }
-
-        const result = await generateSitemapXml(page);
-
-        res.header('Content-Type', 'application/xml');
-        res.header('Cache-Control', 'public, max-age=3600'); // 1 hour
-        res.header('Last-Modified', new Date().toUTCString());
-        res.header('X-Sitemap-Count', result.count.toString());
-        res.header('X-Sitemap-Page', page.toString());
-        res.header('X-Sitemap-Total-Pages', result.totalPages.toString());
-
-        res.send(result.xml);
-    } catch (error) {
-        console.error(
-            `Failed to generate sitemap page ${req.params.page}:`,
-            error,
-        );
-        res.status(500).send('Failed to generate sitemap');
-    }
-});
-
-// ===================== STATS & MONITORING =====================
-router.get('/sitemap-stats', async (_req, res) => {
-    try {
-        const totalPosts = await Post.countDocuments({ in_stock: true });
-        const totalStatic = staticUrls.length;
-
+        const { totalPosts, totalPages } = await getLayout();
         res.json({
             cache: {
-                isCached: !!cachedXml,
-                cacheAge: getCacheAge(),
-                cacheTTL: CACHE_TTL / 1000 + 's',
-                stats: cacheStats,
-                size: cachedXml
-                    ? Math.round(cachedXml.length / 1024) + 'KB'
-                    : 'N/A',
+                pages: [...cache.entries()].map(([page, e]) => ({
+                    page,
+                    ageSec: Math.floor((Date.now() - e.at) / 1000),
+                    sizeKB: Math.round(e.xml.length / 1024),
+                })),
+                stats,
+                ttlSec: CACHE_TTL / 1000,
             },
             urls: {
-                static: totalStatic,
+                static: staticUrls.length,
                 posts: totalPosts,
-                total: totalStatic + totalPosts,
-                maxPerSitemap: MAX_URLS_PER_SITEMAP,
+                pages: totalPages,
             },
-            sitemapPages: Math.ceil(
-                (totalStatic + totalPosts) / MAX_URLS_PER_SITEMAP,
-            ),
-            config: {
-                baseUrl: BASE_URL,
-                compression: ENABLE_COMPRESSION,
-                logging: ENABLE_LOGGING,
-            },
-            pendingRequests: pendingRequests.length,
-            generationInProgress,
+            inflight: [...inflight.keys()],
         });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-// ===================== PING SEARCH ENGINES =====================
-router.get('/sitemap-ping', async (_req, res) => {
-    const searchEngines = [
-        `https://www.google.com/ping?sitemap=${encodeURIComponent(BASE_URL)}/sitemap.xml`,
-        `https://www.bing.com/ping?sitemap=${encodeURIComponent(BASE_URL)}/sitemap.xml`,
-    ];
-
-    try {
-        const results = await Promise.allSettled(
-            searchEngines.map(async (url) => {
-                const response = await fetch(url);
-                return { url, status: response.status };
-            }),
-        );
-
-        res.json({
-            success: true,
-            results: results.map((result, index) => ({
-                engine: index === 0 ? 'Google' : 'Bing',
-                status:
-                    result.status === 'fulfilled'
-                        ? result.value.status
-                        : 'failed',
-                error: result.status === 'rejected' ? result.reason : undefined,
-            })),
-        });
-    } catch (error) {
-        console.error('Failed to ping search engines:', error);
-        res.status(500).json({ error: 'Failed to ping search engines' });
-    }
-});
-
 // ===================== EXPORTS =====================
+const invalidateSitemapCache = () => {
+    cache.clear();
+    log('🗑️ Cache invalidated');
+};
+
 module.exports = router;
 module.exports.invalidateSitemapCache = invalidateSitemapCache;
