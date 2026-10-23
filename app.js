@@ -27,6 +27,8 @@ const cookieParser = require('cookie-parser');
 const notifications = require('./routes/notifications');
 const adminNotifications = require('./routes/adminNotifications');
 const savedSearchesRouter = require('./routes/savedSearches');
+const JobSeeker = require('./routes/jobSeekers');
+
 
 const app = express();
 app.set('trust proxy', 1);
@@ -107,6 +109,7 @@ app.use('/api/discounts', discounts);
 app.use('/api/cities', cities);
 app.use('/api/messages', messages);
 app.use('/api/jobs', jobs);
+app.use('/api/job-seekers', JobSeeker);
 app.use('/api/images', images);
 
 
