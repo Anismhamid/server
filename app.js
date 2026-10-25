@@ -20,6 +20,7 @@ const cities = require('./routes/cities');
 const messages = require('./routes/messages');
 const jobs = require('./routes/jobs');
 const images = require('./routes/images');
+const ai = require('./routes/ai');
 const startFeaturedAdsCron = require('./utils/PaymentController/featuredAdsCron');
 const featuredAdWebhookController = require('./utils/PaymentController/controller');
 const sitemapRouter = require('./routes/sitemap');
@@ -111,6 +112,7 @@ app.use('/api/messages', messages);
 app.use('/api/jobs', jobs);
 app.use('/api/job-seekers', JobSeeker);
 app.use('/api/images', images);
+app.use('/api/ai', ai);
 
 
 app.use('/api/blocks', block);
