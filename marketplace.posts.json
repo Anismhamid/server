@@ -1,23 +1,108 @@
 [{
   "_id": {
+    "$oid": "6a7010772b77d71ced0331a4"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "product_name": "יונדאי i20",
+  "category": "Cars",
+  "subcategory": "private",
+  "price": 17000,
+  "description": "רכב עירוני אמין במצב טוב מאוד, מתאים מצוין כרכב שני למשפחה. הרכב במצב מכני תקין, מוכן למעבר בעלות מיידי. טסט עד מאי 27",
+  "image": {
+    "url": "https://res.cloudinary.com/drxqielit/image/upload/v1785729131/bcjl7enp2am0xwkv1nre.jpg",
+    "publicId": "bcjl7enp2am0xwkv1nre"
+  },
+  "likes": [
+    "6980c609317475fe5c733aed",
+    "6abddbb545bf09cbd0fffb72"
+  ],
+  "featured": false,
+  "sale": false,
+  "discount": 3,
+  "location": "israel",
+  "in_stock": true,
+  "createdAt": {
+    "$date": "2026-08-03T03:52:23.718Z"
+  },
+  "type": "private",
+  "brand": "יונדאי",
+  "year": 2011,
+  "fuel": "gasoline",
+  "mileage": 160000,
+  "color": "White",
+  "reviews": [],
+  "updatedAt": {
+    "$date": "2026-10-19T16:59:50.726Z"
+  },
+  "__v": 7,
+  "status": "accepted",
+  "views": 10,
+  "rejectionReason": ""
+},
+{
+  "_id": {
+    "$oid": "6a79e971d01fe29d8a589a95"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "product_name": "كلب للبيع",
+  "category": "Pets",
+  "subcategory": "dogs",
+  "price": 200,
+  "description": "كلب مسعور",
+  "image": {
+    "url": "https://res.cloudinary.com/drxqielit/image/upload/v1787403557/hnadmwvd3oeikgdngglp.jpg",
+    "publicId": "hnadmwvd3oeikgdngglp"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "israel",
+  "in_stock": true,
+  "status": "accepted",
+  "createdAt": {
+    "$date": "2026-08-10T15:08:33.183Z"
+  },
+  "type": "dogs",
+  "breed": "انسان",
+  "age": 15,
+  "gender": "male",
+  "vaccinated": true,
+  "neutered": true,
+  "microchipped": true,
+  "color": "Black",
+  "weight": 35,
+  "healthIssues": "خخخخخ",
+  "temperament": "مجنون",
+  "reviews": [],
+  "updatedAt": {
+    "$date": "2026-10-12T10:35:40.079Z"
+  },
+  "__v": 5,
+  "views": 9
+},
+{
+  "_id": {
     "$oid": "6a7ddaf31bd4e3404916a18a"
   },
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 2,
+  "views": 19,
   "product_name": "iPhone 15 Pro 256GB",
   "category": "Electronics",
   "subcategory": "smartphones",
   "price": 3200,
   "description": "آيفون 15 برو سعة 256 جيجا، بحالة ممتازة، يدعم 5G.",
   "image": {
-    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
-    "publicId": "seed/electronics-iPhone-15-Pro-256GB"
+    "url": "https://res.cloudinary.com/drxqielit/image/upload/v1787401449/je2kvbuifftmjochi7nr.jpg",
+    "publicId": "je2kvbuifftmjochi7nr"
   },
-  "likes": [
-    "6980c609317475fe5c733aed"
-  ],
+  "likes": [],
   "reviews": [],
   "featured": false,
   "sale": false,
@@ -42,7 +127,7 @@
     "$date": "2026-08-13T14:55:47.042Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T16:46:50.653Z"
+    "$date": "2026-10-19T10:50:34.304Z"
   }
 },
 {
@@ -52,7 +137,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 16,
   "product_name": "آيفون 15 برو 256 جيجا",
   "category": "Electronics",
   "subcategory": "smartphones",
@@ -62,14 +147,16 @@
     "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
     "publicId": "seed/electronics-آيفون-15-برو-256-جيجا"
   },
-  "likes": [],
+  "likes": [
+    "6980c609317475fe5c733aed"
+  ],
   "reviews": [],
   "featured": false,
   "sale": false,
   "discount": 0,
   "location": "ام الفحم",
   "in_stock": true,
-  "status": "accepted",
+  "status": "rejected",
   "type": "smartphones",
   "brand": "Apple",
   "model": "iPhone 15 Pro",
@@ -81,12 +168,12 @@
   "includedAccessories": [],
   "networkType": "5G",
   "color": "Blue Titanium",
-  "__v": 0,
+  "__v": 1,
   "createdAt": {
     "$date": "2026-08-13T14:55:47.043Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.043Z"
+    "$date": "2026-10-05T04:35:34.978Z"
   }
 },
 {
@@ -96,7 +183,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "אייפון 15 פרו 256 גיגה",
   "category": "Electronics",
   "subcategory": "smartphones",
@@ -130,7 +217,7 @@
     "$date": "2026-08-13T14:55:47.043Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.043Z"
+    "$date": "2026-10-03T14:04:59.243Z"
   }
 },
 {
@@ -140,7 +227,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 2,
+  "views": 3,
   "product_name": "Samsung Galaxy S24 256GB",
   "category": "Electronics",
   "subcategory": "smartphones",
@@ -174,7 +261,7 @@
     "$date": "2026-08-13T14:55:47.043Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T15:11:48.743Z"
+    "$date": "2026-10-02T23:52:12.122Z"
   }
 },
 {
@@ -184,7 +271,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "Samsung Galaxy S24 Ultra 512GB",
   "category": "Electronics",
   "subcategory": "smartphones",
@@ -218,7 +305,7 @@
     "$date": "2026-08-13T14:55:47.043Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.043Z"
+    "$date": "2026-10-06T04:26:07.426Z"
   }
 },
 {
@@ -228,7 +315,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 7,
   "product_name": "Samsung Galaxy A55 128GB",
   "category": "Electronics",
   "subcategory": "smartphones",
@@ -262,7 +349,7 @@
     "$date": "2026-08-13T14:55:47.043Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.043Z"
+    "$date": "2026-10-05T14:01:38.665Z"
   }
 },
 {
@@ -272,7 +359,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 4,
   "product_name": "Xiaomi Redmi Note 13 Pro 256GB",
   "category": "Electronics",
   "subcategory": "smartphones",
@@ -306,7 +393,7 @@
     "$date": "2026-08-13T14:55:47.043Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.043Z"
+    "$date": "2026-10-05T05:33:54.887Z"
   }
 },
 {
@@ -316,7 +403,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "MacBook Pro M3 16GB 512GB",
   "category": "Electronics",
   "subcategory": "laptops",
@@ -350,7 +437,7 @@
     "$date": "2026-08-13T14:55:47.043Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.043Z"
+    "$date": "2026-10-06T11:00:08.891Z"
   }
 },
 {
@@ -360,7 +447,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "Lenovo ThinkPad 16GB 512GB",
   "category": "Electronics",
   "subcategory": "laptops",
@@ -393,49 +480,7 @@
     "$date": "2026-08-13T14:55:47.043Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.043Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7ddaf31bd4e3404916a193"
-  },
-  "seller": {
-    "$oid": "6979d4774f1db7cd4a712604"
-  },
-  "views": 0,
-  "product_name": "iPad Air 256GB",
-  "category": "Electronics",
-  "subcategory": "tablets",
-  "price": 2500,
-  "description": "آيباد Air مساحة 256 جيجا بحالة ممتازة.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
-    "publicId": "seed/electronics-iPad-Air-256GB"
-  },
-  "likes": [],
-  "reviews": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "ام الفحم",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "tablets",
-  "brand": "Apple",
-  "model": "iPad Air",
-  "ram": 8,
-  "storage": 256,
-  "screenSize": 10.9,
-  "operatingSystem": "iPadOS",
-  "condition": "excellent",
-  "includedAccessories": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T14:55:47.043Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T14:55:47.043Z"
+    "$date": "2026-10-06T08:02:11.206Z"
   }
 },
 {
@@ -445,7 +490,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "AirPods Pro 2",
   "category": "Electronics",
   "subcategory": "audio",
@@ -474,7 +519,7 @@
     "$date": "2026-08-13T14:55:47.043Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.043Z"
+    "$date": "2026-10-05T00:55:51.268Z"
   }
 },
 {
@@ -562,7 +607,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "Toyota Corolla 2020 Hybrid",
   "category": "Cars",
   "subcategory": "private",
@@ -591,7 +636,7 @@
     "$date": "2026-08-13T14:55:47.043Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.043Z"
+    "$date": "2026-09-25T00:05:09.337Z"
   }
 },
 {
@@ -601,7 +646,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "יונדאי טוסון 2021",
   "category": "Cars",
   "subcategory": "private",
@@ -630,7 +675,7 @@
     "$date": "2026-08-13T14:55:47.043Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.043Z"
+    "$date": "2026-10-05T11:56:54.313Z"
   }
 },
 {
@@ -640,7 +685,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "Hyundai Tucson 2022",
   "category": "Cars",
   "subcategory": "private",
@@ -669,7 +714,7 @@
     "$date": "2026-08-13T14:55:47.043Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.043Z"
+    "$date": "2026-10-12T09:37:13.709Z"
   }
 },
 {
@@ -679,7 +724,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 4,
   "product_name": "BMW 320i 2021",
   "category": "Cars",
   "subcategory": "private",
@@ -708,7 +753,7 @@
     "$date": "2026-08-13T14:55:47.043Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.043Z"
+    "$date": "2026-10-06T06:48:37.404Z"
   }
 },
 {
@@ -718,7 +763,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "Mercedes C200 2020",
   "category": "Cars",
   "subcategory": "private",
@@ -747,7 +792,7 @@
     "$date": "2026-08-13T14:55:47.043Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.043Z"
+    "$date": "2026-10-26T19:59:31.334Z"
   }
 },
 {
@@ -757,7 +802,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "Kia Niro 2022 Hybrid",
   "category": "Cars",
   "subcategory": "private",
@@ -786,7 +831,7 @@
     "$date": "2026-08-13T14:55:47.043Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.043Z"
+    "$date": "2026-09-23T10:41:19.887Z"
   }
 },
 {
@@ -796,7 +841,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "Tesla Model 3 2022",
   "category": "Cars",
   "subcategory": "electric",
@@ -826,7 +871,7 @@
     "$date": "2026-08-13T14:55:47.043Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.043Z"
+    "$date": "2026-10-26T19:59:24.821Z"
   }
 },
 {
@@ -836,7 +881,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "نبات داخلي Monstera",
   "category": "Garden",
   "subcategory": "plants",
@@ -863,7 +908,7 @@
     "$date": "2026-08-13T14:55:47.043Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.043Z"
+    "$date": "2026-10-03T21:09:27.173Z"
   }
 },
 {
@@ -873,7 +918,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 4,
   "product_name": "زيتونة للحديقة",
   "category": "Garden",
   "subcategory": "plants",
@@ -900,7 +945,7 @@
     "$date": "2026-08-13T14:55:47.043Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.043Z"
+    "$date": "2026-10-03T09:25:35.035Z"
   }
 },
 {
@@ -910,7 +955,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "خرطوم مياه 30 متر",
   "category": "Garden",
   "subcategory": "watering",
@@ -936,7 +981,7 @@
     "$date": "2026-08-13T14:55:47.043Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.043Z"
+    "$date": "2026-10-05T14:33:16.455Z"
   }
 },
 {
@@ -946,7 +991,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "نظام ري أوتوماتيكي",
   "category": "Garden",
   "subcategory": "watering",
@@ -972,7 +1017,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-03T20:38:17.450Z"
   }
 },
 {
@@ -982,7 +1027,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 23,
   "product_name": "مقص أغصان احترافي",
   "category": "Garden",
   "subcategory": "tools",
@@ -1008,7 +1053,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-06T05:59:36.728Z"
   }
 },
 {
@@ -1018,7 +1063,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "أدوات حفر للحديقة",
   "category": "Garden",
   "subcategory": "tools",
@@ -1044,7 +1089,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-05T00:08:26.879Z"
   }
 },
 {
@@ -1054,7 +1099,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 4,
   "product_name": "طقم أثاث حديقة",
   "category": "Garden",
   "subcategory": "outdoorDecor",
@@ -1079,7 +1124,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-05T13:12:00.421Z"
   }
 },
 {
@@ -1089,7 +1134,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "خلاط مطبخ Bosch",
   "category": "House",
   "subcategory": "kitchen",
@@ -1116,7 +1161,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-05T07:24:49.727Z"
   }
 },
 {
@@ -1126,7 +1171,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 4,
   "product_name": "ماكينة قهوة DeLonghi",
   "category": "House",
   "subcategory": "kitchen",
@@ -1153,7 +1198,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-05T14:31:19.128Z"
   }
 },
 {
@@ -1163,7 +1208,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "خزانة تخزين كبيرة",
   "category": "House",
   "subcategory": "storage",
@@ -1190,7 +1235,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-06T03:07:42.832Z"
   }
 },
 {
@@ -1200,7 +1245,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 5,
   "product_name": "مرآة ديكور دائرية",
   "category": "House",
   "subcategory": "decor",
@@ -1210,7 +1255,9 @@
     "url": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
     "publicId": "seed/house-مرآة-ديكور-دائرية"
   },
-  "likes": [],
+  "likes": [
+    "6980c609317475fe5c733aed"
+  ],
   "reviews": [],
   "featured": false,
   "sale": false,
@@ -1222,12 +1269,12 @@
   "material": "Glass",
   "color": "Gold",
   "dimensions": "80 cm",
-  "__v": 0,
+  "__v": 1,
   "createdAt": {
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-05T22:37:48.108Z"
   }
 },
 {
@@ -1237,7 +1284,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "أدوات صيانة منزلية",
   "category": "House",
   "subcategory": "maintenance",
@@ -1262,7 +1309,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-03T12:48:04.639Z"
   }
 },
 {
@@ -1272,7 +1319,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "دراجة جبلية Mountain Bike",
   "category": "Bikes",
   "subcategory": "mountain",
@@ -1299,7 +1346,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-04T21:48:30.171Z"
   }
 },
 {
@@ -1309,7 +1356,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "دراجة جبلية 29 إنش",
   "category": "Bikes",
   "subcategory": "mountain",
@@ -1336,7 +1383,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-02T17:30:33.236Z"
   }
 },
 {
@@ -1346,7 +1393,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "دراجة طريق Road Bike",
   "category": "Bikes",
   "subcategory": "road",
@@ -1373,7 +1420,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-06T10:29:10.905Z"
   }
 },
 {
@@ -1383,7 +1430,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "دراجة أطفال",
   "category": "Bikes",
   "subcategory": "kids",
@@ -1409,7 +1456,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-09-24T07:01:05.679Z"
   }
 },
 {
@@ -1419,7 +1466,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "Toyota Hilux Light Truck",
   "category": "Trucks",
   "subcategory": "light",
@@ -1445,7 +1492,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-05T00:25:48.165Z"
   }
 },
 {
@@ -1455,7 +1502,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "Mercedes Heavy Truck",
   "category": "Trucks",
   "subcategory": "heavy",
@@ -1482,7 +1529,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-05T12:54:51.552Z"
   }
 },
 {
@@ -1492,7 +1539,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 4,
   "product_name": "Volvo FH Truck",
   "category": "Trucks",
   "subcategory": "heavy",
@@ -1519,7 +1566,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-05T17:46:02.340Z"
   }
 },
 {
@@ -1529,7 +1576,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "Xiaomi Electric Scooter",
   "category": "ElectricVehicles",
   "subcategory": "scooters",
@@ -1556,7 +1603,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-05T21:28:25.533Z"
   }
 },
 {
@@ -1566,7 +1613,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "Segway Electric Scooter",
   "category": "ElectricVehicles",
   "subcategory": "scooters",
@@ -1593,7 +1640,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-05T21:36:41.958Z"
   }
 },
 {
@@ -1603,7 +1650,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "Tesla Electric Car",
   "category": "ElectricVehicles",
   "subcategory": "cars",
@@ -1630,7 +1677,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-06T01:07:26.000Z"
   }
 },
 {
@@ -1640,7 +1687,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "قميص رجالي Casual",
   "category": "MenClothes",
   "subcategory": "casual",
@@ -1667,7 +1714,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-09-23T17:41:28.960Z"
   }
 },
 {
@@ -1677,7 +1724,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "بدلة رجالية رسمية",
   "category": "MenClothes",
   "subcategory": "formal",
@@ -1704,7 +1751,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-05T22:49:02.469Z"
   }
 },
 {
@@ -1714,7 +1761,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "Nike Air Max Men",
   "category": "MenClothes",
   "subcategory": "shoes",
@@ -1741,7 +1788,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-05T04:10:35.401Z"
   }
 },
 {
@@ -1751,7 +1798,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "فستان نسائي أسود",
   "category": "WomenClothes",
   "subcategory": "dresses",
@@ -1779,7 +1826,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-05T04:59:54.964Z"
   }
 },
 {
@@ -1827,7 +1874,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "Nike Women Shoes",
   "category": "WomenClothes",
   "subcategory": "shoes",
@@ -1855,7 +1902,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-05T01:53:24.306Z"
   }
 },
 {
@@ -1902,7 +1949,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "Tote Bag Large",
   "category": "WomenBags",
   "subcategory": "toteBags",
@@ -1929,7 +1976,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-04T23:58:52.840Z"
   }
 },
 {
@@ -1939,7 +1986,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "شنطة ظهر نسائية",
   "category": "WomenBags",
   "subcategory": "backpacks",
@@ -1966,7 +2013,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-03T12:25:58.372Z"
   }
 },
 {
@@ -1976,7 +2023,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "Clutch Evening Bag",
   "category": "WomenBags",
   "subcategory": "clutches",
@@ -2003,7 +2050,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-05T13:46:44.459Z"
   }
 },
 {
@@ -2013,7 +2060,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "ملابس أطفال حديثي الولادة",
   "category": "Baby",
   "subcategory": "clothes",
@@ -2039,7 +2086,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-09-28T13:34:38.530Z"
   }
 },
 {
@@ -2049,7 +2096,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "Baby Feeding Bottle Philips Avent",
   "category": "Baby",
   "subcategory": "feeding",
@@ -2076,7 +2123,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-02T12:49:42.880Z"
   }
 },
 {
@@ -2086,7 +2133,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 4,
   "product_name": "Baby Care Set",
   "category": "Baby",
   "subcategory": "care",
@@ -2111,7 +2158,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-05T23:04:33.436Z"
   }
 },
 {
@@ -2121,7 +2168,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "لعبة تعليمية للأطفال",
   "category": "Kids",
   "subcategory": "educational",
@@ -2147,7 +2194,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-04T19:40:32.524Z"
   }
 },
 {
@@ -2157,7 +2204,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "LEGO Building Set",
   "category": "Kids",
   "subcategory": "toys",
@@ -2183,7 +2230,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-04T12:49:18.287Z"
   }
 },
 {
@@ -2193,7 +2240,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "Kids Outdoor Scooter",
   "category": "Kids",
   "subcategory": "outdoor",
@@ -2219,7 +2266,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-05T18:21:48.557Z"
   }
 },
 {
@@ -2229,7 +2276,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "Electric Toothbrush",
   "category": "Health",
   "subcategory": "personalCare",
@@ -2255,7 +2302,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-03T17:53:04.361Z"
   }
 },
 {
@@ -2265,7 +2312,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "Digital Blood Pressure Monitor",
   "category": "Health",
   "subcategory": "medical",
@@ -2291,7 +2338,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-04T21:52:10.067Z"
   }
 },
 {
@@ -2301,7 +2348,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "Dumbbell Set 20KG",
   "category": "Health",
   "subcategory": "fitness",
@@ -2326,7 +2373,7 @@
     "$date": "2026-08-13T14:55:47.044Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.044Z"
+    "$date": "2026-10-15T15:14:46.360Z"
   }
 },
 {
@@ -2408,7 +2455,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "Dyson Hair Dryer",
   "category": "Beauty",
   "subcategory": "hair",
@@ -2433,7 +2480,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-02T19:33:41.541Z"
   }
 },
 {
@@ -2443,7 +2490,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "Casio Classic Watch",
   "category": "Watches",
   "subcategory": "classic",
@@ -2469,7 +2516,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-05T18:28:37.657Z"
   }
 },
 {
@@ -2479,7 +2526,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "Apple Watch Series 9",
   "category": "Watches",
   "subcategory": "smart",
@@ -2505,7 +2552,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-05T21:14:48.043Z"
   }
 },
 {
@@ -2515,7 +2562,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "Rolex Classic Watch",
   "category": "Watches",
   "subcategory": "classic",
@@ -2541,7 +2588,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-09-25T03:54:08.004Z"
   }
 },
 {
@@ -2551,7 +2598,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "Ariel Laundry Detergent 2L",
   "category": "Cleaning",
   "subcategory": "detergents",
@@ -2577,7 +2624,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-12T08:59:57.927Z"
   }
 },
 {
@@ -2587,7 +2634,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "ممسحة أرضيات احترافية",
   "category": "Cleaning",
   "subcategory": "tools",
@@ -2612,7 +2659,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-05T15:33:24.924Z"
   }
 },
 {
@@ -2622,7 +2669,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "Disinfectant 1L",
   "category": "Cleaning",
   "subcategory": "disinfection",
@@ -2648,7 +2695,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-20T21:31:59.752Z"
   }
 },
 {
@@ -2658,7 +2705,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 4,
   "product_name": "Honda CB500 2021",
   "category": "Motorcycles",
   "subcategory": "street",
@@ -2688,7 +2735,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-06T06:55:03.065Z"
   }
 },
 {
@@ -2698,7 +2745,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "Yamaha R6 2020",
   "category": "Motorcycles",
   "subcategory": "sport",
@@ -2728,7 +2775,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-05T03:57:36.756Z"
   }
 },
 {
@@ -2738,7 +2785,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "Harley Davidson Cruiser",
   "category": "Motorcycles",
   "subcategory": "cruiser",
@@ -2768,7 +2815,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-05T19:26:42.951Z"
   }
 },
 {
@@ -2778,7 +2825,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "Honda Off Road Bike",
   "category": "Motorcycles",
   "subcategory": "offRoad",
@@ -2807,7 +2854,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-05T21:17:34.178Z"
   }
 },
 {
@@ -2817,7 +2864,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "Yamaha Scooter 2022",
   "category": "Motorcycles",
   "subcategory": "scooter",
@@ -2846,7 +2893,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-09-24T07:01:38.447Z"
   }
 },
 {
@@ -2856,7 +2903,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "لوحة زيتية طبيعية",
   "category": "Art",
   "subcategory": "paintings",
@@ -2886,7 +2933,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-21T09:11:35.992Z"
   }
 },
 {
@@ -2976,7 +3023,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 4,
   "product_name": "قطعة Collectible قديمة",
   "category": "Art",
   "subcategory": "collectibles",
@@ -3005,7 +3052,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-05T18:42:32.076Z"
   }
 },
 {
@@ -3015,7 +3062,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "PlayStation 5",
   "category": "Gaming",
   "subcategory": "consoles",
@@ -3042,7 +3089,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-06T06:56:25.484Z"
   }
 },
 {
@@ -3052,7 +3099,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "PlayStation 5 Slim",
   "category": "Gaming",
   "subcategory": "consoles",
@@ -3079,7 +3126,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-06T07:20:10.395Z"
   }
 },
 {
@@ -3089,7 +3136,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "FIFA 25 PS5",
   "category": "Gaming",
   "subcategory": "games",
@@ -3117,7 +3164,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-06T15:07:56.897Z"
   }
 },
 {
@@ -3127,7 +3174,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "Xbox Series X",
   "category": "Gaming",
   "subcategory": "consoles",
@@ -3154,7 +3201,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-03T05:45:27.332Z"
   }
 },
 {
@@ -3201,7 +3248,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "Gaming Keyboard RGB",
   "category": "Gaming",
   "subcategory": "accessories",
@@ -3227,7 +3274,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-06T06:22:57.162Z"
   }
 },
 {
@@ -3237,7 +3284,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 4,
   "product_name": "شقة للبيع 4 غرف",
   "category": "RealEstate",
   "subcategory": "apartment",
@@ -3277,7 +3324,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-05T09:02:29.613Z"
   }
 },
 {
@@ -3287,7 +3334,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "شقة للإيجار 3 غرف",
   "category": "RealEstate",
   "subcategory": "apartment",
@@ -3327,7 +3374,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-06T11:01:03.180Z"
   }
 },
 {
@@ -3337,7 +3384,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "بيت مستقل للبيع",
   "category": "RealEstate",
   "subcategory": "house",
@@ -3377,7 +3424,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-12T09:49:43.732Z"
   }
 },
 {
@@ -3387,7 +3434,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "فيلا فاخرة للبيع",
   "category": "RealEstate",
   "subcategory": "villa",
@@ -3427,7 +3474,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-09-25T00:24:04.014Z"
   }
 },
 {
@@ -3437,7 +3484,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "أرض للبيع 500 متر",
   "category": "RealEstate",
   "subcategory": "land",
@@ -3473,7 +3520,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-03T12:43:01.128Z"
   }
 },
 {
@@ -3483,7 +3530,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "Golden Retriever Puppy",
   "category": "Pets",
   "subcategory": "dogs",
@@ -3516,7 +3563,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-12T10:28:27.814Z"
   }
 },
 {
@@ -3526,7 +3573,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "قط شيرازي",
   "category": "Pets",
   "subcategory": "cats",
@@ -3559,7 +3606,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-04T13:32:59.403Z"
   }
 },
 {
@@ -3569,7 +3616,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 4,
   "product_name": "عصفور كناري",
   "category": "Pets",
   "subcategory": "birds",
@@ -3600,7 +3647,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-05T21:26:50.365Z"
   }
 },
 {
@@ -3650,7 +3697,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "كنبة زاوية رمادية",
   "category": "Furniture",
   "subcategory": "living_room",
@@ -3681,7 +3728,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-08-22T12:51:01.650Z"
   }
 },
 {
@@ -3691,7 +3738,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "غرفة نوم كاملة",
   "category": "Furniture",
   "subcategory": "bedroom",
@@ -3722,7 +3769,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-03T21:53:18.940Z"
   }
 },
 {
@@ -3732,7 +3779,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 1,
   "product_name": "طاولة طعام 6 كراسي",
   "category": "Furniture",
   "subcategory": "dining",
@@ -3763,7 +3810,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-03T03:09:59.677Z"
   }
 },
 {
@@ -3773,7 +3820,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 4,
   "product_name": "مكتب خشبي للعمل",
   "category": "Furniture",
   "subcategory": "office",
@@ -3804,7 +3851,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-05T08:37:23.293Z"
   }
 },
 {
@@ -3814,7 +3861,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "طقم أثاث خارجي",
   "category": "Furniture",
   "subcategory": "outdoor",
@@ -3844,7 +3891,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
+    "$date": "2026-10-05T05:54:56.771Z"
   }
 },
 {
@@ -3854,7 +3901,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "خزانة مطبخ خشبية",
   "category": "Furniture",
   "subcategory": "kitchen",
@@ -3884,180 +3931,7 @@
     "$date": "2026-08-13T14:55:47.045Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T14:55:47.045Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7ddd4be280d34de836737f"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 0,
-  "product_name": "iPhone 15 Pro 256GB",
-  "category": "Electronics",
-  "subcategory": "smartphones",
-  "price": 2800,
-  "description": "iPhone 15 Pro 256GB بحالة ممتازة، يعمل بشكل كامل.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1696446701796-da61225697cc?w=800",
-    "publicId": "seed/iphone-15-pro"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "smartphones",
-  "brand": "Apple",
-  "model": "iPhone 15 Pro",
-  "ram": 8,
-  "storage": 256,
-  "screenSize": 6.1,
-  "operatingSystem": "iOS",
-  "condition": "excellent",
-  "includedAccessories": [],
-  "networkType": "5G",
-  "color": "Natural Titanium",
-  "warranty": "No warranty",
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T15:05:47.648Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T15:05:47.648Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7ddd4be280d34de8367380"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 0,
-  "product_name": "Samsung Galaxy S24 256GB",
-  "category": "Electronics",
-  "subcategory": "smartphones",
-  "price": 2200,
-  "description": "Samsung Galaxy S24 256GB بحالة ممتازة.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=800",
-    "publicId": "seed/samsung-s24"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": true,
-  "discount": 10,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "smartphones",
-  "brand": "Samsung",
-  "model": "Galaxy S24",
-  "ram": 8,
-  "storage": 256,
-  "screenSize": 6.2,
-  "operatingSystem": "Android",
-  "condition": "like_new",
-  "includedAccessories": [],
-  "networkType": "5G",
-  "color": "Black",
-  "warranty": "6 months",
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T15:05:47.648Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T15:05:47.648Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7ddd4be280d34de8367381"
-  },
-  "seller": {
-    "$oid": "6979d4774f1db7cd4a712604"
-  },
-  "views": 0,
-  "product_name": "Samsung Galaxy A55 128GB",
-  "category": "Electronics",
-  "subcategory": "smartphones",
-  "price": 1200,
-  "description": "هاتف Samsung Galaxy A55 128GB بحالة جيدة جداً.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800",
-    "publicId": "seed/samsung-a55"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "smartphones",
-  "brand": "Samsung",
-  "model": "Galaxy A55",
-  "ram": 8,
-  "storage": 128,
-  "screenSize": 6.6,
-  "operatingSystem": "Android",
-  "condition": "good",
-  "includedAccessories": [],
-  "networkType": "5G",
-  "color": "Blue",
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T15:05:47.648Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T15:05:47.648Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7ddd4be280d34de8367382"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 1,
-  "product_name": "Toyota Corolla 2022",
-  "category": "Cars",
-  "subcategory": "private",
-  "price": 68000,
-  "description": "Toyota Corolla 2022 سيارة عائلية اقتصادية بحالة ممتازة.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1623869675781-80aa31012a5a?w=800",
-    "publicId": "seed/toyota-corolla-2022"
-  },
-  "likes": [],
-  "featured": true,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "private",
-  "brand": "Toyota",
-  "year": 2022,
-  "fuel": "gasoline",
-  "mileage": 52000,
-  "color": "White",
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T15:05:47.648Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T15:23:50.930Z"
+    "$date": "2026-10-04T04:18:36.923Z"
   }
 },
 {
@@ -4067,7 +3941,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "Hyundai Tucson 2021",
   "category": "Cars",
   "subcategory": "private",
@@ -4096,128 +3970,7 @@
     "$date": "2026-08-13T15:05:47.648Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T15:05:47.648Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7ddd4be280d34de8367384"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 1,
-  "product_name": "Toyota Prius 2020 Hybrid",
-  "category": "Cars",
-  "subcategory": "private",
-  "price": 62000,
-  "description": "Toyota Prius 2020 היברידית חסכונית מאוד בדלק.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1550355291-bbee04a92027?w=800",
-    "publicId": "seed/toyota-prius"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": true,
-  "discount": 5,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "private",
-  "brand": "Toyota",
-  "year": 2020,
-  "fuel": "hybrid",
-  "mileage": 72000,
-  "color": "Silver",
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T15:05:47.648Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T15:50:55.714Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7ddd4be280d34de8367385"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 4,
-  "product_name": "Yamaha R6 2020",
-  "category": "Motorcycles",
-  "subcategory": "sport",
-  "price": 48000,
-  "description": "Yamaha R6 sport motorcycle موديل 2020 بحالة ممتازة.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800",
-    "publicId": "seed/yamaha-r6"
-  },
-  "likes": [
-    "6980c609317475fe5c733aed"
-  ],
-  "featured": true,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "sport",
-  "brand": "Yamaha",
-  "year": 2020,
-  "engineCapacity": 600,
-  "mileage": 18000,
-  "fuel": "gasoline",
-  "color": "Blue",
-  "reviews": [],
-  "__v": 1,
-  "createdAt": {
-    "$date": "2026-08-13T15:05:47.649Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T15:37:32.197Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7ddd4be280d34de8367386"
-  },
-  "seller": {
-    "$oid": "6979d4774f1db7cd4a712604"
-  },
-  "views": 15,
-  "product_name": "Honda Off Road Bike",
-  "category": "Motorcycles",
-  "subcategory": "offRoad",
-  "price": 29000,
-  "description": "Honda off road motorcycle مناسبة للطرق الوعرة.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800",
-    "publicId": "seed/honda-offroad"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "offRoad",
-  "brand": "Honda",
-  "year": 2021,
-  "engineCapacity": 450,
-  "mileage": 12000,
-  "fuel": "gasoline",
-  "color": "Red",
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T15:05:47.649Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T15:36:28.840Z"
+    "$date": "2026-10-26T19:59:38.997Z"
   }
 },
 {
@@ -4227,7 +3980,7 @@
   "seller": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "Mountain Bike",
   "category": "Bikes",
   "subcategory": "mountain",
@@ -4254,129 +4007,7 @@
     "$date": "2026-08-13T15:05:47.649Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T15:05:47.649Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7ddd4be280d34de8367388"
-  },
-  "seller": {
-    "$oid": "6979d4774f1db7cd4a712604"
-  },
-  "views": 25,
-  "product_name": "PlayStation 5",
-  "category": "Gaming",
-  "subcategory": "consoles",
-  "price": 1800,
-  "description": "PlayStation 5 بحالة ممتازة مع يد تحكم.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=800",
-    "publicId": "seed/playstation-5"
-  },
-  "likes": [
-    "6980c609317475fe5c733aed"
-  ],
-  "featured": true,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "consoles",
-  "platform": "PlayStation",
-  "edition": "Standard",
-  "multiplayer": true,
-  "language": "English",
-  "releaseYear": 2020,
-  "reviews": [],
-  "__v": 1,
-  "createdAt": {
-    "$date": "2026-08-13T15:05:47.649Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:19:50.562Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7ddd4be280d34de8367389"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 0,
-  "product_name": "PlayStation 5 FC 25",
-  "category": "Gaming",
-  "subcategory": "games",
-  "price": 180,
-  "description": "لعبة كرة قدم PlayStation بحالة ممتازة.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=800",
-    "publicId": "seed/fc25"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "games",
-  "platform": "PlayStation",
-  "genre": "Sports",
-  "multiplayer": true,
-  "language": "English",
-  "releaseYear": 2024,
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T15:05:47.649Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T15:05:47.649Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7ddd4be280d34de836738a"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 0,
-  "product_name": "Corner Sofa",
-  "category": "Furniture",
-  "subcategory": "living_room",
-  "price": 3500,
-  "description": "كنبة زاوية مريحة لغرفة المعيشة.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800",
-    "publicId": "seed/corner-sofa"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": true,
-  "discount": 15,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "living_room",
-  "brand": "IKEA",
-  "material": "Fabric",
-  "color": "Gray",
-  "dimensions": "280x180 cm",
-  "assemblyRequired": false,
-  "condition": "good",
-  "style": "Modern",
-  "includesAccessories": false,
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T15:05:47.649Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T15:05:47.649Z"
+    "$date": "2026-10-06T13:12:33.358Z"
   }
 },
 {
@@ -4386,7 +4017,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "Dining Table",
   "category": "Furniture",
   "subcategory": "dining",
@@ -4417,7 +4048,7 @@
     "$date": "2026-08-13T15:05:47.649Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T15:05:47.649Z"
+    "$date": "2026-10-05T14:33:54.261Z"
   }
 },
 {
@@ -4427,7 +4058,7 @@
   "seller": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "Kitchen Mixer Bosch",
   "category": "House",
   "subcategory": "kitchen",
@@ -4455,7 +4086,7 @@
     "$date": "2026-08-13T15:05:47.649Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T15:05:47.649Z"
+    "$date": "2026-10-05T05:57:52.656Z"
   }
 },
 {
@@ -4465,7 +4096,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 2,
   "product_name": "Garden Shovel",
   "category": "Garden",
   "subcategory": "tools",
@@ -4492,255 +4123,7 @@
     "$date": "2026-08-13T15:05:47.649Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T15:05:47.649Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7ddd4be280d34de836738e"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 0,
-  "product_name": "Indoor Monstera Plant",
-  "category": "Garden",
-  "subcategory": "plants",
-  "price": 150,
-  "description": "نبتة Monstera جميلة مناسبة للمنزل.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=800",
-    "publicId": "seed/monstera"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "plants",
-  "plantType": "Monstera",
-  "season": "All year",
-  "sunExposure": "Indirect sunlight",
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T15:05:47.649Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T15:05:47.649Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7ddd4be280d34de836738f"
-  },
-  "seller": {
-    "$oid": "6979d4774f1db7cd4a712604"
-  },
-  "views": 0,
-  "product_name": "Apple Watch Series 9",
-  "category": "Watches",
-  "subcategory": "smart",
-  "price": 1300,
-  "description": "Apple Watch Series 9 بحالة ممتازة.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1544117519-31a4b719223d?w=800",
-    "publicId": "seed/apple-watch-9"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "smart",
-  "brand": "Apple",
-  "waterResistant": true,
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T15:05:47.649Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T15:05:47.649Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7ddd4be280d34de8367390"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 4,
-  "product_name": "Disinfectant 1L",
-  "category": "Cleaning",
-  "subcategory": "disinfection",
-  "price": 30,
-  "description": "مطهر منزلي 1 لتر للتنظيف والتعقيم.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=800",
-    "publicId": "seed/disinfectant-1l"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "disinfection",
-  "brand": "Sano",
-  "volume": 1,
-  "reviews": [
-    {
-      "user": {
-        "$oid": "6980c609317475fe5c733aed"
-      },
-      "comment": "555",
-      "rating": 5,
-      "createdAt": {
-        "$date": "2026-08-13T15:28:17.155Z"
-      },
-      "_id": {
-        "$oid": "6a7de2911e1f2a3c7fbf16c0"
-      }
-    }
-  ],
-  "__v": 1,
-  "createdAt": {
-    "$date": "2026-08-13T15:05:47.649Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T15:28:19.496Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7ddd4be280d34de8367391"
-  },
-  "seller": {
-    "$oid": "6979d4774f1db7cd4a712604"
-  },
-  "views": 0,
-  "product_name": "Men Casual T-Shirt",
-  "category": "MenClothes",
-  "subcategory": "casual",
-  "price": 90,
-  "description": "قميص رجالي كاجوال قطن 100%.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800",
-    "publicId": "seed/men-tshirt"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "casual",
-  "size": "L",
-  "material": "Cotton",
-  "color": "Black",
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T15:05:47.649Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T15:05:47.649Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7ddd4be280d34de8367392"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 2,
-  "product_name": "Women's Evening Dress",
-  "category": "WomenClothes",
-  "subcategory": "dresses",
-  "price": 350,
-  "description": "فستان نسائي أنيق للمناسبات.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=800",
-    "publicId": "seed/women-dress"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": true,
-  "discount": 20,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "dresses",
-  "size": "M",
-  "material": "Polyester",
-  "color": "Black",
-  "length": "Long",
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T15:05:47.649Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T15:23:10.628Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7ddd4be280d34de8367393"
-  },
-  "seller": {
-    "$oid": "6979d4774f1db7cd4a712604"
-  },
-  "views": 3,
-  "product_name": "Modern Apartment 4 Rooms",
-  "category": "RealEstate",
-  "subcategory": "apartment",
-  "price": 1250000,
-  "description": "شقة حديثة للبيع، أربع غرف مع موقف سيارة ومصعد.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
-    "publicId": "seed/apartment-4-rooms"
-  },
-  "likes": [],
-  "featured": true,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "apartment",
-  "area": 110,
-  "rooms": 4,
-  "bathrooms": 2,
-  "floors": 1,
-  "hasParking": true,
-  "hasElevator": true,
-  "furnished": false,
-  "rentalType": "sale",
-  "propertyAge": 4,
-  "geoLocation": {
-    "type": "Point",
-    "coordinates": [
-      35.1528,
-      32.5179
-    ]
-  },
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T15:05:47.649Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T15:23:41.887Z"
+    "$date": "2026-10-05T13:10:05.347Z"
   }
 },
 {
@@ -4750,7 +4133,7 @@
   "seller": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "views": 0,
+  "views": 4,
   "product_name": "Golden Retriever Puppy",
   "category": "Pets",
   "subcategory": "dogs",
@@ -4778,12 +4161,12 @@
   "weight": 12,
   "temperament": "Friendly",
   "reviews": [],
-  "__v": 0,
+  "__v": 2,
   "createdAt": {
     "$date": "2026-08-13T15:05:47.649Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T15:05:47.649Z"
+    "$date": "2026-10-05T03:00:34.416Z"
   }
 },
 {
@@ -4793,15 +4176,15 @@
   "seller": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "views": 0,
+  "views": 4,
   "product_name": "iPhone 15 Pro 256GB",
   "category": "Electronics",
   "subcategory": "smartphones",
   "price": 2800,
   "description": "iPhone 15 Pro 256GB بحالة ممتازة، يعمل بشكل كامل.",
   "image": {
-    "url": "https://images.unsplash.com/photo-1696446701796-da61225697cc?w=800",
-    "publicId": "seed/iphone-15-pro"
+    "url": "https://res.cloudinary.com/drxqielit/image/upload/v1789483717/gbo6m4vhcjzjjl9s8xrd.jpg",
+    "publicId": "gbo6m4vhcjzjjl9s8xrd"
   },
   "likes": [],
   "featured": false,
@@ -4828,52 +4211,7 @@
     "$date": "2026-08-13T16:04:47.367Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T16:04:47.367Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deb1fb121969c875ee9e0"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 0,
-  "product_name": "Samsung Galaxy S24 256GB",
-  "category": "Electronics",
-  "subcategory": "smartphones",
-  "price": 2200,
-  "description": "Samsung Galaxy S24 256GB بحالة ممتازة.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=800",
-    "publicId": "seed/samsung-s24"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": true,
-  "discount": 10,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "smartphones",
-  "brand": "Samsung",
-  "model": "Galaxy S24",
-  "ram": 8,
-  "storage": 256,
-  "screenSize": 6.2,
-  "operatingSystem": "Android",
-  "condition": "like_new",
-  "includedAccessories": [],
-  "networkType": "5G",
-  "color": "Black",
-  "warranty": "6 months",
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:04:47.367Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:04:47.367Z"
+    "$date": "2026-10-03T18:03:32.136Z"
   }
 },
 {
@@ -4883,7 +4221,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 5,
   "product_name": "Samsung Galaxy A55 128GB",
   "category": "Electronics",
   "subcategory": "smartphones",
@@ -4917,241 +4255,7 @@
     "$date": "2026-08-13T16:04:47.367Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T16:04:47.367Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deb1fb121969c875ee9e2"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 0,
-  "product_name": "Toyota Corolla 2022",
-  "category": "Cars",
-  "subcategory": "private",
-  "price": 68000,
-  "description": "Toyota Corolla 2022 سيارة عائلية اقتصادية بحالة ممتازة.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1623869675781-80aa31012a5a?w=800",
-    "publicId": "seed/toyota-corolla-2022"
-  },
-  "likes": [],
-  "featured": true,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "private",
-  "brand": "Toyota",
-  "year": 2022,
-  "fuel": "gasoline",
-  "mileage": 52000,
-  "color": "White",
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:04:47.367Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:04:47.367Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deb1fb121969c875ee9e3"
-  },
-  "seller": {
-    "$oid": "6979d4774f1db7cd4a712604"
-  },
-  "views": 0,
-  "product_name": "Hyundai Tucson 2021",
-  "category": "Cars",
-  "subcategory": "private",
-  "price": 79000,
-  "description": "Hyundai Tucson 2021 SUV عائلية بحالة ممتازة.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1633500770365-9f2a9a5a4d4c?w=800",
-    "publicId": "seed/hyundai-tucson-2021"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "private",
-  "brand": "Hyundai",
-  "year": 2021,
-  "fuel": "gasoline",
-  "mileage": 64000,
-  "color": "Black",
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:04:47.367Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:04:47.367Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deb1fb121969c875ee9e4"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 0,
-  "product_name": "Toyota Prius 2020 Hybrid",
-  "category": "Cars",
-  "subcategory": "private",
-  "price": 62000,
-  "description": "Toyota Prius 2020 היברידית חסכונית מאוד בדלק.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1550355291-bbee04a92027?w=800",
-    "publicId": "seed/toyota-prius"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": true,
-  "discount": 5,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "private",
-  "brand": "Toyota",
-  "year": 2020,
-  "fuel": "hybrid",
-  "mileage": 72000,
-  "color": "Silver",
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:04:47.367Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:04:47.367Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deb1fb121969c875ee9e5"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 0,
-  "product_name": "Yamaha R6 2020",
-  "category": "Motorcycles",
-  "subcategory": "sport",
-  "price": 48000,
-  "description": "Yamaha R6 sport motorcycle موديل 2020 بحالة ممتازة.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800",
-    "publicId": "seed/yamaha-r6"
-  },
-  "likes": [],
-  "featured": true,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "sport",
-  "brand": "Yamaha",
-  "year": 2020,
-  "engineCapacity": 600,
-  "mileage": 18000,
-  "fuel": "gasoline",
-  "color": "Blue",
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:04:47.367Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:04:47.367Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deb1fb121969c875ee9e6"
-  },
-  "seller": {
-    "$oid": "6979d4774f1db7cd4a712604"
-  },
-  "views": 0,
-  "product_name": "Honda Off Road Bike",
-  "category": "Motorcycles",
-  "subcategory": "offRoad",
-  "price": 29000,
-  "description": "Honda off road motorcycle مناسبة للطرق الوعرة.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800",
-    "publicId": "seed/honda-offroad"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "offRoad",
-  "brand": "Honda",
-  "year": 2021,
-  "engineCapacity": 450,
-  "mileage": 12000,
-  "fuel": "gasoline",
-  "color": "Red",
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deb1fb121969c875ee9e7"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 0,
-  "product_name": "Mountain Bike",
-  "category": "Bikes",
-  "subcategory": "mountain",
-  "price": 1800,
-  "description": "دراجة جبلية قوية مع نظام تعليق أمامي.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=800",
-    "publicId": "seed/mountain-bike"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "mountain",
-  "frameSize": "M",
-  "color": "Black",
-  "suspension": true,
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
+    "$date": "2026-10-04T20:51:16.259Z"
   }
 },
 {
@@ -5195,486 +4299,12 @@
 },
 {
   "_id": {
-    "$oid": "6a7deb1fb121969c875ee9e9"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 0,
-  "product_name": "PlayStation 5 FC 25",
-  "category": "Gaming",
-  "subcategory": "games",
-  "price": 180,
-  "description": "لعبة كرة قدم PlayStation بحالة ممتازة.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=800",
-    "publicId": "seed/fc25"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "games",
-  "platform": "PlayStation",
-  "genre": "Sports",
-  "multiplayer": true,
-  "language": "English",
-  "releaseYear": 2024,
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deb1fb121969c875ee9ea"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 0,
-  "product_name": "Corner Sofa",
-  "category": "Furniture",
-  "subcategory": "living_room",
-  "price": 3500,
-  "description": "كنبة زاوية مريحة لغرفة المعيشة.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800",
-    "publicId": "seed/corner-sofa"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": true,
-  "discount": 15,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "living_room",
-  "brand": "IKEA",
-  "material": "Fabric",
-  "color": "Gray",
-  "dimensions": "280x180 cm",
-  "assemblyRequired": false,
-  "condition": "good",
-  "style": "Modern",
-  "includesAccessories": false,
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deb1fb121969c875ee9eb"
-  },
-  "seller": {
-    "$oid": "6979d4774f1db7cd4a712604"
-  },
-  "views": 0,
-  "product_name": "Dining Table",
-  "category": "Furniture",
-  "subcategory": "dining",
-  "price": 2200,
-  "description": "طاولة طعام خشبية لأربعة إلى ستة أشخاص.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=800",
-    "publicId": "seed/dining-table"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "dining",
-  "material": "Wood",
-  "color": "Brown",
-  "dimensions": "180x90 cm",
-  "assemblyRequired": false,
-  "condition": "like_new",
-  "style": "Modern",
-  "includesAccessories": false,
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deb1fb121969c875ee9ec"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 0,
-  "product_name": "Kitchen Mixer Bosch",
-  "category": "House",
-  "subcategory": "kitchen",
-  "price": 650,
-  "description": "خلاط ومضرب كهربائي Bosch للمطبخ.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1570222094114-d054a817e56b?w=800",
-    "publicId": "seed/bosch-mixer"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "kitchen",
-  "brand": "Bosch",
-  "material": "Stainless Steel",
-  "color": "Silver",
-  "powerWatts": 800,
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deb1fb121969c875ee9ed"
-  },
-  "seller": {
-    "$oid": "6979d4774f1db7cd4a712604"
-  },
-  "views": 0,
-  "product_name": "Garden Shovel",
-  "category": "Garden",
-  "subcategory": "tools",
-  "price": 120,
-  "description": "مجرفة قوية لأعمال الحديقة والحفر.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800",
-    "publicId": "seed/garden-shovel"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "tools",
-  "brand": "Stanley",
-  "toolType": "Shovel",
-  "weatherResistant": true,
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deb1fb121969c875ee9ee"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 0,
-  "product_name": "Indoor Monstera Plant",
-  "category": "Garden",
-  "subcategory": "plants",
-  "price": 150,
-  "description": "نبتة Monstera جميلة مناسبة للمنزل.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=800",
-    "publicId": "seed/monstera"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "plants",
-  "plantType": "Monstera",
-  "season": "All year",
-  "sunExposure": "Indirect sunlight",
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deb1fb121969c875ee9ef"
-  },
-  "seller": {
-    "$oid": "6979d4774f1db7cd4a712604"
-  },
-  "views": 0,
-  "product_name": "Apple Watch Series 9",
-  "category": "Watches",
-  "subcategory": "smart",
-  "price": 1300,
-  "description": "Apple Watch Series 9 بحالة ممتازة.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1544117519-31a4b719223d?w=800",
-    "publicId": "seed/apple-watch-9"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "smart",
-  "brand": "Apple",
-  "waterResistant": true,
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deb1fb121969c875ee9f0"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 0,
-  "product_name": "Disinfectant 1L",
-  "category": "Cleaning",
-  "subcategory": "disinfection",
-  "price": 30,
-  "description": "مطهر منزلي 1 لتر للتنظيف والتعقيم.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=800",
-    "publicId": "seed/disinfectant-1l"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "disinfection",
-  "brand": "Sano",
-  "volume": 1,
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deb1fb121969c875ee9f1"
-  },
-  "seller": {
-    "$oid": "6979d4774f1db7cd4a712604"
-  },
-  "views": 0,
-  "product_name": "Men Casual T-Shirt",
-  "category": "MenClothes",
-  "subcategory": "casual",
-  "price": 90,
-  "description": "قميص رجالي كاجوال قطن 100%.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800",
-    "publicId": "seed/men-tshirt"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "casual",
-  "size": "L",
-  "material": "Cotton",
-  "color": "Black",
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deb1fb121969c875ee9f2"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 0,
-  "product_name": "Women's Evening Dress",
-  "category": "WomenClothes",
-  "subcategory": "dresses",
-  "price": 350,
-  "description": "فستان نسائي أنيق للمناسبات.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=800",
-    "publicId": "seed/women-dress"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": true,
-  "discount": 20,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "dresses",
-  "size": "M",
-  "material": "Polyester",
-  "color": "Black",
-  "length": "Long",
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deb1fb121969c875ee9f3"
-  },
-  "seller": {
-    "$oid": "6979d4774f1db7cd4a712604"
-  },
-  "views": 0,
-  "product_name": "Modern Apartment 4 Rooms",
-  "category": "RealEstate",
-  "subcategory": "apartment",
-  "price": 1250000,
-  "description": "شقة حديثة للبيع، أربع غرف مع موقف سيارة ومصعد.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
-    "publicId": "seed/apartment-4-rooms"
-  },
-  "likes": [],
-  "featured": true,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "apartment",
-  "area": 110,
-  "rooms": 4,
-  "bathrooms": 2,
-  "floors": 1,
-  "hasParking": true,
-  "hasElevator": true,
-  "furnished": false,
-  "rentalType": "sale",
-  "propertyAge": 4,
-  "geoLocation": {
-    "type": "Point",
-    "coordinates": [
-      35.1528,
-      32.5179
-    ]
-  },
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deb1fb121969c875ee9f4"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 0,
-  "product_name": "Golden Retriever Puppy",
-  "category": "Pets",
-  "subcategory": "dogs",
-  "price": 2500,
-  "description": "جرو Golden Retriever اجتماعي ونشيط.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1552053831-71594a27632d?w=800",
-    "publicId": "seed/golden-retriever"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "dogs",
-  "breed": "Golden Retriever",
-  "age": 8,
-  "gender": "male",
-  "vaccinated": true,
-  "neutered": false,
-  "microchipped": true,
-  "color": "Golden",
-  "weight": 12,
-  "temperament": "Friendly",
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:04:47.368Z"
-  }
-},
-{
-  "_id": {
     "$oid": "6a7deda8475b554533597ef4"
   },
   "seller": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "views": 0,
+  "views": 5,
   "product_name": "iPhone 15 Pro 256GB",
   "category": "Electronics",
   "subcategory": "smartphones",
@@ -5709,7 +4339,7 @@
     "$date": "2026-08-13T16:15:36.684Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T16:15:36.684Z"
+    "$date": "2026-10-19T10:50:07.097Z"
   }
 },
 {
@@ -5719,7 +4349,7 @@
   "seller": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "views": 0,
+  "views": 18,
   "product_name": "Samsung Galaxy S24 256GB",
   "category": "Electronics",
   "subcategory": "smartphones",
@@ -5729,7 +4359,9 @@
     "url": "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=800",
     "publicId": "seed/samsung-s24"
   },
-  "likes": [],
+  "likes": [
+    "6980c609317475fe5c733aed"
+  ],
   "featured": false,
   "sale": true,
   "discount": 10,
@@ -5748,13 +4380,40 @@
   "networkType": "5G",
   "color": "Black",
   "warranty": "6 months",
-  "reviews": [],
-  "__v": 0,
+  "reviews": [
+    {
+      "user": {
+        "$oid": "6980c609317475fe5c733aed"
+      },
+      "comment": "رائع",
+      "rating": 3.5,
+      "createdAt": {
+        "$date": "2026-08-18T19:44:11.297Z"
+      },
+      "_id": {
+        "$oid": "6a84b60b721fbead6ce92258"
+      }
+    },
+    {
+      "user": {
+        "$oid": "6a6e076fd6a5414f1ae5be3d"
+      },
+      "comment": ".",
+      "rating": 4,
+      "createdAt": {
+        "$date": "2026-08-19T17:57:22.669Z"
+      },
+      "_id": {
+        "$oid": "6a85ee82b9353a680774f250"
+      }
+    }
+  ],
+  "__v": 3,
   "createdAt": {
     "$date": "2026-08-13T16:15:36.685Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
+    "$date": "2026-10-12T08:51:41.725Z"
   }
 },
 {
@@ -5764,7 +4423,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 7,
   "product_name": "Samsung Galaxy A55 128GB",
   "category": "Electronics",
   "subcategory": "smartphones",
@@ -5798,7 +4457,7 @@
     "$date": "2026-08-13T16:15:36.685Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
+    "$date": "2026-10-19T16:36:38.953Z"
   }
 },
 {
@@ -5808,7 +4467,7 @@
   "seller": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "views": 1,
+  "views": 5,
   "product_name": "Toyota Corolla 2022",
   "category": "Cars",
   "subcategory": "private",
@@ -5837,46 +4496,7 @@
     "$date": "2026-08-13T16:15:36.685Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T16:46:32.274Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deda8475b554533597ef8"
-  },
-  "seller": {
-    "$oid": "6979d4774f1db7cd4a712604"
-  },
-  "views": 0,
-  "product_name": "Hyundai Tucson 2021",
-  "category": "Cars",
-  "subcategory": "private",
-  "price": 79000,
-  "description": "Hyundai Tucson 2021 SUV عائلية بحالة ممتازة.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1633500770365-9f2a9a5a4d4c?w=800",
-    "publicId": "seed/hyundai-tucson-2021"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "private",
-  "brand": "Hyundai",
-  "year": 2021,
-  "fuel": "gasoline",
-  "mileage": 64000,
-  "color": "Black",
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
+    "$date": "2026-10-05T05:40:39.702Z"
   }
 },
 {
@@ -5886,7 +4506,7 @@
   "seller": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "views": 0,
+  "views": 83,
   "product_name": "Toyota Prius 2020 Hybrid",
   "category": "Cars",
   "subcategory": "private",
@@ -5896,8 +4516,10 @@
     "url": "https://images.unsplash.com/photo-1550355291-bbee04a92027?w=800",
     "publicId": "seed/toyota-prius"
   },
-  "likes": [],
-  "featured": false,
+  "likes": [
+    "6980c609317475fe5c733aed"
+  ],
+  "featured": true,
   "sale": true,
   "discount": 5,
   "location": "אום אל-פחם",
@@ -5910,12 +4532,12 @@
   "mileage": 72000,
   "color": "Silver",
   "reviews": [],
-  "__v": 0,
+  "__v": 1,
   "createdAt": {
     "$date": "2026-08-13T16:15:36.685Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
+    "$date": "2026-10-21T06:29:15.814Z"
   }
 },
 {
@@ -5925,7 +4547,7 @@
   "seller": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "Yamaha R6 2020",
   "category": "Motorcycles",
   "subcategory": "sport",
@@ -5955,7 +4577,7 @@
     "$date": "2026-08-13T16:15:36.685Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
+    "$date": "2026-10-12T09:40:30.517Z"
   }
 },
 {
@@ -5965,7 +4587,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 6,
   "product_name": "Honda Off Road Bike",
   "category": "Motorcycles",
   "subcategory": "offRoad",
@@ -5975,7 +4597,9 @@
     "url": "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800",
     "publicId": "seed/honda-offroad"
   },
-  "likes": [],
+  "likes": [
+    "6980c609317475fe5c733aed"
+  ],
   "featured": false,
   "sale": false,
   "discount": 0,
@@ -5990,88 +4614,12 @@
   "fuel": "gasoline",
   "color": "Red",
   "reviews": [],
-  "__v": 0,
+  "__v": 1,
   "createdAt": {
     "$date": "2026-08-13T16:15:36.685Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deda8475b554533597efc"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 0,
-  "product_name": "Mountain Bike",
-  "category": "Bikes",
-  "subcategory": "mountain",
-  "price": 1800,
-  "description": "دراجة جبلية قوية مع نظام تعليق أمامي.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=800",
-    "publicId": "seed/mountain-bike"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "mountain",
-  "frameSize": "M",
-  "color": "Black",
-  "suspension": true,
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deda8475b554533597efd"
-  },
-  "seller": {
-    "$oid": "6979d4774f1db7cd4a712604"
-  },
-  "views": 1,
-  "product_name": "PlayStation 5",
-  "category": "Gaming",
-  "subcategory": "consoles",
-  "price": 1800,
-  "description": "PlayStation 5 بحالة ممتازة مع يد تحكم.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=800",
-    "publicId": "seed/playstation-5"
-  },
-  "likes": [],
-  "featured": true,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "consoles",
-  "platform": "PlayStation",
-  "edition": "Standard",
-  "multiplayer": true,
-  "language": "English",
-  "releaseYear": 2020,
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:42:44.500Z"
+    "$date": "2026-10-04T15:50:52.819Z"
   }
 },
 {
@@ -6081,7 +4629,7 @@
   "seller": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "views": 0,
+  "views": 3,
   "product_name": "PlayStation 5 FC 25",
   "category": "Gaming",
   "subcategory": "games",
@@ -6110,7 +4658,7 @@
     "$date": "2026-08-13T16:15:36.685Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
+    "$date": "2026-10-05T17:15:23.249Z"
   }
 },
 {
@@ -6120,7 +4668,7 @@
   "seller": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "views": 0,
+  "views": 14,
   "product_name": "Corner Sofa",
   "category": "Furniture",
   "subcategory": "living_room",
@@ -6152,160 +4700,7 @@
     "$date": "2026-08-13T16:15:36.685Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deda8475b554533597f00"
-  },
-  "seller": {
-    "$oid": "6979d4774f1db7cd4a712604"
-  },
-  "views": 0,
-  "product_name": "Dining Table",
-  "category": "Furniture",
-  "subcategory": "dining",
-  "price": 2200,
-  "description": "طاولة طعام خشبية لأربعة إلى ستة أشخاص.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=800",
-    "publicId": "seed/dining-table"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "dining",
-  "material": "Wood",
-  "color": "Brown",
-  "dimensions": "180x90 cm",
-  "assemblyRequired": false,
-  "condition": "like_new",
-  "style": "Modern",
-  "includesAccessories": false,
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deda8475b554533597f01"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 0,
-  "product_name": "Kitchen Mixer Bosch",
-  "category": "House",
-  "subcategory": "kitchen",
-  "price": 650,
-  "description": "خلاط ومضرب كهربائي Bosch للمطبخ.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1570222094114-d054a817e56b?w=800",
-    "publicId": "seed/bosch-mixer"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "kitchen",
-  "brand": "Bosch",
-  "material": "Stainless Steel",
-  "color": "Silver",
-  "powerWatts": 800,
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deda8475b554533597f02"
-  },
-  "seller": {
-    "$oid": "6979d4774f1db7cd4a712604"
-  },
-  "views": 0,
-  "product_name": "Garden Shovel",
-  "category": "Garden",
-  "subcategory": "tools",
-  "price": 120,
-  "description": "مجرفة قوية لأعمال الحديقة والحفر.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800",
-    "publicId": "seed/garden-shovel"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "tools",
-  "brand": "Stanley",
-  "toolType": "Shovel",
-  "weatherResistant": true,
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6a7deda8475b554533597f03"
-  },
-  "seller": {
-    "$oid": "6980c609317475fe5c733aed"
-  },
-  "views": 0,
-  "product_name": "Indoor Monstera Plant",
-  "category": "Garden",
-  "subcategory": "plants",
-  "price": 150,
-  "description": "نبتة Monstera جميلة مناسبة للمنزل.",
-  "image": {
-    "url": "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=800",
-    "publicId": "seed/monstera"
-  },
-  "likes": [],
-  "featured": false,
-  "sale": false,
-  "discount": 0,
-  "location": "אום אל-פחם",
-  "in_stock": true,
-  "status": "accepted",
-  "type": "plants",
-  "plantType": "Monstera",
-  "season": "All year",
-  "sunExposure": "Indirect sunlight",
-  "reviews": [],
-  "__v": 0,
-  "createdAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
-  },
-  "updatedAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
+    "$date": "2026-10-26T11:06:58.715Z"
   }
 },
 {
@@ -6315,7 +4710,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 4,
   "product_name": "Apple Watch Series 9",
   "category": "Watches",
   "subcategory": "smart",
@@ -6325,7 +4720,9 @@
     "url": "https://images.unsplash.com/photo-1544117519-31a4b719223d?w=800",
     "publicId": "seed/apple-watch-9"
   },
-  "likes": [],
+  "likes": [
+    "6980c609317475fe5c733aed"
+  ],
   "featured": false,
   "sale": false,
   "discount": 0,
@@ -6335,13 +4732,27 @@
   "type": "smart",
   "brand": "Apple",
   "waterResistant": true,
-  "reviews": [],
-  "__v": 0,
+  "reviews": [
+    {
+      "user": {
+        "$oid": "6980c609317475fe5c733aed"
+      },
+      "comment": "iiiiiiiiiii",
+      "rating": 4,
+      "createdAt": {
+        "$date": "2026-09-02T15:37:24.376Z"
+      },
+      "_id": {
+        "$oid": "6a9842b49dc36b07da21ac4d"
+      }
+    }
+  ],
+  "__v": 2,
   "createdAt": {
     "$date": "2026-08-13T16:15:36.685Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
+    "$date": "2026-09-22T00:29:27.615Z"
   }
 },
 {
@@ -6351,7 +4762,7 @@
   "seller": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "views": 0,
+  "views": 8,
   "product_name": "Disinfectant 1L",
   "category": "Cleaning",
   "subcategory": "disinfection",
@@ -6371,13 +4782,27 @@
   "type": "disinfection",
   "brand": "Sano",
   "volume": 1,
-  "reviews": [],
-  "__v": 0,
+  "reviews": [
+    {
+      "user": {
+        "$oid": "6a946816e2433c847a78bbe0"
+      },
+      "comment": "منتج منيح",
+      "rating": 4,
+      "createdAt": {
+        "$date": "2026-09-02T15:37:56.713Z"
+      },
+      "_id": {
+        "$oid": "6a9842d440bebccd970d3182"
+      }
+    }
+  ],
+  "__v": 1,
   "createdAt": {
     "$date": "2026-08-13T16:15:36.685Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
+    "$date": "2026-10-21T05:22:01.523Z"
   }
 },
 {
@@ -6387,7 +4812,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 43,
   "product_name": "Men Casual T-Shirt",
   "category": "MenClothes",
   "subcategory": "casual",
@@ -6409,12 +4834,12 @@
   "material": "Cotton",
   "color": "Black",
   "reviews": [],
-  "__v": 0,
+  "__v": 16,
   "createdAt": {
     "$date": "2026-08-13T16:15:36.685Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
+    "$date": "2026-10-26T20:00:27.047Z"
   }
 },
 {
@@ -6424,7 +4849,7 @@
   "seller": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "views": 0,
+  "views": 26,
   "product_name": "Women's Evening Dress",
   "category": "WomenClothes",
   "subcategory": "dresses",
@@ -6447,12 +4872,12 @@
   "color": "Black",
   "length": "Long",
   "reviews": [],
-  "__v": 0,
+  "__v": 2,
   "createdAt": {
     "$date": "2026-08-13T16:15:36.685Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
+    "$date": "2026-10-25T06:09:42.977Z"
   }
 },
 {
@@ -6462,7 +4887,7 @@
   "seller": {
     "$oid": "6979d4774f1db7cd4a712604"
   },
-  "views": 0,
+  "views": 8,
   "product_name": "Modern Apartment 4 Rooms",
   "category": "RealEstate",
   "subcategory": "apartment",
@@ -6472,7 +4897,9 @@
     "url": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
     "publicId": "seed/apartment-4-rooms"
   },
-  "likes": [],
+  "likes": [
+    "6980c609317475fe5c733aed"
+  ],
   "featured": true,
   "sale": false,
   "discount": 0,
@@ -6497,30 +4924,517 @@
     ]
   },
   "reviews": [],
-  "__v": 0,
+  "__v": 1,
   "createdAt": {
     "$date": "2026-08-13T16:15:36.685Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
+    "$date": "2026-10-06T00:49:28.429Z"
   }
 },
 {
   "_id": {
-    "$oid": "6a7deda8475b554533597f09"
+    "$oid": "6a899cb6cd8a5b9ca2bc1922"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 13,
+  "product_name": "طاوله صنع يدوي",
+  "category": "Art",
+  "subcategory": "crafts",
+  "price": 1199.99,
+  "description": "ييييييييييييييييييييييييييييييييييييي",
+  "image": {
+    "url": "https://res.cloudinary.com/drxqielit/image/upload/v1787403330/esarpluissxtp9g2g0tv.jpg",
+    "publicId": "esarpluissxtp9g2g0tv"
+  },
+  "likes": [
+    "6980c609317475fe5c733aed"
+  ],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "",
+  "in_stock": true,
+  "status": "accepted",
+  "createdAt": {
+    "$date": "2026-08-22T12:57:26.441Z"
+  },
+  "type": "crafts",
+  "artist": "نسيم زكريا",
+  "creationYear": 2026,
+  "dimensions": "12/22",
+  "technique": "بازلت",
+  "certificate": false,
+  "condition": "جديد",
+  "framed": false,
+  "reviews": [],
+  "updatedAt": {
+    "$date": "2026-10-21T04:50:14.341Z"
+  },
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "6a983ab9b45b0d1dc05b1467"
+  },
+  "seller": {
+    "$oid": "6a946816e2433c847a78bbe0"
+  },
+  "views": 49,
+  "product_name": "מכר",
+  "category": "Beauty",
+  "subcategory": "makeup",
+  "price": 40,
+  "description": "Correcting concealer color palette ",
+  "image": {
+    "url": "https://res.cloudinary.com/drxqielit/image/upload/v1788361331/vfu75x9qcsbv3vki6vfm.jpg",
+    "publicId": "vfu75x9qcsbv3vki6vfm"
+  },
+  "likes": [
+    "6980c609317475fe5c733aed"
+  ],
+  "featured": false,
+  "sale": true,
+  "discount": 10,
+  "location": "israel",
+  "in_stock": true,
+  "status": "accepted",
+  "createdAt": {
+    "$date": "2026-09-02T15:03:21.869Z"
+  },
+  "type": "makeup",
+  "brand": "Sheglam",
+  "expiryDate": "2028-02-19",
+  "reviews": [
+    {
+      "user": {
+        "$oid": "6980c609317475fe5c733aed"
+      },
+      "comment": "يبسبيسبسبيب",
+      "rating": 5,
+      "createdAt": {
+        "$date": "2026-09-02T15:13:01.713Z"
+      },
+      "_id": {
+        "$oid": "6a983cfd3dc3139c42439a8b"
+      }
+    }
+  ],
+  "updatedAt": {
+    "$date": "2026-10-07T05:30:21.417Z"
+  },
+  "__v": 12
+},
+{
+  "_id": {
+    "$oid": "6a9c0ded9e2b21d4bac06e77"
   },
   "seller": {
     "$oid": "6980c609317475fe5c733aed"
   },
-  "views": 0,
-  "product_name": "Golden Retriever Puppy",
-  "category": "Pets",
-  "subcategory": "dogs",
-  "price": 2500,
-  "description": "جرو Golden Retriever اجتماعي ونشيط.",
+  "views": 131,
+  "product_name": "كهربائي بيوت",
+  "category": "Services",
+  "subcategory": "electrical",
+  "price": 0,
+  "description": "",
   "image": {
-    "url": "https://images.unsplash.com/photo-1552053831-71594a27632d?w=800",
-    "publicId": "seed/golden-retriever"
+    "url": "https://res.cloudinary.com/drxqielit/image/upload/v1788611170/rw7wbr5am3httpji95cy.jpg",
+    "publicId": "rw7wbr5am3httpji95cy"
+  },
+  "likes": [
+    "6980c609317475fe5c733aed"
+  ],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "",
+  "in_stock": true,
+  "status": "accepted",
+  "createdAt": {
+    "$date": "2026-09-05T12:41:17.042Z"
+  },
+  "type": "electrical",
+  "serviceTitle": "كهرباء للبيوت",
+  "providerName": "ابو النور",
+  "experienceYears": 40,
+  "priceFrom": 100,
+  "priceTo": 50000,
+  "pricingType": "negotiable",
+  "availableDays": [],
+  "availableHours": "",
+  "serviceArea": "ام الفحم",
+  "emergencyService": true,
+  "reviews": [],
+  "updatedAt": {
+    "$date": "2026-10-25T06:57:41.611Z"
+  },
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "6aa93fbe2c617bb5ddbbab64"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 227,
+  "product_name": "جيتار",
+  "category": "MusicalInstruments",
+  "subcategory": "guitars",
+  "price": 2500,
+  "description": "بببببببببببببببببب",
+  "image": {
+    "url": "https://res.cloudinary.com/drxqielit/image/upload/v1789476788/ci76jb6pmuvhd1wct0gz.jpg",
+    "publicId": "ci76jb6pmuvhd1wct0gz"
+  },
+  "likes": [
+    "6980c609317475fe5c733aed"
+  ],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "createdAt": {
+    "$date": "2026-09-15T12:53:18.662Z"
+  },
+  "type": "guitars",
+  "brand": "تتت",
+  "model": "2015",
+  "material": "خشب",
+  "color": "Brown",
+  "electric": false,
+  "condition": "new",
+  "accessories": [],
+  "reviews": [
+    {
+      "user": {
+        "$oid": "6980c609317475fe5c733aed"
+      },
+      "comment": "123456",
+      "rating": 5,
+      "createdAt": {
+        "$date": "2026-09-15T18:34:37.800Z"
+      },
+      "_id": {
+        "$oid": "6aa98fbd4d56bed11f955e7b"
+      }
+    }
+  ],
+  "updatedAt": {
+    "$date": "2026-10-03T03:15:06.609Z"
+  },
+  "__v": 2
+},
+{
+  "_id": {
+    "$oid": "6ab5639388c32bbd9dbb77e5"
+  },
+  "seller": {
+    "$oid": "699b384cccc6122ea7aaeab8"
+  },
+  "views": 26,
+  "product_name": "فراخ تيريكس",
+  "category": "Pets",
+  "subcategory": "small_animals",
+  "price": 650,
+  "description": "فراخ تيريكس ام و ابو ضخمات الفرخ ع٦٥٠ والجوز ب١٠٠٠ للجادين فقط التواصل على 0537611091",
+  "image": {
+    "url": "https://res.cloudinary.com/drxqielit/image/upload/v1790272390/goxsb4bpukbgk2m7mwg1.jpg",
+    "publicId": "goxsb4bpukbgk2m7mwg1"
+  },
+  "likes": [
+    "6980c609317475fe5c733aed",
+    "6abdde1b4209d43207c1b7b9",
+    "6979d4774f1db7cd4a712604"
+  ],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם ",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "small_animals",
+  "breed": "تيريكس",
+  "age": 1,
+  "gender": "male",
+  "vaccinated": true,
+  "neutered": true,
+  "microchipped": true,
+  "color": "OliveGreen",
+  "weight": 3,
+  "healthIssues": "مريض نفساني",
+  "temperament": "مجنون ولا حبه",
+  "reviews": [
+    {
+      "user": {
+        "$oid": "6980c609317475fe5c733aed"
+      },
+      "comment": "اشي مرتب دوود",
+      "rating": 5,
+      "createdAt": {
+        "$date": "2026-09-25T03:43:41.578Z"
+      },
+      "_id": {
+        "$oid": "6ab5eded7f22134841a71b8f"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-09-24T17:53:23.043Z"
+  },
+  "updatedAt": {
+    "$date": "2026-10-21T05:27:24.418Z"
+  },
+  "__v": 4
+},
+{
+  "_id": {
+    "$oid": "6ac21c26bb0197b04d8399eb"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 5,
+  "product_name": "شغل جبصين",
+  "category": "Services",
+  "subcategory": "maintenance",
+  "price": 0,
+  "description": "معلم جبصين، شيبوتسيم",
+  "image": {
+    "url": "https://res.cloudinary.com/drxqielit/image/upload/v1791105961/users/6979d4774f1db7cd4a712604/75562473-1ca8-4833-a170-5caf0caf5d6a.jpg",
+    "publicId": "users/6979d4774f1db7cd4a712604/75562473-1ca8-4833-a170-5caf0caf5d6a"
+  },
+  "likes": [
+    "6979d4774f1db7cd4a712604"
+  ],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם ",
+  "in_stock": true,
+  "status": "accepted",
+  "type": "maintenance",
+  "serviceTitle": "معلم جبصين",
+  "providerName": "عبدالله",
+  "experienceYears": 22,
+  "priceFrom": 1000,
+  "priceTo": 100000,
+  "pricingType": "fixed",
+  "availableDays": [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday"
+  ],
+  "availableHours": "08:00",
+  "serviceArea": "ام الفحم",
+  "emergencyService": false,
+  "reviews": [],
+  "createdAt": {
+    "$date": "2026-10-04T09:28:06.714Z"
+  },
+  "updatedAt": {
+    "$date": "2026-10-25T06:57:50.439Z"
+  },
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "6ac33ad891f0e72e993136c4"
+  },
+  "seller": {
+    "$oid": "6abddbb545bf09cbd0fffb72"
+  },
+  "views": 11,
+  "product_name": "jkghjgh",
+  "category": "House",
+  "subcategory": "kitchen",
+  "price": 100,
+  "description": "ghdkyhfdkhgfljk",
+  "image": {
+    "url": "https://res.cloudinary.com/drxqielit/image/upload/v1791179446/users/6abddbb545bf09cbd0fffb72/ad3f4ff6-f01c-4819-bcfa-4579b879f4fa.png",
+    "publicId": "users/6abddbb545bf09cbd0fffb72/ad3f4ff6-f01c-4819-bcfa-4579b879f4fa"
+  },
+  "likes": [
+    "6980c609317475fe5c733aed"
+  ],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "rejectionReason": "",
+  "reviewedBy": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "reviewedAt": {
+    "$date": "2026-10-05T05:51:51.259Z"
+  },
+  "type": "kitchen",
+  "brand": "hgghfhgf",
+  "material": "dfgdghfdg",
+  "color": "Black",
+  "dimensions": "yt6757",
+  "capacity": 45232432342,
+  "powerWatts": 5645564654,
+  "usageType": "trdghfjh",
+  "reviews": [],
+  "createdAt": {
+    "$date": "2026-10-05T05:51:20.057Z"
+  },
+  "updatedAt": {
+    "$date": "2026-10-07T07:02:57.602Z"
+  },
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "6ac3b2e0cbf456906a36fa4e"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 55,
+  "product_name": "معلم جبصين",
+  "category": "Services",
+  "subcategory": "maintenance",
+  "price": 0,
+  "description": "هلهةنىهل",
+  "image": {
+    "url": "https://res.cloudinary.com/drxqielit/image/upload/v1791210114/users/6979d4774f1db7cd4a712604/714cb509-a4b3-48ce-9e8d-dbbf67c77664.jpg",
+    "publicId": "users/6979d4774f1db7cd4a712604/714cb509-a4b3-48ce-9e8d-dbbf67c77664"
+  },
+  "likes": [
+    "6980c609317475fe5c733aed",
+    "6abddbb545bf09cbd0fffb72",
+    "6979d4774f1db7cd4a712604"
+  ],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם ",
+  "in_stock": true,
+  "status": "accepted",
+  "rejectionReason": "",
+  "reviewedBy": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "reviewedAt": {
+    "$date": "2026-10-05T14:23:48.984Z"
+  },
+  "type": "maintenance",
+  "serviceTitle": "جبصين",
+  "providerName": "عبدالله",
+  "experienceYears": 22,
+  "priceFrom": 1000,
+  "priceTo": 100000,
+  "pricingType": "negotiable",
+  "availableDays": [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday"
+  ],
+  "availableHours": "من 0800 ل 22:00",
+  "serviceArea": "ام الفحم",
+  "emergencyService": false,
+  "reviews": [
+    {
+      "user": {
+        "$oid": "6980c609317475fe5c733aed"
+      },
+      "comment": "انتي نار دوود",
+      "rating": 3,
+      "createdAt": {
+        "$date": "2026-10-07T15:29:43.786Z"
+      },
+      "_id": {
+        "$oid": "6ac66567cc3303b23e3691de"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-10-05T14:23:28.841Z"
+  },
+  "updatedAt": {
+    "$date": "2026-10-26T06:41:00.250Z"
+  },
+  "__v": 4
+},
+{
+  "_id": {
+    "$oid": "6ac9e390a1631f5afdfd00e4"
+  },
+  "seller": {
+    "$oid": "6979d4774f1db7cd4a712604"
+  },
+  "views": 18,
+  "product_name": "iPhone 15 مستعمل",
+  "category": "Electronics",
+  "subcategory": "smartphones",
+  "price": 1200,
+  "description": "scsdsdsadsa",
+  "image": {
+    "url": "https://res.cloudinary.com/drxqielit/image/upload/v1791615679/users/6979d4774f1db7cd4a712604/097ba778-6db9-42b9-937a-2d44ae5fef93.png",
+    "publicId": "users/6979d4774f1db7cd4a712604/097ba778-6db9-42b9-937a-2d44ae5fef93"
+  },
+  "likes": [],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "Sakhnin",
+  "in_stock": true,
+  "status": "accepted",
+  "rejectionReason": "",
+  "reviewedBy": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "reviewedAt": {
+    "$date": "2026-10-10T07:59:56.908Z"
+  },
+  "type": "smartphones",
+  "brand": "apple",
+  "model": "iPhones 15",
+  "ram": 256,
+  "screenSize": 2,
+  "operatingSystem": "ios",
+  "condition": "like_new",
+  "includedAccessories": [],
+  "color": "Black",
+  "warranty": "سنه",
+  "reviews": [],
+  "createdAt": {
+    "$date": "2026-10-10T07:04:48.398Z"
+  },
+  "updatedAt": {
+    "$date": "2026-10-21T18:34:58.964Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6ac9f0d969c40607d61cf8d9"
+  },
+  "seller": {
+    "$oid": "6abddbb545bf09cbd0fffb72"
+  },
+  "views": 6,
+  "product_name": "iphone",
+  "category": "Electronics",
+  "subcategory": "smartphones",
+  "price": 1300,
+  "description": "سيشسشيسشي",
+  "image": {
+    "url": "https://res.cloudinary.com/drxqielit/image/upload/v1791619221/users/6980c609317475fe5c733aed/819ec750-ddc6-4a19-a1ef-e6c65446b2b2.png",
+    "publicId": "users/6980c609317475fe5c733aed/819ec750-ddc6-4a19-a1ef-e6c65446b2b2"
   },
   "likes": [],
   "featured": false,
@@ -6529,22 +5443,95 @@
   "location": "אום אל-פחם",
   "in_stock": true,
   "status": "accepted",
-  "type": "dogs",
-  "breed": "Golden Retriever",
-  "age": 8,
-  "gender": "male",
-  "vaccinated": true,
-  "neutered": false,
-  "microchipped": true,
-  "color": "Golden",
-  "weight": 12,
-  "temperament": "Friendly",
+  "rejectionReason": "",
+  "reviewedBy": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "reviewedAt": {
+    "$date": "2026-10-10T08:03:06.552Z"
+  },
+  "type": "smartphones",
+  "brand": "apple",
+  "model": "iphone 15",
+  "ram": 512,
+  "storage": 498,
+  "screenSize": 0,
+  "operatingSystem": "ios",
+  "condition": "like_new",
+  "includedAccessories": [],
+  "color": "LightGray",
+  "warranty": "سنه",
   "reviews": [],
-  "__v": 0,
   "createdAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
+    "$date": "2026-10-10T08:01:29.457Z"
   },
   "updatedAt": {
-    "$date": "2026-08-13T16:15:36.685Z"
-  }
+    "$date": "2026-10-15T15:24:20.770Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6ad5c11a8318917c5640c963"
+  },
+  "seller": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "views": 20,
+  "product_name": "كنبايات",
+  "category": "House",
+  "subcategory": "decor",
+  "price": 200,
+  "description": "asdfsafsdfdsfds",
+  "image": {
+    "url": "https://res.cloudinary.com/drxqielit/image/upload/v1792393357/users/6980c609317475fe5c733aed/0e275367-a057-4d77-9632-55ecf8f864e7.webp",
+    "publicId": "users/6980c609317475fe5c733aed/0e275367-a057-4d77-9632-55ecf8f864e7"
+  },
+  "likes": [
+    "6980c609317475fe5c733aed",
+    "6abddbb545bf09cbd0fffb72"
+  ],
+  "featured": false,
+  "sale": false,
+  "discount": 0,
+  "location": "אום אל-פחם",
+  "in_stock": true,
+  "status": "accepted",
+  "rejectionReason": "",
+  "reviewedBy": {
+    "$oid": "6980c609317475fe5c733aed"
+  },
+  "reviewedAt": {
+    "$date": "2026-10-19T07:05:11.867Z"
+  },
+  "type": "decor",
+  "brand": "asus",
+  "material": "زان",
+  "color": "Orange",
+  "dimensions": "160x60",
+  "capacity": null,
+  "powerWatts": null,
+  "usageType": "",
+  "reviews": [
+    {
+      "user": {
+        "$oid": "6abddbb545bf09cbd0fffb72"
+      },
+      "comment": "نار حمرا",
+      "rating": 5,
+      "createdAt": {
+        "$date": "2026-10-19T11:14:09.628Z"
+      },
+      "_id": {
+        "$oid": "6ad5fb81ba6f35bf2bfaa884"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-10-19T07:04:58.709Z"
+  },
+  "updatedAt": {
+    "$date": "2026-10-26T06:41:00.235Z"
+  },
+  "__v": 3
 }]
