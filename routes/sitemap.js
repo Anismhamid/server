@@ -12,7 +12,23 @@ const CACHE_TTL = 1000 * 60 * 15;
 const ENABLE_LOGGING =
     process.env.NODE_ENV !== 'production' || process.env.LOG_SITEMAP === 'true';
 
-const publicPostFilter = { in_stock: true, status: 'accepted' };
+const MIN_DESC = 40; // لازم يطابق PostDetails.tsx
+const MIN_NAME = 4;
+
+const trimmedLen = (field) => ({
+    $strLenCP: { $trim: { input: { $toString: { $ifNull: [field, ''] } } } },
+});
+
+const publicPostFilter = {
+    in_stock: true,
+    status: 'accepted',
+    $expr: {
+        $and: [
+            { $gte: [trimmedLen('$description'), MIN_DESC] },
+            { $gte: [trimmedLen('$product_name'), MIN_NAME] },
+        ],
+    },
+};
 
 const staticUrls = [
     { loc: '/', priority: '1.0', changefreq: 'daily' },
@@ -46,10 +62,26 @@ const staticUrls = [
     { loc: '/category/Pets', priority: '0.8', changefreq: 'weekly' },
     { loc: '/category/cameras', priority: '0.8', changefreq: 'weekly' },
     { loc: '/category/books', priority: '0.8', changefreq: 'weekly' },
-    { loc: '/category/musicalInstruments', priority: '0.8', changefreq: 'weekly' },
-    { loc: '/category/constructionEquipment', priority: '0.8', changefreq: 'weekly' },
-    { loc: '/category/industrialEquipment', priority: '0.8', changefreq: 'weekly' },
-    { loc: '/category/weldingEquipment', priority: '0.8', changefreq: 'weekly' },
+    {
+        loc: '/category/musicalInstruments',
+        priority: '0.8',
+        changefreq: 'weekly',
+    },
+    {
+        loc: '/category/constructionEquipment',
+        priority: '0.8',
+        changefreq: 'weekly',
+    },
+    {
+        loc: '/category/industrialEquipment',
+        priority: '0.8',
+        changefreq: 'weekly',
+    },
+    {
+        loc: '/category/weldingEquipment',
+        priority: '0.8',
+        changefreq: 'weekly',
+    },
     { loc: '/category/officeEquipment', priority: '0.8', changefreq: 'weekly' },
     { loc: '/category/Services', priority: '0.8', changefreq: 'weekly' },
 
@@ -105,7 +137,7 @@ const generateSitemapXml = async (page) => {
         .lean()
         .maxTimeMS(10000);
 
-    const postUrls = posts.map((post) => ({
+    const postUrls = posts.filter((post) => post.seller?.slug).map((post) => ({
         loc: buildPostUrl(post),
         lastmod: post.updatedAt
             ? new Date(post.updatedAt).toISOString().split('T')[0]

@@ -1,13 +1,21 @@
 const mongoose = require('mongoose');
-const Post = require('./models/post');
+const Posts = require('./models/post');
+const chalk = require('chalk');
 
 const seedPosts = async () => {
+    const existing = await Posts.countDocuments();
+    if (existing > 0) {
+        console.log(
+            chalk.yellow(
+                `Posts already exist (${existing}). Skipping seeding.`,
+            ),
+        );
+        return;
+    }
     try {
         const posts = [
             {
-                seller: new mongoose.Types.ObjectId(
-                    '6980c609317475fe5c733aed'
-                ),
+                seller: new mongoose.Types.ObjectId('6980c609317475fe5c733aed'),
                 product_name: 'iPhone 15 Pro 256GB',
                 category: 'Electronics',
                 subcategory: 'smartphones',
@@ -39,9 +47,7 @@ const seedPosts = async () => {
             },
 
             {
-                seller: new mongoose.Types.ObjectId(
-                    '6980c609317475fe5c733aed'
-                ),
+                seller: new mongoose.Types.ObjectId('6980c609317475fe5c733aed'),
                 product_name: 'Samsung Galaxy S24 256GB',
                 category: 'Electronics',
                 subcategory: 'smartphones',
@@ -72,15 +78,12 @@ const seedPosts = async () => {
             },
 
             {
-                seller: new mongoose.Types.ObjectId(
-                    '6979d4774f1db7cd4a712604'
-                ),
+                seller: new mongoose.Types.ObjectId('6979d4774f1db7cd4a712604'),
                 product_name: 'Samsung Galaxy A55 128GB',
                 category: 'Electronics',
                 subcategory: 'smartphones',
                 price: 1200,
-                description:
-                    'هاتف Samsung Galaxy A55 128GB بحالة جيدة جداً.',
+                description: 'هاتف Samsung Galaxy A55 128GB بحالة جيدة جداً.',
                 image: {
                     url: 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800',
                     publicId: 'seed/samsung-a55',
@@ -105,9 +108,7 @@ const seedPosts = async () => {
             },
 
             {
-                seller: new mongoose.Types.ObjectId(
-                    '6980c609317475fe5c733aed'
-                ),
+                seller: new mongoose.Types.ObjectId('6980c609317475fe5c733aed'),
                 product_name: 'Toyota Corolla 2022',
                 category: 'Cars',
                 subcategory: 'private',
@@ -134,15 +135,12 @@ const seedPosts = async () => {
             },
 
             {
-                seller: new mongoose.Types.ObjectId(
-                    '6979d4774f1db7cd4a712604'
-                ),
+                seller: new mongoose.Types.ObjectId('6979d4774f1db7cd4a712604'),
                 product_name: 'Hyundai Tucson 2021',
                 category: 'Cars',
                 subcategory: 'private',
                 price: 79000,
-                description:
-                    'Hyundai Tucson 2021 SUV عائلية بحالة ممتازة.',
+                description: 'Hyundai Tucson 2021 SUV عائلية بحالة ممتازة.',
                 image: {
                     url: 'https://images.unsplash.com/photo-1633500770365-9f2a9a5a4d4c?w=800',
                     publicId: 'seed/hyundai-tucson-2021',
@@ -163,15 +161,12 @@ const seedPosts = async () => {
             },
 
             {
-                seller: new mongoose.Types.ObjectId(
-                    '6980c609317475fe5c733aed'
-                ),
+                seller: new mongoose.Types.ObjectId('6980c609317475fe5c733aed'),
                 product_name: 'Toyota Prius 2020 Hybrid',
                 category: 'Cars',
                 subcategory: 'private',
                 price: 62000,
-                description:
-                    'Toyota Prius 2020 היברידית חסכונית מאוד בדלק.',
+                description: 'Toyota Prius 2020 היברידית חסכונית מאוד בדלק.',
                 image: {
                     url: 'https://images.unsplash.com/photo-1550355291-bbee04a92027?w=800',
                     publicId: 'seed/toyota-prius',
@@ -192,9 +187,7 @@ const seedPosts = async () => {
             },
 
             {
-                seller: new mongoose.Types.ObjectId(
-                    '6980c609317475fe5c733aed'
-                ),
+                seller: new mongoose.Types.ObjectId('6980c609317475fe5c733aed'),
                 product_name: 'Yamaha R6 2020',
                 category: 'Motorcycles',
                 subcategory: 'sport',
@@ -222,15 +215,12 @@ const seedPosts = async () => {
             },
 
             {
-                seller: new mongoose.Types.ObjectId(
-                    '6979d4774f1db7cd4a712604'
-                ),
+                seller: new mongoose.Types.ObjectId('6979d4774f1db7cd4a712604'),
                 product_name: 'Honda Off Road Bike',
                 category: 'Motorcycles',
                 subcategory: 'offRoad',
                 price: 29000,
-                description:
-                    'Honda off road motorcycle مناسبة للطرق الوعرة.',
+                description: 'Honda off road motorcycle مناسبة للطرق الوعرة.',
                 image: {
                     url: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800',
                     publicId: 'seed/honda-offroad',
@@ -252,15 +242,12 @@ const seedPosts = async () => {
             },
 
             {
-                seller: new mongoose.Types.ObjectId(
-                    '6980c609317475fe5c733aed'
-                ),
+                seller: new mongoose.Types.ObjectId('6980c609317475fe5c733aed'),
                 product_name: 'Mountain Bike',
                 category: 'Bikes',
                 subcategory: 'mountain',
                 price: 1800,
-                description:
-                    'دراجة جبلية قوية مع نظام تعليق أمامي.',
+                description: 'دراجة جبلية قوية مع نظام تعليق أمامي.',
                 image: {
                     url: 'https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=800',
                     publicId: 'seed/mountain-bike',
@@ -279,15 +266,12 @@ const seedPosts = async () => {
             },
 
             {
-                seller: new mongoose.Types.ObjectId(
-                    '6979d4774f1db7cd4a712604'
-                ),
+                seller: new mongoose.Types.ObjectId('6979d4774f1db7cd4a712604'),
                 product_name: 'PlayStation 5',
                 category: 'Gaming',
                 subcategory: 'consoles',
                 price: 1800,
-                description:
-                    'PlayStation 5 بحالة ممتازة مع يد تحكم.',
+                description: 'PlayStation 5 بحالة ممتازة مع يد تحكم.',
                 image: {
                     url: 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=800',
                     publicId: 'seed/playstation-5',
@@ -308,15 +292,12 @@ const seedPosts = async () => {
             },
 
             {
-                seller: new mongoose.Types.ObjectId(
-                    '6980c609317475fe5c733aed'
-                ),
+                seller: new mongoose.Types.ObjectId('6980c609317475fe5c733aed'),
                 product_name: 'PlayStation 5 FC 25',
                 category: 'Gaming',
                 subcategory: 'games',
                 price: 180,
-                description:
-                    'لعبة كرة قدم PlayStation بحالة ممتازة.',
+                description: 'لعبة كرة قدم PlayStation بحالة ممتازة.',
                 image: {
                     url: 'https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=800',
                     publicId: 'seed/fc25',
@@ -337,15 +318,12 @@ const seedPosts = async () => {
             },
 
             {
-                seller: new mongoose.Types.ObjectId(
-                    '6980c609317475fe5c733aed'
-                ),
+                seller: new mongoose.Types.ObjectId('6980c609317475fe5c733aed'),
                 product_name: 'Corner Sofa',
                 category: 'Furniture',
                 subcategory: 'living_room',
                 price: 3500,
-                description:
-                    'كنبة زاوية مريحة لغرفة المعيشة.',
+                description: 'كنبة زاوية مريحة لغرفة المعيشة.',
                 image: {
                     url: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800',
                     publicId: 'seed/corner-sofa',
@@ -368,15 +346,12 @@ const seedPosts = async () => {
             },
 
             {
-                seller: new mongoose.Types.ObjectId(
-                    '6979d4774f1db7cd4a712604'
-                ),
+                seller: new mongoose.Types.ObjectId('6979d4774f1db7cd4a712604'),
                 product_name: 'Dining Table',
                 category: 'Furniture',
                 subcategory: 'dining',
                 price: 2200,
-                description:
-                    'طاولة طعام خشبية لأربعة إلى ستة أشخاص.',
+                description: 'طاولة طعام خشبية لأربعة إلى ستة أشخاص.',
                 image: {
                     url: 'https://images.unsplash.com/photo-1617806118233-18e1de247200?w=800',
                     publicId: 'seed/dining-table',
@@ -397,15 +372,12 @@ const seedPosts = async () => {
             },
 
             {
-                seller: new mongoose.Types.ObjectId(
-                    '6980c609317475fe5c733aed'
-                ),
+                seller: new mongoose.Types.ObjectId('6980c609317475fe5c733aed'),
                 product_name: 'Kitchen Mixer Bosch',
                 category: 'House',
                 subcategory: 'kitchen',
                 price: 650,
-                description:
-                    'خلاط ومضرب كهربائي Bosch للمطبخ.',
+                description: 'خلاط ومضرب كهربائي Bosch للمطبخ.',
                 image: {
                     url: 'https://images.unsplash.com/photo-1570222094114-d054a817e56b?w=800',
                     publicId: 'seed/bosch-mixer',
@@ -425,15 +397,12 @@ const seedPosts = async () => {
             },
 
             {
-                seller: new mongoose.Types.ObjectId(
-                    '6979d4774f1db7cd4a712604'
-                ),
+                seller: new mongoose.Types.ObjectId('6979d4774f1db7cd4a712604'),
                 product_name: 'Garden Shovel',
                 category: 'Garden',
                 subcategory: 'tools',
                 price: 120,
-                description:
-                    'مجرفة قوية لأعمال الحديقة والحفر.',
+                description: 'مجرفة قوية لأعمال الحديقة والحفر.',
                 image: {
                     url: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800',
                     publicId: 'seed/garden-shovel',
@@ -452,15 +421,12 @@ const seedPosts = async () => {
             },
 
             {
-                seller: new mongoose.Types.ObjectId(
-                    '6980c609317475fe5c733aed'
-                ),
+                seller: new mongoose.Types.ObjectId('6980c609317475fe5c733aed'),
                 product_name: 'Indoor Monstera Plant',
                 category: 'Garden',
                 subcategory: 'plants',
                 price: 150,
-                description:
-                    'نبتة Monstera جميلة مناسبة للمنزل.',
+                description: 'نبتة Monstera جميلة مناسبة للمنزل.',
                 image: {
                     url: 'https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=800',
                     publicId: 'seed/monstera',
@@ -479,15 +445,12 @@ const seedPosts = async () => {
             },
 
             {
-                seller: new mongoose.Types.ObjectId(
-                    '6979d4774f1db7cd4a712604'
-                ),
+                seller: new mongoose.Types.ObjectId('6979d4774f1db7cd4a712604'),
                 product_name: 'Apple Watch Series 9',
                 category: 'Watches',
                 subcategory: 'smart',
                 price: 1300,
-                description:
-                    'Apple Watch Series 9 بحالة ممتازة.',
+                description: 'Apple Watch Series 9 بحالة ممتازة.',
                 image: {
                     url: 'https://images.unsplash.com/photo-1544117519-31a4b719223d?w=800',
                     publicId: 'seed/apple-watch-9',
@@ -505,15 +468,12 @@ const seedPosts = async () => {
             },
 
             {
-                seller: new mongoose.Types.ObjectId(
-                    '6980c609317475fe5c733aed'
-                ),
+                seller: new mongoose.Types.ObjectId('6980c609317475fe5c733aed'),
                 product_name: 'Disinfectant 1L',
                 category: 'Cleaning',
                 subcategory: 'disinfection',
                 price: 30,
-                description:
-                    'مطهر منزلي 1 لتر للتنظيف والتعقيم.',
+                description: 'مطهر منزلي 1 لتر للتنظيف والتعقيم.',
                 image: {
                     url: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=800',
                     publicId: 'seed/disinfectant-1l',
@@ -531,15 +491,12 @@ const seedPosts = async () => {
             },
 
             {
-                seller: new mongoose.Types.ObjectId(
-                    '6979d4774f1db7cd4a712604'
-                ),
+                seller: new mongoose.Types.ObjectId('6979d4774f1db7cd4a712604'),
                 product_name: 'Men Casual T-Shirt',
                 category: 'MenClothes',
                 subcategory: 'casual',
                 price: 90,
-                description:
-                    'قميص رجالي كاجوال قطن 100%.',
+                description: 'قميص رجالي كاجوال قطن 100%.',
                 image: {
                     url: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800',
                     publicId: 'seed/men-tshirt',
@@ -558,15 +515,12 @@ const seedPosts = async () => {
             },
 
             {
-                seller: new mongoose.Types.ObjectId(
-                    '6980c609317475fe5c733aed'
-                ),
+                seller: new mongoose.Types.ObjectId('6980c609317475fe5c733aed'),
                 product_name: "Women's Evening Dress",
                 category: 'WomenClothes',
                 subcategory: 'dresses',
                 price: 350,
-                description:
-                    'فستان نسائي أنيق للمناسبات.',
+                description: 'فستان نسائي أنيق للمناسبات.',
                 image: {
                     url: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=800',
                     publicId: 'seed/women-dress',
@@ -586,15 +540,12 @@ const seedPosts = async () => {
             },
 
             {
-                seller: new mongoose.Types.ObjectId(
-                    '6979d4774f1db7cd4a712604'
-                ),
+                seller: new mongoose.Types.ObjectId('6979d4774f1db7cd4a712604'),
                 product_name: 'Modern Apartment 4 Rooms',
                 category: 'RealEstate',
                 subcategory: 'apartment',
                 price: 1250000,
-                description:
-                    'شقة حديثة للبيع، أربع غرف مع موقف سيارة ومصعد.',
+                description: 'شقة حديثة للبيع، أربع غرف مع موقف سيارة ومصعد.',
                 image: {
                     url: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800',
                     publicId: 'seed/apartment-4-rooms',
@@ -623,15 +574,12 @@ const seedPosts = async () => {
             },
 
             {
-                seller: new mongoose.Types.ObjectId(
-                    '6980c609317475fe5c733aed'
-                ),
+                seller: new mongoose.Types.ObjectId('6980c609317475fe5c733aed'),
                 product_name: 'Golden Retriever Puppy',
                 category: 'Pets',
                 subcategory: 'dogs',
                 price: 2500,
-                description:
-                    'جرو Golden Retriever اجتماعي ونشيط.',
+                description: 'جرو Golden Retriever اجتماعي ونشيط.',
                 image: {
                     url: 'https://images.unsplash.com/photo-1552053831-71594a27632d?w=800',
                     publicId: 'seed/golden-retriever',
@@ -656,11 +604,9 @@ const seedPosts = async () => {
             },
         ];
 
-        const insertedPosts = await Post.insertMany(posts);
+        const insertedPosts = await Posts.insertMany(posts);
 
-        console.log(
-            `✅ Inserted ${insertedPosts.length} posts successfully.`
-        );
+        console.log(`✅ Inserted ${insertedPosts.length} posts successfully.`);
 
         return insertedPosts;
     } catch (error) {
