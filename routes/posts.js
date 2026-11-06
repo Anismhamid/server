@@ -889,9 +889,7 @@ router.patch(
                         );
                     });
                 } else {
-                    console.warn(
-                        `[approve] Post ${post._id} has no seller`,
-                    );
+                    console.warn(`[approve] Post ${post._id} has no seller`);
                 }
 
                 // ------------------------------------------------------------
@@ -900,13 +898,10 @@ router.patch(
 
                 matchSavedSearches(io, post)
                     .then((result) => {
-                        console.log(
-                            '[approve] Saved search matching result:',
-                            {
-                                postId: String(post._id),
-                                ...result,
-                            },
-                        );
+                        console.log('[approve] Saved search matching result:', {
+                            postId: String(post._id),
+                            ...result,
+                        });
                     })
                     .catch((error) => {
                         console.error(
