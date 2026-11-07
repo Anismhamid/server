@@ -2,10 +2,10 @@ const Joi = require('joi');
 
 const publicUserSchema = Joi.object({
     name: Joi.object({
-        first: Joi.string(),
-        last: Joi.string(),
+        first: Joi.string().allow(''),
+        last: Joi.string().allow(''),
     }),
-    slug: Joi.string(),
+    slug: Joi.string().allow(''),
     image: Joi.object({
         url: Joi.string().uri().allow(''),
         publicId: Joi.string().allow(''),
@@ -86,7 +86,7 @@ const baseProductSchema = {
 
     location: Joi.string().empty('').default('israel'),
 
-    ageGroup: Joi.string(),
+    ageGroup: Joi.string().allow(''),
 
     safeMaterial: Joi.boolean().default(false),
 
@@ -116,8 +116,8 @@ const houseSchema = Joi.object({
         .valid('kitchen', 'storage', 'decor', 'maintenance')
         .required(),
 
-    brand: Joi.string(),
-    material: Joi.string(),
+    brand: Joi.string().allow(''),
+    material: Joi.string().allow(''),
     color: Joi.string().allow('').optional(),
     dimensions: Joi.string().allow('').optional(),
     capacity: Joi.number().allow('').optional(),
@@ -133,26 +133,26 @@ const gardenSchema = Joi.object({
         .valid('plants', 'trees', 'watering', 'tools', 'outdoorDecor')
         .required(),
 
-    brand: Joi.string(),
+    brand: Joi.string().allow(''),
 
     // Trees
-    treeType: Joi.string(),
+    treeType: Joi.string().allow(''),
     height: Joi.number().min(0),
     ageYears: Joi.number().min(0),
     fruitBearing: Joi.boolean(),
-    fruitType: Joi.string(),
+    fruitType: Joi.string().allow(''),
 
     // Plants
-    plantType: Joi.string(),
-    season: Joi.string(),
-    sunExposure: Joi.string(),
+    plantType: Joi.string().allow(''),
+    season: Joi.string().allow(''),
+    sunExposure: Joi.string().allow(''),
 
     // Watering
     hoseLength: Joi.number().min(0),
     automatic: Joi.boolean(),
 
     // Tools
-    toolType: Joi.string(),
+    toolType: Joi.string().allow(''),
 
     weatherResistant: Joi.boolean(),
 }).options({ stripUnknown: true });
@@ -175,7 +175,7 @@ const carsSchema = Joi.object({
             otherwise: Joi.optional(),
         }),
     mileage: Joi.number().min(0),
-    color: Joi.string(),
+    color: Joi.string().allow(''),
     batteryCapacity: Joi.number().optional(),
     rangeKm: Joi.number().optional(),
 }).options({ stripUnknown: true });
@@ -210,7 +210,7 @@ const motorcyclesSchema = Joi.object({
 
     fuel: Joi.string().valid('gasoline', 'electric'),
 
-    color: Joi.string(),
+    color: Joi.string().allow(''),
 
     partType: Joi.string().when('type', {
         is: 'parts',
@@ -290,8 +290,8 @@ const menClothesSchema = Joi.object({
     ...baseProductSchema,
     type: Joi.string().valid('casual', 'formal', 'shoes').required(),
     size: Joi.string().required(),
-    material: Joi.string(),
-    color: Joi.string(),
+    material: Joi.string().allow(''),
+    color: Joi.string().allow(''),
 }).options({ stripUnknown: true });
 
 /* ================== Women Clothes ================== */
@@ -299,9 +299,9 @@ const womenClothesSchema = Joi.object({
     ...baseProductSchema,
     type: Joi.string().valid('casual', 'dresses', 'shoes').required(),
     size: Joi.string().required(),
-    material: Joi.string(),
-    color: Joi.string(),
-    length: Joi.string(), // للفئة dresses
+    material: Joi.string().allow(''),
+    color: Joi.string().allow(''),
+    length: Joi.string().allow(''), // للفئة dresses
     heelHeight: Joi.number(), // للفئة shoes
 }).options({ stripUnknown: true });
 
@@ -311,8 +311,8 @@ const womenBagsSchema = Joi.object({
         .valid('handbags', 'toteBags', 'backpacks', 'clutches')
         .required(),
     size: Joi.string().required(),
-    material: Joi.string(),
-    color: Joi.string(),
+    material: Joi.string().allow(''),
+    color: Joi.string().allow(''),
 }).options({ stripUnknown: true });
 
 /* ================== Baby ================== */
@@ -320,8 +320,8 @@ const babySchema = Joi.object({
     ...baseProductSchema,
     type: Joi.string().valid('clothes', 'care', 'feeding').required(),
     ageGroup: Joi.string().required(),
-    brand: Joi.string(),
-    material: Joi.string(),
+    brand: Joi.string().allow(''),
+    material: Joi.string().allow(''),
 }).options({ stripUnknown: true });
 
 /* ================== Kids ================== */
@@ -330,14 +330,14 @@ const kidsSchema = Joi.object({
     type: Joi.string().valid('educational', 'toys', 'outdoor').required(),
     ageGroup: Joi.string().required(),
     safeMaterial: Joi.boolean(),
-    material: Joi.string(),
+    material: Joi.string().allow(''),
 }).options({ stripUnknown: true });
 
 /* ================== Health ================== */
 const healthSchema = Joi.object({
     ...baseProductSchema,
     type: Joi.string().valid('personalCare', 'medical', 'fitness').required(),
-    brand: Joi.string(),
+    brand: Joi.string().allow(''),
     expiryDate: Joi.date(),
 }).options({ stripUnknown: true });
 
@@ -345,7 +345,7 @@ const healthSchema = Joi.object({
 const beautySchema = Joi.object({
     ...baseProductSchema,
     type: Joi.string().valid('makeup', 'skincare', 'hair').required(),
-    brand: Joi.string(),
+    brand: Joi.string().allow(''),
     expiryDate: Joi.date(),
 }).options({ stripUnknown: true });
 
@@ -353,7 +353,7 @@ const beautySchema = Joi.object({
 const watchesSchema = Joi.object({
     ...baseProductSchema,
     type: Joi.string().valid('classic', 'smart', 'hand').required(),
-    brand: Joi.string(),
+    brand: Joi.string().allow(''),
     waterResistant: Joi.boolean(),
 }).options({ stripUnknown: true });
 
@@ -361,7 +361,7 @@ const watchesSchema = Joi.object({
 const cleaningSchema = Joi.object({
     ...baseProductSchema,
     type: Joi.string().valid('detergents', 'tools', 'disinfection').required(),
-    brand: Joi.string(),
+    brand: Joi.string().allow(''),
     volume: Joi.number(),
 }).options({ stripUnknown: true });
 
@@ -379,13 +379,13 @@ const artSchema = Joi.object({
         )
         .required(),
 
-    artist: Joi.string(),
+    artist: Joi.string().allow(''),
     creationYear: Joi.number(),
-    dimensions: Joi.string(),
-    technique: Joi.string(),
+    dimensions: Joi.string().allow(''),
+    technique: Joi.string().allow(''),
     certificate: Joi.boolean().default(false),
-    provenance: Joi.string(),
-    condition: Joi.string(),
+    provenance: Joi.string().allow(''),
+    condition: Joi.string().allow(''),
     framed: Joi.boolean().default(false),
 }).options({ stripUnknown: true });
 
@@ -405,11 +405,11 @@ const gamingSchema = Joi.object({
         'Mobile',
     ),
 
-    genre: Joi.string(),
-    edition: Joi.string(),
+    genre: Joi.string().allow(''),
+    edition: Joi.string().allow(''),
     multiplayer: Joi.boolean().default(false),
-    rating: Joi.string(),
-    language: Joi.string(),
+    rating: Joi.string().allow(''),
+    language: Joi.string().allow(''),
     releaseYear: Joi.number(),
 }).options({ stripUnknown: true });
 
@@ -453,23 +453,23 @@ const petsSchema = Joi.object({
         .valid('dogs', 'cats', 'birds', 'fish', 'small_animals', 'supplies')
         .required(),
 
-    breed: Joi.string(),
+    breed: Joi.string().allow(''),
     age: Joi.number().min(0),
     gender: Joi.string().valid('male', 'female'),
-    birdType: Joi.string(),
+    birdType: Joi.string().allow(''),
 
     vaccinated: Joi.boolean().default(false),
     neutered: Joi.boolean().default(false),
     microchipped: Joi.boolean().default(false),
 
-    color: Joi.string(),
+    color: Joi.string().allow(''),
     weight: Joi.number().min(0),
-    healthIssues: Joi.string(),
-    temperament: Joi.string(),
+    healthIssues: Joi.string().allow(''),
+    temperament: Joi.string().allow(''),
 
-    brand: Joi.string(),
-    size: Joi.string(),
-    material: Joi.string(),
+    brand: Joi.string().allow(''),
+    size: Joi.string().allow(''),
+    material: Joi.string().allow(''),
 }).options({ stripUnknown: true });
 
 /* ================== Furniture ================== */
@@ -499,7 +499,7 @@ const furnitureSchema = Joi.object({
         .valid('new', 'like_new', 'good', 'fair')
         .default('good'),
 
-    style: Joi.string(),
+    style: Joi.string().allow(''),
     includesAccessories: Joi.boolean().default(false),
 }).options({ stripUnknown: true });
 
@@ -511,8 +511,8 @@ const camerasSchema = Joi.object({
         .valid('cameras', 'lenses', 'video', 'accessories')
         .required(),
 
-    brand: Joi.string(),
-    model: Joi.string(),
+    brand: Joi.string().allow(''),
+    model: Joi.string().allow(''),
 
     cameraType: Joi.string().valid(
         'dslr',
@@ -523,19 +523,19 @@ const camerasSchema = Joi.object({
         'professional_video',
     ),
 
-    sensorType: Joi.string(),
+    sensorType: Joi.string().allow(''),
     megapixels: Joi.number(),
-    resolution: Joi.string(),
-    videoResolution: Joi.string(),
+    resolution: Joi.string().allow(''),
+    videoResolution: Joi.string().allow(''),
 
-    lensMount: Joi.string(),
-    focalLength: Joi.string(),
+    lensMount: Joi.string().allow(''),
+    focalLength: Joi.string().allow(''),
 
     condition: Joi.string()
         .valid('new', 'like_new', 'excellent', 'good', 'fair')
         .default('good'),
 
-    warranty: Joi.string(),
+    warranty: Joi.string().allow(''),
     includedAccessories: Joi.array().items(Joi.string()),
 }).options({ stripUnknown: true });
 
@@ -556,14 +556,14 @@ const booksSchema = Joi.object({
         )
         .required(),
 
-    title: Joi.string(),
-    author: Joi.string(),
-    publisher: Joi.string(),
-    edition: Joi.string(),
+    title: Joi.string().allow(''),
+    author: Joi.string().allow(''),
+    publisher: Joi.string().allow(''),
+    edition: Joi.string().allow(''),
     publicationYear: Joi.number(),
-    language: Joi.string(),
+    language: Joi.string().allow(''),
 
-    isbn: Joi.string(),
+    isbn: Joi.string().allow(''),
 
     condition: Joi.string()
         .valid('new', 'like_new', 'good', 'fair')
@@ -587,12 +587,12 @@ const musicalInstrumentsSchema = Joi.object({
         )
         .required(),
 
-    brand: Joi.string(),
-    model: Joi.string(),
+    brand: Joi.string().allow(''),
+    model: Joi.string().allow(''),
 
-    material: Joi.string(),
-    color: Joi.string(),
-    size: Joi.string(),
+    material: Joi.string().allow(''),
+    color: Joi.string().allow(''),
+    size: Joi.string().allow(''),
 
     electric: Joi.boolean().default(false),
 
@@ -620,8 +620,8 @@ const constructionEquipmentSchema = Joi.object({
         )
         .required(),
 
-    brand: Joi.string(),
-    model: Joi.string(),
+    brand: Joi.string().allow(''),
+    model: Joi.string().allow(''),
 
     year: Joi.number(),
 
@@ -637,7 +637,7 @@ const constructionEquipmentSchema = Joi.object({
         .valid('new', 'like_new', 'excellent', 'good', 'fair')
         .default('good'),
 
-    warranty: Joi.string(),
+    warranty: Joi.string().allow(''),
 }).options({ stripUnknown: true });
 
 /* ================== Industrial Equipment ================== */
@@ -656,8 +656,8 @@ const industrialEquipmentSchema = Joi.object({
         )
         .required(),
 
-    brand: Joi.string(),
-    model: Joi.string(),
+    brand: Joi.string().allow(''),
+    model: Joi.string().allow(''),
 
     year: Joi.number(),
 
@@ -671,7 +671,7 @@ const industrialEquipmentSchema = Joi.object({
         .valid('new', 'like_new', 'excellent', 'good', 'fair')
         .default('good'),
 
-    warranty: Joi.string(),
+    warranty: Joi.string().allow(''),
 }).options({ stripUnknown: true });
 
 /* ================== Welding Equipment ================== */
@@ -688,8 +688,8 @@ const weldingEquipmentSchema = Joi.object({
         )
         .required(),
 
-    brand: Joi.string(),
-    model: Joi.string(),
+    brand: Joi.string().allow(''),
+    model: Joi.string().allow(''),
 
     weldingType: Joi.string().valid(
         'mig',
@@ -727,10 +727,10 @@ const officeEquipmentSchema = Joi.object({
         )
         .required(),
 
-    brand: Joi.string(),
-    model: Joi.string(),
+    brand: Joi.string().allow(''),
+    model: Joi.string().allow(''),
 
-    connectivity: Joi.string(),
+    connectivity: Joi.string().allow(''),
 
     printTechnology: Joi.string().valid('laser', 'inkjet', 'thermal', 'other'),
 
@@ -740,7 +740,7 @@ const officeEquipmentSchema = Joi.object({
         .valid('new', 'like_new', 'excellent', 'good', 'fair')
         .default('good'),
 
-    warranty: Joi.string(),
+    warranty: Joi.string().allow(''),
 }).options({ stripUnknown: true });
 
 /* ================== Services ================== */

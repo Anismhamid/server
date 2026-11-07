@@ -345,7 +345,8 @@ router.get('/spicific/:postId', async (req, res) => {
     }
 });
 
-// Update post
+
+/* Update post */
 router.put(
     '/:postId',
     auth,
@@ -354,10 +355,18 @@ router.put(
     async (req, res) => {
         try {
             const post = await Posts.findById(req.params.postId);
-            if (!post) return res.status(404).send('Post not found');
 
-            const isOwner =
-                req.payload._id.toString() === post.seller._id.toString();
+            if (!post) {
+                return res.status(404).send('Post not found');
+            }
+
+            const userId = req.payload._id.toString();
+            const sellerId = (
+                post.seller?._id ?? post.seller
+            )?.toString();
+
+            const isOwner = userId === sellerId;
+
             const isAdminOrMod =
                 req.payload.role === 'Admin' ||
                 req.payload.role === 'Moderator';
@@ -366,16 +375,24 @@ router.put(
                 return res.status(403).send('Access denied');
             }
 
-            const schema = getPostSchema(post.category, post.type);
+            // Dynamic Joi schema according to post category and type
+            const schema = getPostSchema(
+                post.category,
+                post.type
+            );
 
             const { error, value } = schema.validate(req.body, {
                 abortEarly: false,
                 allowUnknown: false,
                 presence: 'optional',
+                noDefaults: true,
             });
 
             if (error) {
-                console.error('❌ Joi validation error:', error.details);
+                console.error(
+                    '❌ Joi validation error:',
+                    error.details
+                );
 
                 return res.status(400).json({
                     success: false,
@@ -387,19 +404,36 @@ router.put(
                 });
             }
 
-            const updatedPost = await Posts.findByIdAndUpdate(
-                req.params.postId,
-                { $set: value },
-                { returnDocument: 'after', runValidators: true },
-            );
+            // Fields that must never be changed through this route
+            const protectedFields = [
+                'seller',
+                'likes',
+                'reviews',
+                'category',
+                'status',
+                'featured',
+                '_id',
+                '__v',
+                'createdAt',
+                'updatedAt',
+            ];
+
+            for (const key of protectedFields) {
+                delete value[key];
+            }
+
+            // Update the existing discriminator document
+            post.set(value);
+
+            await post.save();
 
             invalidateSitemapCache();
 
-            res.status(200).send(updatedPost);
+            return res.status(200).send(post);
+
         } catch (error) {
             console.error('❌ Update post error:', error);
             console.error('Post ID:', req.params.postId);
-            console.error('Body:', req.body);
 
             return res.status(500).json({
                 success: false,
@@ -408,6 +442,7 @@ router.put(
         }
     },
 );
+
 
 // Delete post
 router.delete(
@@ -477,6 +512,7 @@ router.delete(
         }
     },
 );
+
 //______________End-All-posts__________
 
 router.get('/:category', async (req, res) => {
