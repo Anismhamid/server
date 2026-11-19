@@ -14,19 +14,15 @@ module.exports = async (req, res, next) => {
             });
         }
 
-        const payload = Jwt.verify(
-            token,
-            process.env.JWT_SECRET,
-        );
+        const payload = Jwt.verify(token, process.env.JWT_SECRET, {
+            algorithms: ['HS256'],
+        });
 
         req.payload = payload;
 
         next();
     } catch (error) {
-        console.error(
-            'Auth middleware error:',
-            error.message,
-        );
+        console.error('Auth middleware error:', error.message);
 
         return res.status(401).json({
             success: false,

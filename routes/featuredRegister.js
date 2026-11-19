@@ -68,6 +68,14 @@ router.post('/buy', auth, async (req, res) => {
         if (!listing) {
             return res.status(404).json({ message: 'Listing not found' });
         }
+        
+        if (listing.seller.toString() !== userId) {
+            return res.status(403).json({
+                success: false,
+                code: 'NOT_LISTING_OWNER',
+                message: 'You can only promote your own listings',
+            });
+        }
 
         const prices = {
             highlight: 10,

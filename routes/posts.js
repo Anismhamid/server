@@ -10,6 +10,7 @@ const { getPostSchema } = require('../schema/postsSchema');
 const {
     requirePermission,
     requireRole,
+    requireActiveAccount
 } = require('../middlewares/userPermissions');
 const { invalidateSitemapCache } = require('../routes/sitemap');
 const Block = require('../models/Block');
@@ -345,12 +346,11 @@ router.get('/spicific/:postId', async (req, res) => {
     }
 });
 
-
 /* Update post */
 router.put(
     '/:postId',
     auth,
-    requirePermission('canUseAccount'),
+    requireActiveAccount,
     requirePermission('canCreatePosts'),
     async (req, res) => {
         try {
@@ -361,25 +361,20 @@ router.put(
             }
 
             const userId = req.payload._id.toString();
-            const sellerId = (
-                post.seller?._id ?? post.seller
-            )?.toString();
+            const sellerId = (post.seller?._id ?? post.seller)?.toString();
 
             const isOwner = userId === sellerId;
 
             const isAdminOrMod =
-                req.payload.role === 'Admin' ||
-                req.payload.role === 'Moderator';
+                req.currentUser.role === 'Admin' ||
+                req.currentUser.role === 'Moderator';
 
             if (!isOwner && !isAdminOrMod) {
                 return res.status(403).send('Access denied');
             }
 
             // Dynamic Joi schema according to post category and type
-            const schema = getPostSchema(
-                post.category,
-                post.type
-            );
+            const schema = getPostSchema(post.category, post.type);
 
             const { error, value } = schema.validate(req.body, {
                 abortEarly: false,
@@ -389,10 +384,7 @@ router.put(
             });
 
             if (error) {
-                console.error(
-                    '❌ Joi validation error:',
-                    error.details
-                );
+                console.error('❌ Joi validation error:', error.details);
 
                 return res.status(400).json({
                     success: false,
@@ -430,7 +422,6 @@ router.put(
             invalidateSitemapCache();
 
             return res.status(200).send(post);
-
         } catch (error) {
             console.error('❌ Update post error:', error);
             console.error('Post ID:', req.params.postId);
@@ -442,7 +433,6 @@ router.put(
         }
     },
 );
-
 
 // Delete post
 router.delete(
@@ -467,8 +457,8 @@ router.delete(
                 req.payload._id.toString() === post.seller.toString();
 
             const canDelete =
-                req.payload.role === 'Admin' ||
-                req.payload.role === 'Moderator' ||
+                req.currentUser.role === 'Admin' ||
+                req.currentUser.role === 'Moderator' ||
                 isOwner;
 
             if (!canDelete) {

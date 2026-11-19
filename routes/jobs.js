@@ -5,9 +5,13 @@ const Jobs = require('../models/Jobs');
 const auth = require('../middlewares/auth');
 const router = express.Router();
 const {
-    requirePermission,
     requireRole,
+    requireActiveAccount,
 } = require('../middlewares/userPermissions');
+
+const Joi = require('joi');
+const { JOB_CATEGORIES } = require('../config/jobCategories');
+
 
 // =====================================================
 // Helpers
@@ -15,7 +19,7 @@ const {
 
 const populateSeller = {
     path: 'seller',
-    select: 'name image slug _id phone personalEmail',
+    select: 'name image slug _id',
 };
 
 // =====================================================
@@ -177,7 +181,6 @@ router.get('/type/:type', async (req, res) => {
     }
 });
 
-
 // =====================================================
 // GET /api/jobs/admin
 // Admin / Moderator - paginated jobs
@@ -186,6 +189,7 @@ router.get('/type/:type', async (req, res) => {
 router.get(
     '/admin',
     auth,
+    requireActiveAccount,
     requireRole('Admin', 'Moderator'),
     async (req, res) => {
         try {
@@ -291,6 +295,7 @@ router.get(
 router.delete(
     '/admin/:jobId',
     auth,
+    requireActiveAccount,
     requireRole('Admin', 'Moderator'),
     async (req, res) => {
         try {
@@ -337,6 +342,7 @@ router.delete(
 router.patch(
     '/admin/:jobId',
     auth,
+    requireActiveAccount,
     requireRole('Admin', 'Moderator'),
     async (req, res) => {
         try {
@@ -429,7 +435,7 @@ router.get('/:jobId', async (req, res) => {
 // Create job
 // =====================================================
 
-router.post('/', auth, async (req, res) => {
+router.post('/', auth, requireActiveAccount, async (req, res) => {
     try {
         /*
          * مهم:
@@ -478,7 +484,7 @@ router.post('/', auth, async (req, res) => {
 // Update job
 // =====================================================
 
-router.patch('/:jobId', auth, async (req, res) => {
+router.patch('/:jobId', auth, requireActiveAccount, async (req, res) => {
     try {
         const { jobId } = req.params;
         const sellerId = req.payload._id;
@@ -497,14 +503,7 @@ router.patch('/:jobId', auth, async (req, res) => {
             });
         }
 
-        const job = await Jobs.findById(jobId).populate(populateSeller);
-
-        if (!job) {
-            return res.status(404).json({
-                success: false,
-                message: 'Job not found',
-            });
-        }
+        const job = await Jobs.findById(jobId);
 
         // فقط صاحب الوظيفة يستطيع تعديلها
         if (job.seller.toString() !== sellerId.toString()) {
@@ -635,8 +634,5 @@ router.get('/user/:userId', async (req, res) => {
         });
     }
 });
-
-
-
 
 module.exports = router;

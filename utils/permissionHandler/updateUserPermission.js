@@ -1,14 +1,54 @@
 const User = require('../../models/User');
 
-const roleType = {
-    Admin: 'Admin',
-    Moderator: 'Moderator',
-    Client: 'Client',
-};
+const allowedPermissions = [
+    'canLogin',
+    'canCreatePosts',
+    'canSendMessages',
+    'canSendOffers',
+    'canUseAccount',
+    'canAccessExistingData',
+    'canViewMessages',
+    'canViewMessageAuditLogs',
+    'canManageReports',
+    'canDeleteReports',
+];
 
 const updateUserPermission = async (req, res) => {
     try {
-        if (req.payload.role !== roleType.Admin) {
+        if (!req.payload?._id) {
+            return res.status(401).json({
+                success: false,
+                code: 'UNAUTHORIZED',
+                message: 'Authentication required',
+            });
+        }
+
+        // فحص الدور الحالي من قاعدة البيانات
+        const actor = await User.findById(req.payload._id).select(
+            '_id role accountStatus permissions',
+        );
+
+        if (!actor) {
+            return res.status(401).json({
+                success: false,
+                code: 'USER_NOT_FOUND',
+                message: 'User not found',
+            });
+        }
+
+        if (
+            actor.accountStatus === 'disabled' ||
+            actor.permissions?.canLogin === false ||
+            actor.permissions?.canUseAccount === false
+        ) {
+            return res.status(403).json({
+                success: false,
+                code: 'ACCOUNT_ACCESS_DENIED',
+                message: 'Account access denied',
+            });
+        }
+
+        if (actor.role !== 'Admin') {
             return res.status(403).json({
                 success: false,
                 code: 'ADMIN_ONLY',
@@ -18,8 +58,9 @@ const updateUserPermission = async (req, res) => {
 
         const { userId } = req.params;
         const { enabled } = req.body;
+        const permission = req.permission;
 
-        if (userId === req.payload._id.toString()) {
+        if (userId === actor._id.toString()) {
             return res.status(400).json({
                 success: false,
                 code: 'CANNOT_CHANGE_SELF_PERMISSIONS',
@@ -34,21 +75,6 @@ const updateUserPermission = async (req, res) => {
                 message: 'enabled must be a boolean',
             });
         }
-
-        const permission = req.permission;
-
-        const allowedPermissions = [
-            'canLogin',
-            'canCreatePosts',
-            'canSendMessages',
-            'canSendOffers',
-            'canUseAccount',
-            'canAccessExistingData',
-            'canViewMessages',
-            'canViewMessageAuditLogs',
-            'canManageReports',
-            'canDeleteReports',
-        ];
 
         if (!allowedPermissions.includes(permission)) {
             return res.status(400).json({
@@ -83,11 +109,13 @@ const updateUserPermission = async (req, res) => {
 
         const io = req.app.get('io');
 
-        io.emit('user:permissionChanged', {
-            userId: user._id.toString(),
-            permission,
-            enabled,
-        });
+        if (io) {
+            io.emit('user:permissionChanged', {
+                userId: user._id.toString(),
+                permission,
+                enabled,
+            });
+        }
 
         return res.status(200).json({
             success: true,

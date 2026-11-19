@@ -2,9 +2,8 @@
 require('dotenv').config({
     path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env',
 });
-
+const mongoose = require('mongoose');
 const { setServers } = require('node:dns/promises');
-
 const { createServer } = require('http');
 const { Server } = require('socket.io');
 const Jwt = require('jsonwebtoken');
@@ -113,6 +112,11 @@ io.use(async (socket, next) => {
             return next(new Error('Account access disabled'));
         }
 
+        if (user.permissions?.canLogin === false) {
+            return next(new Error('Login permission disabled'));
+        }
+
+        // TODO: Consider adding more granular permission checks here
         socket.user = {
             _id: user._id.toString(),
             role: user.role,
@@ -181,11 +185,22 @@ io.on('connection', (socket) => {
     }
 
     // ==================================================
-    // Typing
+    // Typing — Secure
     // ==================================================
 
-    socket.on('user:typing', ({ to }) => {
-        if (!to) return;
+    const canSendTyping = () => {
+        return (
+            socket.user.permissions?.canSendMessages === true &&
+            socket.user.permissions?.canUseAccount !== false
+        );
+    };
+
+    socket.on('user:typing', ({ to } = {}) => {
+        if (!canSendTyping()) return;
+
+        if (!mongoose.isValidObjectId(to)) return;
+
+        if (to.toString() === userId) return;
 
         io.to(to.toString()).emit('user:typing', {
             from: userId,
@@ -193,16 +208,20 @@ io.on('connection', (socket) => {
     });
 
     // ==================================================
-    // Stop typing
-    // ==================================================
+// Stop Typing — Secure
+// ==================================================
 
-    socket.on('user:stopTyping', ({ to }) => {
-        if (!to) return;
+socket.on('user:stopTyping', ({ to } = {}) => {
+    if (!canSendTyping()) return;
 
-        io.to(to.toString()).emit('user:stopTyping', {
-            from: userId,
-        });
+    if (!mongoose.isValidObjectId(to)) return;
+
+    if (to.toString() === userId) return;
+
+    io.to(to.toString()).emit('user:stopTyping', {
+        from: userId,
     });
+});
 
     // ==================================================
     // IMPORTANT:

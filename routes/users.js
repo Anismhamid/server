@@ -19,6 +19,7 @@ const optionalAuth = require('../middlewares/optionalAuth');
 
 const {
     requirePermission,
+    requireRole,
     setPermission,
 } = require('../middlewares/userPermissions');
 
@@ -710,33 +711,32 @@ router.get('/me', optionalAuth, async (req, res) => {
 // GET ALL USERS (Admin / Moderator)
 // ============================================================
 
-router.get('/', auth, requirePermission('canUseAccount'), async (req, res) => {
-    try {
-        if (
-            req.payload.role !== roleType.Admin &&
-            req.payload.role !== roleType.Moderator
-        ) {
+router.get(
+    '/',
+    auth,
+    requirePermission('canUseAccount'),
+    requireRole('Admin', 'Moderator'),
+    async (req, res) => {
+        try {
+            const users = await User.find().select('-password').lean();
+
+            if (!users.length) {
+                return sendError(res, 404, 'NO_USERS', 'No users found yet');
+            }
+
+            return res.status(200).json(users);
+        } catch (error) {
+            console.error('Get users error:', error);
+
             return sendError(
                 res,
-                403,
-                'USERS_MANAGEMENT_ACCESS_DENIED',
-                'Only admins and moderators can access users',
+                500,
+                'GET_USERS_ERROR',
+                'Internal server error',
             );
         }
-
-        const users = await User.find().select('-password').lean();
-
-        if (!users.length) {
-            return sendError(res, 404, 'NO_USERS', 'No users found yet');
-        }
-
-        return res.status(200).json(users);
-    } catch (error) {
-        console.error('Get users error:', error);
-
-        return sendError(res, 500, 'GET_USERS_ERROR', 'Internal server error');
-    }
-});
+    },
+);
 
 // ============================================================
 // PUBLIC CUSTOMER ROUTES
@@ -879,73 +879,85 @@ router.get(
 
 // ============================================================
 // UPDATE USER ROLE (Admin only)
-// ⚠️ الآن يعتمد على userId بدلاً من userEmail
+// Uses userId instead of userEmail
 // ============================================================
 
-router.patch(
-    '/role/:userId',
-    auth,
-    requirePermission('canUseAccount'),
-    async (req, res) => {
-        try {
-            if (req.payload.role !== roleType.Admin) {
-                return sendError(
-                    res,
-                    403,
-                    'ADMIN_ONLY',
-                    'Access denied. Admins only',
-                );
-            }
+router.patch('/role/:userId', auth, requireRole('Admin'), async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const { role } = req.body;
 
-            const { userId } = req.params;
-            const { role } = req.body;
+        // 1. Validate MongoDB ObjectId
+        if (!mongoose.isValidObjectId(userId)) {
+            return sendError(res, 400, 'INVALID_USER_ID', 'Invalid user ID');
+        }
 
-            if (
-                ![roleType.Admin, roleType.Moderator, roleType.Client].includes(
-                    role,
-                )
-            ) {
-                return sendError(
-                    res,
-                    400,
-                    'INVALID_ROLE',
-                    'Invalid role value',
-                );
-            }
-
-            const user = await User.findByIdAndUpdate(
-                userId,
-                { role },
-                { new: true, runValidators: true },
-            )
-                .select('-password')
-                .lean();
-
-            if (!user) {
-                return sendError(res, 404, 'USER_NOT_FOUND', 'User not found');
-            }
-
-            const io = req.app.get('io');
-            if (io) {
-                io.emit('user:roleChanged', {
-                    userId: user._id.toString(),
-                    role: user.role,
-                });
-            }
-
-            return res.status(200).send(user);
-        } catch (error) {
-            console.error('Role update error:', error);
-
+        // 2. Prevent changing own role
+        if (userId === req.currentUser._id.toString()) {
             return sendError(
                 res,
-                500,
-                'ROLE_UPDATE_ERROR',
-                'Internal server error',
+                400,
+                'CANNOT_CHANGE_SELF_ROLE',
+                'You cannot change your own role',
             );
         }
-    },
-);
+
+        // 3. Validate role
+        const allowedRoles = [
+            roleType.Admin,
+            roleType.Moderator,
+            roleType.Client,
+        ];
+
+        if (!allowedRoles.includes(role)) {
+            return sendError(res, 400, 'INVALID_ROLE', 'Invalid role value');
+        }
+
+        // 4. Update role
+        const user = await User.findByIdAndUpdate(
+            userId,
+            {
+                $set: { role },
+            },
+            {
+                new: true,
+                runValidators: true,
+            },
+        )
+            .select('_id role')
+            .lean();
+
+        // 5. Check user existence
+        if (!user) {
+            return sendError(res, 404, 'USER_NOT_FOUND', 'User not found');
+        }
+
+        // 6. Notify connected clients
+        const io = req.app.get('io');
+
+        if (io) {
+            io.emit('user:roleChanged', {
+                userId: user._id.toString(),
+                role: user.role,
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'User role updated successfully',
+            user,
+        });
+    } catch (error) {
+        console.error('Role update error:', error);
+
+        return sendError(
+            res,
+            500,
+            'ROLE_UPDATE_ERROR',
+            'Internal server error',
+        );
+    }
+});
 
 // ============================================================
 // COMPLETE USER DATA
@@ -967,8 +979,8 @@ router.patch(
                 );
             }
 
-            const isAdmin = req.payload.role === roleType.Admin;
-            const isSelf = req.params.userId === req.payload._id;
+            const isAdmin = req.currentUser.role === roleType.Admin;
+            const isSelf = req.params.userId === req.currentUser._id;
 
             if (!isAdmin && !isSelf) {
                 return sendError(res, 403, 'FORBIDDEN', 'Forbidden');
@@ -1026,8 +1038,8 @@ router.patch(
     requirePermission('canUseAccount'),
     async (req, res) => {
         try {
-            const isSelf = req.params.userId === req.payload._id.toString();
-            const isAdmin = req.payload.role === roleType.Admin;
+            const isSelf = req.params.userId === req.currentUser._id.toString();
+            const isAdmin = req.currentUser.role === roleType.Admin;
 
             const { error } = editUserProfileSchema.validate(req.body);
             if (error) {
@@ -1117,8 +1129,8 @@ router.patch(
         try {
             const { userId } = req.params;
             const { newPassword } = req.body;
-            const isAdmin = req.payload.role === roleType.Admin;
-            const isSelf = req.payload._id === userId;
+            const isAdmin = req.currentUser.role === roleType.Admin;
+            const isSelf = req.currentUser._id === userId;
 
             if (!newPassword || newPassword.length < 6) {
                 return sendError(
@@ -1173,8 +1185,8 @@ router.delete(
     requirePermission('canUseAccount'),
     async (req, res) => {
         try {
-            const isAdmin = req.payload.role === roleType.Admin;
-            const isSelf = req.payload._id === req.params.userId;
+            const isAdmin = req.currentUser.role === roleType.Admin;
+            const isSelf = req.currentUser._id === req.params.userId;
 
             if (!isAdmin && !isSelf) {
                 return sendError(
@@ -1251,8 +1263,8 @@ router.patch(
             const { status } = req.body;
 
             // authorization: self or admin
-            const isSelf = req.payload._id === userId;
-            const isAdmin = req.payload.role === roleType.Admin;
+            const isSelf = req.currentUser._id === userId;
+            const isAdmin = req.currentUser.role === roleType.Admin;
 
             if (!isSelf && !isAdmin) {
                 return sendError(
@@ -1316,93 +1328,95 @@ router.patch(
 // ACCOUNT STATUS (Admin only)
 // ============================================================
 
-router.patch('/account-status/:userId', auth, async (req, res) => {
-    try {
-        if (req.payload.role !== roleType.Admin) {
-            return sendError(res, 403, 'ADMIN_ONLY', 'Admins only');
-        }
+router.patch(
+    '/account-status/:userId',
+    auth,
+    requirePermission('canUseAccount'),
+    requireRole('Admin'),
+    async (req, res) => {
+        try {
+            const { userId } = req.params;
+            const { accountStatus } = req.body;
 
-        const { userId } = req.params;
-        const { accountStatus } = req.body;
+            if (!['active', 'disabled'].includes(accountStatus)) {
+                return sendError(
+                    res,
+                    400,
+                    'INVALID_ACCOUNT_STATUS',
+                    'Invalid account status',
+                );
+            }
 
-        if (!['active', 'disabled'].includes(accountStatus)) {
-            return sendError(
-                res,
-                400,
-                'INVALID_ACCOUNT_STATUS',
-                'Invalid account status',
-            );
-        }
+            // لا تسمح للـ Admin بتعطيل نفسه
+            if (userId === req.currentUser._id.toString()) {
+                return sendError(
+                    res,
+                    400,
+                    'CANNOT_DISABLE_SELF',
+                    'You cannot disable your own account',
+                );
+            }
 
-        // لا تسمح للـ Admin بتعطيل نفسه
-        if (userId === req.payload._id.toString()) {
-            return sendError(
-                res,
-                400,
-                'CANNOT_DISABLE_SELF',
-                'You cannot disable your own account',
-            );
-        }
+            const user = await User.findByIdAndUpdate(
+                userId,
+                {
+                    $set: { accountStatus },
+                },
+                {
+                    new: true,
+                    runValidators: true,
+                },
+            )
+                .select('-password')
+                .lean();
 
-        const user = await User.findByIdAndUpdate(
-            userId,
-            {
-                $set: { accountStatus },
-            },
-            {
-                new: true,
-                runValidators: true,
-            },
-        )
-            .select('-password')
-            .lean();
+            if (!user) {
+                return sendError(res, 404, 'USER_NOT_FOUND', 'User not found');
+            }
 
-        if (!user) {
-            return sendError(res, 404, 'USER_NOT_FOUND', 'User not found');
-        }
-
-        const io = req.app.get('io');
-
-        if (io) {
-            io.emit('user:accountStatusChanged', {
-                userId: user._id.toString(),
-                accountStatus: user.accountStatus,
-            });
-        }
-
-        // إذا تم التعطيل → اجعله offline
-        if (accountStatus === 'disabled') {
-            await User.findByIdAndUpdate(userId, {
-                $set: { status: false },
-            });
+            const io = req.app.get('io');
 
             if (io) {
-                io.emit('user:statusChanged', {
+                io.emit('user:accountStatusChanged', {
                     userId: user._id.toString(),
-                    status: false,
+                    accountStatus: user.accountStatus,
                 });
             }
+
+            // إذا تم التعطيل → اجعله offline
+            if (accountStatus === 'disabled') {
+                await User.findByIdAndUpdate(userId, {
+                    $set: { status: false },
+                });
+
+                if (io) {
+                    io.emit('user:statusChanged', {
+                        userId: user._id.toString(),
+                        status: false,
+                    });
+                }
+            }
+
+            return res.status(200).json({
+                success: true,
+                message:
+                    accountStatus === 'disabled'
+                        ? 'Account disabled successfully'
+                        : 'Account activated successfully',
+                user,
+            });
+        } catch (error) {
+            console.error('Account status update error:', error);
+
+            return sendError(
+                res,
+                500,
+                'ACCOUNT_STATUS_UPDATE_ERROR',
+                'Internal server error',
+            );
         }
-
-        return res.status(200).json({
-            success: true,
-            message:
-                accountStatus === 'disabled'
-                    ? 'Account disabled successfully'
-                    : 'Account activated successfully',
-            user,
-        });
-    } catch (error) {
-        console.error('Account status update error:', error);
-
-        return sendError(
-            res,
-            500,
-            'ACCOUNT_STATUS_UPDATE_ERROR',
-            'Internal server error',
-        );
-    }
-});
+    },
+);
 
 // ============================================================
 // PERMISSIONS (Admin only, one route per permission)

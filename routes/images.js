@@ -20,7 +20,15 @@ cloudinary.config({
 router.post('/sign', auth, (req, res) => {
     try {
         const userId = req.payload._id;
-        const isProfile = req.body.type === 'profile';
+        const allowedTypes = ['profile', 'ad'];
+
+        if (!allowedTypes.includes(req.body.type)) {
+            return res.status(400).json({
+                success: false,
+                code: 'INVALID_UPLOAD_TYPE',
+                message: 'Invalid upload type',
+            });
+        }
         const adId =
             typeof req.body.adId === 'string' &&
             /^[a-zA-Z0-9_-]+$/.test(req.body.adId)
@@ -29,7 +37,7 @@ router.post('/sign', auth, (req, res) => {
 
         const timestamp = Math.round(Date.now() / 1000);
 
-        const params = isProfile
+        const params = allowedTypes
             ? {
                   timestamp,
                   public_id: `users/${userId}/profile/avatar`,
