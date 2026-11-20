@@ -12,8 +12,7 @@ const cron = require('node-cron');
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // دالة مساعدة لجلب الإعلانات وترتيبها حسب الأولوية
-const getAdsByPriority = async (typeFilter) => {
-    // جلب كل الإعلانات النشطة والمطابقة للفلتر
+const getAdsByPriority = async (typeFilter, categoryFilter = null) => {
     const ads = await FeaturedAd.find({
         ...(typeFilter && { type: typeFilter }),
         isActive: true,
@@ -24,18 +23,28 @@ const getAdsByPriority = async (typeFilter) => {
         select: 'product_name category location price image seller sale discount in_stock brand',
     });
 
-    // ترتيب الأولويات: Homepage (3) > Top (2) > Highlight (1)
     const priority = { homepage: 3, top: 2, highlight: 1 };
 
     return ads
-        .filter((ad) => ad.listingId !== null) // تصفية الإعلانات المحذوفة
+        .filter((ad) => {
+            if (!ad.listingId) return false;
+
+            // إذا حُددت فئة، نعرض المنتجات من هذه الفئة فقط
+            if (categoryFilter) {
+                return (
+                    String(ad.listingId.category || '').trim().toLowerCase() ===
+                    String(categoryFilter).trim().toLowerCase()
+                );
+            }
+
+            return true;
+        })
         .sort((a, b) => {
-            // أولاً: الترتيب حسب الأولوية (الأغلى أولاً)
             const priorityDiff =
                 (priority[b.type] || 0) - (priority[a.type] || 0);
+
             if (priorityDiff !== 0) return priorityDiff;
 
-            // ثانياً: إذا تساوت الأولوية، نرتب حسب تاريخ الإنشاء (الأحدث أولاً)
             return new Date(b.createdAt) - new Date(a.createdAt);
         });
 };
@@ -199,10 +208,18 @@ router.get('/highlight', async (req, res) => {
 // GET /api/featured-ads/top
 router.get('/top', async (req, res) => {
     try {
-        const ads = await getAdsByPriority('top');
-        res.status(200).send(ads);
+        const category = String(req.query.category || '').trim();
+
+        // لا نعرض إعلانات عامة إذا لم تُحدد فئة البحث
+        if (!category) {
+            return res.status(200).json([]);
+        }
+
+        const ads = await getAdsByPriority('top', category);
+
+        res.status(200).json(ads);
     } catch (err) {
-        console.error(err);
+        console.error('Error fetching top ads:', err);
         res.status(500).json({ message: 'Server error' });
     }
 });

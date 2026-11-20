@@ -289,9 +289,16 @@ const TYPE_ALIASES = {
     outdoor: [
         'outdoor',
         'outdoor toys',
+        'outdoor furniture',
+        'garden furniture',
         'ألعاب خارجية',
         'أغراض خارجية',
+        'أثاث خارجي',
+        'أثاث حديقة',
+        'أثاث حدائق',
         'ציוד חוץ',
+        'ריהוט גן',
+        'ריהוט חוץ',
     ],
 
     // ========================================================
@@ -735,14 +742,501 @@ const TYPE_ALIASES = {
         'ריהוט משרדי',
     ],
 
-    outdoor: [
-        'outdoor furniture',
-        'garden furniture',
-        'أثاث خارجي',
-        'أثاث حديقة',
-        'أثاث حدائق',
-        'ריהוט גן',
-        'ריהוט חוץ',
+
+    // Garden
+    trees: [
+        'trees',
+        'tree',
+        'fruit trees',
+        'fruit tree',
+        'أشجار',
+        'شجر',
+        'أشجار مثمرة',
+        'עצים',
+        'עצי פרי',
+    ],
+
+    // Cameras
+    cameras: [
+        'cameras',
+        'camera',
+        'digital cameras',
+        'كاميرات',
+        'كاميرا',
+        'מצלמות',
+        'מצלמה',
+    ],
+
+    lenses: [
+        'lenses',
+        'lens',
+        'camera lenses',
+        'عدسات',
+        'عدسة',
+        'עדשות',
+        'עדשה',
+    ],
+
+    video: [
+        'video',
+        'video cameras',
+        'camcorders',
+        'فيديو',
+        'كاميرات فيديو',
+        'מצלמות וידאו',
+    ],
+
+    // Books
+    school: [
+        'school',
+        'school books',
+        'textbooks',
+        'كتب مدرسية',
+        'كتب المدرسة',
+        'ספרי לימוד',
+    ],
+
+    university: [
+        'university',
+        'academic books',
+        'college books',
+        'كتب جامعية',
+        'كتب أكاديمية',
+        'ספרים אקדמיים',
+    ],
+
+    novels: [
+        'novels',
+        'novel',
+        'fiction',
+        'روايات',
+        'رواية',
+        'רומנים',
+    ],
+
+    children: [
+        'children',
+        'childrens books',
+        'kids books',
+        'كتب أطفال',
+        'قصص أطفال',
+        'ספרי ילדים',
+    ],
+
+    religious: [
+        'religious',
+        'religious books',
+        'كتب دينية',
+        'كتب إسلامية',
+        'ספרי דת',
+    ],
+
+    language: [
+        'language',
+        'language learning',
+        'كتب لغات',
+        'تعلم اللغات',
+        'ספרי שפות',
+    ],
+
+    business: [
+        'business',
+        'business books',
+        'كتب أعمال',
+        'كتب إدارة',
+        'ספרי עסקים',
+    ],
+
+    other: [
+        'other',
+        'others',
+        'other books',
+        'أخرى',
+        'أخرى متنوعة',
+        'متفرقات',
+        'אחר',
+        'אחרים',
+    ],
+
+    // Musical Instruments
+    guitars: [
+        'guitars',
+        'guitar',
+        'acoustic guitar',
+        'electric guitar',
+        'قيثارات',
+        'جيتار',
+        'غيتار',
+        'גיטרות',
+        'גיטרה',
+    ],
+
+    pianos: [
+        'pianos',
+        'piano',
+        'grand piano',
+        'digital piano',
+        'بيانو',
+        'بيانوهات',
+        'פסנתרים',
+        'פסנתר',
+    ],
+
+    keyboards: [
+        'keyboards',
+        'keyboard',
+        'musical keyboard',
+        'synthesizer',
+        'أورغ',
+        'أورج',
+        'لوحات مفاتيح موسيقية',
+        'קלידים',
+        'אורגנים',
+    ],
+
+    drums: [
+        'drums',
+        'drum',
+        'drum set',
+        'طبول',
+        'طبل',
+        'درامز',
+        'תופים',
+    ],
+
+    violins: [
+        'violins',
+        'violin',
+        'كمان',
+        'كمنجة',
+        'كمانات',
+        'כינורות',
+        'כינור',
+    ],
+
+    wind: [
+        'wind',
+        'wind instruments',
+        'flute',
+        'saxophone',
+        'trumpet',
+        'آلات نفخ',
+        'ناي',
+        'فلوت',
+        'ساكسفون',
+        'כלי נשיפה',
+    ],
+
+    percussion: [
+        'percussion',
+        'percussion instruments',
+        'آلات إيقاعية',
+        'إيقاع',
+        'دفوف',
+        'כלי הקשה',
+    ],
+
+    // Construction Equipment
+    excavators: [
+        'excavators',
+        'excavator',
+        'حفارات',
+        'حفارة',
+        'מחפרים',
+        'מחפר',
+    ],
+
+    loaders: [
+        'loaders',
+        'loader',
+        'جرافات تحميل',
+        'لودر',
+        'מעמיסים',
+    ],
+
+    cranes: [
+        'cranes',
+        'crane',
+        'رافعات',
+        'رافعة',
+        'מנופים',
+        'מנוף',
+    ],
+
+    concrete_equipment: [
+        'concrete equipment',
+        'concrete mixers',
+        'معدات خرسانة',
+        'خلاطات خرسانة',
+        'ציוד בטון',
+    ],
+
+    scaffolding: [
+        'scaffolding',
+        'scaffold',
+        'سقالات',
+        'سقالة',
+        'פיגומים',
+    ],
+
+    cutting_equipment: [
+        'cutting equipment',
+        'cutting machines',
+        'معدات قص',
+        'معدات تقطيع',
+        'ציוד חיתוך',
+    ],
+
+    compaction_equipment: [
+        'compaction equipment',
+        'compactors',
+        'معدات دك',
+        'معدات ضغط التربة',
+        'ציוד הידוק',
+    ],
+
+    // Industrial Equipment
+    industrial_machines: [
+        'industrial machines',
+        'industrial machinery',
+        'آلات صناعية',
+        'ماكينات صناعية',
+        'מכונות תעשייתיות',
+    ],
+
+    compressors: [
+        'compressors',
+        'compressor',
+        'ضواغط',
+        'كمبروسر',
+        'מדחסים',
+    ],
+
+    generators: [
+        'generators',
+        'generator',
+        'مولدات',
+        'مولد كهرباء',
+        'גנרטורים',
+    ],
+
+    production_equipment: [
+        'production equipment',
+        'production machines',
+        'معدات إنتاج',
+        'معدات تصنيع',
+        'ציוד ייצור',
+    ],
+
+    packaging_equipment: [
+        'packaging equipment',
+        'packaging machines',
+        'معدات تغليف',
+        'آلات تعبئة وتغليف',
+        'ציוד אריזה',
+    ],
+
+    material_handling: [
+        'material handling',
+        'material handling equipment',
+        'معدات مناولة',
+        'معدات نقل المواد',
+        'ציוד שינוע',
+    ],
+
+    // Welding Equipment
+    welding_machines: [
+        'welding machines',
+        'welding machine',
+        'ماكينات لحام',
+        'أجهزة لحام',
+        'מכונות ריתוך',
+    ],
+
+    plasma_cutters: [
+        'plasma cutters',
+        'plasma cutter',
+        'قواطع بلازما',
+        'جهاز بلازما',
+        'חותכי פלזמה',
+    ],
+
+    welding_accessories: [
+        'welding accessories',
+        'ملحقات لحام',
+        'اكسسوارات لحام',
+        'אביזרי ריתוך',
+    ],
+
+    protective_equipment: [
+        'protective equipment',
+        'safety equipment',
+        'معدات حماية',
+        'معدات سلامة',
+        'ציוד מגן',
+    ],
+
+    // Office Equipment
+    printers: [
+        'printers',
+        'printer',
+        'طابعات',
+        'طابعة',
+        'מדפסות',
+    ],
+
+    scanners: [
+        'scanners',
+        'scanner',
+        'ماسحات ضوئية',
+        'سكانر',
+        'סורקים',
+    ],
+
+    copiers: [
+        'copiers',
+        'copier',
+        'photocopiers',
+        'آلات تصوير',
+        'ماكينات تصوير',
+        'מכונות צילום',
+    ],
+
+    projectors: [
+        'projectors',
+        'projector',
+        'أجهزة عرض',
+        'بروجكتور',
+        'מקרנים',
+    ],
+
+    shredders: [
+        'shredders',
+        'paper shredders',
+        'فرامات ورق',
+        'ماكينات إتلاف الورق',
+        'מגרסות נייר',
+    ],
+
+    laminators: [
+        'laminators',
+        'laminator',
+        'آلات تغليف حراري',
+        'ماكينات تغليف',
+        'מכשירי למינציה',
+    ],
+
+    // Services
+    electrical: [
+        'electrical',
+        'electrician',
+        'electrical services',
+        'كهرباء',
+        'كهربائي',
+        'خدمات كهربائية',
+        'חשמל',
+        'חשמלאי',
+    ],
+
+    plumbing: [
+        'plumbing',
+        'plumber',
+        'سباكة',
+        'سباك',
+        'تمديدات مياه',
+        'אינסטלציה',
+        'אינסטלטור',
+    ],
+
+    cleaning: [
+        'cleaning',
+        'cleaning services',
+        'خدمات تنظيف',
+        'تنظيف',
+        'ניקיון',
+        'שירותי ניקיון',
+    ],
+
+    transportation: [
+        'transportation',
+        'transport',
+        'نقل',
+        'خدمات نقل',
+        'مواصلات',
+        'הובלה',
+        'תחבורה',
+    ],
+
+    moving: [
+        'moving',
+        'moving services',
+        'نقل عفش',
+        'نقل أثاث',
+        'نقل منازل',
+        'הובלות',
+    ],
+
+    automotive: [
+        'automotive',
+        'car services',
+        'خدمات سيارات',
+        'صيانة سيارات',
+        'שירותי רכב',
+    ],
+
+    programming: [
+        'programming',
+        'software development',
+        'برمجة',
+        'تطوير برمجيات',
+        'תכנות',
+    ],
+
+    design: [
+        'design',
+        'graphic design',
+        'تصميم',
+        'تصميم جرافيك',
+        'עיצוב',
+    ],
+
+    marketing: [
+        'marketing',
+        'digital marketing',
+        'تسويق',
+        'تسويق إلكتروني',
+        'שיווק',
+    ],
+
+    education: [
+        'education',
+        'tutoring',
+        'teaching',
+        'تعليم',
+        'دروس خصوصية',
+        'تدريس',
+        'חינוך',
+        'שיעורים פרטיים',
+    ],
+
+    beauty: [
+        'beauty',
+        'beauty services',
+        'خدمات تجميل',
+        'تجميل',
+        'קוסמטיקה',
+    ],
+
+    // Real Estate
+    room: [
+        'room',
+        'rooms',
+        'private room',
+        'غرفة',
+        'غرف',
+        'غرفة للإيجار',
+        'חדר',
+        'חדרים',
     ],
 };
 

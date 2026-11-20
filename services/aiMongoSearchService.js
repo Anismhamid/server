@@ -12,32 +12,6 @@ function escapeRegex(value) {
     return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-function buildModelQuery(model, brand) {
-    const aliases = getBrandModelAliases(brand, model) || [];
-
-    const values = [
-        model,
-        ...aliases,
-    ];
-
-    const uniqueValues = [
-        ...new Set(
-            values
-                .filter(Boolean)
-                .map(String)
-        ),
-    ];
-
-    return {
-        $in: uniqueValues.map(
-            value =>
-                new RegExp(
-                    `^${escapeRegex(value)}$`,
-                    'i'
-                )
-        ),
-    };
-}
 
 function aliasesToRegex(aliases) {
     return aliases.map(
@@ -122,7 +96,10 @@ function buildMongoQuery(filters) {
     // Fuel - Multilingual
     // ========================================
 
-    if (filters.fuel) {
+    if (
+        filters.category === 'Cars' &&
+        filters.fuel
+    ) {
         const fuelAliases =
             FUEL_ALIASES[
                 filters.fuel

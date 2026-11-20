@@ -18,43 +18,113 @@ const { TYPE_ALIASES } = require('./typeAliases');
 const CATEGORY_TYPES = {
     House: ['kitchen', 'storage', 'decor', 'maintenance'],
 
-    Garden: ['plants', 'watering', 'tools', 'outdoorDecor'],
+    Garden: ['plants', 'trees', 'watering', 'tools', 'outdoorDecor'],
 
     Cars: ['private', 'electric', 'parts'],
-
     Bikes: ['kids', 'mountain', 'road'],
-
     Trucks: ['light', 'heavy'],
-
     ElectricVehicles: ['cars', 'scooters'],
 
     MenClothes: ['casual', 'formal', 'shoes'],
-
     WomenClothes: ['casual', 'dresses', 'shoes'],
-
     WomenBags: ['handbags', 'toteBags', 'backpacks', 'clutches'],
 
     Baby: ['clothes', 'care', 'feeding'],
-
     Kids: ['educational', 'toys', 'outdoor'],
-
     Health: ['personalCare', 'medical', 'fitness'],
-
     Beauty: ['makeup', 'skincare', 'hair'],
-
     Watches: ['classic', 'smart', 'hand'],
-
     Cleaning: ['detergents', 'tools', 'disinfection'],
 
     Motorcycles: ['street', 'sport', 'cruiser', 'offRoad', 'scooter', 'parts'],
 
     Electronics: ['smartphones', 'laptops', 'tablets', 'accessories', 'audio'],
 
+    Cameras: ['cameras', 'lenses', 'video', 'accessories'],
+
+    Books: [
+        'school',
+        'university',
+        'novels',
+        'children',
+        'religious',
+        'language',
+        'business',
+        'other',
+    ],
+
+    MusicalInstruments: [
+        'guitars',
+        'pianos',
+        'keyboards',
+        'drums',
+        'violins',
+        'wind',
+        'percussion',
+        'other',
+    ],
+
+    ConstructionEquipment: [
+        'excavators',
+        'loaders',
+        'cranes',
+        'concrete_equipment',
+        'scaffolding',
+        'cutting_equipment',
+        'compaction_equipment',
+        'other',
+    ],
+
+    IndustrialEquipment: [
+        'industrial_machines',
+        'compressors',
+        'generators',
+        'production_equipment',
+        'packaging_equipment',
+        'material_handling',
+        'other',
+    ],
+
+    WeldingEquipment: [
+        'welding_machines',
+        'plasma_cutters',
+        'welding_accessories',
+        'protective_equipment',
+        'other',
+    ],
+
+    OfficeEquipment: [
+        'printers',
+        'scanners',
+        'copiers',
+        'projectors',
+        'shredders',
+        'laminators',
+        'other',
+    ],
+
+    Services: [
+        'maintenance',
+        'electrical',
+        'plumbing',
+        'cleaning',
+        'transportation',
+        'moving',
+        'automotive',
+        'programming',
+        'design',
+        'photography',
+        'marketing',
+        'education',
+        'beauty',
+        'other',
+    ],
+
     Art: ['paintings', 'sculptures', 'photography', 'crafts', 'collectibles'],
 
     Gaming: ['consoles', 'games', 'accessories', 'pc_gaming'],
 
-    RealEstate: ['apartment', 'house', 'villa', 'commercial', 'land'],
+    RealEstate: ['apartment', 'house', 'villa', 'commercial', 'land', 'room'],
 
     Pets: ['dogs', 'cats', 'birds', 'fish', 'small_animals', 'supplies'],
 
@@ -281,14 +351,8 @@ function normalizeFuel(value) {
 // Type
 // ============================================================
 
-function normalizeType(value, category) {
+function findTypeForCategory(value, category) {
     if (!value || !category) {
-        return null;
-    }
-
-    const canonicalType = findCanonicalValue(value, TYPE_LOOKUP);
-
-    if (!canonicalType) {
         return null;
     }
 
@@ -298,37 +362,79 @@ function normalizeType(value, category) {
         return null;
     }
 
-    return allowedTypes.includes(canonicalType) ? canonicalType : null;
+    const normalizedValue = normalizeText(value);
+
+    if (!normalizedValue) {
+        return null;
+    }
+
+    for (const canonicalType of allowedTypes) {
+        if (normalizeText(canonicalType) === normalizedValue) {
+            return canonicalType;
+        }
+
+        const aliases = TYPE_ALIASES[canonicalType] || [];
+
+        const matched = aliases.some(
+            (alias) => normalizeText(alias) === normalizedValue,
+        );
+
+        if (matched) {
+            return canonicalType;
+        }
+    }
+
+    return null;
 }
 
-// ============================================================
-// Find Category By Type
-// ============================================================
+function normalizeType(value, category) {
+    return findTypeForCategory(value, category);
+}
 
 /**
- * Used when the parser detects a type
- * but the category was not explicitly detected.
- *
- * Example:
- *
- * "لوحه زيتيه"
- *
- * → paintings
- * → Art
+ * لا تستنتج الفئة إلا إذا كان النوع ينتمي إلى فئة واحدة فقط.
+ * الأنواع المشتركة مثل tools وaccessories لا تنتج تخمينًا.
  */
 function findCategoryByType(type) {
     if (!type) {
         return null;
     }
 
-    for (const [category, types] of Object.entries(CATEGORY_TYPES)) {
-        if (types.includes(type)) {
-            return category;
-        }
-    }
+    const matches = Object.keys(CATEGORY_TYPES).filter(
+        (category) => findTypeForCategory(type, category) !== null,
+    );
 
-    return null;
+    return matches.length === 1 ? matches[0] : null;
 }
+
+// // ============================================================
+// // Find Category By Type
+// // ============================================================
+
+// /**
+//  * Used when the parser detects a type
+//  * but the category was not explicitly detected.
+//  *
+//  * Example:
+//  *
+//  * "لوحه زيتيه"
+//  *
+//  * → paintings
+//  * → Art
+//  */
+// function findCategoryByType(type) {
+//     if (!type) {
+//         return null;
+//     }
+
+//     for (const [category, types] of Object.entries(CATEGORY_TYPES)) {
+//         if (types.includes(type)) {
+//             return category;
+//         }
+//     }
+
+//     return null;
+// }
 
 // ============================================================
 // Condition
@@ -436,7 +542,7 @@ function normalizeSearchFilters(filters) {
     // Type
     // --------------------------------------------------------
 
-    let type = normalizeType(filters.type, category);
+    let type = category ? normalizeType(filters.type, category) : null;
 
     /*
      * If parser gave us a valid type but no category,
@@ -452,14 +558,11 @@ function normalizeSearchFilters(filters) {
      * category = Art
      */
     if (!category && filters.type) {
-        const rawType = findCanonicalValue(filters.type, TYPE_LOOKUP);
-
-        const inferredCategory = findCategoryByType(rawType);
+        const inferredCategory = findCategoryByType(filters.type);
 
         if (inferredCategory) {
             category = inferredCategory;
-
-            type = normalizeType(rawType, category);
+            type = normalizeType(filters.type, category);
         }
     }
 
@@ -523,21 +626,17 @@ function normalizeSearchFilters(filters) {
 // ============================================================
 
 module.exports = {
+    CATEGORY_TYPES,
     normalizeSearchFilters,
-
     normalizeCategory,
     normalizeCondition,
     normalizeFuel,
     normalizeType,
     normalizeCurrency,
     normalizeStorage,
-
     findCategoryByType,
-
     getBrandCanonical,
-
     cleanValue,
     normalizeText,
-
     createEmptyFilters,
 };
