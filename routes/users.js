@@ -679,7 +679,7 @@ router.get('/me', optionalAuth, async (req, res) => {
             .select('-password')
             .lean();
 
-        if (!user) return;
+        if (!user) return sendError(res, 404, 'USER_NOT_FOUND', 'User not found');
 
         if (
             user.accountStatus === 'disabled' ||
@@ -746,7 +746,7 @@ router.get('/customer/:slug', async (req, res) => {
     try {
         const { slug } = req.params;
 
-        const user = await User.findOne({ slug }).select('-password');
+        const user = await User.findOne({ slug }).select('_id name slug image role status createdAt');
         if (!user) {
             return sendError(res, 404, 'USER_NOT_FOUND', 'User not found');
         }
