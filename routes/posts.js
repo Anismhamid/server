@@ -50,25 +50,70 @@ const isBlockedBetweenUsers = async (userA, userB) => {
     return Boolean(block);
 };
 
-//==============All-posts==========
-// Get all posts for search in home page
+// ============================================
+// GET ALL ACCEPTED POSTS (PAGINATED)
+// ============================================
+
 router.get('/', async (req, res) => {
     try {
-        const posts = await Posts.find({ status: 'accepted' })
+        // --------------------------------------------
+        // Pagination
+        // --------------------------------------------
+
+        const page = Math.max(1, parseInt(req.query.page, 10) || 1);
+
+        const requestedLimit = parseInt(req.query.limit, 10) || 20;
+
+        const limit = Math.min(Math.max(requestedLimit, 1), 50);
+
+        const skip = (page - 1) * limit;
+
+        // --------------------------------------------
+        // Query
+        // --------------------------------------------
+
+        const posts = await Posts.find({
+            status: 'accepted',
+        })
+            .sort({ createdAt: -1, _id: -1 })
+            .skip(skip)
+            .limit(limit + 1)
             .populate({
                 path: 'seller',
                 select: 'name image slug _id',
             })
-            .populate({
-                path: 'reviews.user',
-                select: 'name image slug _id',
-            })
-            .select();
+            .lean();
 
-        return res.status(200).json(posts.reverse());
+        // --------------------------------------------
+        // Check if more posts exist
+        // --------------------------------------------
+
+        const hasMore = posts.length > limit;
+
+        if (hasMore) {
+            posts.pop();
+        }
+
+        // --------------------------------------------
+        // Response headers
+        // --------------------------------------------
+
+        res.set('X-Page', String(page));
+        res.set('X-Limit', String(limit));
+        res.set('X-Has-More', String(hasMore));
+
+        // --------------------------------------------
+        // Response
+        // --------------------------------------------
+
+        return res.status(200).json(posts);
     } catch (error) {
         console.error('Error fetching posts:', error);
-        return res.status(500).json({ error: error.message });
+
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to fetch posts',
+        });
     }
 });
 
